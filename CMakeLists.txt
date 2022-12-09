@@ -12,8 +12,8 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia Network)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia)
 
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES
@@ -30,10 +30,7 @@ set(PROJECT_SOURCES
         ui/mainwindow.ui
         src/recognizer.h
         src/recognizer.cpp
-        src/modeldownloader.h
-        src/modeldownloader.cpp
         src/global.h
-        ui/modeldownloader.ui
         ${RC_FILES}
 )
 
@@ -73,7 +70,6 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Concurrent
     Qt${QT_VERSION_MAJOR}::Svg
     Qt${QT_VERSION_MAJOR}::Multimedia
-    Qt${QT_VERSION_MAJOR}::Network
     ${INTL_LDFLAGS}
     vosk
 )

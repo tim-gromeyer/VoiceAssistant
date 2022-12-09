@@ -45,7 +45,16 @@ public:
 
     QString language;
 
-    Listener *device = nullptr;
+    QScopedPointer<Listener> device;
+
+    bool hasWord(QString word);
+
+    static void setWakeWord(const QString &word);
+    static QString wakeWord();
+
+    void setModelDir(const QString &);
+    QString modelDir();
+
 public Q_SLOTS:
     void setUpModel();
     void setUpMic();
@@ -55,9 +64,10 @@ Q_SIGNALS:
 
 private:
     VoskModel *model = nullptr;
-    VoskRecognizer *rec = nullptr;
 
-    QAudioSource *audio = nullptr;
+    QScopedPointer<QAudioSource> audio;
+
+    QString _modelDir;
 };
 
 #endif // RECOGNIZER_H

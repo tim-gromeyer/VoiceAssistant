@@ -29,6 +29,8 @@ private Q_SLOTS:
 
     void updateText(const QString &text);
 
+    void onHasWord();
+
 private:
     Ui::MainWindow *ui;
 

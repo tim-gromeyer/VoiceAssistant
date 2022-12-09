@@ -22,6 +22,15 @@
         <property name="text">
          <string>Loading ...</string>
         </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -54,6 +63,20 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -82,7 +105,7 @@
    </widget>
    <widget class="QMenu" name="menu_Models">
     <property name="title">
-     <string>&amp;Models</string>
+     <string>&amp;Model</string>
     </property>
     <widget class="QMenu" name="menuLoad_model">
      <property name="title">
@@ -90,6 +113,7 @@
      </property>
     </widget>
     <addaction name="menuLoad_model"/>
+    <addaction name="actionHas_word"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Models"/>
@@ -103,6 +127,11 @@
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="actionHas_word">
+   <property name="text">
+    <string>Contains word</string>
    </property>
   </action>
  </widget>
