@@ -1,11 +1,15 @@
 #ifndef RECOGNIZER_H
 #define RECOGNIZER_H
 
-#include <QAudioSource>
 #include <QIODevice>
 
-#include "vosk_api.h"
-
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QAudioSource>
+#define AUDIOINPUT QAudioSource
+#else
+#include <QAudioInput>
+#define AUDIOINPUT QAudioInput
+#endif
 
 class Listener : public QIODevice
 {
@@ -42,32 +46,36 @@ public:
         ModelsMissing = 2, // Model folder is empty
         ErrorWhileLoading = 3 // Unknown error
     };
+    Q_ENUM(State);
 
     QString language;
 
-    QScopedPointer<Listener> device;
+    [[nodiscard]] inline State state() const { return m_state; }
 
-    bool hasWord(QString word);
+    [[nodiscard]] inline Listener* device() const { return m_device.get(); }
+
+    static bool hasWord(QString word);
 
     static void setWakeWord(const QString &word);
     static QString wakeWord();
 
-    void setModelDir(const QString &);
-    QString modelDir();
+    static void setModelDir(const QString &);
+    static QString modelDir();
 
 public Q_SLOTS:
     void setUpModel();
     void setUpMic();
 
 Q_SIGNALS:
-    void stateChanged(Recognizer::State);
+    void stateChanged();
 
 private:
-    VoskModel *model = nullptr;
+    inline void setState(Recognizer::State s) { m_state = s; Q_EMIT stateChanged(); };
 
-    QScopedPointer<QAudioSource> audio;
+    QScopedPointer<AUDIOINPUT> audio;
+    QScopedPointer<Listener> m_device;
 
-    QString _modelDir;
+    State m_state = Ok;
 };
 
 #endif // RECOGNIZER_H

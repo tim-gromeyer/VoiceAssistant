@@ -21,9 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
-    // Disable kaldi debug messages
-    vosk_set_log_level(-1);
-
     // Connect actions
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
 
@@ -35,15 +32,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Prepare recognizer
     connect(recognizer, &Recognizer::stateChanged, this, &MainWindow::onStateChanged);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     auto future = QtConcurrent::run(&Recognizer::setUpModel, recognizer);
+#else
+    auto future = QtConcurrent::run(recognizer, &Recognizer::setUpModel);
+#endif
     Q_UNUSED(future);
-    connect(recognizer->device.get(), &Listener::textUpdated, this, &MainWindow::updateText);
-    connect(recognizer->device.get(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
-    connect(recognizer->device.get(), &Listener::doneListening, this, &MainWindow::doneListening);
+
+    connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
+    connect(recognizer->device(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
+    connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
 }
 
-void MainWindow::onStateChanged(Recognizer::State state) {
-    switch (state) {
+void MainWindow::onStateChanged() {
+    switch (recognizer->state()) {
     case Recognizer::Ok:
         ui->statusLabel->setText(tr("Waiting for wake word"));
         break;
@@ -56,7 +58,7 @@ void MainWindow::onStateChanged(Recognizer::State state) {
                                     "<p><i><a href=\"%2\">%2</a></i>.</p>\n"
                                     "<p>Make sure the folder has one of the following names:</p>\n"
                                     "<p><i>%3</i>.</p>"
-                                    ).arg(STR("https://alphacephei.com/vosk/models"), recognizer->modelDir(), QLocale::system().uiLanguages().join(L1(", "))));
+                                    ).arg(STR("https://alphacephei.com/vosk/models"), Recognizer::modelDir(), QLocale::system().uiLanguages().join(L1(", "))));
         break;
     case Recognizer::NoModelFound:
         ui->statusLabel->setText(tr("No language model found for your system language."));
@@ -105,7 +107,7 @@ void MainWindow::onHasWord() {
     infoLabel->setWordWrap(true);
 
     connect(inputLine.get(), &QLineEdit::textChanged, this, [this, &succesLabel](const QString &word){
-        if (recognizer->hasWord(word)) {
+        if (Recognizer::hasWord(word)) {
             succesLabel->setStyleSheet(STR("color: green"));
             succesLabel->setText(tr("Yes it can!"));
         }

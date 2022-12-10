@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.16)
 
-project(VoiceAssistant VERSION 1.3.0 LANGUAGES CXX)
+project(VoiceAssistant VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,14 +24,14 @@ set(RC_FILES
 include(cmake/Translation.cmake)
 
 set(PROJECT_SOURCES
-        src/main.cpp
-        src/mainwindow.cpp
-        src/mainwindow.h
-        ui/mainwindow.ui
-        src/recognizer.h
-        src/recognizer.cpp
-        src/global.h
-        ${RC_FILES}
+    ${RC_FILES}
+    src/global.h
+    src/main.cpp
+    src/mainwindow.cpp
+    src/mainwindow.h
+    src/recognizer.cpp
+    src/recognizer.h
+    ui/mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -77,6 +77,7 @@ target_link_libraries(voiceassistant PRIVATE
 target_compile_definitions(voiceassistant PUBLIC
     APP_VERSION="${PROJECT_VERSION}"
     APP_DIR="${CMAKE_SOURCE_DIR}"
+    QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
 )
 
 set_target_properties(voiceassistant PROPERTIES

@@ -20,7 +20,7 @@ public:
     ~MainWindow();
 
 private Q_SLOTS:
-    void onStateChanged(Recognizer::State);
+    void onStateChanged();
 
     void updateTime();
 

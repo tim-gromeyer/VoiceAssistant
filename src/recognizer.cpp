@@ -1,20 +1,22 @@
 #include "recognizer.h"
 #include "global.h"
 
-#include <QAudioSource>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QJsonDocument>
 #include <QLocale>
-#include <QMediaDevices>
 #include <QMessageBox>
 #include <QThread>
 
+#include "vosk_api.h"
 
+
+VoskModel *model = nullptr;
 VoskRecognizer *globalRecognizer = nullptr;
 QLatin1String _wakeWord = L1("alexa ");
-qsizetype _wakeWordSize = 6;
+int _wakeWordSize = 6;
+QString _modelDir;
 
 Listener::Listener(QObject *parent)
     : QIODevice(parent) {
@@ -40,7 +42,8 @@ void Listener::parseText(const char *json) {
 
     if (text.isEmpty()) return;
 
-    text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
+    if (text.contains(_wakeWord))
+        text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
 
     qDebug() << "[debug] Text:" << text;
 
@@ -61,8 +64,10 @@ void Listener::parsePartial(const char *json) {
 }
 
 Recognizer::Recognizer(QObject *parent)
-    : QObject{parent}, device(new Listener(this))
+    : QObject{parent}, m_device(new Listener(this))
 {
+    // Disable kaldi debug messages
+    vosk_set_log_level(-1);
 }
 
 void Recognizer::setUpModel()
@@ -71,23 +76,16 @@ void Recognizer::setUpModel()
 
     const QStringList uiLangs = QLocale::system().uiLanguages();
 
-#ifdef QT_DEBUG
-    QString appDir = STR(APP_DIR);
-#else
-    QString appDir = QCoreApplication::applicationDirPath();
-#endif
-    appDir.append(L1("/models/"));
-
-    QDir dir(appDir);
+    QDir dir(modelDir());
     if (dir.isEmpty(QDir::Dirs)) {
-        emit stateChanged(ModelsMissing);
+        setState(ModelsMissing);
         return;
     }
 
     for (const auto &lang : uiLangs) {
-        if (!dir::exists(appDir + lang)) continue;
+        if (!dir::exists(modelDir() + lang)) continue;
 
-        model = vosk_model_new(QString(appDir + lang).toUtf8());
+        model = vosk_model_new(QString(modelDir() + lang).toUtf8());
         if (model) {
             qDebug() << "[debug] Loaded model, language:" << lang;
 
@@ -95,19 +93,19 @@ void Recognizer::setUpModel()
         }
 
         if (!model || !globalRecognizer) {
-            emit stateChanged(ErrorWhileLoading);
+            setState(ErrorWhileLoading);
             return;
         }
 
         qDebug() << "[debug] Recognizer loaded successful";
 
         language = lang;
-        Q_EMIT stateChanged(Ok);
+        setState(Ok);
         break;
     }
 
     if (language.isEmpty()) {
-        emit stateChanged(NoModelFound);
+        setState(NoModelFound);
         qDebug() << "[debug] No model found!";
     }
 }
@@ -121,14 +119,18 @@ void Recognizer::setUpMic()
     QAudioFormat format;
     format.setSampleRate(16000);
     format.setChannelCount(1);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     format.setSampleFormat(QAudioFormat::Int16);
+#else
+    format.setSampleSize(16);
+#endif
 
-    audio.reset(new QAudioSource(format, this));
-    connect(audio.get(), &QAudioSource::stateChanged, this, [](QAudio::State state){
+    audio.reset(new AUDIOINPUT(format, this));
+    connect(audio.get(), &AUDIOINPUT::stateChanged, this, [](QAudio::State state){
         qDebug() << "[debug] Microphone state:" << state;
     });
     audio->setBufferSize(8000);
-    audio->start(device.get());
+    audio->start(m_device.get());
 
     qDebug() << "[debug] Microphone set up";
 }
