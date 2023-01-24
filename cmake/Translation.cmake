@@ -7,8 +7,6 @@ function(ADD_TRANSLATIONS res_file)
         qt5_add_translation(_QM_FILES ${ARGN})
     endif()
 
-    message(STATUS "${ARGN}\n${_QM_FILES}")
-
     file(WRITE ${_rc_file} "<RCC>\n\t<qresource prefix=\"/translations\">\n")
     foreach(_lang ${_QM_FILES})
         get_filename_component(_filename ${_lang} NAME)

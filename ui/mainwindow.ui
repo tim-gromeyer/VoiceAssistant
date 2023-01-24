@@ -11,12 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string>VoiceAssistant - Pre alpha!</string>
   </property>
   <widget class="QWidget" name="container">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
       <item>
        <widget class="QLabel" name="statusLabel">
         <property name="text">
@@ -30,6 +30,17 @@
         </property>
         <property name="openExternalLinks">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="muteButton">
+        <property name="text">
+         <string>Mute</string>
+        </property>
+        <property name="icon">
+         <iconset theme="audio-input-microphone">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>
@@ -53,30 +64,26 @@
       <property name="text">
        <string/>
       </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
      </widget>
     </item>
     <item>
-     <widget class="QFrame" name="content">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+     <widget class="QScrollArea" name="content">
+      <property name="widgetResizable">
+       <bool>true</bool>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="leftMargin">
-        <number>0</number>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>780</width>
+         <height>489</height>
+        </rect>
        </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-      </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -95,6 +102,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -114,6 +122,7 @@
     </widget>
     <addaction name="menuLoad_model"/>
     <addaction name="actionHas_word"/>
+    <addaction name="actionOpen_downloader"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Models"/>
@@ -132,6 +141,26 @@
   <action name="actionHas_word">
    <property name="text">
     <string>Contains word</string>
+   </property>
+  </action>
+  <action name="actionOpen_downloader">
+   <property name="text">
+    <string>Open downloader</string>
+   </property>
+  </action>
+  <action name="action_Quit">
+   <property name="icon">
+    <iconset theme="window-close">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
    </property>
   </action>
  </widget>

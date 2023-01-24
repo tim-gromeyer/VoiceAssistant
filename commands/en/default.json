@@ -1,0 +1,23 @@
+[
+  {
+    "funcName": "sayTime",
+    "commands": [
+      "how late",
+      "what's the time",
+      "what time is it"
+    ]
+  },
+  {
+    "funcName": "stop",
+    "commands": [
+      "stop"
+    ]
+  },
+  {
+    "funcName": "repeat",
+    "commands": [
+      "repeat after me",
+      "repeat me"
+    ]
+  }
+]

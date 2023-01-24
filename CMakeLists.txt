@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 project(VoiceAssistant VERSION 0.1.0 LANGUAGES CXX)
 
@@ -12,8 +12,21 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/ui)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Concurrent Multimedia)
+# Build type
+if (NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Build type not specified. Release is used.")
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
+
+# Disable debug messages in release mode and improve performance
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+    string(REPLACE "-O2" "-O3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    add_compile_definitions(QT_NO_DEBUG_OUTPUT)
+endif()
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
 
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES
@@ -29,23 +42,22 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
+    src/modeldownloader.cpp
+    src/modeldownloader.h
     src/recognizer.cpp
     src/recognizer.h
     ui/mainwindow.ui
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    add_translations(TS ${TS_FILES})
+add_translations(TS ${TS_FILES})
 
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(voiceassistant
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${TS}
     )
-
 else()
-    add_translations(TS ${TS_FILES})
-
     if(ANDROID)
         add_library(voiceassistant SHARED
             ${PROJECT_SOURCES}
@@ -67,9 +79,10 @@ target_include_directories(voiceassistant PRIVATE src vosk)
 target_link_directories(voiceassistant PRIVATE vosk)
 target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Concurrent
     Qt${QT_VERSION_MAJOR}::Svg
     Qt${QT_VERSION_MAJOR}::Multimedia
+    Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::TextToSpeech
     ${INTL_LDFLAGS}
     vosk
 )
