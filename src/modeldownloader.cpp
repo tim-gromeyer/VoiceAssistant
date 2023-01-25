@@ -246,6 +246,7 @@ void ModelDownloader::downloadFinished()
         }
     }
 
+    // FIXME: Dialog closes when the copy button is clicked!
     QMessageBox msg(this);
     msg.setIcon(QMessageBox::Information);
     msg.setWindowTitle(tr("File downloaded!"));

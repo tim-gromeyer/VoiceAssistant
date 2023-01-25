@@ -26,8 +26,8 @@
 using namespace std::chrono_literals;
 using namespace literals;
 
-Recognizer *recognizer;
-std::shared_ptr<QTextToSpeech> engine;
+std::shared_ptr<Recognizer> recognizer;
+QSharedPointer<QTextToSpeech> engine;
 QHash<QString, QStringList> funcCommandHash;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->content->setFocus();
 
     // Set up recognizer
-    recognizer = new Recognizer(this);
+    recognizer.reset(new Recognizer(this));
 
     // Set up text to speech
     std::thread(&MainWindow::setupTextToSpeech).detach();
@@ -60,14 +60,14 @@ MainWindow::MainWindow(QWidget *parent)
     updateTime();
 
     // Set up all (standard) commands
-    connect(recognizer,
+    connect(recognizer.get(),
             &Recognizer::languageChanged,
             this,
             &MainWindow::setUpCommands,
             Qt::QueuedConnection);
 
     // Prepare recognizer
-    connect(recognizer, &Recognizer::stateChanged, this, &MainWindow::onStateChanged);
+    connect(recognizer.get(), &Recognizer::stateChanged, this, &MainWindow::onStateChanged);
     recognizer->setup();
 
     connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
@@ -275,7 +275,7 @@ void MainWindow::setUpCommands()
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qDebug() << "Error opening file";
+        qDebug() << STR("Failed to open %1\n%2").arg(jsonFile.fileName(), jsonFile.errorString());
         return;
     }
 
@@ -380,7 +380,9 @@ MainWindow::~MainWindow()
         qDebug() << "[debug] All threads ended";
     }
 
+    engine->deleteLater();
     recognizer->deleteLater();
 
-    delete recognizer;
+    engine.reset();
+    recognizer.reset();
 }
