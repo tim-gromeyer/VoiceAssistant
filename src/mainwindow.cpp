@@ -26,7 +26,7 @@
 using namespace std::chrono_literals;
 using namespace literals;
 
-std::shared_ptr<Recognizer> recognizer;
+std::shared_ptr<SpeechToText> recognizer;
 QSharedPointer<QTextToSpeech> engine;
 QHash<QString, QStringList> funcCommandHash;
 
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->content->setFocus();
 
     // Set up recognizer
-    recognizer.reset(new Recognizer(this));
+    recognizer.reset(new SpeechToText(this));
 
     // Set up text to speech
     std::thread(&MainWindow::setupTextToSpeech).detach();
@@ -61,13 +61,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set up all (standard) commands
     connect(recognizer.get(),
-            &Recognizer::languageChanged,
+            &SpeechToText::languageChanged,
             this,
             &MainWindow::setUpCommands,
             Qt::QueuedConnection);
 
     // Prepare recognizer
-    connect(recognizer.get(), &Recognizer::stateChanged, this, &MainWindow::onStateChanged);
+    connect(recognizer.get(), &SpeechToText::stateChanged, this, &MainWindow::onStateChanged);
     recognizer->setup();
 
     connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
@@ -139,12 +139,12 @@ void MainWindow::setupTrayIcon()
 void MainWindow::onStateChanged()
 {
     switch (recognizer->state()) {
-    case Recognizer::NoError:
-    case Recognizer::Running:
+    case SpeechToText::NoError:
+    case SpeechToText::Running:
         ui->statusLabel->setText(tr("Waiting for wake word"));
         break;
-    case Recognizer::NoModelFound:
-    case Recognizer::ModelsMissing:
+    case SpeechToText::NoModelFound:
+    case SpeechToText::ModelsMissing:
         ui->statusLabel->setText(recognizer->errorString());
         openModelDownloader();
         break;
@@ -205,7 +205,7 @@ void MainWindow::onHasWord()
             return;
         }
 
-        bool hasWord = Recognizer::hasWord(word);
+        bool hasWord = SpeechToText::hasWord(word);
         if (hasWord)
             wordEdit->setStyleSheet(STR("color: green"));
         else
@@ -270,7 +270,7 @@ void MainWindow::loadPlugin(const std::string &path)
 
 void MainWindow::setUpCommands()
 {
-    const QString dir = Recognizer::dataDir() + STR("/commands/") + recognizer->language();
+    const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
 
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file

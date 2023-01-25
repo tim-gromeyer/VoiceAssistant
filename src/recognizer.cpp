@@ -1,4 +1,4 @@
-#include "recognizer.h" // Include the header file for the Recognizer class
+#include "recognizer.h" // Include the header file for the SpeechToText class
 #include "global.h"     // Include string literals
 
 #include <QCoreApplication> // Include the QCoreApplication class
@@ -84,7 +84,7 @@ void Listener::parsePartial(const char *json)
     Q_EMIT textUpdated(text);
 }
 
-Recognizer::Recognizer(QObject *parent)
+SpeechToText::SpeechToText(QObject *parent)
     : QObject{parent}
     , m_device(new Listener(this))
 {
@@ -92,12 +92,12 @@ Recognizer::Recognizer(QObject *parent)
     vosk_set_log_level(-1);
 }
 
-Recognizer::operator bool() const
+SpeechToText::operator bool() const
 {
     return audio && m_device && globalRecognizer;
 }
 
-void Recognizer::pause()
+void SpeechToText::pause()
 {
     if (!audio)
         return;
@@ -109,7 +109,7 @@ void Recognizer::pause()
     setState(Paused);
 }
 
-void Recognizer::resume()
+void SpeechToText::resume()
 {
     if (!audio)
         return;
@@ -130,7 +130,7 @@ void Recognizer::resume()
     setState(Running);
 }
 
-void Recognizer::setUpModel()
+void SpeechToText::setUpModel()
 {
     qDebug() << "[debug] Setting up model and recognizer";
 
@@ -160,7 +160,7 @@ void Recognizer::setUpModel()
         m_language = lang;
         Q_EMIT languageChanged();
 
-        qDebug() << "[debug] Recognizer loaded successful";
+        qDebug() << "[debug] SpeechToText loaded successful";
 
         Q_EMIT modelLoaded();
         return;
@@ -170,7 +170,7 @@ void Recognizer::setUpModel()
     qDebug() << "[debug] No model found!";
 }
 
-void Recognizer::setUpMic()
+void SpeechToText::setUpMic()
 {
     if (!globalRecognizer)
         return;
@@ -213,17 +213,17 @@ void Recognizer::setUpMic()
     qDebug() << "[debug] Microphone set up";
 }
 
-void Recognizer::setup()
+void SpeechToText::setup()
 {
     if (m_state != NotStarted)
         return;
 
-    connect(this, &Recognizer::modelLoaded, this, &Recognizer::setUpMic, Qt::UniqueConnection);
+    connect(this, &SpeechToText::modelLoaded, this, &SpeechToText::setUpMic, Qt::UniqueConnection);
 
-    std::thread(&Recognizer::setUpModel, this).detach();
+    std::thread(&SpeechToText::setUpModel, this).detach();
 }
 
-bool Recognizer::hasWord(const QString &word)
+bool SpeechToText::hasWord(const QString &word)
 {
     if (!model)
         return false;
@@ -234,16 +234,16 @@ bool Recognizer::hasWord(const QString &word)
     return vosk_model_find_word(model, word.toLower().toUtf8()) != -1;
 }
 
-void Recognizer::setWakeWord(const QString &word)
+void SpeechToText::setWakeWord(const QString &word)
 {
     _wakeWord = QLatin1String(word.toLatin1() + ' ');
 }
-QString Recognizer::wakeWord()
+QString SpeechToText::wakeWord()
 {
     return _wakeWord.left(_wakeWord.size() - 1);
 }
 
-QString Recognizer::dataDir()
+QString SpeechToText::dataDir()
 {
 #ifdef QT_DEBUG
     return STR(APP_DIR);
@@ -252,13 +252,13 @@ QString Recognizer::dataDir()
 #endif
 }
 
-void Recognizer::setModelDir(const QString &dir)
+void SpeechToText::setModelDir(const QString &dir)
 {
     _modelDir = dir;
     if (!_modelDir.endsWith(u'/'))
         _modelDir.append(u'/');
 }
-QString Recognizer::modelDir()
+QString SpeechToText::modelDir()
 {
     if (_modelDir.isEmpty()) {
         _modelDir = dataDir();
@@ -268,16 +268,16 @@ QString Recognizer::modelDir()
     return _modelDir;
 }
 
-void Recognizer::setAlwaysListen(bool aL)
+void SpeechToText::setAlwaysListen(bool aL)
 {
     _alwaysListen = aL;
 }
-bool Recognizer::alwaysListen()
+bool SpeechToText::alwaysListen()
 {
     return _alwaysListen;
 }
 
-void Recognizer::setState(Recognizer::State s)
+void SpeechToText::setState(SpeechToText::State s)
 {
     m_state = s;
 
@@ -313,15 +313,13 @@ void Recognizer::setState(Recognizer::State s)
         break;
     }
 
-    qDebug() << "[debug] Recognizer state changed:" << s << ":" << m_errorString;
+    qDebug() << "[debug] SpeechToText state changed:" << s << ":" << m_errorString;
 
     Q_EMIT stateChanged();
 }
 
-Recognizer::~Recognizer()
+SpeechToText::~SpeechToText()
 {
-    // FIXME: The code crashes when calling `vosk_recognizer_free`. No matter if I create the `VoskRecognizer` in a separate thread or not.
-    // TODO: Create a issue here: https://github.com/alphacep/vosk-api/issues/new/choose
-    // vosk_recognizer_free(globalRecognizer);
+    vosk_recognizer_free(globalRecognizer);
     vosk_model_free(model);
 }

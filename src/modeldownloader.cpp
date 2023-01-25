@@ -26,7 +26,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
 {
     setWindowTitle(tr("Model downloader"));
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
-    QDir().mkpath(Recognizer::modelDir());
+    QDir().mkpath(SpeechToText::modelDir());
     downloadInfo();
     setupUi();
     QGuiApplication::restoreOverrideCursor();
@@ -34,6 +34,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
 
 void ModelDownloader::downloadInfo()
 {
+    // TODO: Cache the file
     reply = manager->get(
         QNetworkRequest(QUrl(STR("https://alphacephei.com/vosk/models/model-list.json"))));
 
@@ -230,7 +231,7 @@ void ModelDownloader::downloadFinished()
     }
 
     // Read the downloaded data and write it to a file
-    QFile file(Recognizer::modelDir() + fileName);
+    QFile file(SpeechToText::modelDir() + fileName);
     if (file.open(QIODevice::WriteOnly)) {
         file.write(reply->readAll());
         file.close();
@@ -260,7 +261,7 @@ void ModelDownloader::downloadFinished()
     copy.setIcon(QIcon::fromTheme(STR("clipboard-copy")));
     copy.setDefault(true);
     connect(&copy, &QPushButton::clicked, this, [] {
-        QGuiApplication::clipboard()->setText(Recognizer::modelDir());
+        QGuiApplication::clipboard()->setText(SpeechToText::modelDir());
     });
     msg.addButton(&copy, QMessageBox::ActionRole);
     msg.exec();

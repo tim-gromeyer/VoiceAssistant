@@ -13,6 +13,16 @@ QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(std::string);
 
+struct Command
+{
+    std::function<void(const std::string &)> func = nullptr;
+    QString fucName;
+    QStringList respond;
+    QString execute;
+
+    void run();
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
