@@ -19,5 +19,13 @@
       "repeat after me",
       "repeat me"
     ]
+  },
+  {
+    "commands": [
+      "hello"
+    ],
+    "responses": [
+      "hello"
+    ]
   }
 ]

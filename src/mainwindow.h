@@ -11,18 +11,6 @@ class QTimer;
 class QSystemTrayIcon;
 QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(std::string);
-
-struct Command
-{
-    std::function<void(const std::string &)> func = nullptr;
-    QString fucName;
-    QStringList respond;
-    QString execute;
-
-    void run();
-};
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,6 +22,22 @@ public:
     static void say(const std::string &);
     static void say(const QString &);
 
+    struct Action
+    {
+        std::function<void(const std::string &)> func = nullptr;
+        QString funcName;
+        QStringList responses;
+
+        // Execute program
+        QString program;
+        QStringList args;
+
+        // Commands it reacts to
+        QStringList commands;
+
+        void run(QObject *, const QString &) const;
+    };
+
 private Q_SLOTS:
     void onStateChanged();
 
@@ -43,13 +47,13 @@ private Q_SLOTS:
     void doneListening();
 
     void updateText(const QString &);
+    void processText(const QString &);
 
     void onHelpAbout();
 
     void onHasWord();
 
     void openModelDownloader();
-    void processText(const QString &);
 
     // Setup
     static void setupTextToSpeech();
@@ -61,24 +65,20 @@ private Q_SLOTS:
 
     static QStringList getCommandsForFunction(const QString &);
 
-    ////////////////////////////////////////////
-    /// Define new functions here!
-    ////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+    /// Define new functions here! The function must accept a QString
+    //////////////////////////////////////////////////////////////////
 
-    static void sayTime(const std::string &); // Say the current local time
-    static void stop(const std::string &);    // Stop text to speech
-    static void repeat(const std::string &);  // Repeat what the user said
+    static void sayTime(const QString &); // Say the current local time
+    static void stop(const QString &);    // Stop text to speech
+    static void repeat(QString);          // Repeat what the user said
 
 private:
-    void loadPlugin(const std::string &);
-
     void setUpCommands();
 
     Ui::MainWindow *ui;
 
     QTimer *timeTimer;
-
-    std::map<QStringList, std::function<void(const std::string &)>> commandAndSlot;
 
     QSharedPointer<QSystemTrayIcon> trayIcon;
 };

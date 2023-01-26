@@ -261,8 +261,7 @@ void SpeechToText::setModelDir(const QString &dir)
 QString SpeechToText::modelDir()
 {
     if (_modelDir.isEmpty()) {
-        _modelDir = dataDir();
-        _modelDir.append(L1("/models/"));
+        _modelDir = dataDir() + STR("/models/");
     }
 
     return _modelDir;

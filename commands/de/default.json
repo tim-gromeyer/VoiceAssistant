@@ -22,5 +22,14 @@
       "sprich mir nach",
       "wiederhole mich"
     ]
+  },
+  {
+    "commands": [
+      "hallo"
+    ],
+    "responses": [
+      "guten tag",
+      "hallo"
+    ]
   }
 ]

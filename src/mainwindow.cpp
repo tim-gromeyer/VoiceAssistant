@@ -6,12 +6,16 @@
 
 #include <QDebug>
 #include <QDialogButtonBox>
+#include <QGraphicsDropShadowEffect>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLibrary>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QProcess>
+#include <QPropertyAnimation>
+#include <QRandomGenerator>
 #include <QSystemTrayIcon>
 #include <QTextToSpeech>
 #include <QThreadPool>
@@ -28,7 +32,27 @@ using namespace literals;
 
 std::shared_ptr<SpeechToText> recognizer;
 QSharedPointer<QTextToSpeech> engine;
-QHash<QString, QStringList> funcCommandHash;
+
+QList<MainWindow::Action> commands;
+
+void MainWindow::Action::run(QObject *parent, const QString &text) const
+{
+    if (func) {
+        func(text.toStdString());
+        return;
+
+    } else if (!funcName.isEmpty()) {
+        QMetaObject::invokeMethod(parent, funcName.toUtf8(), Q_ARG(QString, text));
+    } else if (!responses.isEmpty()) {
+        int randomIndex = QRandomGenerator::global()->bounded(responses.size());
+        say(responses.at(randomIndex));
+    } else if (!program.isEmpty()) {
+        QProcess p(parent);
+        p.setProgram(program);
+        p.setArguments(args);
+        p.startDetached();
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -165,6 +189,8 @@ void MainWindow::updateText(const QString &text)
 
 void MainWindow::onWakeWord()
 {
+    // TODO: Some animation
+
     ui->statusLabel->setText(tr("Listening ..."));
 }
 
@@ -225,47 +251,16 @@ void MainWindow::openModelDownloader()
 
 void MainWindow::processText(const QString &text)
 {
-    for (auto &pair : commandAndSlot) {
-        for (const auto &command : pair.first) {
+    for (const auto &action : qAsConst(commands)) {
+        for (const auto &command : action.commands) {
             if (text.contains(command)) {
-                std::thread(pair.second, text.toStdString()).detach();
+                std::thread(&Action::run, action, this, text).detach();
                 return;
             }
         }
     }
 
     engine->say(tr("I have not understood this!"));
-}
-
-using Plugin = std::string (*)(const std::string &);
-using PluginCommand = std::vector<std::string> (*)();
-
-void MainWindow::loadPlugin(const std::string &path)
-{
-    auto *library = new QLibrary(QString::fromStdString(path));
-    if (!library->load()) {
-        qDebug() << library->errorString();
-        return;
-    }
-
-    std::function<std::string(const std::string &)> pluginFunction = (Plugin) library->resolve(
-        "onCommand");
-    if (!pluginFunction)
-        return;
-
-    std::function<std::vector<std::string>()> commandFunction = (PluginCommand) library->resolve(
-        "commands");
-    if (!commandFunction)
-        return;
-    auto list = commandFunction();
-
-    QStringList commands;
-    commands.reserve((int) list.size());
-
-    for (const auto &command : list)
-        commands << QString::fromStdString(command);
-
-    commandAndSlot[commands] = pluginFunction;
 }
 
 void MainWindow::setUpCommands()
@@ -291,31 +286,48 @@ void MainWindow::setUpCommands()
     for (const auto &value : jsonArray) {
         // convert the array element to an object
         QJsonObject jsonObject = value.toObject();
-        // get the function name from the JSON object
-        QString funcName = jsonObject[STR("funcName")].toString();
+
         // get the commands array from the JSON object
         QJsonArray commandsArray = jsonObject[STR("commands")].toArray();
-        // convert the commands array to a QStringList
-        QStringList commands;
+        if (commandsArray.isEmpty()) {
+            qWarning() << "No commands specified for:" << jsonObject;
+            continue;
+        }
+
+        // Command template
+        Action c;
+
+        // get the function name from the JSON object(optional)
+        c.funcName = jsonObject[STR("funcName")].toString();
+
+        // get the responses(optional)
+        QJsonArray responseArray = jsonObject[STR("responses")].toArray();
+        for (const auto &response : responseArray)
+            c.responses.append(response.toString());
+
+        // used to execute external programs(optional)
+        c.program = jsonObject[STR("program")].toString();
+        QJsonArray args = jsonObject[STR("args")].toArray();
+        c.args.reserve(args.size());
+        for (const auto &arg : args)
+            c.args.append(arg.toString());
+
         // reserve memory
-        commands.reserve(commandsArray.size());
+        c.commands.reserve(commandsArray.size());
         for (const auto &command : commandsArray)
-            commands << command.toString();
+            c.commands << command.toString();
 
-        std::function<void(const std::string &)> func = [this, funcName](const std::string &arg) {
-            QMetaObject::invokeMethod(this, funcName.toUtf8().constData(), Q_ARG(std::string, arg));
-        };
-
-        // register the function and commands in the commandAndSlot map
-        commandAndSlot[commands] = func;
-
-        funcCommandHash[funcName] = commands;
+        commands.append(c);
     }
 }
 
-QStringList MainWindow::getCommandsForFunction(const QString &func)
+QStringList MainWindow::getCommandsForFunction(const QString &funcName)
 {
-    return funcCommandHash[func];
+    for (const auto &action : qAsConst(commands))
+        if (action.funcName == funcName)
+            return action.commands;
+
+    return {};
 }
 
 void MainWindow::say(const QString &text)
@@ -328,7 +340,12 @@ void MainWindow::say(const QString &text)
     engine->say(text);
 }
 
-void MainWindow::stop(const std::string &)
+void MainWindow::say(const std::string &text)
+{
+    say(QString::fromStdString(text));
+}
+
+void MainWindow::stop(const QString &)
 {
     if (!engine)
         return;
@@ -336,12 +353,7 @@ void MainWindow::stop(const std::string &)
     engine->stop();
 }
 
-void MainWindow::say(const std::string &text)
-{
-    say(QString::fromStdString(text));
-}
-
-void MainWindow::sayTime(const std::string &text)
+void MainWindow::sayTime(const QString &text)
 {
     // Get the current time
     QTime currentTime = QTime::currentTime();
@@ -352,10 +364,8 @@ void MainWindow::sayTime(const std::string &text)
     say(tr("It is %1").arg(time));
 }
 
-void MainWindow::repeat(const std::string &_text)
+void MainWindow::repeat(QString text)
 {
-    QString text = QString::fromStdString(_text);
-
     const QStringList commands = getCommandsForFunction(STR("repeat"));
 
     for (const auto &command : commands) {
