@@ -38,6 +38,9 @@ public:
         void run(QObject *, const QString &) const;
     };
 
+protected:
+    void closeEvent(QCloseEvent *) override;
+
 private Q_SLOTS:
     void onStateChanged();
 
@@ -59,11 +62,12 @@ private Q_SLOTS:
     static void setupTextToSpeech();
     void setupTrayIcon();
 
-    void confirmQuit();
-
     void toggleMute();
 
-    static QStringList getCommandsForFunction(const QString &);
+    static QStringList commandsForFuncName(const QString &);
+
+    static void loadCommands();
+    void saveCommands();
 
     //////////////////////////////////////////////////////////////////
     /// Define new functions here! The function must accept a QString
@@ -74,10 +78,9 @@ private Q_SLOTS:
     static void repeat(QString);          // Repeat what the user said
 
 private:
-    void setUpCommands();
-
     Ui::MainWindow *ui;
 
+    // The timer used to display the current time
     QTimer *timeTimer;
 
     QSharedPointer<QSystemTrayIcon> trayIcon;

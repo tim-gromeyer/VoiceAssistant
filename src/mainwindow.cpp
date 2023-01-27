@@ -4,6 +4,7 @@
 #include "recognizer.h"
 #include "ui_mainwindow.h"
 
+#include <QCloseEvent>
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QGraphicsDropShadowEffect>
@@ -16,6 +17,7 @@
 #include <QProcess>
 #include <QPropertyAnimation>
 #include <QRandomGenerator>
+#include <QSaveFile>
 #include <QSystemTrayIcon>
 #include <QTextToSpeech>
 #include <QThreadPool>
@@ -83,11 +85,11 @@ MainWindow::MainWindow(QWidget *parent)
     timeTimer->start();
     updateTime();
 
-    // Set up all (standard) commands
+    // Set up all commands
     connect(recognizer.get(),
             &SpeechToText::languageChanged,
             this,
-            &MainWindow::setUpCommands,
+            &MainWindow::loadCommands,
             Qt::QueuedConnection);
 
     // Prepare recognizer
@@ -98,7 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(recognizer->device(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
     connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
 
-    connect(ui->action_Quit, &QAction::triggered, this, &MainWindow::confirmQuit);
+    connect(ui->action_Quit, &QAction::triggered, this, &QWidget::close);
     connect(ui->muteButton, &QCheckBox::stateChanged, this, &MainWindow::toggleMute);
 
     setupTrayIcon();
@@ -131,12 +133,12 @@ void MainWindow::toggleMute()
     }
 }
 
-void MainWindow::confirmQuit()
+void MainWindow::closeEvent(QCloseEvent *e)
 {
     auto ret = QMessageBox::question(this, tr("Quit?"), tr("Do you really want to quit?"));
 
-    if (ret == QMessageBox::Yes)
-        QCoreApplication::quit();
+    if (ret != QMessageBox::Yes)
+        e->ignore();
 }
 
 void MainWindow::setupTextToSpeech()
@@ -189,8 +191,7 @@ void MainWindow::updateText(const QString &text)
 
 void MainWindow::onWakeWord()
 {
-    // TODO: Some animation
-
+    // TODO: Some animation, see https://doc.qt.io/qt-6/qgraphicsdropshadoweffect.html
     ui->statusLabel->setText(tr("Listening ..."));
 }
 
@@ -263,7 +264,7 @@ void MainWindow::processText(const QString &text)
     engine->say(tr("I have not understood this!"));
 }
 
-void MainWindow::setUpCommands()
+void MainWindow::loadCommands()
 {
     const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
 
@@ -321,13 +322,62 @@ void MainWindow::setUpCommands()
     }
 }
 
-QStringList MainWindow::getCommandsForFunction(const QString &funcName)
+void MainWindow::saveCommands()
 {
-    for (const auto &action : qAsConst(commands))
-        if (action.funcName == funcName)
-            return action.commands;
+    const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
 
-    return {};
+    QJsonArray jsonArray;
+
+    for (const auto &c : qAsConst(commands)) {
+        QJsonObject jsonObject;
+
+        jsonObject[STR("funcName")] = c.funcName;
+        jsonObject[STR("program")] = c.program;
+
+        QJsonArray commandsArray;
+        for (const auto &command : c.commands)
+            commandsArray.append(command);
+        jsonObject[STR("commands")] = commandsArray;
+
+        QJsonArray responseArray;
+        for (const auto &response : c.responses)
+            responseArray.append(response);
+        jsonObject[STR("responses")] = responseArray;
+
+        QJsonArray argsArray;
+        for (const auto &arg : c.args)
+            argsArray.append(arg);
+        jsonObject[STR("args")] = argsArray;
+
+        jsonArray.append(jsonObject);
+    }
+
+    QJsonDocument jsonDoc(jsonArray);
+
+    QSaveFile jsonFile(dir + STR("/default.json"));
+    if (!jsonFile.open(QIODevice::WriteOnly)) {
+        qDebug() << STR("Failed to open %1\n%2").arg(jsonFile.fileName(), jsonFile.errorString());
+        return;
+    }
+    jsonFile.write(jsonDoc.toJson());
+    if (!jsonFile.commit())
+        QMessageBox::warning(
+            this,
+            tr("Failed to save file"),
+            tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
+                .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
+}
+
+QStringList MainWindow::commandsForFuncName(const QString &funcName)
+{
+    auto it = std::find_if(commands.begin(), commands.end(), [&funcName](const Action &action) {
+        return action.funcName == funcName;
+    });
+
+    if (it == commands.end())
+        return {};
+
+    return it->commands;
 }
 
 void MainWindow::say(const QString &text)
@@ -366,7 +416,7 @@ void MainWindow::sayTime(const QString &text)
 
 void MainWindow::repeat(QString text)
 {
-    const QStringList commands = getCommandsForFunction(STR("repeat"));
+    const QStringList commands = commandsForFuncName(STR("repeat"));
 
     for (const auto &command : commands) {
         if (!text.startsWith(command))

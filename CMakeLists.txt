@@ -84,7 +84,7 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::TextToSpeech
     ${INTL_LDFLAGS}
-    vosk
+    -lvosk
 )
 
 target_compile_definitions(voiceassistant PUBLIC
@@ -93,12 +93,20 @@ target_compile_definitions(voiceassistant PUBLIC
     QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
 )
 
+set(ANDROID_EXTRA_LIBS
+    ${CMAKE_SOURCE_DIR}/vosk/libvosk.so
+)
+
+set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
+
 set_target_properties(voiceassistant PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER org.qtproject.voiceassistant
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    QT_ANDROID_EXTRA_LIBS "${ANDROID_EXTRA_LIBS}"
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_SOURCE_DIR}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)

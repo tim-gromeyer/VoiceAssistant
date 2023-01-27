@@ -20,6 +20,8 @@
 
 using namespace literals;
 
+// TODO: Unzip with https://github.com/Sygmei/11Zip
+
 ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}
     , manager(new QNetworkAccessManager(this))
@@ -34,24 +36,35 @@ ModelDownloader::ModelDownloader(QWidget *parent)
 
 void ModelDownloader::downloadInfo()
 {
-    // TODO: Cache the file
-    reply = manager->get(
-        QNetworkRequest(QUrl(STR("https://alphacephei.com/vosk/models/model-list.json"))));
+    QFile f(QDir::tempPath() + STR("/VoiceAssistant-model-list.json"), this);
+    QByteArray jsonData;
+    if (!f.open(QIODevice::ReadOnly)) {
+        reply = manager->get(
+            QNetworkRequest(QUrl(STR("https://alphacephei.com/vosk/models/model-list.json"))));
 
-    while (reply->isRunning())
-        QCoreApplication::processEvents();
+        while (reply->isRunning())
+            QCoreApplication::processEvents();
 
-    if (reply->error() != QNetworkReply::NoError) {
-        // Handle error
-        QMessageBox::critical(this,
-                              tr("Error"),
-                              tr("Could not download model info file:\n%1")
-                                  .arg(reply->errorString()));
-        return;
-    }
+        if (reply->error() != QNetworkReply::NoError) {
+            // Handle error
+            QMessageBox::critical(this,
+                                  tr("Error"),
+                                  tr("Could not download model info file:\n%1")
+                                      .arg(reply->errorString()));
+            return;
+        }
 
-    QString jsonString = QString::fromUtf8(reply->readAll());
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonString.toUtf8());
+        jsonData = reply->readAll();
+
+        QFile cache(QDir::tempPath() + STR("/VoiceAssistant-model-list.json"), this);
+        if (cache.open(QIODevice::WriteOnly)) {
+            cache.write(jsonData);
+            cache.close();
+        }
+    } else
+        jsonData = f.readAll();
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonData);
 
     if (!jsonResponse.isArray()) {
         // Handle error here: the JSON file is invalid
@@ -247,14 +260,23 @@ void ModelDownloader::downloadFinished()
         }
     }
 
+    QDialog dia(this);
+    QVBoxLayout l(&dia);
+    dia.setWindowTitle(tr("File downloaded!"));
+
+    QLabel textLabel(tr(""), &dia);
+
+    // TODO: Display following text after unzipping was successful
+    /*  Congratulations, model downloaded successfully!
+     *  Now restart the application and have fun!
+     */
+
     // FIXME: Dialog closes when the copy button is clicked!
     QMessageBox msg(this);
     msg.setIcon(QMessageBox::Information);
     msg.setWindowTitle(tr("File downloaded!"));
-    msg.setText(tr("File downloaded successfully!\nNow click the button below to copy the file "
-                   "path, unpack the zip and rename the unpacked folder to the "
-                   "following name:\n%1")
-                    .arg(info.lang));
+    msg.setText(tr("Congratulations, model downloaded successfully!\n"
+                   "Now restart the application and have fun!"));
 
     msg.addButton(QMessageBox::Ok);
     QPushButton copy(tr("Copy path"), this);
