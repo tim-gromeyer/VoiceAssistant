@@ -1,6 +1,6 @@
 # Pre-Alpha!
 
-Currently, only voice recognition and some basic commands like " how late " or " repeat after me " work.
+Currently, only voice recognition and some basic commands like "how late" or "repeat after me" work.
 
 # VoiceAssistant
 
@@ -22,9 +22,10 @@ Supported values:
 | Name      | Type             | Description                                                |
 |-----------|------------------|------------------------------------------------------------|
 | commands  | Array of strings | Required. All commands it reacts to                        |
-| responses | Array of strings | It selects a random response from the Array                |
 | funcName  | String           | The name of the function to call(`MainWindow::<funcName>`) |
-| programm  | String           | A program to execute                                       |
+| responses | Array of strings | It selects a random response from the Array                |
+| program   | String           | A program to execute                                       |
+| args      | Array of strings | Arguments passed to the executable `program`               |
 
 
 ## Credits

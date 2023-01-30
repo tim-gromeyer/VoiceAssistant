@@ -10,10 +10,3 @@ constexpr QLatin1String L1(const char *str)
 }
 #define STR(str) QStringLiteral(str)
 } // namespace literals
-
-namespace dir {
-inline bool exists(const QString &dir)
-{
-    return QDir(dir).exists();
-}
-} // namespace dir

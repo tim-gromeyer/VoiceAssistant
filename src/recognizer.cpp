@@ -1,11 +1,12 @@
 #include "recognizer.h" // Include the header file for the SpeechToText class
 #include "global.h"     // Include string literals
 
-#include <QCoreApplication> // Include the QCoreApplication class
-#include <QDebug>           // Include the QDebug class for logging messages
-#include <QJsonDocument>    // Include the QJsonDocument class for working with JSON data
-#include <QLocale>          // Include the QLocale class for working with locale settings
-#include <QMessageBox>      // Include the QMessageBox class for creating message boxes
+#include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QJsonDocument>
+#include <QLocale>
+#include <QMessageBox>
 
 #include "vosk_api.h" // Include the Vosk API header file
 
@@ -88,7 +89,7 @@ SpeechToText::SpeechToText(QObject *parent)
     : QObject{parent}
     , m_device(new Listener(this))
 {
-    // Disable kaldi debug messages
+    // Disable kaldi info messages
     vosk_set_log_level(-1);
 }
 
@@ -143,10 +144,11 @@ void SpeechToText::setUpModel()
     }
 
     for (const auto &lang : uiLangs) {
-        if (!dir::exists(modelDir() + lang))
+        QString formattedLang = lang.toLower().replace(u'_', u'-');
+        if (!QDir(modelDir() + formattedLang).exists())
             continue;
 
-        model = vosk_model_new(QString(modelDir() + lang).toUtf8());
+        model = vosk_model_new(QString(modelDir() + formattedLang).toUtf8());
         if (model) {
             qDebug() << "[debug] Loaded model, language:" << lang;
             globalRecognizer = vosk_recognizer_new(model, 16000.0);
@@ -282,7 +284,6 @@ void SpeechToText::setState(SpeechToText::State s)
 
     switch (m_state) {
     case Running:
-    case NoError:
         m_errorString.clear();
         break;
     case NoModelFound:
@@ -306,7 +307,7 @@ void SpeechToText::setState(SpeechToText::State s)
             "The microphone is incompatible with the required audio format (PCM 16bit mono)");
         break;
     case Paused:
-        m_errorString = tr("Stopped processing audio data (Paused).");
+        m_errorString = tr("The audio device is closed, and is not processing any audio data");
         break;
     default:
         break;

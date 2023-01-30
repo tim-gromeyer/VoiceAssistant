@@ -1,0 +1,3 @@
+[submodule "3rdparty/11Zip"]
+	path = 3rdparty/11Zip
+	url = https://github.com/Sygmei/11Zip

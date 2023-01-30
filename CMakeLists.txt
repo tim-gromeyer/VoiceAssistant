@@ -75,6 +75,8 @@ IF(WIN32)
     SET(INTL_LDFLAGS -lintl)
 ENDIF(WIN32)
 
+add_subdirectory(3rdparty)
+
 target_include_directories(voiceassistant PRIVATE src vosk)
 target_link_directories(voiceassistant PRIVATE vosk)
 target_link_libraries(voiceassistant PRIVATE
@@ -84,7 +86,8 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::TextToSpeech
     ${INTL_LDFLAGS}
-    -lvosk
+    vosk
+    elzip
 )
 
 target_compile_definitions(voiceassistant PUBLIC

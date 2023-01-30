@@ -11,7 +11,6 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QLibrary>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QProcess>
@@ -23,7 +22,6 @@
 #include <QThreadPool>
 #include <QTime>
 #include <QTimer>
-#include <QWidgetAction>
 
 #include <chrono>
 #include <functional>
@@ -32,24 +30,25 @@
 using namespace std::chrono_literals;
 using namespace literals;
 
-std::shared_ptr<SpeechToText> recognizer;
-QSharedPointer<QTextToSpeech> engine;
+SpeechToText *recognizer;
+QTextToSpeech *engine;
 
 QList<MainWindow::Action> commands;
+MainWindow *instance = nullptr;
 
-void MainWindow::Action::run(QObject *parent, const QString &text) const
+void MainWindow::Action::run(const QString &text) const
 {
     if (func) {
         func(text.toStdString());
         return;
 
     } else if (!funcName.isEmpty()) {
-        QMetaObject::invokeMethod(parent, funcName.toUtf8(), Q_ARG(QString, text));
+        QMetaObject::invokeMethod(instance, funcName.toUtf8(), Q_ARG(QString, text));
     } else if (!responses.isEmpty()) {
         int randomIndex = QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
     } else if (!program.isEmpty()) {
-        QProcess p(parent);
+        QProcess p(instance);
         p.setProgram(program);
         p.setArguments(args);
         p.startDetached();
@@ -66,18 +65,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->content->setFocus();
 
+    // Set instance
+    instance = this;
+
     // Set up recognizer
-    recognizer.reset(new SpeechToText(this));
+    recognizer = new SpeechToText(this);
 
     // Set up text to speech
     std::thread(&MainWindow::setupTextToSpeech).detach();
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
-    connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
-
-    // Connect actions
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
+    connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
 
     // Set up time timer
     timeTimer->setInterval(1s);
@@ -86,19 +86,19 @@ MainWindow::MainWindow(QWidget *parent)
     updateTime();
 
     // Set up all commands
-    connect(recognizer.get(),
+    connect(recognizer,
             &SpeechToText::languageChanged,
             this,
             &MainWindow::loadCommands,
             Qt::QueuedConnection);
 
     // Prepare recognizer
-    connect(recognizer.get(), &SpeechToText::stateChanged, this, &MainWindow::onStateChanged);
+    connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onStateChanged);
     recognizer->setup();
 
+    connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
     connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
     connect(recognizer->device(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
-    connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
 
     connect(ui->action_Quit, &QAction::triggered, this, &QWidget::close);
     connect(ui->muteButton, &QCheckBox::stateChanged, this, &MainWindow::toggleMute);
@@ -108,7 +108,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::onHelpAbout()
 {
-    // TODO: Implement about dialog. Don't forget the credits to Vosk and Qt
+    // TODO: Implement about dialog. Credits:
+    // - Qt
+    // - Vosk
+    // - 11Zip/elZip (https://github.com/Sygmei/11Zip)
 }
 
 void MainWindow::toggleMute()
@@ -143,7 +146,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::setupTextToSpeech()
 {
-    engine.reset(new QTextToSpeech());
+    engine = new QTextToSpeech();
     engine->setLocale(QLocale::system());
 }
 
@@ -165,7 +168,6 @@ void MainWindow::setupTrayIcon()
 void MainWindow::onStateChanged()
 {
     switch (recognizer->state()) {
-    case SpeechToText::NoError:
     case SpeechToText::Running:
         ui->statusLabel->setText(tr("Waiting for wake word"));
         break;
@@ -242,6 +244,19 @@ void MainWindow::onHasWord()
     connect(buttonBox, &QDialogButtonBox::accepted, &dia, &QDialog::accept);
 
     dia.exec();
+
+    dia.deleteLater();
+    layout->deleteLater();
+    infoLabel->deleteLater();
+    wordLabel->deleteLater();
+    wordEdit->deleteLater();
+    buttonBox->deleteLater();
+
+    delete layout;
+    delete infoLabel;
+    delete wordLabel;
+    delete wordEdit;
+    delete buttonBox;
 }
 
 void MainWindow::openModelDownloader()
@@ -255,7 +270,7 @@ void MainWindow::processText(const QString &text)
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
             if (text.contains(command)) {
-                std::thread(&Action::run, action, this, text).detach();
+                std::thread(&Action::run, action, text).detach();
                 return;
             }
         }
@@ -271,7 +286,10 @@ void MainWindow::loadCommands()
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qDebug() << STR("Failed to open %1\n%2").arg(jsonFile.fileName(), jsonFile.errorString());
+        qDebug() << STR("Failed to open %1:\n%2")
+                        .arg(jsonFile.fileName(), jsonFile.errorString())
+                        .toStdString()
+                        .c_str();
         return;
     }
 
@@ -443,6 +461,6 @@ MainWindow::~MainWindow()
     engine->deleteLater();
     recognizer->deleteLater();
 
-    engine.reset();
-    recognizer.reset();
+    delete engine;
+    delete recognizer;
 }

@@ -19,8 +19,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    static void say(const std::string &);
     static void say(const QString &);
+    static void say(const std::string &);
+
+    static void playSound(const QString &);
 
     struct Action
     {
@@ -35,7 +37,10 @@ public:
         // Commands it reacts to
         QStringList commands;
 
-        void run(QObject *, const QString &) const;
+        // A sound to play
+        QString sound;
+
+        void run(const QString &) const;
     };
 
 protected:

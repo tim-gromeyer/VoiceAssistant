@@ -18,9 +18,9 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 
-using namespace literals;
+#include "elzip.hpp"
 
-// TODO: Unzip with https://github.com/Sygmei/11Zip
+using namespace literals;
 
 ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}
@@ -42,11 +42,12 @@ void ModelDownloader::downloadInfo()
         reply = manager->get(
             QNetworkRequest(QUrl(STR("https://alphacephei.com/vosk/models/model-list.json"))));
 
-        while (reply->isRunning())
-            QCoreApplication::processEvents();
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+        loop.exec();
 
         if (reply->error() != QNetworkReply::NoError) {
-            // Handle error
+            QGuiApplication::restoreOverrideCursor();
             QMessageBox::critical(this,
                                   tr("Error"),
                                   tr("Could not download model info file:\n%1")
@@ -56,18 +57,26 @@ void ModelDownloader::downloadInfo()
 
         jsonData = reply->readAll();
 
-        QFile cache(QDir::tempPath() + STR("/VoiceAssistant-model-list.json"), this);
+        QFile cache(f.fileName(), this);
         if (cache.open(QIODevice::WriteOnly)) {
             cache.write(jsonData);
             cache.close();
         }
     } else
         jsonData = f.readAll();
+    qDebug() << "[debug] Cache file for model list:" << f.fileName();
 
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonData);
+    QJsonParseError error{};
+    error.error = QJsonParseError::NoError;
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(jsonData, &error);
 
-    if (!jsonResponse.isArray()) {
-        // Handle error here: the JSON file is invalid
+    if (error.error != QJsonParseError::NoError) {
+        QMessageBox::warning(this,
+                             tr("Failed to load model information!"),
+                             tr("Parsing error at %1:\n%2")
+                                 .arg(QString::number(error.offset), error.errorString()));
+        if (f.remove())
+            downloadInfo();
         return;
     }
 
@@ -78,13 +87,13 @@ void ModelDownloader::downloadInfo()
     for (auto &&i : jsonArray) {
         QJsonObject jsonObject = i.toObject();
         ModelInfo modelInfo;
-        modelInfo.name = jsonObject[STR("name")].toString();
         modelInfo.lang = jsonObject[STR("lang")].toString();
         modelInfo.langText = jsonObject[STR("lang_text")].toString();
-        modelInfo.url = jsonObject[STR("url")].toString();
+        modelInfo.name = jsonObject[STR("name")].toString();
+        modelInfo.obsolete = jsonObject[STR("obsolete")].toBool();
         modelInfo.size = jsonObject[STR("size")].toInt();
         modelInfo.sizeText = jsonObject[STR("size_text")].toString();
-        modelInfo.obsolete = jsonObject[STR("obsolete")].toBool();
+        modelInfo.url = jsonObject[STR("url")].toString();
 
         // Add the struct to the list
         if (!modelInfo.obsolete)
@@ -262,31 +271,18 @@ void ModelDownloader::downloadFinished()
 
     QDialog dia(this);
     QVBoxLayout l(&dia);
-    dia.setWindowTitle(tr("File downloaded!"));
+    dia.setWindowTitle(tr("Unzipping file"));
+    QLabel textLabel(tr("Unzipping file ..."), &dia);
+    l.addWidget(&textLabel);
+    dia.setLayout(&l);
+    dia.show();
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
 
-    QLabel textLabel(tr(""), &dia);
+    elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
+    QDir(SpeechToText::modelDir()).rename(info.name, info.lang);
 
-    // TODO: Display following text after unzipping was successful
-    /*  Congratulations, model downloaded successfully!
-     *  Now restart the application and have fun!
-     */
-
-    // FIXME: Dialog closes when the copy button is clicked!
-    QMessageBox msg(this);
-    msg.setIcon(QMessageBox::Information);
-    msg.setWindowTitle(tr("File downloaded!"));
-    msg.setText(tr("Congratulations, model downloaded successfully!\n"
-                   "Now restart the application and have fun!"));
-
-    msg.addButton(QMessageBox::Ok);
-    QPushButton copy(tr("Copy path"), this);
-    copy.setIcon(QIcon::fromTheme(STR("clipboard-copy")));
-    copy.setDefault(true);
-    connect(&copy, &QPushButton::clicked, this, [] {
-        QGuiApplication::clipboard()->setText(SpeechToText::modelDir());
-    });
-    msg.addButton(&copy, QMessageBox::ActionRole);
-    msg.exec();
+    QGuiApplication::restoreOverrideCursor();
+    dia.close();
 
     if (senderButton)
         senderButton->setText(tr("Downloaded"));

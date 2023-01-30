@@ -11,9 +11,9 @@
   {
     "funcName": "stop",
     "commands": [
-      "stopp",
+      "shop",
       "stock",
-      "shop"
+      "stopp"
     ]
   },
   {
@@ -25,11 +25,16 @@
   },
   {
     "commands": [
-      "hallo"
+      "guten abend",
+      "guten mittag",
+      "guten tag",
+      "hallo",
+      "mahlzeit"
     ],
     "responses": [
       "guten tag",
-      "hallo"
+      "hallo",
+      "hallo, freut mich von dir zu hören"
     ]
   }
 ]

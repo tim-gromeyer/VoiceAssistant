@@ -3,20 +3,20 @@
 #include <QDialog>
 #include <QUrl>
 
-class QTableWidget;
-class QNetworkReply;
 class QNetworkAccessManager;
+class QNetworkReply;
 class QProgressDialog;
+class QTableWidget;
 
 struct ModelInfo
 {
-    QString name;
     QString lang;
     QString langText;
-    QUrl url;
-    int size;
+    QString name;
     QString sizeText;
+    QUrl url;
     bool obsolete;
+    int size;
 };
 
 class ModelDownloader : public QDialog
