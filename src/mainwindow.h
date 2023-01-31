@@ -7,8 +7,9 @@ QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
-class QTimer;
+class QMediaPlayer;
 class QSystemTrayIcon;
+class QTimer;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -19,10 +20,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    static MainWindow *instance();
+
     static void say(const QString &);
     static void say(const std::string &);
 
-    static void playSound(const QString &);
+    void playSound(const QString &);
 
     struct Action
     {
@@ -55,7 +58,7 @@ private Q_SLOTS:
     void doneListening();
 
     void updateText(const QString &);
-    void processText(const QString &);
+    static void processText(const QString &);
 
     void onHelpAbout();
 
@@ -67,7 +70,7 @@ private Q_SLOTS:
     static void setupTextToSpeech();
     void setupTrayIcon();
 
-    void toggleMute();
+    void toggleMute(bool mute);
 
     static QStringList commandsForFuncName(const QString &);
 
@@ -84,6 +87,9 @@ private Q_SLOTS:
 
 private:
     Ui::MainWindow *ui;
+
+    QAction *muteAction = nullptr;
+    QMediaPlayer *player = nullptr;
 
     // The timer used to display the current time
     QTimer *timeTimer;

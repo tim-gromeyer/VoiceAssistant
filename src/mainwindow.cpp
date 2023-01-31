@@ -12,6 +12,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLineEdit>
+#include <QMediaPlayer>
 #include <QMessageBox>
 #include <QProcess>
 #include <QPropertyAnimation>
@@ -34,7 +35,7 @@ SpeechToText *recognizer;
 QTextToSpeech *engine;
 
 QList<MainWindow::Action> commands;
-MainWindow *instance = nullptr;
+MainWindow *_instance = nullptr;
 
 void MainWindow::Action::run(const QString &text) const
 {
@@ -43,21 +44,23 @@ void MainWindow::Action::run(const QString &text) const
         return;
 
     } else if (!funcName.isEmpty()) {
-        QMetaObject::invokeMethod(instance, funcName.toUtf8(), Q_ARG(QString, text));
+        QMetaObject::invokeMethod(_instance, funcName.toUtf8(), Q_ARG(QString, text));
     } else if (!responses.isEmpty()) {
         int randomIndex = QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
     } else if (!program.isEmpty()) {
-        QProcess p(instance);
+        QProcess p(_instance);
         p.setProgram(program);
         p.setArguments(args);
         p.startDetached();
-    }
+    } else if (!sound.isEmpty())
+        _instance->playSound(sound);
 }
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , player(new QMediaPlayer(this))
     , timeTimer(new QTimer(this))
 {
     // Set up UI
@@ -65,8 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->content->setFocus();
 
-    // Set instance
-    instance = this;
+    // Set _instance
+    _instance = this;
 
     // Set up recognizer
     recognizer = new SpeechToText(this);
@@ -78,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
     connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
+    connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
 
     // Set up time timer
     timeTimer->setInterval(1s);
@@ -106,22 +110,62 @@ MainWindow::MainWindow(QWidget *parent)
     setupTrayIcon();
 }
 
-void MainWindow::onHelpAbout()
+void MainWindow::playSound(const QString &url)
 {
-    // TODO: Implement about dialog. Credits:
-    // - Qt
-    // - Vosk
-    // - 11Zip/elZip (https://github.com/Sygmei/11Zip)
+    player->setMedia(QUrl(url));
+    player->play();
 }
 
-void MainWindow::toggleMute()
+MainWindow *instance()
 {
+    return _instance;
+}
+
+void MainWindow::onHelpAbout()
+{
+    // TODO: Finish about dialog
+    QMessageBox::about(
+        this,
+        tr("About VoiceAssistant"),
+        tr("<h1>Voice Assistant</h1>\n"
+           "<p>A resource-efficient and customizable voice assistant written in c++.</p>\n"
+           "<h1>About</h1>\n"
+           "<table border=\"0\" style=\"border-collapse: collapse; width: 100%;\">\n"
+           "<tbody>\n"
+           "<tr>\n"
+           "<td style=\"text-align: right; padding-right: 5px;\">Version:</td>\n"
+           "<td style=\"text-align: left; padding-left: 5px;\">%1</td>\n"
+           "</tr>\n"
+           "<tr>\n"
+           "<td style=\"text-align: right; padding-right: 5px;\">Qt Version:</td>\n"
+           "<td style=\"text-align: left; padding-left: 5px;\">%2</td>\n"
+           "</tr>\n"
+           "<tr>\n"
+           "<td style=\"text-align: right; padding-right: 5px;\">Homepage:</td>\n"
+           "<td style=\"text-align: left; padding-left: 5px;\"><a "
+           "href=\"https://github.com/tim-gromeyer/VoiceAssistant\">https://github.com/"
+           "tim-gromeyer/VoiceAssistant</a></td>\n"
+           "</tr>\n"
+           "</tbody>\n"
+           "</table>\n"
+           "<h1>Credits</h1>\n"
+           "<p>This project uses <a href=\"https://github.com/alphacep/vosk-api\">Vosk</a> which "
+           "is licensed under the <a "
+           "href=\"https://github.com/alphacep/vosk-api/blob/master/COPYING\">Apache License "
+           "2.0</a>.</p>\n"
+           "<p>This project also uses&nbsp;<a href=\"https://github.com/Sygmei/11Zip\" "
+           "target=\"_blank\" rel=\"noopener\">11Zip</a>&nbsp;to unpack the downloaded voice "
+           "modells.</p>")
+            .arg(STR("beta"), qVersion()));
+}
+
+void MainWindow::toggleMute(bool mute)
+{
+    qDebug() << __func__ << mute;
     ui->content->setFocus();
 
     if (!recognizer)
         return;
-
-    bool mute = ui->muteButton->isChecked();
 
     if (mute) {
         ui->muteButton->setText(tr("Unmute"));
@@ -134,6 +178,13 @@ void MainWindow::toggleMute()
         ui->muteButton->setIcon(QIcon::fromTheme(STR("audio-input-microphone")));
         recognizer->resume();
     }
+
+    muteAction->setText(ui->muteButton->text());
+    muteAction->setToolTip(ui->muteButton->toolTip());
+    muteAction->setIcon(ui->muteButton->icon());
+    muteAction->setChecked(mute);
+
+    ui->muteButton->setChecked(mute);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -147,7 +198,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::setupTextToSpeech()
 {
     engine = new QTextToSpeech();
-    engine->setLocale(QLocale::system());
+    engine->setLocale(QLocale::system()); // WARNING: This could fail!
 }
 
 void MainWindow::setupTrayIcon()
@@ -155,11 +206,17 @@ void MainWindow::setupTrayIcon()
     trayIcon.reset(new QSystemTrayIcon(QGuiApplication::windowIcon(), this));
     connect(trayIcon.get(), &QSystemTrayIcon::activated, this, [this] { setVisible(!isVisible()); });
 
-    // TODO: Implement mute action
+    muteAction = new QAction(this);
+    muteAction->setCheckable(true);
+    muteAction->setText(tr("Mute"));
+    muteAction->setToolTip(tr("Mute"));
+    muteAction->setIcon(QIcon::fromTheme(STR("audio-input-microphone")));
+    connect(muteAction, &QAction::triggered, this, &MainWindow::toggleMute);
 
     auto *menu = new QMenu(this);
     menu->addAction(ui->action_Quit);
     menu->addSeparator();
+    menu->addAction(muteAction);
 
     trayIcon->setContextMenu(menu);
     trayIcon->show();
@@ -193,7 +250,6 @@ void MainWindow::updateText(const QString &text)
 
 void MainWindow::onWakeWord()
 {
-    // TODO: Some animation, see https://doc.qt.io/qt-6/qgraphicsdropshadoweffect.html
     ui->statusLabel->setText(tr("Listening ..."));
 }
 
@@ -400,6 +456,7 @@ QStringList MainWindow::commandsForFuncName(const QString &funcName)
 
 void MainWindow::say(const QString &text)
 {
+    // TODO: Make music (player) silenter while speaking
     if (!engine) {
         qWarning() << "Can not say following text:" << text << "\nTextToSpeech not set up!";
         return;
@@ -415,10 +472,10 @@ void MainWindow::say(const std::string &text)
 
 void MainWindow::stop(const QString &)
 {
-    if (!engine)
-        return;
-
-    engine->stop();
+    if (engine && engine->state() == QTextToSpeech::Speaking)
+        engine->stop();
+    else
+        _instance->player->stop();
 }
 
 void MainWindow::sayTime(const QString &text)
@@ -453,7 +510,7 @@ MainWindow::~MainWindow()
     int activeThreadCount = QThreadPool::globalInstance()->activeThreadCount();
 
     if (activeThreadCount != 0) {
-        qDebug() << "[debug] Waiting for" << activeThreadCount << "threads to be done.";
+        qDebug() << "[debug] Waiting for" << activeThreadCount << "threads to finish.";
         QThreadPool::globalInstance()->waitForDone();
         qDebug() << "[debug] All threads ended";
     }
@@ -464,3 +521,8 @@ MainWindow::~MainWindow()
     delete engine;
     delete recognizer;
 }
+
+// TODO: Let user add commands via GUI
+// TODO: Add settings like disabling tray icon, store language and model path and so on
+// TODO: Add text input mode if speech to text doesn't work for some reason
+// TODO: Add options for controlling text to speech
