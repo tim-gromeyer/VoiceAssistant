@@ -1,40 +1,65 @@
 [
-  {
-    "funcName": "sayTime",
-    "commands": [
-      "wie spät",
-      "aktuelle uhrzeit",
-      "wie viel uhr",
-      "wieviel uhr"
-    ]
-  },
-  {
-    "funcName": "stop",
-    "commands": [
-      "shop",
-      "stock",
-      "stopp"
-    ]
-  },
-  {
-    "funcName": "repeat",
-    "commands": [
-      "sprich mir nach",
-      "wiederhole mich"
-    ]
-  },
-  {
-    "commands": [
-      "guten abend",
-      "guten mittag",
-      "guten tag",
-      "hallo",
-      "mahlzeit"
-    ],
-    "responses": [
-      "guten tag",
-      "hallo",
-      "hallo, freut mich von dir zu hören"
-    ]
-  }
+    {
+        "funcName": "sayTime",
+        "commands": [
+            "wie spät",
+            "aktuelle uhrzeit",
+            "wie viel uhr",
+            "wieviel uhr"
+        ]
+    },
+    {
+        "funcName": "stop",
+        "commands": [
+            "shop",
+            "stock",
+            "stopp"
+        ]
+    },
+    {
+        "funcName": "repeat",
+        "commands": [
+            "sprich mir nach",
+            "wiederhole mich"
+        ]
+    },
+    {
+        "commands": [
+            "guten abend",
+            "guten mittag",
+            "guten tag",
+            "hallo",
+            "mahlzeit"
+        ],
+        "responses": [
+            "guten tag",
+            "hallo",
+            "hallo, freut mich von dir zu hören"
+        ]
+    },
+    {
+        "commands": [
+            "spiele ein lied",
+            "spieler ein lied"
+        ],
+        "sound": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+        "commands": [
+            "befehle neu laden"
+        ],
+        "funcName": "loadCommands"
+    },
+    {
+        "commands": [
+            "stumm schalten"
+        ],
+        "funcName": "toggleMute"
+    },
+    {
+        "commands": [
+            "herunterfahren"
+        ],
+        "funcName": "close"
+    }
 ]

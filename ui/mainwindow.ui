@@ -115,12 +115,6 @@
     <property name="title">
      <string>&amp;Model</string>
     </property>
-    <widget class="QMenu" name="menuLoad_model">
-     <property name="title">
-      <string>Load model</string>
-     </property>
-    </widget>
-    <addaction name="menuLoad_model"/>
     <addaction name="actionHas_word"/>
     <addaction name="actionOpen_downloader"/>
    </widget>

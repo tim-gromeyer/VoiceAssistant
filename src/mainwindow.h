@@ -21,11 +21,8 @@ public:
     ~MainWindow();
 
     static MainWindow *instance();
-
-    static void say(const QString &);
-    static void say(const std::string &);
-
-    void playSound(const QString &);
+    // Ask the user a question and return the answer
+    QString ask(const QString &text);
 
     struct Action
     {
@@ -46,11 +43,19 @@ public:
         void run(const QString &) const;
     };
 
+public Q_SLOTS:
+    static void say(const QString &);
+    static void say(const std::string &);
+
+    void playSound(const QString &);
+
 protected:
     void closeEvent(QCloseEvent *) override;
 
 private Q_SLOTS:
     void onStateChanged();
+
+    void toggleTextMode();
 
     void updateTime();
 
@@ -70,15 +75,16 @@ private Q_SLOTS:
     static void setupTextToSpeech();
     void setupTrayIcon();
 
-    void toggleMute(bool mute);
+    void mute(bool mute);
+    void toggleMute();
 
     static QStringList commandsForFuncName(const QString &);
 
     static void loadCommands();
-    void saveCommands();
+    static void saveCommands();
 
     //////////////////////////////////////////////////////////////////
-    /// Define new functions here! The function must accept a QString
+    /// Define new functions here!
     //////////////////////////////////////////////////////////////////
 
     static void sayTime(const QString &); // Say the current local time

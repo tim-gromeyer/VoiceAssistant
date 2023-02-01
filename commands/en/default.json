@@ -1,31 +1,31 @@
 [
-  {
-    "funcName": "sayTime",
-    "commands": [
-      "how late",
-      "what's the time",
-      "what time is it"
-    ]
-  },
-  {
-    "funcName": "stop",
-    "commands": [
-      "stop"
-    ]
-  },
-  {
-    "funcName": "repeat",
-    "commands": [
-      "repeat after me",
-      "repeat me"
-    ]
-  },
-  {
-    "commands": [
-      "hello"
-    ],
-    "responses": [
-      "hello"
-    ]
-  }
+    {
+        "funcName": "sayTime",
+        "commands": [
+            "how late",
+            "what's the time",
+            "what time is it"
+        ]
+    },
+    {
+        "funcName": "stop",
+        "commands": [
+            "stop"
+        ]
+    },
+    {
+        "funcName": "repeat",
+        "commands": [
+            "repeat after me",
+            "repeat me"
+        ]
+    },
+    {
+        "commands": [
+            "hello"
+        ],
+        "responses": [
+            "hello"
+        ]
+    }
 ]

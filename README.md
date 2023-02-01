@@ -1,6 +1,6 @@
 # Pre-Alpha!
 
-Currently, only voice recognition and some basic commands like "how late" or "repeat after me" work.
+Currently, only basics work. See [`Add Commands`](#add-commands) for more.
 
 # VoiceAssistant
 
@@ -8,6 +8,9 @@ Resource-efficient voice assistant that is still in the early stages of developm
 
 ## Table of Contents
 
+- [Customization](#customization)
+- [Add commands](#add-commands)
+- [Credits](#credits)
 
 ## Customization
 
@@ -26,6 +29,7 @@ Supported values:
 | responses | Array of strings | It selects a random response from the Array                |
 | program   | String           | A program to execute                                       |
 | args      | Array of strings | Arguments passed to the executable `program`               |
+| sound     | String           | Path to local or remote file which gets played             |
 
 
 ## Credits

@@ -14,6 +14,7 @@
 #include <QLineEdit>
 #include <QMediaPlayer>
 #include <QMessageBox>
+#include <QMetaMethod>
 #include <QProcess>
 #include <QPropertyAnimation>
 #include <QRandomGenerator>
@@ -44,7 +45,10 @@ void MainWindow::Action::run(const QString &text) const
         return;
 
     } else if (!funcName.isEmpty()) {
-        QMetaObject::invokeMethod(_instance, funcName.toUtf8(), Q_ARG(QString, text));
+        if (MainWindow::staticMetaObject.indexOfMethod(QString(funcName + L1("()")).toUtf8()) == -1)
+            QMetaObject::invokeMethod(_instance, funcName.toUtf8(), Q_ARG(QString, text));
+        else
+            QMetaObject::invokeMethod(_instance, funcName.toUtf8());
     } else if (!responses.isEmpty()) {
         int randomIndex = QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
@@ -105,18 +109,34 @@ MainWindow::MainWindow(QWidget *parent)
     connect(recognizer->device(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
 
     connect(ui->action_Quit, &QAction::triggered, this, &QWidget::close);
-    connect(ui->muteButton, &QCheckBox::stateChanged, this, &MainWindow::toggleMute);
+    connect(ui->muteButton, &QCheckBox::clicked, this, &MainWindow::mute);
 
     setupTrayIcon();
 }
 
-void MainWindow::playSound(const QString &url)
+QString MainWindow::ask(const QString &text)
 {
-    player->setMedia(QUrl(url));
+    say(text);
+    // TODO: Implement asking the user
+    return {};
+}
+
+void MainWindow::toggleTextMode()
+{
+    // TODO: Implement toggle text mode(input via text instead of voice)
+}
+
+void MainWindow::playSound(const QString &_url)
+{
+    QUrl url(_url);
+    if (QFile::exists(_url))
+        url = QUrl::fromLocalFile(_url);
+
+    player->setMedia(url);
     player->play();
 }
 
-MainWindow *instance()
+MainWindow *MainWindow::instance()
 {
     return _instance;
 }
@@ -159,9 +179,8 @@ void MainWindow::onHelpAbout()
             .arg(STR("beta"), qVersion()));
 }
 
-void MainWindow::toggleMute(bool mute)
+void MainWindow::mute(bool mute)
 {
-    qDebug() << __func__ << mute;
     ui->content->setFocus();
 
     if (!recognizer)
@@ -185,6 +204,11 @@ void MainWindow::toggleMute(bool mute)
     muteAction->setChecked(mute);
 
     ui->muteButton->setChecked(mute);
+}
+
+void MainWindow::toggleMute()
+{
+    mute(!muteAction->isChecked());
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -211,7 +235,7 @@ void MainWindow::setupTrayIcon()
     muteAction->setText(tr("Mute"));
     muteAction->setToolTip(tr("Mute"));
     muteAction->setIcon(QIcon::fromTheme(STR("audio-input-microphone")));
-    connect(muteAction, &QAction::triggered, this, &MainWindow::toggleMute);
+    connect(muteAction, &QAction::triggered, this, &MainWindow::mute);
 
     auto *menu = new QMenu(this);
     menu->addAction(ui->action_Quit);
@@ -233,6 +257,9 @@ void MainWindow::onStateChanged()
         ui->statusLabel->setText(recognizer->errorString());
         openModelDownloader();
         break;
+    case SpeechToText::State::NoMicrophone:
+    case SpeechToText::IncompatibleFormat:
+        toggleTextMode();
     default:
         ui->statusLabel->setText(recognizer->errorString());
     }
@@ -325,7 +352,7 @@ void MainWindow::processText(const QString &text)
 {
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
-            if (text.contains(command)) {
+            if (text.startsWith(command)) {
                 std::thread(&Action::run, action, text).detach();
                 return;
             }
@@ -337,15 +364,17 @@ void MainWindow::processText(const QString &text)
 
 void MainWindow::loadCommands()
 {
+    commands.clear();
+
     const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
 
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qDebug() << STR("Failed to open %1:\n%2")
-                        .arg(jsonFile.fileName(), jsonFile.errorString())
-                        .toStdString()
-                        .c_str();
+        qWarning() << STR("Failed to open %1:\n%2")
+                          .arg(jsonFile.fileName(), jsonFile.errorString())
+                          .toStdString()
+                          .c_str();
         return;
     }
 
@@ -380,6 +409,9 @@ void MainWindow::loadCommands()
         for (const auto &response : responseArray)
             c.responses.append(response.toString());
 
+        // sound/song to play(optional)
+        c.sound = jsonObject[STR("sound")].toString();
+
         // used to execute external programs(optional)
         c.program = jsonObject[STR("program")].toString();
         QJsonArray args = jsonObject[STR("args")].toArray();
@@ -405,25 +437,35 @@ void MainWindow::saveCommands()
     for (const auto &c : qAsConst(commands)) {
         QJsonObject jsonObject;
 
-        jsonObject[STR("funcName")] = c.funcName;
-        jsonObject[STR("program")] = c.program;
+        if (!c.funcName.isEmpty())
+            jsonObject[STR("funcName")] = c.funcName;
+        if (!c.program.isEmpty())
+            jsonObject[STR("program")] = c.program;
+        if (!c.sound.isEmpty())
+            jsonObject[STR("sound")] = c.sound;
 
-        QJsonArray commandsArray;
-        for (const auto &command : c.commands)
-            commandsArray.append(command);
-        jsonObject[STR("commands")] = commandsArray;
+        if (!c.commands.isEmpty()) {
+            QJsonArray commandsArray;
+            for (const auto &command : c.commands)
+                commandsArray.append(command);
+            jsonObject[STR("commands")] = commandsArray;
+        }
 
-        QJsonArray responseArray;
-        for (const auto &response : c.responses)
-            responseArray.append(response);
-        jsonObject[STR("responses")] = responseArray;
+        if (!c.responses.isEmpty()) {
+            QJsonArray responseArray;
+            for (const auto &response : c.responses)
+                responseArray.append(response);
+            jsonObject[STR("responses")] = responseArray;
+        }
 
-        QJsonArray argsArray;
-        for (const auto &arg : c.args)
-            argsArray.append(arg);
-        jsonObject[STR("args")] = argsArray;
-
-        jsonArray.append(jsonObject);
+        if (!c.args.isEmpty()) {
+            QJsonArray argsArray;
+            for (const auto &arg : c.args)
+                argsArray.append(arg);
+            jsonObject[STR("args")] = argsArray;
+        }
+        if (!jsonObject.isEmpty())
+            jsonArray.append(jsonObject);
     }
 
     QJsonDocument jsonDoc(jsonArray);
@@ -436,7 +478,7 @@ void MainWindow::saveCommands()
     jsonFile.write(jsonDoc.toJson());
     if (!jsonFile.commit())
         QMessageBox::warning(
-            this,
+            _instance,
             tr("Failed to save file"),
             tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
                 .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
@@ -524,5 +566,4 @@ MainWindow::~MainWindow()
 
 // TODO: Let user add commands via GUI
 // TODO: Add settings like disabling tray icon, store language and model path and so on
-// TODO: Add text input mode if speech to text doesn't work for some reason
 // TODO: Add options for controlling text to speech
