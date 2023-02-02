@@ -7,10 +7,13 @@ QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
+class QAudioOutput;
 class QMediaPlayer;
 class QSystemTrayIcon;
 class QTimer;
 QT_END_NAMESPACE
+
+Q_DECLARE_METATYPE(std::string)
 
 class MainWindow : public QMainWindow
 {
@@ -26,7 +29,6 @@ public:
 
     struct Action
     {
-        std::function<void(const std::string &)> func = nullptr;
         QString funcName;
         QStringList responses;
 
@@ -43,6 +45,9 @@ public:
         void run(const QString &) const;
     };
 
+    // Say something and wait to be done
+    static void sayAndWait(const QString &);
+
 public Q_SLOTS:
     static void say(const QString &);
     static void say(const std::string &);
@@ -53,7 +58,8 @@ protected:
     void closeEvent(QCloseEvent *) override;
 
 private Q_SLOTS:
-    void onStateChanged();
+    void onSTTStateChanged();
+    void onTTSStateChanged();
 
     void toggleTextMode();
 
@@ -88,7 +94,7 @@ private Q_SLOTS:
     //////////////////////////////////////////////////////////////////
 
     static void sayTime(const QString &); // Say the current local time
-    static void stop(const QString &);    // Stop text to speech
+    static void stop();                   // Stop text to speech
     static void repeat(QString);          // Repeat what the user said
 
 private:
@@ -96,6 +102,9 @@ private:
 
     QAction *muteAction = nullptr;
     QMediaPlayer *player = nullptr;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QAudioOutput *audioOutput = nullptr;
+#endif
 
     // The timer used to display the current time
     QTimer *timeTimer;
