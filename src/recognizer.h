@@ -98,6 +98,8 @@ public Q_SLOTS:
     void pause();
     void resume();
 
+    static void reset();
+
 Q_SIGNALS:
     void stateChanged();
     void modelLoaded();

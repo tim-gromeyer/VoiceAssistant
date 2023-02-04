@@ -27,8 +27,6 @@
 #endif
 
 #include <chrono>
-#include <functional>
-#include <thread>
 
 using namespace std::chrono_literals;
 using namespace literals;
@@ -40,6 +38,9 @@ QThread *engineThread = new QThread();
 QList<MainWindow::Action> commands;
 MainWindow *_instance = nullptr;
 
+bool asking = false;
+QString answerOnQuestion;
+
 void MainWindow::Action::run(const QString &text) const
 {
     if (!funcName.isEmpty()) {
@@ -50,15 +51,18 @@ void MainWindow::Action::run(const QString &text) const
                                       Q_ARG(QString, text));
         else
             QMetaObject::invokeMethod(_instance, funcName.toUtf8(), Qt::QueuedConnection);
-    } else if (!responses.isEmpty()) {
+    }
+    if (!responses.isEmpty()) {
         int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
-    } else if (!program.isEmpty()) {
+    }
+    if (!program.isEmpty()) {
         QProcess p(_instance);
         p.setProgram(program);
         p.setArguments(args);
         p.startDetached();
-    } else if (!sound.isEmpty())
+    }
+    if (!sound.isEmpty())
         _instance->playSound(sound);
 }
 
@@ -85,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
     recognizer = new SpeechToText(this);
 
     // Set up text to speech
-    std::thread(&MainWindow::setupTextToSpeech).detach();
+    QThreadPool::globalInstance()->start(&MainWindow::setupTextToSpeech);
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -120,9 +124,10 @@ MainWindow::MainWindow(QWidget *parent)
     setupTrayIcon();
 }
 
-void MainWindow::toggleTextMode()
+void MainWindow::addCommand(const Action &a)
 {
-    // TODO: Implement toggle text mode(input via text instead of voice)
+    commands.append(a);
+    saveCommands();
 }
 
 void MainWindow::playSound(const QString &_url)
@@ -146,13 +151,12 @@ MainWindow *MainWindow::instance()
 
 void MainWindow::onHelpAbout()
 {
-    // TODO: Finish about dialog
     QMessageBox::about(
         this,
         tr("About VoiceAssistant"),
         tr("<h1>Voice Assistant</h1>\n"
            "<p>A resource-efficient and customizable voice assistant written in c++.</p>\n"
-           "<h1>About</h1>\n"
+           "<h3>About</h3>\n"
            "<table border=\"0\" style=\"border-collapse: collapse; width: 100%;\">\n"
            "<tbody>\n"
            "<tr>\n"
@@ -171,7 +175,7 @@ void MainWindow::onHelpAbout()
            "</tr>\n"
            "</tbody>\n"
            "</table>\n"
-           "<h1>Credits</h1>\n"
+           "<h3>Credits</h3>\n"
            "<p>This project uses <a href=\"https://github.com/alphacep/vosk-api\">Vosk</a> which "
            "is licensed under the <a "
            "href=\"https://github.com/alphacep/vosk-api/blob/master/COPYING\">Apache License "
@@ -293,9 +297,6 @@ void MainWindow::onSTTStateChanged()
         ui->statusLabel->setText(recognizer->errorString());
         openModelDownloader();
         break;
-    case SpeechToText::State::NoMicrophone:
-    case SpeechToText::IncompatibleFormat:
-        toggleTextMode();
     default:
         ui->statusLabel->setText(recognizer->errorString());
     }
@@ -325,6 +326,13 @@ void MainWindow::onWakeWord()
 
 void MainWindow::doneListening()
 {
+    if (asking) {
+        Q_EMIT answerReady();
+        answerOnQuestion = ui->textLabel->text();
+        ui->textLabel->setText({});
+        return;
+    }
+
     processText(ui->textLabel->text());
     ui->statusLabel->setText(tr("Waiting for wake word"));
     ui->textLabel->setText({});
@@ -566,7 +574,6 @@ void MainWindow::say(const std::string &text)
 
 void MainWindow::sayAndWait(const QString &text)
 {
-    qDebug() << __func__ << text;
     if (!engine)
         return;
     QEventLoop loop(_instance);
@@ -574,30 +581,61 @@ void MainWindow::sayAndWait(const QString &text)
         if (s != QTextToSpeech::Speaking)
             loop.quit();
     });
-    qDebug() << engine->state();
     say(text);
-    qDebug() << engine->state();
     loop.exec();
-    qDebug() << "Done";
 }
 
 QString MainWindow::ask(const QString &text)
 {
-    Q_UNUSED(this);
     sayAndWait(text);
-    // TODO: Implement asking the user
-    return {};
+
+    Q_ASSERT(recognizer->state() != SpeechToText::Running
+             || recognizer->state() != SpeechToText::Paused);
+
+    QEventLoop loop;
+    connect(_instance, &MainWindow::answerReady, &loop, &QEventLoop::quit);
+    asking = true;
+    SpeechToText::reset();
+    _instance->ui->statusLabel->setText(tr("Waiting for answer..."));
+    loop.exec();
+    loop.deleteLater();
+    asking = false;
+    _instance->onSTTStateChanged();
+
+    return answerOnQuestion;
 }
 
 void MainWindow::stop()
 {
-    if (engine && engine->state() == QTextToSpeech::Speaking)
+    if (engine)
         engine->stop();
-    else
+    if (_instance->player)
         _instance->player->stop();
 }
 
-void MainWindow::sayTime(const QString &text)
+void MainWindow::pause()
+{
+    if (_instance->player)
+        _instance->player->pause();
+}
+
+void MainWindow::resume()
+{
+    if (_instance->player)
+        _instance->player->play();
+}
+
+void MainWindow::quit()
+{
+    const QString answer = ask(tr("Are you sure?"));
+
+    if (answer == tr("yes")) {
+        sayAndWait(tr("Okay"));
+        qApp->quit();
+    }
+}
+
+void MainWindow::sayTime()
 {
     // Get the current time
     QTime currentTime = QTime::currentTime();

@@ -25,7 +25,7 @@ public:
 
     static MainWindow *instance();
     // Ask the user a question and return the answer
-    QString ask(const QString &text);
+    static QString ask(const QString &text);
 
     struct Action
     {
@@ -48,6 +48,12 @@ public:
     // Say something and wait to be done
     static void sayAndWait(const QString &);
 
+    // Add a command
+    static void addCommand(const Action &);
+
+Q_SIGNALS:
+    void answerReady();
+
 public Q_SLOTS:
     static void say(const QString &);
     static void say(const std::string &);
@@ -60,8 +66,6 @@ protected:
 private Q_SLOTS:
     void onSTTStateChanged();
     void onTTSStateChanged();
-
-    void toggleTextMode();
 
     void updateTime();
 
@@ -93,9 +97,12 @@ private Q_SLOTS:
     /// Define new functions here!
     //////////////////////////////////////////////////////////////////
 
-    static void sayTime(const QString &); // Say the current local time
-    static void stop();                   // Stop text to speech
-    static void repeat(QString);          // Repeat what the user said
+    static void quit();          // Close the app
+    static void sayTime();       // Say the current local time
+    static void stop();          // Stop text to speech
+    static void pause();         // Pause music
+    static void resume();        // Resume the playing of music
+    static void repeat(QString); // Repeat what the user said
 
 private:
     Ui::MainWindow *ui;

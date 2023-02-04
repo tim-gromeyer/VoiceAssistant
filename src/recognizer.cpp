@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QLocale>
 #include <QMessageBox>
+#include <QThreadPool>
 
 #include "vosk_api.h" // Include the Vosk API header file
 
@@ -131,6 +132,12 @@ void SpeechToText::resume()
     setState(Running);
 }
 
+void SpeechToText::reset()
+{
+    if (globalRecognizer)
+        vosk_recognizer_reset(globalRecognizer);
+}
+
 void SpeechToText::setUpModel()
 {
     qDebug() << "[debug] Setting up model and recognizer";
@@ -222,7 +229,7 @@ void SpeechToText::setup()
 
     connect(this, &SpeechToText::modelLoaded, this, &SpeechToText::setUpMic, Qt::UniqueConnection);
 
-    std::thread(&SpeechToText::setUpModel, this).detach();
+    QThreadPool::globalInstance()->start([this] { setUpModel(); });
 }
 
 bool SpeechToText::hasWord(const QString &word)

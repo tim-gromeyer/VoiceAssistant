@@ -58,8 +58,21 @@
     },
     {
         "commands": [
+            "pause"
+        ],
+        "funcName": "pause"
+    },
+    {
+        "commands": [
+            "weiter",
+            "fortsetzen"
+        ],
+        "funcName": "resume"
+    },
+    {
+        "commands": [
             "herunterfahren"
         ],
-        "funcName": "close"
+        "funcName": "quit"
     }
 ]

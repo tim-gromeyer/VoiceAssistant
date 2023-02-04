@@ -38,6 +38,8 @@ include(cmake/Translation.cmake)
 
 set(PROJECT_SOURCES
     ${RC_FILES}
+    src/commanddialog.cpp
+    src/commanddialog.h
     src/global.h
     src/main.cpp
     src/mainwindow.cpp
