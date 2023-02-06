@@ -40,6 +40,8 @@ Q_SIGNALS:
     // Signal emitted when the recognizer has recognized some text in the audio input
     void textUpdated(const QString &text);
 
+    void answerReady(QString);
+
 private:
     // Private method that takes a JSON string containing the recognized text
     // and parses it to extract the text and emit the appropriate signals
@@ -85,10 +87,9 @@ public:
     static void setModelDir(const QString &);
     static QString modelDir();
 
-    static void setAlwaysListen(bool aL);
-    static bool alwaysListen();
-
     inline QString language() { return m_language; };
+
+    static void ask();
 
     void setup();
 
@@ -104,6 +105,11 @@ Q_SIGNALS:
     void stateChanged();
     void modelLoaded();
     void languageChanged();
+
+    void answerReady(QString);
+
+private Q_SLOTS:
+    void onAnswerReady(const QString &);
 
 private:
     void setState(SpeechToText::State s);

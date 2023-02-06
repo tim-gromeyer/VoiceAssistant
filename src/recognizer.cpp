@@ -9,6 +9,10 @@
 #include <QMessageBox>
 #include <QThreadPool>
 
+#if NEED_MICROPHONE_PERMISSION
+#include <QPermission>
+#endif
+
 #include "vosk_api.h" // Include the Vosk API header file
 
 #include <thread> // Include thread so we don't need QtConcurrent
@@ -25,17 +29,12 @@ QLatin1String _wakeWord = L1("alexa ");
 // Declare a global variable to store the directory where the Vosk models are stored
 QString _modelDir;
 
-// Declare a global variable to indicate whether the recognizer should always listen for audio input
-bool _alwaysListen = false;
+bool asking = false;
 
 Listener::Listener(QObject *parent)
     : QIODevice(parent)
 {
     open(QIODevice::ReadWrite);
-
-#ifdef QT_DEBUG
-    _alwaysListen = true;
-#endif
 };
 
 qint64 Listener::writeData(const char *data, qint64 size)
@@ -56,11 +55,13 @@ void Listener::parseText(const char *json)
     if (text.isEmpty())
         return;
 
-    if (!_alwaysListen)
-        return;
-
     if (text.contains(_wakeWord))
         text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
+    else if (asking) {
+        Q_EMIT answerReady(text);
+        return;
+    } else
+        return;
 
     Q_EMIT textUpdated(text);
 
@@ -80,7 +81,7 @@ void Listener::parsePartial(const char *json)
     if (text.contains(_wakeWord)) {
         Q_EMIT wakeWord();
         text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
-    } else if (!_alwaysListen)
+    } else if (!asking)
         return;
 
     Q_EMIT textUpdated(text);
@@ -90,8 +91,35 @@ SpeechToText::SpeechToText(QObject *parent)
     : QObject{parent}
     , m_device(new Listener(this))
 {
+    connect(m_device.get(), &Listener::answerReady, this, &SpeechToText::onAnswerReady);
+
     // Disable kaldi info messages
     vosk_set_log_level(-1);
+
+#if NEED_MICROPHONE_PERMISSION
+    QMicrophonePermission microphonePermission;
+    switch (qApp->checkPermission(microphonePermission)) {
+    case Qt::PermissionStatus::Undetermined:
+        qApp->requestPermission(microphonePermission, this, &SpeechToText::setUpMic);
+        return;
+    case Qt::PermissionStatus::Denied:
+        setState(State::NoMicrophone);
+        return;
+    case Qt::PermissionStatus::Granted:
+        break; // Proceed
+    }
+#endif
+}
+
+void SpeechToText::onAnswerReady(const QString &answer)
+{
+    asking = false;
+    Q_EMIT answerReady(answer);
+}
+
+void SpeechToText::ask()
+{
+    asking = true;
 }
 
 SpeechToText::operator bool() const
@@ -274,15 +302,6 @@ QString SpeechToText::modelDir()
     }
 
     return _modelDir;
-}
-
-void SpeechToText::setAlwaysListen(bool aL)
-{
-    _alwaysListen = aL;
-}
-bool SpeechToText::alwaysListen()
-{
-    return _alwaysListen;
 }
 
 void SpeechToText::setState(SpeechToText::State s)

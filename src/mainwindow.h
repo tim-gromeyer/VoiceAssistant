@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "plugins/base.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -27,8 +29,11 @@ public:
     // Ask the user a question and return the answer
     static QString ask(const QString &text);
 
-    struct Action
+    struct Action : public Plugin
     {
+        Action() = default;
+        ~Action() = default;
+
         QString funcName;
         QStringList responses;
 
@@ -49,10 +54,7 @@ public:
     static void sayAndWait(const QString &);
 
     // Add a command
-    static void addCommand(const Action &);
-
-Q_SIGNALS:
-    void answerReady();
+    static void addCommand(Plugin);
 
 public Q_SLOTS:
     static void say(const QString &);

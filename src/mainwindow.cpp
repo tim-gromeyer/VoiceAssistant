@@ -36,10 +36,8 @@ QTextToSpeech *engine = nullptr;
 QThread *engineThread = new QThread();
 
 QList<MainWindow::Action> commands;
+QList<Plugin> plugins;
 MainWindow *_instance = nullptr;
-
-bool asking = false;
-QString answerOnQuestion;
 
 void MainWindow::Action::run(const QString &text) const
 {
@@ -124,9 +122,9 @@ MainWindow::MainWindow(QWidget *parent)
     setupTrayIcon();
 }
 
-void MainWindow::addCommand(const Action &a)
+void MainWindow::addCommand(Plugin a)
 {
-    commands.append(a);
+    plugins.append(a);
     saveCommands();
 }
 
@@ -326,13 +324,6 @@ void MainWindow::onWakeWord()
 
 void MainWindow::doneListening()
 {
-    if (asking) {
-        Q_EMIT answerReady();
-        answerOnQuestion = ui->textLabel->text();
-        ui->textLabel->setText({});
-        return;
-    }
-
     processText(ui->textLabel->text());
     ui->statusLabel->setText(tr("Waiting for wake word"));
     ui->textLabel->setText({});
@@ -589,20 +580,25 @@ QString MainWindow::ask(const QString &text)
 {
     sayAndWait(text);
 
+    // If this is the case something is definitely wrong
     Q_ASSERT(recognizer->state() != SpeechToText::Running
              || recognizer->state() != SpeechToText::Paused);
 
-    QEventLoop loop;
-    connect(_instance, &MainWindow::answerReady, &loop, &QEventLoop::quit);
-    asking = true;
+    // By making it a pointer we prevent out of scope warnings
+    std::shared_ptr<QString> answer(new QString());
+
+    QEventLoop loop(_instance);
     SpeechToText::reset();
+    connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
+    connect(recognizer, &SpeechToText::answerReady, _instance, [answer](const QString &asw) {
+        *answer = asw;
+    });
     _instance->ui->statusLabel->setText(tr("Waiting for answer..."));
+    SpeechToText::ask();
     loop.exec();
     loop.deleteLater();
-    asking = false;
-    _instance->onSTTStateChanged();
 
-    return answerOnQuestion;
+    return *answer;
 }
 
 void MainWindow::stop()
@@ -629,7 +625,7 @@ void MainWindow::quit()
 {
     const QString answer = ask(tr("Are you sure?"));
 
-    if (answer == tr("yes")) {
+    if (answer.startsWith(tr("yes"))) {
         sayAndWait(tr("Okay"));
         qApp->quit();
     }
@@ -676,11 +672,13 @@ MainWindow::~MainWindow()
     delete recognizer;
 
     // Prevent deleting the thread while running
-    QEventLoop loop;
-    connect(engineThread, &QThread::finished, &loop, &QEventLoop::quit);
-    engineThread->quit();
-    loop.exec();
-    loop.deleteLater();
+    if (engineThread->isRunning()) {
+        QEventLoop loop;
+        connect(engineThread, &QThread::finished, &loop, &QEventLoop::quit);
+        engineThread->quit();
+        loop.exec();
+        loop.deleteLater();
+    }
 
     if (engine)
         engine->deleteLater();
@@ -693,3 +691,4 @@ MainWindow::~MainWindow()
 // TODO: Let user add commands via GUI
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
+// NOTE: QThreadPool::start(std::function<void()>) requires Qt 5.15

@@ -38,6 +38,7 @@ include(cmake/Translation.cmake)
 
 set(PROJECT_SOURCES
     ${RC_FILES}
+    plugins/base.h
     src/commanddialog.cpp
     src/commanddialog.h
     src/global.h
