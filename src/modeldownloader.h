@@ -25,6 +25,9 @@ class ModelDownloader : public QDialog
 public:
     explicit ModelDownloader(QWidget *parent = nullptr);
 
+Q_SIGNALS:
+    void modelDownloaded();
+
 private Q_SLOTS:
     void search(const QString &);
     void downloadFinished();

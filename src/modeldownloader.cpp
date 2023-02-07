@@ -269,14 +269,12 @@ void ModelDownloader::downloadFinished()
         }
     }
 
-    QDialog dia(this);
-    QVBoxLayout l(&dia);
-    dia.setWindowTitle(tr("Unzipping file"));
-    QLabel textLabel(tr("Unzipping file ..."), &dia);
-    l.addWidget(&textLabel);
-    dia.setLayout(&l);
-    dia.show();
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+    QMessageBox dia(this);
+    dia.setWindowTitle(tr("Unzipping file"));
+    dia.setText(tr("Unzipping file ..."));
+    dia.setIcon(QMessageBox::Information);
+    dia.show();
 
     elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
     QDir(SpeechToText::modelDir()).rename(info.name, info.lang);
@@ -286,4 +284,6 @@ void ModelDownloader::downloadFinished()
 
     if (senderButton)
         senderButton->setText(tr("Downloaded"));
+
+    Q_EMIT modelDownloaded();
 }

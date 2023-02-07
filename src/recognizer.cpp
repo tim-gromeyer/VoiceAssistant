@@ -100,12 +100,13 @@ SpeechToText::SpeechToText(QObject *parent)
     QMicrophonePermission microphonePermission;
     switch (qApp->checkPermission(microphonePermission)) {
     case Qt::PermissionStatus::Undetermined:
-        qApp->requestPermission(microphonePermission, this, &SpeechToText::setUpMic);
+        qApp->requestPermission(microphonePermission, this, &SpeechToText::setup);
         return;
     case Qt::PermissionStatus::Denied:
         setState(State::NoMicrophone);
         return;
     case Qt::PermissionStatus::Granted:
+        setup();
         break; // Proceed
     }
 #endif
@@ -252,12 +253,29 @@ void SpeechToText::setUpMic()
 
 void SpeechToText::setup()
 {
-    if (m_state != NotStarted)
+    qDebug() << __func__ << m_state;
+    switch (m_state) {
+    case Running:
         return;
+    case IncompatibleFormat:
+    case NoMicrophone:
+        setUpMic();
+        break;
+    case ErrorWhileLoading:
+    case ModelsMissing:
+    case NoModelFound:
+    case NotStarted:
+        connect(this,
+                &SpeechToText::modelLoaded,
+                this,
+                &SpeechToText::setUpMic,
+                Qt::UniqueConnection);
 
-    connect(this, &SpeechToText::modelLoaded, this, &SpeechToText::setUpMic, Qt::UniqueConnection);
-
-    QThreadPool::globalInstance()->start([this] { setUpModel(); });
+        threading::runFunction([this] { setUpModel(); });
+        break;
+    default:
+        break;
+    }
 }
 
 bool SpeechToText::hasWord(const QString &word)

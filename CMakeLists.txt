@@ -41,6 +41,7 @@ set(PROJECT_SOURCES
     plugins/base.h
     src/commanddialog.cpp
     src/commanddialog.h
+    src/global.cpp
     src/global.h
     src/main.cpp
     src/mainwindow.cpp

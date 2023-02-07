@@ -85,9 +85,18 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
     // Set up recognizer
     recognizer = new SpeechToText(this);
+    connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);
+    connect(recognizer,
+            &SpeechToText::languageChanged,
+            this,
+            &MainWindow::loadCommands,
+            Qt::QueuedConnection);
+#if !NEED_MICROPHONE_PERMISSION
+    recognizer->setup();
+#endif
 
     // Set up text to speech
-    QThreadPool::globalInstance()->start(&MainWindow::setupTextToSpeech);
+    threading::runFunction(&MainWindow::setupTextToSpeech);
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -100,17 +109,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timeTimer, &QTimer::timeout, this, &MainWindow::updateTime);
     timeTimer->start();
     updateTime();
-
-    // Set up all commands
-    connect(recognizer,
-            &SpeechToText::languageChanged,
-            this,
-            &MainWindow::loadCommands,
-            Qt::QueuedConnection);
-
-    // Prepare recognizer
-    connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);
-    recognizer->setup();
 
     connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
     connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
@@ -394,6 +392,11 @@ void MainWindow::onHasWord()
 void MainWindow::openModelDownloader()
 {
     ModelDownloader dia(this);
+    connect(&dia,
+            &ModelDownloader::modelDownloaded,
+            recognizer,
+            &SpeechToText::setup,
+            Qt::QueuedConnection);
     dia.exec();
 }
 
@@ -691,4 +694,3 @@ MainWindow::~MainWindow()
 // TODO: Let user add commands via GUI
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
-// NOTE: QThreadPool::start(std::function<void()>) requires Qt 5.15
