@@ -1,8 +1,9 @@
 #include "modeldownloader.h"
-#include "global.h"
 #include "recognizer.h"
+#include "utils.h"
 
 #include <QClipboard>
+#include <QDir>
 #include <QGuiApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -20,7 +21,7 @@
 
 #include "elzip.hpp"
 
-using namespace literals;
+using namespace utils::literals;
 
 ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}
@@ -216,7 +217,6 @@ void ModelDownloader::downloadModel()
     progress->setValue(0);
     progress->setRange(0, info.size);
     connect(reply, &QNetworkReply::downloadProgress, this, [this](qint64 recived, qint64 total) {
-        qDebug() << recived * 100 / total << "% downloaded";
         progress->setValue((int) recived);
     });
 
@@ -238,7 +238,8 @@ void ModelDownloader::downloadFinished()
         progress->close();
 
     // Check for error
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError
+        && reply->error() != QNetworkReply::OperationCanceledError) {
         QMessageBox::critical(this,
                               tr("Download failed!"),
                               tr("The download failed for following reason:\n%1")

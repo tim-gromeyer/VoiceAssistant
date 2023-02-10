@@ -17,7 +17,7 @@
         ]
     },
     {
-        "funcName": "repeat",
+        "funcName": "say",
         "commands": [
             "sprich mir nach",
             "wiederhole mich"
@@ -34,7 +34,8 @@
         "responses": [
             "guten tag",
             "hallo",
-            "hallo, freut mich von dir zu hören"
+            "hallo, freut mich von dir zu hören",
+            "Hallo! Wie kann ich heute helfen?"
         ]
     },
     {
@@ -75,5 +76,24 @@
             "herunterfahren"
         ],
         "funcName": "quit"
+    },
+    {
+        "commands": [
+            "lauter"
+        ],
+        "funcName": "volumeUp"
+    },
+    {
+        "commands": [
+            "leiser"
+        ],
+        "funcName": "volumeDown"
+    },
+    {
+        "commands": [
+            "lautstärke",
+            "lautstärker"
+        ],
+        "funcName": "setVolume"
     }
 ]

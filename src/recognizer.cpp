@@ -1,5 +1,6 @@
 #include "recognizer.h" // Include the header file for the SpeechToText class
-#include "global.h"     // Include string literals
+#include "global.h"
+#include "utils.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -17,7 +18,7 @@
 
 #include <thread> // Include thread so we don't need QtConcurrent
 
-using namespace literals;
+using namespace utils::literals;
 
 // Declare global variables for the Vosk model and recognizer
 VoskModel *model = nullptr;

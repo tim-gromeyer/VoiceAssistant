@@ -1,11 +1,11 @@
-#include "global.h"
 #include "mainwindow.h"
+#include "utils.h"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
 
-using namespace literals;
+using namespace utils::literals;
 
 int main(int argc, char *argv[])
 {

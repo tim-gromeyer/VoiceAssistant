@@ -62,6 +62,19 @@ public Q_SLOTS:
 
     void playSound(const QString &);
 
+    //////////////////////////////////////////////////////////////////
+    /// Define new functions here!
+    //////////////////////////////////////////////////////////////////
+
+    static void quit();    // Close the app
+    static void sayTime(); // Say the current local time
+    static void stop();    // Stop text to speech
+    static void pause();   // Pause music
+    static void resume();  // Resume the playing of music
+    static void volumeUp();
+    static void volumeDown();
+    static void setVolume(const QString &);
+
 protected:
     void closeEvent(QCloseEvent *) override;
 
@@ -90,21 +103,8 @@ private Q_SLOTS:
     void mute(bool mute);
     void toggleMute();
 
-    static QStringList commandsForFuncName(const QString &);
-
     static void loadCommands();
     static void saveCommands();
-
-    //////////////////////////////////////////////////////////////////
-    /// Define new functions here!
-    //////////////////////////////////////////////////////////////////
-
-    static void quit();          // Close the app
-    static void sayTime();       // Say the current local time
-    static void stop();          // Stop text to speech
-    static void pause();         // Pause music
-    static void resume();        // Resume the playing of music
-    static void repeat(QString); // Repeat what the user said
 
 private:
     Ui::MainWindow *ui;
@@ -114,6 +114,8 @@ private:
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QAudioOutput *audioOutput = nullptr;
 #endif
+
+    static void applyVolume();
 
     // The timer used to display the current time
     QTimer *timeTimer;

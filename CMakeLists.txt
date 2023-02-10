@@ -41,7 +41,6 @@ set(PROJECT_SOURCES
     plugins/base.h
     src/commanddialog.cpp
     src/commanddialog.h
-    src/global.cpp
     src/global.h
     src/main.cpp
     src/mainwindow.cpp
@@ -51,6 +50,8 @@ set(PROJECT_SOURCES
     src/recognizer.cpp
     src/recognizer.h
     ui/mainwindow.ui
+    src/utils.h
+    src/utils.cpp
 )
 
 add_translations(TS ${TS_FILES})

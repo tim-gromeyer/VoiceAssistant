@@ -3,6 +3,7 @@
 #include "modeldownloader.h"
 #include "recognizer.h"
 #include "ui_mainwindow.h"
+#include "utils.h"
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -29,7 +30,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
-using namespace literals;
+using namespace utils::literals;
 
 SpeechToText *recognizer = nullptr;
 QTextToSpeech *engine = nullptr;
@@ -38,6 +39,8 @@ QThread *engineThread = new QThread();
 QList<MainWindow::Action> commands;
 QList<Plugin> plugins;
 MainWindow *_instance = nullptr;
+
+float volume = 1.0;
 
 void MainWindow::Action::run(const QString &text) const
 {
@@ -225,11 +228,13 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::setupTextToSpeech()
 {
     // Use QThread here because otherwise the stateChanged signal doesn't get emitted
+    qDebug() << "[debug] TTS: Setup QTextToSpeech";
     engine = new QTextToSpeech();
     engine->moveToThread(engineThread);
     engineThread->start();
     engine->setLocale(QLocale::system()); // WARNING: This might fail!
     connect(engine, &QTextToSpeech::stateChanged, _instance, &MainWindow::onTTSStateChanged);
+    qDebug() << "[debug] TTS: Setup finished";
 }
 
 void MainWindow::setupTrayIcon()
@@ -264,17 +269,17 @@ void MainWindow::onTTSStateChanged()
     case QTextToSpeech::Speaking:
         if (player)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-            audioOutput->setVolume(0.3);
+            audioOutput->setVolume(0.3F * volume);
 #else
-            player->setVolume(30);
+            player->setVolume(int(30 * volume));
 #endif
         break;
     case QTextToSpeech::Ready:
         if (player)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-            audioOutput->setVolume(1);
+            audioOutput->setVolume(1 * volume);
 #else
-            player->setVolume(100);
+            player->setVolume(int(100 * volume));
 #endif
         break;
     default:
@@ -296,6 +301,8 @@ void MainWindow::onSTTStateChanged()
     default:
         ui->statusLabel->setText(recognizer->errorString());
     }
+
+    trayIcon->setToolTip(ui->statusLabel->text());
 }
 
 void MainWindow::updateTime()
@@ -314,9 +321,9 @@ void MainWindow::onWakeWord()
 
     if (player)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        audioOutput->setVolume(0.3);
+        audioOutput->setVolume(0.3F * volume);
 #else
-        player->setVolume(30);
+        player->setVolume(int(30 * volume));
 #endif
 }
 
@@ -328,9 +335,9 @@ void MainWindow::doneListening()
 
     if (player)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-        audioOutput->setVolume(1);
+        audioOutput->setVolume(1 * volume);
 #else
-        player->setVolume(100);
+        player->setVolume(int(100 * volume));
 #endif
 }
 
@@ -408,7 +415,7 @@ void MainWindow::processText(const QString &text)
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
             if (text.startsWith(command)) {
-                action.run(text);
+                action.run(text.mid(command.length() + 1));
                 return;
             }
         }
@@ -539,18 +546,6 @@ void MainWindow::saveCommands()
                 .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
 }
 
-QStringList MainWindow::commandsForFuncName(const QString &funcName)
-{
-    auto it = std::find_if(commands.begin(), commands.end(), [&funcName](const Action &action) {
-        return action.funcName == funcName;
-    });
-
-    if (it == commands.end())
-        return {};
-
-    return it->commands;
-}
-
 void MainWindow::say(const QString &text)
 {
     if (!engine) {
@@ -588,20 +583,22 @@ QString MainWindow::ask(const QString &text)
              || recognizer->state() != SpeechToText::Paused);
 
     // By making it a pointer we prevent out of scope warnings
-    std::shared_ptr<QString> answer(new QString());
+    QString answer;
 
     QEventLoop loop(_instance);
     SpeechToText::reset();
     connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
-    connect(recognizer, &SpeechToText::answerReady, _instance, [answer](const QString &asw) {
-        *answer = asw;
+    connect(recognizer, &SpeechToText::answerReady, _instance, [&answer](const QString &asw) {
+        answer = asw;
     });
     _instance->ui->statusLabel->setText(tr("Waiting for answer..."));
     SpeechToText::ask();
     loop.exec();
     loop.deleteLater();
+    _instance->ui->statusLabel->setText(tr("Waiting for wake word"));
+    _instance->ui->textLabel->setText({});
 
-    return *answer;
+    return answer;
 }
 
 void MainWindow::stop()
@@ -645,23 +642,49 @@ void MainWindow::sayTime()
     say(tr("It is %1").arg(time));
 }
 
-void MainWindow::repeat(QString text)
+void MainWindow::applyVolume()
 {
-    const QStringList commands = commandsForFuncName(STR("repeat"));
+    qDebug() << "[debug] Change volume to:" << volume;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    _instance->audioOutput->setVolume(1.0F * volume);
+#else
+    if (_instance->player)
+        _instance->player->setVolume(int(100 * volume));
+#endif
 
-    for (const auto &command : commands) {
-        if (!text.startsWith(command))
-            continue;
+    if (engine)
+        engine->setVolume(1.0 * volume);
+}
 
-        text.remove(0, command.length() + 1); // +1 for space after the command
-    }
+void MainWindow::volumeUp()
+{
+    if (volume != 1)
+        volume += 0.1;
 
-    say(text);
+    applyVolume();
+}
+
+void MainWindow::volumeDown()
+{
+    if (volume != 0)
+        volume -= 0.1;
+
+    applyVolume();
+}
+
+void MainWindow::setVolume(const QString &text)
+{
+    int volumeInt = utils::wordToNumber(text);
+
+    volume = (float) volumeInt / 10.0F;
+    applyVolume();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    timeTimer->stop();
 
     int activeThreadCount = QThreadPool::globalInstance()->activeThreadCount();
 
@@ -675,13 +698,8 @@ MainWindow::~MainWindow()
     delete recognizer;
 
     // Prevent deleting the thread while running
-    if (engineThread->isRunning()) {
-        QEventLoop loop;
-        connect(engineThread, &QThread::finished, &loop, &QEventLoop::quit);
-        engineThread->quit();
-        loop.exec();
-        loop.deleteLater();
-    }
+    engineThread->quit();
+    engineThread->wait();
 
     if (engine)
         engine->deleteLater();
@@ -692,5 +710,10 @@ MainWindow::~MainWindow()
 }
 
 // TODO: Let user add commands via GUI
+// See: https://doc.qt.io/qt-6/qwizardpage.html,
+//      https://doc.qt.io/qt-6/qwizard.html
+//      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
+// TODO: Load plugins, see https://doc.qt.io/qt-6/qpluginloader.html
+// TODO: Implement weather, see Qt weather example
