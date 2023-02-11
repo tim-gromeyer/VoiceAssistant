@@ -16,8 +16,6 @@
 
 #include "vosk_api.h" // Include the Vosk API header file
 
-#include <thread> // Include thread so we don't need QtConcurrent
-
 using namespace utils::literals;
 
 // Declare global variables for the Vosk model and recognizer
@@ -56,6 +54,8 @@ void Listener::parseText(const char *json)
     if (text.isEmpty())
         return;
 
+    text.append(u' ');
+
     if (text.contains(_wakeWord))
         text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
     else if (asking) {
@@ -63,6 +63,8 @@ void Listener::parseText(const char *json)
         return;
     } else
         return;
+
+    text = text.trimmed();
 
     Q_EMIT textUpdated(text);
 

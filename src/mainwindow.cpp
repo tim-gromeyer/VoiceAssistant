@@ -34,7 +34,7 @@ using namespace utils::literals;
 
 SpeechToText *recognizer = nullptr;
 QTextToSpeech *engine = nullptr;
-QThread *engineThread = new QThread();
+QThread *engineThread = nullptr;
 
 QList<MainWindow::Action> commands;
 QList<Plugin> plugins;
@@ -99,6 +99,8 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     // Set up text to speech
+    engineThread = new QThread(this);
+    connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
     threading::runFunction(&MainWindow::setupTextToSpeech);
 
     // Connect the actions
@@ -409,7 +411,7 @@ void MainWindow::openModelDownloader()
 
 void MainWindow::processText(const QString &text)
 {
-    if (text == SpeechToText::wakeWord())
+    if (text.isEmpty())
         return;
 
     for (const auto &action : qAsConst(commands)) {
@@ -419,6 +421,14 @@ void MainWindow::processText(const QString &text)
                 return;
             }
         }
+    }
+
+    for (const auto &plugin : qAsConst(plugins)) {
+        if (!plugin.isValid(text))
+            continue;
+
+        plugin.run(text);
+        return;
     }
 
     engine->say(tr("I have not understood this!"));
@@ -583,12 +593,13 @@ QString MainWindow::ask(const QString &text)
              || recognizer->state() != SpeechToText::Paused);
 
     // By making it a pointer we prevent out of scope warnings
-    QString answer;
+    static QString answer;
+    answer.clear();
 
     QEventLoop loop(_instance);
     SpeechToText::reset();
     connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
-    connect(recognizer, &SpeechToText::answerReady, _instance, [&answer](const QString &asw) {
+    connect(recognizer, &SpeechToText::answerReady, _instance, [](const QString &asw) {
         answer = asw;
     });
     _instance->ui->statusLabel->setText(tr("Waiting for answer..."));
@@ -698,12 +709,13 @@ MainWindow::~MainWindow()
     delete recognizer;
 
     // Prevent deleting the thread while running
-    engineThread->quit();
-    engineThread->wait();
+    if (engineThread) {
+        engineThread->quit();
+        engineThread->wait();
+    }
 
     if (engine)
         engine->deleteLater();
-    engineThread->deleteLater();
 
     delete engine;
     delete engineThread;
