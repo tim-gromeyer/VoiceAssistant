@@ -39,7 +39,7 @@ Listener::Listener(QObject *parent)
 qint64 Listener::writeData(const char *data, qint64 size)
 {
     if (vosk_recognizer_accept_waveform(globalRecognizer, data, (int) size))
-        parseText(vosk_recognizer_final_result(globalRecognizer));
+        parseText(vosk_recognizer_result(globalRecognizer));
     else
         parsePartial(vosk_recognizer_partial_result(globalRecognizer));
 

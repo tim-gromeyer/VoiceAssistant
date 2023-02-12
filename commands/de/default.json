@@ -95,5 +95,11 @@
             "lautstärker"
         ],
         "funcName": "setVolume"
+    },
+    {
+        "commands": [
+            "erzähler ein witz"
+        ],
+        "funcName": "tellJoke"
     }
 ]

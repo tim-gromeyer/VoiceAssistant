@@ -9,6 +9,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
+class Jokes;
 class QAudioOutput;
 class QMediaPlayer;
 class QSystemTrayIcon;
@@ -74,6 +75,7 @@ public Q_SLOTS:
     static void volumeUp();
     static void volumeDown();
     static void setVolume(const QString &);
+    static void tellJoke();
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -114,6 +116,8 @@ private:
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QAudioOutput *audioOutput = nullptr;
 #endif
+
+    Jokes *jokes = nullptr;
 
     static void applyVolume();
 

@@ -42,6 +42,8 @@ set(PROJECT_SOURCES
     src/commanddialog.cpp
     src/commanddialog.h
     src/global.h
+    src/jokes.cpp
+    src/jokes.h
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
@@ -49,9 +51,9 @@ set(PROJECT_SOURCES
     src/modeldownloader.h
     src/recognizer.cpp
     src/recognizer.h
-    ui/mainwindow.ui
-    src/utils.h
     src/utils.cpp
+    src/utils.h
+    ui/mainwindow.ui
 )
 
 add_translations(TS ${TS_FILES})

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "global.h"
+#include "jokes.h"
 #include "modeldownloader.h"
 #include "recognizer.h"
 #include "ui_mainwindow.h"
@@ -72,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , player(new QMediaPlayer(this))
     , timeTimer(new QTimer(this))
+    , jokes(new Jokes())
 {
     // Set up UI
     ui->setupUi(this);
@@ -102,6 +104,8 @@ MainWindow::MainWindow(QWidget *parent)
     engineThread = new QThread(this);
     connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
     threading::runFunction(&MainWindow::setupTextToSpeech);
+
+    jokes->setup();
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -304,7 +308,8 @@ void MainWindow::onSTTStateChanged()
         ui->statusLabel->setText(recognizer->errorString());
     }
 
-    trayIcon->setToolTip(ui->statusLabel->text());
+    if (trayIcon)
+        trayIcon->setToolTip(ui->statusLabel->text());
 }
 
 void MainWindow::updateTime()
@@ -443,10 +448,10 @@ void MainWindow::loadCommands()
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
     if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qWarning() << STR("Failed to open %1:\n%2")
-                          .arg(jsonFile.fileName(), jsonFile.errorString())
-                          .toStdString()
-                          .c_str();
+        qCritical() << STR("Failed to open %1:\n%2")
+                           .arg(jsonFile.fileName(), jsonFile.errorString())
+                           .toStdString()
+                           .c_str();
         return;
     }
 
@@ -454,8 +459,19 @@ void MainWindow::loadCommands()
     QByteArray jsonData = jsonFile.readAll();
     jsonFile.close();
 
+    // In case of an error
+    QJsonParseError error{};
+
     // create a QJsonDocument from the JSON data
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &error);
+
+    // Error handling
+    if (error.error != QJsonParseError::NoError) {
+        qCritical() << STR("JSON parsing error at %1: %2")
+                           .arg(QString::number(error.offset), error.errorString());
+        return;
+    }
+
     // get the array from the JSON document
     QJsonArray jsonArray = jsonDoc.array();
 
@@ -691,6 +707,11 @@ void MainWindow::setVolume(const QString &text)
     applyVolume();
 }
 
+void MainWindow::tellJoke()
+{
+    _instance->jokes->sayJoke();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -708,6 +729,8 @@ MainWindow::~MainWindow()
     recognizer->deleteLater();
     delete recognizer;
 
+    jokes->deleteLater();
+
     // Prevent deleting the thread while running
     if (engineThread) {
         engineThread->quit();
@@ -719,6 +742,7 @@ MainWindow::~MainWindow()
 
     delete engine;
     delete engineThread;
+    delete jokes;
 }
 
 // TODO: Let user add commands via GUI
