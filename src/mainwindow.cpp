@@ -709,7 +709,7 @@ void MainWindow::setVolume(const QString &text)
 
 void MainWindow::tellJoke()
 {
-    _instance->jokes->sayJoke();
+    _instance->jokes->tellJoke();
 }
 
 MainWindow::~MainWindow()
