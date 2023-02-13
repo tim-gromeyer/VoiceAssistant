@@ -27,9 +27,13 @@ void Jokes::setup()
         {STR("cs"), STR("de"), STR("en"), STR("es"), STR("fr"), STR("pt")});
     static const QStringList uiLangs = QLocale::system().uiLanguages();
 
-    for (const auto &lang : uiLangs)
-        if (jokeLangs.contains(lang.right(2)))
-            jokeLang = lang.right(2);
+    jokeLang = std::accumulate(uiLangs.begin(),
+                               uiLangs.end(),
+                               QString(QLatin1String("")),
+                               [](const QString &a, const QString &b) {
+                                   const QString lang = b.right(2);
+                                   return jokeLangs.contains(lang) ? lang : a;
+                               });
 
     if (jokeLang.isEmpty()) {
         qCritical() << tr("No jokes are available for your language.\nYour languages: %1\nJoke "
@@ -54,20 +58,24 @@ void Jokes::tellJoke()
         }
     }
 
-    Joke joke = jokes.at(0);
-    jokes.removeFirst();
+    Joke joke = jokes.takeFirst();
     previousJokes.append(joke);
 
     qDebug() << joke.joke << joke.delivery;
+    if (jokes.size() == 1)
+        QTimer::singleShot(3s, this, &Jokes::fetchJokes);
+
+    if (joke.isSingle) {
+        MainWindow::say(joke.joke);
+        return;
+    }
 
     MainWindow::sayAndWait(joke.joke);
-    if (joke.isSingle)
-        return;
 
     QEventLoop loop(this);
 
     QTimer timer(this);
-    timer.setInterval(500ms);
+    timer.setInterval(700ms);
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
     timer.start();
@@ -126,5 +134,5 @@ void Jokes::fetchJokes()
             jokes.append(joke);
     }
 
-    qDebug() << "Jokes: Completed fetching jokes. Number of cached jokes:" << jokes.size();
+    qDebug() << "Jokes: Fetching jokes completed. Number of cached jokes:" << jokes.size();
 }

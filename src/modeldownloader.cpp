@@ -242,7 +242,7 @@ void ModelDownloader::downloadFinished()
     progress->close();
 
     // Check for error
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError || !reply->isOpen()) {
         if (reply->error() != QNetworkReply::OperationCanceledError) {
             QMessageBox::critical(this,
                                   tr("Download failed!"),
@@ -282,8 +282,12 @@ void ModelDownloader::downloadFinished()
     dia.setIcon(QMessageBox::Information);
     dia.show();
 
-    elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
-    QDir(SpeechToText::modelDir()).rename(info.name, info.lang);
+    try {
+        elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
+        QDir(SpeechToText::modelDir()).rename(info.name, info.lang);
+    } catch (elz::zip_exception &e) {
+        qCritical() << "Can't unzip voice model: " << e.what();
+    }
 
     QGuiApplication::restoreOverrideCursor();
     dia.close();

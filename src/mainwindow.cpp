@@ -712,6 +712,21 @@ void MainWindow::tellJoke()
     _instance->jokes->tellJoke();
 }
 
+void MainWindow::restart()
+{
+    const QString answer = ask(tr("Are you sure?"));
+
+    if (!answer.startsWith(tr("yes")))
+        return;
+
+    sayAndWait(tr("Okay"));
+
+    QStringList args = qApp->arguments();
+    args.removeFirst();
+    QProcess::startDetached(qApp->applicationFilePath(), args);
+    qApp->quit();
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;

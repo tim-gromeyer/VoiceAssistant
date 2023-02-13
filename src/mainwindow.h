@@ -76,6 +76,7 @@ public Q_SLOTS:
     static void volumeDown();
     static void setVolume(const QString &);
     static void tellJoke();
+    static void restart(); // Restart the application
 
 protected:
     void closeEvent(QCloseEvent *) override;
