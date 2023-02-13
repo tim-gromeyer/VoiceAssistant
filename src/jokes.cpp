@@ -22,6 +22,7 @@ Jokes::Jokes(QObject *parent)
 
 void Jokes::setup()
 {
+    qDebug() << "Jokes: setup";
     static const QStringList jokeLangs(
         {STR("cs"), STR("de"), STR("en"), STR("es"), STR("fr"), STR("pt")});
     static const QStringList uiLangs = QLocale::system().uiLanguages();
@@ -38,18 +39,26 @@ void Jokes::setup()
     }
 
     fetchJokes();
+    qDebug() << "Jokes: Setup finished";
 }
 
 void Jokes::tellJoke()
 {
+    qDebug() << "Jokes: Telling a joke. Cached amount of jokes:" << jokes.size();
     // TODO: Slow down voice temporarily
-    if (jokes.isEmpty())
+    if (jokes.isEmpty()) {
         fetchJokes();
+        if (jokes.isEmpty()) {
+            MainWindow::say(tr("Sorry, something went wrong"));
+            return;
+        }
+    }
 
-    Joke joke = jokes.takeFirst();
+    Joke joke = jokes.at(0);
+    jokes.removeFirst();
     previousJokes.append(joke);
 
-    qDebug() << joke.joke << '\n' << joke.delivery;
+    qDebug() << joke.joke << joke.delivery;
 
     MainWindow::sayAndWait(joke.joke);
     if (joke.isSingle)
@@ -78,14 +87,19 @@ Jokes::Joke parseJson(const QByteArray &json)
         return joke;
     }
     joke.isSingle = obj[STR("type")].toString() == L1("single");
-    joke.joke = obj[STR("setup")].toString();
-    joke.delivery = obj[STR("delivery")].toString();
+    if (joke.isSingle) {
+        joke.joke = obj[STR("joke")].toString();
+    } else {
+        joke.joke = obj[STR("setup")].toString();
+        joke.delivery = obj[STR("delivery")].toString();
+    }
 
     return joke;
 }
 
 void Jokes::fetchJokes()
 {
+    qDebug() << "Jokes: Fetching jokes";
     int tries = 0;
 
     while (jokes.size() <= 2 && tries <= 5) {
@@ -99,7 +113,7 @@ void Jokes::fetchJokes()
         loop.exec();
 
         if (reply->error() != QNetworkReply::NoError) {
-            qCritical() << tr("Could not download model info file:\n%1").arg(reply->errorString());
+            qCritical() << tr("Could not fetch joke: %1").arg(reply->errorString());
             return;
         }
 
@@ -111,4 +125,6 @@ void Jokes::fetchJokes()
         if (!previousJokes.contains(joke))
             jokes.append(joke);
     }
+
+    qDebug() << "Jokes: Completed fetching jokes. Number of cached jokes:" << jokes.size();
 }

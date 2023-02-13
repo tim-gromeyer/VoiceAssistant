@@ -105,8 +105,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
     threading::runFunction(&MainWindow::setupTextToSpeech);
 
-    jokes->setup();
-
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
@@ -127,6 +125,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->muteButton, &QCheckBox::clicked, this, &MainWindow::mute);
 
     setupTrayIcon();
+
+    QTimer::singleShot(1s, jokes, &Jokes::setup);
 }
 
 void MainWindow::addCommand(Plugin a)

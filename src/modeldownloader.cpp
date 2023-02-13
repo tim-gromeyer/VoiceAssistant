@@ -26,8 +26,14 @@ using namespace utils::literals;
 ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}
     , manager(new QNetworkAccessManager(this))
+    , progress(new QProgressDialog(this))
 {
     setWindowTitle(tr("Model downloader"));
+
+    progress->setWindowTitle(tr("Downloading..."));
+    progress->setRange(0, 100);
+    progress->close();
+
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
     QDir().mkpath(SpeechToText::modelDir());
     downloadInfo();
@@ -207,23 +213,22 @@ void ModelDownloader::downloadModel()
     // that will be called when the download is complete
     QObject::connect(reply, &QNetworkReply::finished, this, &ModelDownloader::downloadFinished);
 
-    // Create progress dialogue
-    if (!progress)
-        progress = new QProgressDialog(this);
-
-    // Show a progress dialog to show the progress
-    progress->setWindowTitle(tr("Downloading..."));
     progress->setLabelText(tr("Downloading %1").arg(fileName));
     progress->setValue(0);
-    progress->setRange(0, info.size);
-    connect(reply, &QNetworkReply::downloadProgress, this, [this](qint64 recived, qint64 total) {
-        progress->setValue((int) recived);
-    });
+    connect(reply, &QNetworkReply::downloadProgress, this, &ModelDownloader::downloadProgress);
 
     // Cancel if the user cancels
     connect(progress, &QProgressDialog::canceled, reply, &QNetworkReply::abort);
 
-    progress->exec();
+    progress->show();
+}
+
+void ModelDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+    //      W * 100  //      W
+    //  G = -------  //  G = - * 100
+    //         p     //      p
+    progress->setValue(int(bytesReceived * 100 / bytesTotal));
 }
 
 void ModelDownloader::downloadFinished()
@@ -234,16 +239,16 @@ void ModelDownloader::downloadFinished()
     QString fileName = info.name + L1(".zip");
 
     // Hide the progress dialog
-    if (progress)
-        progress->close();
+    progress->close();
 
     // Check for error
-    if (reply->error() != QNetworkReply::NoError
-        && reply->error() != QNetworkReply::OperationCanceledError) {
-        QMessageBox::critical(this,
-                              tr("Download failed!"),
-                              tr("The download failed for following reason:\n%1")
-                                  .arg(reply->errorString()));
+    if (reply->error() != QNetworkReply::NoError) {
+        if (reply->error() != QNetworkReply::OperationCanceledError) {
+            QMessageBox::critical(this,
+                                  tr("Download failed!"),
+                                  tr("The download failed for following reason:\n%1")
+                                      .arg(reply->errorString()));
+        }
 
         if (senderButton) {
             senderButton->setText(tr("Download"));

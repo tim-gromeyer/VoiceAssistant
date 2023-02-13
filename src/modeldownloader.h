@@ -35,6 +35,8 @@ private Q_SLOTS:
     void downloadInfo();
     void setupUi();
 
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+
 private:
     void downloadModel();
 
@@ -48,5 +50,5 @@ private:
     QNetworkAccessManager *manager = nullptr;
     QNetworkReply *reply = nullptr;
 
-    QProgressDialog *progress = nullptr;
+    QProgressDialog *progress;
 };
