@@ -228,6 +228,8 @@ void ModelDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
     //      W * 100  //      W
     //  G = -------  //  G = - * 100
     //         p     //      p
+    if (bytesTotal <= 0)
+        return;
     progress->setValue(int(bytesReceived * 100 / bytesTotal));
 }
 

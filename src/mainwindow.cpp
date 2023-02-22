@@ -2,6 +2,7 @@
 #include "global.h"
 #include "jokes.h"
 #include "modeldownloader.h"
+#include "plugins/bridge.h"
 #include "recognizer.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
@@ -15,6 +16,7 @@
 #include <QLineEdit>
 #include <QMediaPlayer>
 #include <QMessageBox>
+#include <QPluginLoader>
 #include <QProcess>
 #include <QRandomGenerator>
 #include <QSaveFile>
@@ -37,8 +39,7 @@ SpeechToText *recognizer = nullptr;
 QTextToSpeech *engine = nullptr;
 QThread *engineThread = nullptr;
 
-QList<MainWindow::Action> commands;
-QList<Plugin> plugins;
+QList<PluginInterface *> plugins;
 MainWindow *_instance = nullptr;
 
 float volume = 1.0;
@@ -47,25 +48,25 @@ void MainWindow::Action::run(const QString &text) const
 {
     if (!funcName.isEmpty()) {
         if (MainWindow::staticMetaObject.indexOfMethod(QString(funcName + L1("()")).toUtf8()) == -1)
-            QMetaObject::invokeMethod(_instance,
+            QMetaObject::invokeMethod(instance(),
                                       funcName.toUtf8(),
                                       Qt::QueuedConnection,
                                       Q_ARG(QString, text));
         else
-            QMetaObject::invokeMethod(_instance, funcName.toUtf8(), Qt::QueuedConnection);
+            QMetaObject::invokeMethod(instance(), funcName.toUtf8(), Qt::QueuedConnection);
     }
     if (!responses.isEmpty()) {
         int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
     }
     if (!program.isEmpty()) {
-        QProcess p(_instance);
+        QProcess p(instance());
         p.setProgram(program);
         p.setArguments(args);
         p.startDetached();
     }
     if (!sound.isEmpty())
-        _instance->playSound(sound);
+        instance()->playSound(sound);
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -73,14 +74,15 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , player(new QMediaPlayer(this))
     , timeTimer(new QTimer(this))
-    , jokes(new Jokes())
+    , jokes(new Jokes(this))
+    , bridge(new PluginBridge(this))
 {
     // Set up UI
     ui->setupUi(this);
 
     ui->content->setFocus();
 
-    // Set _instance
+    // Set instance for instance()
     _instance = this;
 
     // Set audio output device
@@ -126,13 +128,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupTrayIcon();
 
+    loadPlugins();
+
     QTimer::singleShot(1s, jokes, &Jokes::setup);
 }
 
-void MainWindow::addCommand(Plugin a)
+void MainWindow::addCommand(PluginInterface *a)
 {
     plugins.append(a);
-    saveCommands();
+    instance()->saveCommands();
 }
 
 void MainWindow::playSound(const QString &_url)
@@ -193,6 +197,7 @@ void MainWindow::onHelpAbout()
 
 void MainWindow::mute(bool mute)
 {
+    muted = mute;
     ui->content->setFocus();
 
     if (!recognizer)
@@ -213,14 +218,19 @@ void MainWindow::mute(bool mute)
     muteAction->setText(ui->muteButton->text());
     muteAction->setToolTip(ui->muteButton->toolTip());
     muteAction->setIcon(ui->muteButton->icon());
-    muteAction->setChecked(mute);
 
+    muteAction->setChecked(mute);
     ui->muteButton->setChecked(mute);
 }
 
 void MainWindow::toggleMute()
 {
     mute(!muteAction->isChecked());
+}
+
+void MainWindow::toggleVisibilty()
+{
+    setVisible(!isVisible());
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -261,6 +271,7 @@ void MainWindow::setupTrayIcon()
     menu->addAction(muteAction);
 
     trayIcon->setContextMenu(menu);
+    trayIcon->setToolTip(qApp->applicationName());
     trayIcon->show();
 }
 
@@ -307,9 +318,6 @@ void MainWindow::onSTTStateChanged()
     default:
         ui->statusLabel->setText(recognizer->errorString());
     }
-
-    if (trayIcon)
-        trayIcon->setToolTip(ui->statusLabel->text());
 }
 
 void MainWindow::updateTime()
@@ -332,6 +340,7 @@ void MainWindow::onWakeWord()
 #else
         player->setVolume(int(30 * volume));
 #endif
+    engine->setVolume(.3 * volume);
 }
 
 void MainWindow::doneListening()
@@ -429,10 +438,10 @@ void MainWindow::processText(const QString &text)
     }
 
     for (const auto &plugin : qAsConst(plugins)) {
-        if (!plugin.isValid(text))
+        if (!plugin->isValid(text))
             continue;
 
-        plugin.run(text);
+        plugin->run(text);
         return;
     }
 
@@ -566,10 +575,79 @@ void MainWindow::saveCommands()
     jsonFile.write(jsonDoc.toJson());
     if (!jsonFile.commit())
         QMessageBox::warning(
-            _instance,
+            instance(),
             tr("Failed to save file"),
             tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
                 .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
+}
+
+void MainWindow::loadPlugins()
+{
+    const auto staticInstances = QPluginLoader::staticInstances();
+    for (QObject *plugin : staticInstances)
+        plugins.append(qobject_cast<PluginInterface *>(plugin));
+
+#ifdef QT_DEBUG
+    pluginsDir.setPath(SpeechToText::dataDir() + L1("/plugins"));
+#else
+    pluginsDir = QDir(QCoreApplication::applicationDirPath());
+
+#if defined(Q_OS_WIN)
+    if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
+        pluginsDir.cdUp();
+#elif defined(Q_OS_MAC)
+    if (pluginsDir.dirName() == "MacOS") {
+        pluginsDir.cdUp();
+        pluginsDir.cdUp();
+        pluginsDir.cdUp();
+    }
+#endif
+    if (!pluginsDir.cd("plugins"))
+        return;
+#endif
+
+    const auto entryList = pluginsDir.entryList(QDir::Files);
+
+    for (const QString &fileName : entryList) {
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        qDebug() << &loader << loader.load() << loader.fileName() << loader.errorString();
+        loader.load();
+        QObject *plugin = loader.instance();
+        if (!plugin)
+            continue;
+
+        PluginInterface *interface = qobject_cast<PluginInterface *>(plugin);
+        if (!interface)
+            continue;
+
+        interface->setBridge(bridge);
+
+        qInfo() << "Loaded plugin:" << loader.fileName();
+        plugins.append(interface);
+    }
+
+    if (plugins.isEmpty())
+        return;
+
+    connect(bridge, &PluginBridge::_say, this, &MainWindow::say);
+    connect(
+        bridge,
+        &PluginBridge::_sayAndWait,
+        this,
+        [this](const QString &text) {
+            qDebug() << "sayAndWait";
+            sayAndWait(text);
+        },
+        Qt::DirectConnection);
+    connect(
+        bridge,
+        &PluginBridge::_ask,
+        this,
+        [this](const QString &text) {
+            const QString answer = ask(text);
+            bridge->_setAnswer(answer);
+        },
+        Qt::DirectConnection);
 }
 
 void MainWindow::say(const QString &text)
@@ -582,16 +660,11 @@ void MainWindow::say(const QString &text)
     engine->say(text);
 }
 
-void MainWindow::say(const std::string &text)
-{
-    say(QString::fromStdString(text));
-}
-
 void MainWindow::sayAndWait(const QString &text)
 {
     if (!engine)
         return;
-    QEventLoop loop(_instance);
+    QEventLoop loop(instance());
     connect(engine, &QTextToSpeech::stateChanged, &loop, [&loop](QTextToSpeech::State s) {
         if (s != QTextToSpeech::Speaking)
             loop.quit();
@@ -602,6 +675,9 @@ void MainWindow::sayAndWait(const QString &text)
 
 QString MainWindow::ask(const QString &text)
 {
+    if (instance()->muted)
+        return {QLatin1String()};
+
     sayAndWait(text);
 
     // If this is the case something is definitely wrong
@@ -612,18 +688,18 @@ QString MainWindow::ask(const QString &text)
     static QString answer;
     answer.clear();
 
-    QEventLoop loop(_instance);
+    QEventLoop loop(instance());
     SpeechToText::reset();
     connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
-    connect(recognizer, &SpeechToText::answerReady, _instance, [](const QString &asw) {
+    connect(recognizer, &SpeechToText::answerReady, instance(), [](const QString &asw) {
         answer = asw;
     });
-    _instance->ui->statusLabel->setText(tr("Waiting for answer..."));
+    instance()->ui->statusLabel->setText(tr("Waiting for answer..."));
     SpeechToText::ask();
     loop.exec();
     loop.deleteLater();
-    _instance->ui->statusLabel->setText(tr("Waiting for wake word"));
-    _instance->ui->textLabel->setText({});
+    instance()->ui->statusLabel->setText(tr("Waiting for wake word"));
+    instance()->ui->textLabel->setText({});
 
     return answer;
 }
@@ -632,20 +708,20 @@ void MainWindow::stop()
 {
     if (engine)
         engine->stop();
-    if (_instance->player)
-        _instance->player->stop();
+    if (instance()->player)
+        instance()->player->stop();
 }
 
 void MainWindow::pause()
 {
-    if (_instance->player)
-        _instance->player->pause();
+    if (instance()->player)
+        instance()->player->pause();
 }
 
 void MainWindow::resume()
 {
-    if (_instance->player)
-        _instance->player->play();
+    if (instance()->player)
+        instance()->player->play();
 }
 
 void MainWindow::quit()
@@ -673,10 +749,10 @@ void MainWindow::applyVolume()
 {
     qDebug() << "[debug] Change volume to:" << volume;
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    _instance->audioOutput->setVolume(1.0F * volume);
+    instance()->audioOutput->setVolume(1.0F * volume);
 #else
-    if (_instance->player)
-        _instance->player->setVolume(int(100 * volume));
+    if (instance()->player)
+        instance()->player->setVolume(int(100 * volume));
 #endif
 
     if (engine)
@@ -709,7 +785,7 @@ void MainWindow::setVolume(const QString &text)
 
 void MainWindow::tellJoke()
 {
-    _instance->jokes->tellJoke();
+    jokes->tellJoke();
 }
 
 void MainWindow::restart()
@@ -729,9 +805,10 @@ void MainWindow::restart()
 
 MainWindow::~MainWindow()
 {
-    delete ui;
-
     timeTimer->stop();
+    timeTimer->deleteLater();
+
+    delete ui;
 
     int activeThreadCount = QThreadPool::globalInstance()->activeThreadCount();
 
@@ -743,6 +820,9 @@ MainWindow::~MainWindow()
 
     recognizer->deleteLater();
     delete recognizer;
+
+    bridge->deleteLater();
+    delete bridge;
 
     jokes->deleteLater();
 
@@ -758,6 +838,7 @@ MainWindow::~MainWindow()
     delete engine;
     delete engineThread;
     delete jokes;
+    delete timeTimer;
 }
 
 // TODO: Let user add commands via GUI
@@ -767,4 +848,4 @@ MainWindow::~MainWindow()
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
 // TODO: Load plugins, see https://doc.qt.io/qt-6/qpluginloader.html
-// TODO: Implement weather, see Qt weather example
+// TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example

@@ -2,3 +2,5 @@
 vosk/
 models/
 android/
+plugins/*.so
+plugins/build-*

@@ -1,22 +1,23 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-
 #include "plugins/base.h"
+
+#include <QDir>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 class Jokes;
+class PluginBridge;
 class QAudioOutput;
 class QMediaPlayer;
+class QPluginLoader;
 class QSystemTrayIcon;
 class QTimer;
 QT_END_NAMESPACE
-
-Q_DECLARE_METATYPE(std::string)
 
 class MainWindow : public QMainWindow
 {
@@ -30,11 +31,8 @@ public:
     // Ask the user a question and return the answer
     static QString ask(const QString &text);
 
-    struct Action : public Plugin
+    struct Action
     {
-        Action() = default;
-        ~Action() = default;
-
         QString funcName;
         QStringList responses;
 
@@ -55,13 +53,13 @@ public:
     static void sayAndWait(const QString &);
 
     // Add a command
-    static void addCommand(Plugin);
+    static void addCommand(PluginInterface *);
 
 public Q_SLOTS:
     static void say(const QString &);
-    static void say(const std::string &);
 
     void playSound(const QString &);
+    void toggleVisibilty();
 
     //////////////////////////////////////////////////////////////////
     /// Define new functions here!
@@ -75,8 +73,9 @@ public Q_SLOTS:
     static void volumeUp();
     static void volumeDown();
     static void setVolume(const QString &);
-    static void tellJoke();
     static void restart(); // Restart the application
+
+    void tellJoke();
 
 protected:
     void closeEvent(QCloseEvent *) override;
@@ -91,7 +90,7 @@ private Q_SLOTS:
     void doneListening();
 
     void updateText(const QString &);
-    static void processText(const QString &);
+    void processText(const QString &);
 
     void onHelpAbout();
 
@@ -106,11 +105,17 @@ private Q_SLOTS:
     void mute(bool mute);
     void toggleMute();
 
-    static void loadCommands();
-    static void saveCommands();
+    void loadCommands();
+    void saveCommands();
+
+    void loadPlugins();
 
 private:
+    static void applyVolume();
+
     Ui::MainWindow *ui;
+
+    bool muted = false;
 
     QAction *muteAction = nullptr;
     QMediaPlayer *player = nullptr;
@@ -118,14 +123,16 @@ private:
     QAudioOutput *audioOutput = nullptr;
 #endif
 
-    Jokes *jokes = nullptr;
-
-    static void applyVolume();
-
     // The timer used to display the current time
     QTimer *timeTimer;
+    Jokes *jokes;
+
+    QDir pluginsDir;
+    PluginBridge *bridge;
 
     QSharedPointer<QSystemTrayIcon> trayIcon;
+
+    QList<MainWindow::Action> commands;
 };
 
 #endif // MAINWINDOW_H

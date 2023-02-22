@@ -1,12 +1,31 @@
 #pragma once
 
 #include <QString>
+#include <QtPlugin>
 
-struct Plugin
+#ifndef NO_BRIDGE
+#include "bridge.h"
+#else
+class PluginPluginBridge;
+#endif
+
+class PluginInterface
 {
-    bool isValid(const QString &) const { return false; };
+public:
+    virtual ~PluginInterface() = default;
 
-    void run(const QString &) const {};
+    virtual bool isValid(const QString &) = 0;
+
+    virtual void run(const QString &) = 0;
+
+    inline void setBridge(PluginBridge *b)
+    {
+#ifndef NO_BRIDGE
+        bridge = b;
+#endif
+    }
+    PluginBridge *bridge = nullptr;
 };
 
-Q_DECLARE_TYPEINFO(Plugin, Q_PRIMITIVE_TYPE);
+#define PLUGIN_iid "io.github.tim-gromeyer.voiceassistant.plugin/1.0"
+Q_DECLARE_INTERFACE(PluginInterface, PLUGIN_iid);

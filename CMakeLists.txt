@@ -23,6 +23,9 @@ if(CMAKE_BUILD_TYPE STREQUAL "Release")
     string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
     string(REPLACE "-O2" "-O3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     add_compile_definitions(QT_NO_DEBUG_OUTPUT)
+    option(BUILD_TEST_PLUGIN "Build a test plugin" OFF)
+else()
+    option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
@@ -39,6 +42,7 @@ include(cmake/Translation.cmake)
 set(PROJECT_SOURCES
     ${RC_FILES}
     plugins/base.h
+    plugins/bridge.h
     src/commanddialog.cpp
     src/commanddialog.h
     src/global.h
@@ -83,6 +87,10 @@ IF(WIN32)
 ENDIF(WIN32)
 
 add_subdirectory(3rdparty)
+if (BUILD_TEST_PLUGIN)
+    message(STATUS "Build test plugin")
+    add_subdirectory(plugins/testPlugin)
+endif()
 
 target_include_directories(voiceassistant PRIVATE src vosk)
 target_link_directories(voiceassistant PRIVATE vosk)

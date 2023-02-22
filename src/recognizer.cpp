@@ -23,7 +23,7 @@ VoskModel *model = nullptr;
 VoskRecognizer *globalRecognizer = nullptr;
 
 // Declare a string for the "wake word" (defaults to `alexa` + empty character so it doesn't trigger on alexander)
-QLatin1String _wakeWord = L1("alexa ");
+QLatin1String _wakeWord = L1("computer ");
 
 // Declare a global variable to store the directory where the Vosk models are stored
 QString _modelDir;
@@ -139,6 +139,8 @@ void SpeechToText::pause()
     audio->stop();
     if (globalRecognizer)
         vosk_recognizer_reset(globalRecognizer);
+
+    asking = false;
 
     setState(Paused);
 }

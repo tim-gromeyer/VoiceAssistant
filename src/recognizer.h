@@ -103,8 +103,9 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void stateChanged();
-    void modelLoaded();
     void languageChanged();
+
+    void modelLoaded();
 
     void answerReady(QString);
 
