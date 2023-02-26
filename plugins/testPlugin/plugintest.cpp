@@ -2,7 +2,7 @@
 
 bool PluginTest::isValid(const QString &text)
 {
-    return text == QLatin1String("plugin testen");
+    return text == QLatin1String("test plug in") || text == QLatin1String("plugin testen");
 }
 
 void PluginTest::run(const QString & /* text */)

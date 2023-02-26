@@ -13,6 +13,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QLibrary>
 #include <QLineEdit>
 #include <QMediaPlayer>
 #include <QMessageBox>
@@ -39,7 +40,13 @@ SpeechToText *recognizer = nullptr;
 QTextToSpeech *engine = nullptr;
 QThread *engineThread = nullptr;
 
-QList<PluginInterface *> plugins;
+struct Plugin
+{
+    PluginInterface *interface = nullptr;
+    QObject *object = nullptr;
+};
+
+QList<Plugin> plugins;
 MainWindow *_instance = nullptr;
 
 float volume = 1.0;
@@ -130,12 +137,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     loadPlugins();
 
-    QTimer::singleShot(1s, jokes, &Jokes::setup);
+    QTimer::singleShot(3s, jokes, &Jokes::setup);
 }
 
-void MainWindow::addCommand(PluginInterface *a)
+void MainWindow::addCommand(const Action &a)
 {
-    plugins.append(a);
+    instance()->commands.append(a);
     instance()->saveCommands();
 }
 
@@ -197,7 +204,7 @@ void MainWindow::onHelpAbout()
 
 void MainWindow::mute(bool mute)
 {
-    muted = mute;
+    m_muted = mute;
     ui->content->setFocus();
 
     if (!recognizer)
@@ -221,6 +228,8 @@ void MainWindow::mute(bool mute)
 
     muteAction->setChecked(mute);
     ui->muteButton->setChecked(mute);
+
+    Q_EMIT muted();
 }
 
 void MainWindow::toggleMute()
@@ -345,9 +354,10 @@ void MainWindow::onWakeWord()
 
 void MainWindow::doneListening()
 {
-    processText(ui->textLabel->text());
     ui->statusLabel->setText(tr("Waiting for wake word"));
+    const QString text = ui->textLabel->text();
     ui->textLabel->setText({});
+    QMetaObject::invokeMethod(this, "processText", Qt::QueuedConnection, Q_ARG(QString, text));
 
     if (player)
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -355,6 +365,8 @@ void MainWindow::doneListening()
 #else
         player->setVolume(int(100 * volume));
 #endif
+
+    engine->setVolume(1.0F * volume);
 }
 
 void MainWindow::onHasWord()
@@ -437,15 +449,15 @@ void MainWindow::processText(const QString &text)
         }
     }
 
-    for (const auto &plugin : qAsConst(plugins)) {
-        if (!plugin->isValid(text))
+    for (const Plugin &plugin : qAsConst(plugins)) {
+        if (!plugin.interface->isValid(text))
             continue;
 
-        plugin->run(text);
+        plugin.interface->run(text);
         return;
     }
 
-    engine->say(tr("I have not understood this!"));
+    say(tr("I have not understood this!"));
 }
 
 void MainWindow::loadCommands()
@@ -584,8 +596,19 @@ void MainWindow::saveCommands()
 void MainWindow::loadPlugins()
 {
     const auto staticInstances = QPluginLoader::staticInstances();
-    for (QObject *plugin : staticInstances)
-        plugins.append(qobject_cast<PluginInterface *>(plugin));
+    for (QObject *pluginObject : staticInstances) {
+        auto *interface = qobject_cast<PluginInterface *>(pluginObject);
+        if (!interface)
+            continue;
+
+        interface->setBridge(bridge);
+
+        Plugin plugin;
+        plugin.interface = interface;
+        plugin.object = pluginObject;
+
+        plugins.append(plugin);
+    }
 
 #ifdef QT_DEBUG
     pluginsDir.setPath(SpeechToText::dataDir() + L1("/plugins"));
@@ -609,45 +632,44 @@ void MainWindow::loadPlugins()
     const auto entryList = pluginsDir.entryList(QDir::Files);
 
     for (const QString &fileName : entryList) {
-        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
-        qDebug() << &loader << loader.load() << loader.fileName() << loader.errorString();
-        loader.load();
-        QObject *plugin = loader.instance();
-        if (!plugin)
+        if (!QLibrary::isLibrary(fileName))
             continue;
 
-        PluginInterface *interface = qobject_cast<PluginInterface *>(plugin);
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        if (!loader.load()) {
+            qWarning() << "Failed to load plugin" << fileName
+                       << "due to following reason:" << loader.errorString()
+                       << "\nUse `qtplugininfo` for a more advanced error message!";
+        }
+        QObject *pluginObject = loader.instance();
+        if (!pluginObject)
+            continue;
+
+        pluginObject->setParent(this);
+
+        PluginInterface *interface = qobject_cast<PluginInterface *>(pluginObject);
         if (!interface)
             continue;
 
         interface->setBridge(bridge);
+        Plugin plugin;
+        plugin.interface = interface;
+        plugin.object = pluginObject;
 
         qInfo() << "Loaded plugin:" << loader.fileName();
-        plugins.append(interface);
+        plugins.append(plugin);
     }
 
     if (plugins.isEmpty())
         return;
 
-    connect(bridge, &PluginBridge::_say, this, &MainWindow::say);
-    connect(
-        bridge,
-        &PluginBridge::_sayAndWait,
-        this,
-        [this](const QString &text) {
-            qDebug() << "sayAndWait";
-            sayAndWait(text);
-        },
-        Qt::DirectConnection);
-    connect(
-        bridge,
-        &PluginBridge::_ask,
-        this,
-        [this](const QString &text) {
-            const QString answer = ask(text);
-            bridge->_setAnswer(answer);
-        },
-        Qt::DirectConnection);
+    connect(bridge, &PluginBridge::_say, this, &MainWindow::say, Qt::QueuedConnection);
+    connect(bridge,
+            &PluginBridge::_sayAndWait,
+            this,
+            &MainWindow::bridgeSayAndWait,
+            Qt::QueuedConnection);
+    connect(bridge, &PluginBridge::_ask, this, &MainWindow::bridgeAsk, Qt::QueuedConnection);
 }
 
 void MainWindow::say(const QString &text)
@@ -675,7 +697,7 @@ void MainWindow::sayAndWait(const QString &text)
 
 QString MainWindow::ask(const QString &text)
 {
-    if (instance()->muted)
+    if (instance()->m_muted)
         return {QLatin1String()};
 
     sayAndWait(text);
@@ -688,20 +710,38 @@ QString MainWindow::ask(const QString &text)
     static QString answer;
     answer.clear();
 
-    QEventLoop loop(instance());
-    SpeechToText::reset();
-    connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
-    connect(recognizer, &SpeechToText::answerReady, instance(), [](const QString &asw) {
+    QEventLoop loop;
+
+    recognizer->reset();
+    connect(recognizer, &SpeechToText::answerReady, &loop, [&loop](const QString &asw) {
         answer = asw;
     });
-    instance()->ui->statusLabel->setText(tr("Waiting for answer..."));
+    connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
+
+    if (instance()->m_muted)
+        return {QLatin1String()};
     SpeechToText::ask();
+    instance()->ui->statusLabel->setText(tr("Waiting for answer..."));
     loop.exec();
-    loop.deleteLater();
     instance()->ui->statusLabel->setText(tr("Waiting for wake word"));
     instance()->ui->textLabel->setText({});
 
     return answer;
+}
+
+void MainWindow::bridgeSayAndWait(const QString &text)
+{
+    sayAndWait(text);
+    bridge->pause = false;
+}
+
+void MainWindow::bridgeAsk(const QString &text)
+{
+    if (!m_muted)
+        recognizer->resume();
+
+    bridge->answer = ask(text);
+    bridge->pause = false;
 }
 
 void MainWindow::stop()

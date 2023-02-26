@@ -53,23 +53,21 @@ void Listener::parseText(const char *json)
 
     if (text.isEmpty())
         return;
-
-    text.append(u' ');
-
-    if (text.contains(_wakeWord))
-        text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
     else if (asking) {
         Q_EMIT answerReady(text);
         return;
-    } else
+    }
+
+    text.append(u' ');
+
+    if (!text.contains(_wakeWord))
         return;
 
+    text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
     text = text.trimmed();
 
     Q_EMIT textUpdated(text);
-
     qDebug() << "[debug] Text:" << text;
-
     Q_EMIT doneListening();
 }
 
@@ -133,12 +131,16 @@ SpeechToText::operator bool() const
 
 void SpeechToText::pause()
 {
+    if (asking)
+        Q_EMIT answerReady(QLatin1String());
+
     if (!audio)
         return;
 
-    audio->stop();
-    if (globalRecognizer)
-        vosk_recognizer_reset(globalRecognizer);
+    reset();
+    // audio->stop(); // This somehow crashes
+    QMetaObject::invokeMethod(
+        audio.get(), [this] { audio->stop(); }, Qt::QueuedConnection);
 
     asking = false;
 
@@ -168,6 +170,8 @@ void SpeechToText::resume()
 
 void SpeechToText::reset()
 {
+    m_device->reset();
+
     if (globalRecognizer)
         vosk_recognizer_reset(globalRecognizer);
 }
@@ -258,7 +262,6 @@ void SpeechToText::setUpMic()
 
 void SpeechToText::setup()
 {
-    qDebug() << __func__ << m_state;
     switch (m_state) {
     case Running:
         return;

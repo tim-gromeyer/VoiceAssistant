@@ -2,6 +2,7 @@
 #include "utils.h"
 
 #include <QApplication>
+#include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
 

@@ -6,7 +6,7 @@
 #ifndef NO_BRIDGE
 #include "bridge.h"
 #else
-class PluginPluginBridge;
+class PluginBridge;
 #endif
 
 class PluginInterface

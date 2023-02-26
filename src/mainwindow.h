@@ -28,8 +28,6 @@ public:
     ~MainWindow();
 
     static MainWindow *instance();
-    // Ask the user a question and return the answer
-    static QString ask(const QString &text);
 
     struct Action
     {
@@ -53,10 +51,19 @@ public:
     static void sayAndWait(const QString &);
 
     // Add a command
-    static void addCommand(PluginInterface *);
+    static void addCommand(const Action &);
+
+Q_SIGNALS:
+    void muted();
 
 public Q_SLOTS:
     static void say(const QString &);
+
+    // Ask the user a question and return the answer
+    static QString ask(const QString &text);
+
+    void bridgeSayAndWait(const QString &);
+    void bridgeAsk(const QString &);
 
     void playSound(const QString &);
     void toggleVisibilty();
@@ -115,7 +122,7 @@ private:
 
     Ui::MainWindow *ui;
 
-    bool muted = false;
+    bool m_muted = false;
 
     QAction *muteAction = nullptr;
     QMediaPlayer *player = nullptr;

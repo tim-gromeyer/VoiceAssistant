@@ -27,5 +27,11 @@
         "responses": [
             "hello"
         ]
+    },
+    {
+        "commands": [
+            "shut down"
+        ],
+        "funcName": "quit"
     }
 ]
