@@ -4,6 +4,12 @@
 #include <QMutex>
 #include <QObject>
 
+#if QT_WIDGETS_LIB
+#include <QWidget>
+#else
+class QWidget;
+#endif
+
 class PluginBridge : public QObject
 {
     Q_OBJECT
@@ -23,7 +29,7 @@ public:
         mutex.lock();
         pause = true;
 
-        Q_EMIT _ask(text);
+        Q_EMIT _ask(text, QPrivateSignal());
 
         while (pause)
             QCoreApplication::processEvents();
@@ -40,7 +46,7 @@ public:
         mutex.lock();
         pause = true;
 
-        Q_EMIT _sayAndWait(text);
+        Q_EMIT _sayAndWait(text, QPrivateSignal());
 
         while (pause)
             QCoreApplication::processEvents();
@@ -49,12 +55,14 @@ public:
     }
 
 public Q_SLOTS:
-    inline void say(const QString &text) { Q_EMIT _say(text); };
+    inline void say(const QString &text) { Q_EMIT _say(text, QPrivateSignal()); };
 
 Q_SIGNALS:
-    void _say(const QString &);
-    void _sayAndWait(const QString &);
-    void _ask(const QString &);
+    void _say(const QString &, QPrivateSignal);
+    void _sayAndWait(const QString &, QPrivateSignal);
+    void _ask(const QString &, QPrivateSignal);
+
+    // void useWidget(QWidget *);
 
 private:
     QString answer;

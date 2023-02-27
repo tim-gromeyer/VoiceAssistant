@@ -866,10 +866,10 @@ MainWindow::~MainWindow()
     delete timeTimer;
 }
 
-// TODO: Let user add commands via GUI
-// See: https://doc.qt.io/qt-6/qwizardpage.html,
-//      https://doc.qt.io/qt-6/qwizard.html
-//      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html
+/* TODO: Let user add commands via GUI, 
+ * see: https://doc.qt.io/qt-6/qwizardpage.html,
+ *      https://doc.qt.io/qt-6/qwizard.html
+ *      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html */
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example
