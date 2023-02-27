@@ -1,8 +1,10 @@
 #include "jokes.h"
+#include "global.h"
 #include "mainwindow.h"
 #include "utils.h"
 
 #include <QCoreApplication>
+#include <QDataStream>
 #include <QEventLoop>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -15,10 +17,31 @@
 using namespace std::chrono_literals;
 using namespace utils::literals;
 
+inline QDataStream &operator<<(QDataStream &out, const Jokes::Joke &j)
+{
+    out << j.joke;
+    out << j.delivery;
+    out << j.error;
+    out << j.isSingle;
+
+    return out;
+}
+inline QDataStream &operator>>(QDataStream &in, Jokes::Joke &j)
+{
+    in >> j.joke;
+    in >> j.delivery;
+    in >> j.error;
+    in >> j.isSingle;
+
+    return in;
+}
+
 Jokes::Jokes(QObject *parent)
     : QObject(parent)
     , manager(new QNetworkAccessManager(this))
-{}
+{
+    qRegisterMetaTypeStreamOperators<Jokes::Joke>("Joke");
+}
 
 void Jokes::setup()
 {
@@ -29,7 +52,7 @@ void Jokes::setup()
 
     jokeLang = std::accumulate(uiLangs.begin(),
                                uiLangs.end(),
-                               QString(QLatin1String("")),
+                               QString(QLatin1String()),
                                [](const QString &a, const QString &b) {
                                    const QString lang = b.right(2);
                                    return jokeLangs.contains(lang) ? lang : a;
@@ -42,6 +65,7 @@ void Jokes::setup()
         return;
     }
 
+    loadJokes();
     fetchJokes();
     qDebug() << "Jokes: Setup finished";
 }
@@ -135,4 +159,40 @@ void Jokes::fetchJokes()
     }
 
     qDebug() << "Jokes: Fetching jokes completed. Number of cached jokes:" << jokes.size();
+}
+
+QString jokeFile = dir::dataDir() + QStringLiteral("/jokes.data");
+
+void Jokes::loadJokes()
+{
+    QDir().mkpath(dir::dataDir());
+    QFile f(jokeFile);
+    if (!f.open(QIODevice::ReadOnly))
+        return;
+
+    QDataStream in(&f);
+    while (!in.atEnd()) {
+        Joke j;
+        in >> j;
+        if (!jokes.contains(j))
+            jokes.append(j);
+    }
+    f.close();
+}
+
+void Jokes::saveJokes()
+{
+    QFile f(jokeFile, this);
+    if (!f.open(QIODevice::WriteOnly))
+        return;
+
+    QDataStream out(&f);
+    for (const Joke &j : qAsConst(jokes)) {
+        out << j;
+    }
+}
+
+Jokes::~Jokes()
+{
+    saveJokes();
 }

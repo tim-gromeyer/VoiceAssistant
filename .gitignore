@@ -4,3 +4,4 @@ models/
 android/
 plugins/*.so
 plugins/build-*
+data/

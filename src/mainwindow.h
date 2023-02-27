@@ -3,7 +3,6 @@
 
 #include "plugins/base.h"
 
-#include <QDir>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -134,7 +133,6 @@ private:
     QTimer *timeTimer;
     Jokes *jokes;
 
-    QDir pluginsDir;
     PluginBridge *bridge;
 
     QSharedPointer<QSystemTrayIcon> trayIcon;

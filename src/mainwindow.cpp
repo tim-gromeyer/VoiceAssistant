@@ -10,6 +10,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QDialogButtonBox>
+#include <QDir>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -464,7 +465,7 @@ void MainWindow::loadCommands()
 {
     commands.clear();
 
-    const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
+    const QString dir = dir::baseDir() + STR("/commands/") + recognizer->language();
 
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
@@ -539,7 +540,7 @@ void MainWindow::loadCommands()
 
 void MainWindow::saveCommands()
 {
-    const QString dir = SpeechToText::dataDir() + STR("/commands/") + recognizer->language();
+    const QString dir = dir::baseDir() + STR("/commands/") + recognizer->language();
 
     QJsonArray jsonArray;
 
@@ -610,24 +611,8 @@ void MainWindow::loadPlugins()
         plugins.append(plugin);
     }
 
-#ifdef QT_DEBUG
-    pluginsDir.setPath(SpeechToText::dataDir() + L1("/plugins"));
-#else
-    pluginsDir = QDir(QCoreApplication::applicationDirPath());
-
-#if defined(Q_OS_WIN)
-    if (pluginsDir.dirName().toLower() == "debug" || pluginsDir.dirName().toLower() == "release")
-        pluginsDir.cdUp();
-#elif defined(Q_OS_MAC)
-    if (pluginsDir.dirName() == "MacOS") {
-        pluginsDir.cdUp();
-        pluginsDir.cdUp();
-        pluginsDir.cdUp();
-    }
-#endif
-    if (!pluginsDir.cd("plugins"))
-        return;
-#endif
+    QDir pluginsDir;
+    pluginsDir.setPath(dir::pluginDir());
 
     const auto entryList = pluginsDir.entryList(QDir::Files);
 
@@ -887,5 +872,4 @@ MainWindow::~MainWindow()
 //      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
-// TODO: Load plugins, see https://doc.qt.io/qt-6/qpluginloader.html
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example

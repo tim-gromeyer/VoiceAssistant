@@ -14,6 +14,7 @@ class Jokes : public QObject
 
 public:
     explicit Jokes(QObject *parent = nullptr);
+    ~Jokes();
 
     struct Joke
     {
@@ -38,7 +39,10 @@ public Q_SLOTS:
     void setup();
 
     void tellJoke();
-    void fetchJokes();
+
+    void fetchJokes(); // From the internet
+    void loadJokes();  // From local file
+    void saveJokes();  // Save to local file
 
 private:
     QList<Joke> previousJokes;
