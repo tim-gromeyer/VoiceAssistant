@@ -62,7 +62,7 @@ Q_SIGNALS:
     void _sayAndWait(const QString &, QPrivateSignal);
     void _ask(const QString &, QPrivateSignal);
 
-    // void useWidget(QWidget *);
+    void useWidget(QWidget *);
 
 private:
     QString answer;

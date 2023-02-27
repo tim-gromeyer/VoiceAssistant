@@ -2,9 +2,9 @@
 
 #include "../base.h"
 
-#include <QObject>
+#include <QMainWindow>
 
-class PluginTest : public QObject, PluginInterface
+class PluginTest : public QWidget, PluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID PLUGIN_iid FILE "metadata.json")
@@ -12,7 +12,7 @@ class PluginTest : public QObject, PluginInterface
 
 public:
     explicit PluginTest(QObject *parent = nullptr)
-        : QObject(parent){};
+        : QWidget(qobject_cast<QMainWindow *>(parent)){};
 
     bool isValid(const QString &) override;
     void run(const QString &) override;

@@ -655,6 +655,11 @@ void MainWindow::loadPlugins()
             &MainWindow::bridgeSayAndWait,
             Qt::QueuedConnection);
     connect(bridge, &PluginBridge::_ask, this, &MainWindow::bridgeAsk, Qt::QueuedConnection);
+    connect(bridge,
+            &PluginBridge::useWidget,
+            ui->content,
+            &QScrollArea::setWidget,
+            Qt::QueuedConnection);
 }
 
 void MainWindow::say(const QString &text)
