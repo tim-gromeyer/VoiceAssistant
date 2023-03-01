@@ -28,7 +28,7 @@
 #include <QTime>
 #include <QTimer>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
 #include <QAudioOutput>
 #endif
 
@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent)
     _instance = this;
 
     // Set audio output device
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
     audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);
 #endif
@@ -153,7 +153,7 @@ void MainWindow::playSound(const QString &_url)
     if (QFile::exists(_url))
         url = QUrl::fromLocalFile(_url);
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
     player->setSource(url);
 #else
     player->setMedia(url);
@@ -295,7 +295,7 @@ void MainWindow::onTTSStateChanged()
     switch (s) {
     case QTextToSpeech::Speaking:
         if (player)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
             audioOutput->setVolume(0.3F * volume);
 #else
             player->setVolume(int(30 * volume));
@@ -303,7 +303,7 @@ void MainWindow::onTTSStateChanged()
         break;
     case QTextToSpeech::Ready:
         if (player)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
             audioOutput->setVolume(1 * volume);
 #else
             player->setVolume(int(100 * volume));
@@ -345,7 +345,7 @@ void MainWindow::onWakeWord()
     ui->statusLabel->setText(tr("Listening ..."));
 
     if (player)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
         audioOutput->setVolume(0.3F * volume);
 #else
         player->setVolume(int(30 * volume));
@@ -361,7 +361,7 @@ void MainWindow::doneListening()
     QMetaObject::invokeMethod(this, "processText", Qt::QueuedConnection, Q_ARG(QString, text));
 
     if (player)
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
         audioOutput->setVolume(1 * volume);
 #else
         player->setVolume(int(100 * volume));
@@ -778,7 +778,7 @@ void MainWindow::sayTime()
 void MainWindow::applyVolume()
 {
     qDebug() << "[debug] Change volume to:" << volume;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
     instance()->audioOutput->setVolume(1.0F * volume);
 #else
     if (instance()->player)

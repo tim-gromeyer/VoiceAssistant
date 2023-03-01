@@ -226,7 +226,7 @@ void SpeechToText::setUpMic()
     QAudioFormat format;
     format.setSampleRate(16000);
     format.setChannelCount(1);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
     format.setSampleFormat(QAudioFormat::Int16);
 
     auto inputDevices = QMediaDevices::audioInputs();

@@ -125,7 +125,7 @@ private:
 
     QAction *muteAction = nullptr;
     QMediaPlayer *player = nullptr;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
     QAudioOutput *audioOutput = nullptr;
 #endif
 

@@ -54,14 +54,14 @@ public:
 namespace threading {
 void runFunctionInThreadPool(std::function<void()> f)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+#if QT6
+    QThreadPool::globalInstance()->start(std::move(f));
+#else
     if (!f)
         return;
 
     QRunnable *runnable = new FunctionRunnable(std::move(f));
     QThreadPool::globalInstance()->start(runnable);
-#else
-    QThreadPool::globalInstance()->start(std::move(f));
 #endif
 }
 QThread *runFunction(std::function<void()> f)

@@ -3,7 +3,7 @@
 
 #include <QIODevice>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#ifdef QT6
 #include <QAudioSource>
 #include <QMediaDevices>
 #define AUDIOINPUT QAudioSource

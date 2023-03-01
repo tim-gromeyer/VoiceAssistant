@@ -40,7 +40,9 @@ Jokes::Jokes(QObject *parent)
     : QObject(parent)
     , manager(new QNetworkAccessManager(this))
 {
+#ifdef QT5
     qRegisterMetaTypeStreamOperators<Jokes::Joke>("Joke");
+#endif
 }
 
 void Jokes::setup()
