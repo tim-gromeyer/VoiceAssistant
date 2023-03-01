@@ -22,13 +22,18 @@ static const QString &baseDir()
 }
 static const QString &dataDir()
 {
-    static const QString dir = baseDir() + QStringLiteral("/data");
+    static const QString dir = baseDir() + QStringLiteral("/data/");
     return dir;
 }
 
 static const QString &pluginDir()
 {
-    static const QString dir = baseDir() + QStringLiteral("/plugins");
+    static const QString dir = baseDir() + QStringLiteral("/plugins/");
+    return dir;
+}
+static const QString &modelDir()
+{
+    static const QString dir = baseDir() + QStringLiteral("/models/");
     return dir;
 }
 } // namespace dir

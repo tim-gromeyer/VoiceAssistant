@@ -1,9 +1,10 @@
 #include "modeldownloader.h"
-#include "recognizer.h"
+#include "global.h"
 #include "utils.h"
 
 #include <QClipboard>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QGuiApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -17,6 +18,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 #include <QTableWidget>
+#include <QThread>
 #include <QVBoxLayout>
 
 #include "elzip.hpp"
@@ -27,6 +29,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}
     , manager(new QNetworkAccessManager(this))
     , progress(new QProgressDialog(this))
+    , downloadTime(new QElapsedTimer())
 {
     setWindowTitle(tr("Model downloader"));
 
@@ -35,7 +38,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
     progress->close();
 
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
-    QDir().mkpath(SpeechToText::modelDir());
+    QDir().mkpath(dir::modelDir());
     downloadInfo();
     setupUi();
     QGuiApplication::restoreOverrideCursor();
@@ -142,7 +145,11 @@ void ModelDownloader::setupUi()
 
         auto *downloadButton = new QPushButton(tr("Download"), table);
         downloadButton->setProperty("index", i);
-        connect(downloadButton, &QPushButton::clicked, this, &ModelDownloader::downloadModel);
+        connect(downloadButton,
+                &QPushButton::clicked,
+                this,
+                &ModelDownloader::downloadModel,
+                Qt::QueuedConnection);
 
         table->setItem(row, 0, new QTableWidgetItem(langText));
         table->setItem(row, 1, new QTableWidgetItem(modelInfo.sizeText));
@@ -192,6 +199,9 @@ void ModelDownloader::search(const QString &searchText)
 
 void ModelDownloader::downloadModel()
 {
+    if (reply && reply->isRunning())
+        return;
+
     // Get the sender QObject, which in this case should be a QPushButton
     senderButton = qobject_cast<QPushButton *>(sender());
     senderButton->setText(tr("Downloading"));
@@ -202,49 +212,102 @@ void ModelDownloader::downloadModel()
 
     // Get the ModelInfo
     const ModelInfo &info = modelInfos.at(currIndex);
+    alreadyDownloaded = 0;
+    endSize = info.size;
+
+    QNetworkRequest request(info.url);
 
     // Get the file name
-    QString fileName = info.name + L1(".zip");
+    QString fileName = info.name + STR(".zip");
+    file = new QFile(dir::modelDir() + fileName, this);
+
+    if (file->exists() && file->size() == info.size) {
+        // File already exists and is complete,
+        // skip the download and unzip
+        QMetaObject::invokeMethod(this, &ModelDownloader::downloadFinished, Qt::QueuedConnection);
+        return;
+    }
+
+    if (!file->open(QIODevice::Append)) {
+        QMessageBox::critical(this,
+                              tr("Could not open file"),
+                              tr("Could not open %1 for writing:\n%2")
+                                  .arg(file->fileName(), file->errorString()));
+        return;
+    }
+
+    if (file->exists()) {
+        alreadyDownloaded = file->size();
+        request.setRawHeader("Range", "bytes=" + QByteArray::number(alreadyDownloaded) + "-");
+    }
 
     // Create a QNetworkAccessManager object and use it to download the model
-    reply = manager->get(QNetworkRequest(info.url));
+    reply = manager->get(request);
 
     // Connect the finished signal of the response to a lambda function
     // that will be called when the download is complete
     QObject::connect(reply, &QNetworkReply::finished, this, &ModelDownloader::downloadFinished);
 
-    progress->setLabelText(tr("Downloading %1").arg(fileName));
+    progress->setProperty("file", fileName);
+    progress->setLabelText(
+        tr("Downloading %1\n%2 KB/s - %3 seconds remaining").arg(fileName, STR("0"), STR("0")));
     progress->setValue(0);
     connect(reply, &QNetworkReply::downloadProgress, this, &ModelDownloader::downloadProgress);
+    connect(reply, &QIODevice::readyRead, this, &ModelDownloader::save);
 
     // Cancel if the user cancels
     connect(progress, &QProgressDialog::canceled, reply, &QNetworkReply::abort);
+    downloadTime->start();
 
     progress->show();
 }
 
 void ModelDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-    //      W * 100  //      W
-    //  G = -------  //  G = - * 100
-    //         p     //      p
+    using namespace download;
+    using namespace file;
+
     if (bytesTotal <= 0)
         return;
-    progress->setValue(int(bytesReceived * 100 / bytesTotal));
+
+    // Calculate download speed
+    auto downloadSpeed = qint64(bytesReceived / double(downloadTime->elapsed() / 1000.0));
+
+    // Calculate estimated time remaining
+    qint64 bytesRemaining = bytesTotal - bytesReceived;
+    qint64 secondsRemaining = bytesRemaining / downloadSpeed;
+
+    // Update progress dialog
+    progress->setValue(int((bytesReceived + alreadyDownloaded) * 100 / endSize));
+    progress->setLabelText(tr("Downloading %1\n%2 of %3\n%4 - %5 remaining")
+                               .arg(progress->property("file").toString(),
+                                    makeSizeRedalbe(alreadyDownloaded + bytesReceived),
+                                    makeSizeRedalbe(endSize),
+                                    makeDownloadSpeedReadable(downloadSpeed),
+                                    makeSecoundsReadable(secondsRemaining)));
+}
+
+void ModelDownloader::save()
+{
+    if (!file || !reply)
+        return;
+
+    file->write(reply->readAll());
 }
 
 void ModelDownloader::downloadFinished()
 {
-    const ModelInfo &info = modelInfos.at(currIndex);
+    if (!file)
+        return;
 
-    // Get the file name
-    QString fileName = info.name + L1(".zip");
+    const ModelInfo &info = modelInfos.at(currIndex);
+    bool error = false;
 
     // Hide the progress dialog
     progress->close();
 
     // Check for error
-    if (reply->error() != QNetworkReply::NoError || !reply->isOpen()) {
+    if (reply && (reply->error() != QNetworkReply::NoError || !reply->isOpen())) {
         if (reply->error() != QNetworkReply::OperationCanceledError) {
             QMessageBox::critical(this,
                                   tr("Download failed!"),
@@ -257,45 +320,68 @@ void ModelDownloader::downloadFinished()
             senderButton->setEnabled(true);
         }
 
+        file->close();
+
         return;
     }
 
     // Read the downloaded data and write it to a file
-    QFile file(SpeechToText::modelDir() + fileName);
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(reply->readAll());
-        file.close();
+    if (file->size() == info.size) {
+    } else if (reply && file->isOpen()) {
+        file->write(reply->readAll());
     } else {
-        QMessageBox::critical(this,
-                              tr("Could not write file"),
-                              tr("Can not write to file %1:\n%2")
-                                  .arg(file.fileName(), file.errorString()));
-
+        qWarning() << "File is not open! Check for previous error messages!";
         if (senderButton) {
             senderButton->setText(tr("Download"));
             senderButton->setEnabled(true);
         }
     }
 
-    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
-    QMessageBox dia(this);
-    dia.setWindowTitle(tr("Unzipping file"));
-    dia.setText(tr("Unzipping file ..."));
-    dia.setIcon(QMessageBox::Information);
-    dia.show();
+    file->close();
 
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+    qInfo() << "Unzipping" << file->fileName() << "to" << dir::modelDir();
     try {
-        elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
-        QDir(SpeechToText::modelDir()).rename(info.name, info.lang);
+        auto *thread = threading::runFunction([&] {
+            elz::extractZip(file->fileName().toStdString(), dir::modelDir().toStdString());
+        });
+        thread->start();
+        if (senderButton)
+            senderButton->setText(tr("Unziping"));
+        while (thread->isRunning()) {
+            QCoreApplication::processEvents();
+        }
+        thread->deleteLater();
+
+        // elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
+        qInfo() << "Renaming folder ...";
+        QDir dir(dir::modelDir());
+        if (!dir.rename(info.name, info.lang)) {
+            qCritical() << "Can't rename the folder, do it yourself!\nOriginal name:" << info.name
+                        << "\nNew name:" << info.lang << "\n";
+            error = true;
+        }
+
+        delete thread;
     } catch (elz::zip_exception &e) {
         qCritical() << "Can't unzip voice model: " << e.what();
+        if (senderButton) {
+            senderButton->setText(tr("Failed. Try again"));
+            senderButton->setEnabled(true);
+        }
+        error = true;
     }
 
     QGuiApplication::restoreOverrideCursor();
-    dia.close();
 
     if (senderButton)
         senderButton->setText(tr("Downloaded"));
 
-    Q_EMIT modelDownloaded();
+    if (!error)
+        Q_EMIT modelDownloaded();
+}
+
+ModelDownloader::~ModelDownloader()
+{
+    delete downloadTime;
 }

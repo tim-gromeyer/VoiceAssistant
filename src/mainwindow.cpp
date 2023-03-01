@@ -113,7 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up text to speech
     engineThread = new QThread(this);
     connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
-    threading::runFunction(&MainWindow::setupTextToSpeech);
+    threading::runFunctionInThreadPool(&MainWindow::setupTextToSpeech);
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -878,3 +878,4 @@ MainWindow::~MainWindow()
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example
+// TODO: The TextToSpeech voice is horrible, change it!

@@ -25,9 +25,6 @@ VoskRecognizer *globalRecognizer = nullptr;
 // Declare a string for the "wake word" (defaults to `alexa` + empty character so it doesn't trigger on alexander)
 QLatin1String _wakeWord = L1("computer ");
 
-// Declare a global variable to store the directory where the Vosk models are stored
-QString _modelDir;
-
 bool asking = false;
 
 Listener::Listener(QObject *parent)
@@ -182,7 +179,7 @@ void SpeechToText::setUpModel()
 
     const QStringList uiLangs = QLocale::system().uiLanguages();
 
-    QDir dir(modelDir());
+    QDir dir(dir::modelDir());
     if (dir.isEmpty(QDir::Dirs)) {
         setState(ModelsMissing);
         return;
@@ -190,10 +187,10 @@ void SpeechToText::setUpModel()
 
     for (const auto &lang : uiLangs) {
         QString formattedLang = lang.toLower().replace(u'_', u'-');
-        if (!QDir(modelDir() + formattedLang).exists())
+        if (!QDir(dir::modelDir() + formattedLang).exists())
             continue;
 
-        model = vosk_model_new(QString(modelDir() + formattedLang).toUtf8());
+        model = vosk_model_new(QString(dir::modelDir() + formattedLang).toUtf8());
         if (model) {
             qDebug() << "[debug] Loaded model, language:" << lang;
             globalRecognizer = vosk_recognizer_new(model, 16000.0);
@@ -279,7 +276,7 @@ void SpeechToText::setup()
                 &SpeechToText::setUpMic,
                 Qt::UniqueConnection);
 
-        threading::runFunction([this] { setUpModel(); });
+        threading::runFunctionInThreadPool([this] { setUpModel(); });
         break;
     default:
         break;
@@ -304,30 +301,6 @@ void SpeechToText::setWakeWord(const QString &word)
 QString SpeechToText::wakeWord()
 {
     return _wakeWord.left(_wakeWord.size() - 1);
-}
-
-QString SpeechToText::dataDir()
-{
-#ifdef QT_DEBUG
-    return STR(APP_DIR);
-#else
-    return QCoreApplication::applicationDirPath();
-#endif
-}
-
-void SpeechToText::setModelDir(const QString &dir)
-{
-    _modelDir = dir;
-    if (!_modelDir.endsWith(u'/'))
-        _modelDir.append(u'/');
-}
-QString SpeechToText::modelDir()
-{
-    if (_modelDir.isEmpty()) {
-        _modelDir = dataDir() + STR("/models/");
-    }
-
-    return _modelDir;
 }
 
 void SpeechToText::setState(SpeechToText::State s)

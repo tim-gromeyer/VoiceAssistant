@@ -82,11 +82,6 @@ public:
     static void setWakeWord(const QString &word);
     static QString wakeWord();
 
-    static QString dataDir();
-
-    static void setModelDir(const QString &);
-    static QString modelDir();
-
     inline QString language() { return m_language; };
 
     static void ask();

@@ -7,6 +7,8 @@ class QNetworkAccessManager;
 class QNetworkReply;
 class QProgressDialog;
 class QTableWidget;
+class QFile;
+class QElapsedTimer;
 
 struct ModelInfo
 {
@@ -24,6 +26,7 @@ class ModelDownloader : public QDialog
     Q_OBJECT
 public:
     explicit ModelDownloader(QWidget *parent = nullptr);
+    ~ModelDownloader();
 
 Q_SIGNALS:
     void modelDownloaded();
@@ -36,6 +39,7 @@ private Q_SLOTS:
     void setupUi();
 
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void save();
 
 private:
     void downloadModel();
@@ -51,4 +55,8 @@ private:
     QNetworkReply *reply = nullptr;
 
     QProgressDialog *progress;
+    QElapsedTimer *downloadTime;
+    QFile *file = nullptr;
+    qint64 alreadyDownloaded = 0;
+    qint64 endSize = 0;
 };

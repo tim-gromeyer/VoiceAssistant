@@ -4,6 +4,8 @@
 
 #include <functional>
 
+class QThread;
+
 namespace utils {
 inline namespace numbers {
 int wordToNumber(const QString &);
@@ -18,5 +20,15 @@ constexpr QLatin1String L1(const char *str)
 } // namespace utils
 
 namespace threading {
-void runFunction(std::function<void()>);
+void runFunctionInThreadPool(std::function<void()>);
+QThread *runFunction(std::function<void()>);
 }
+
+namespace file {
+QString makeSizeRedalbe(qint64);
+}
+
+namespace download {
+QString makeSecoundsReadable(qint64);
+QString makeDownloadSpeedReadable(qint64);
+} // namespace download
