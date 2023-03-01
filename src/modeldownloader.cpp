@@ -249,8 +249,12 @@ void ModelDownloader::downloadModel()
     QObject::connect(reply, &QNetworkReply::finished, this, &ModelDownloader::downloadFinished);
 
     progress->setProperty("file", fileName);
-    progress->setLabelText(
-        tr("Downloading %1\n%2 KB/s - %3 seconds remaining").arg(fileName, STR("0"), STR("0")));
+    progress->setLabelText(tr("Downloading %1\n%2 from %3\n%4 - %5 remaining")
+                               .arg(fileName,
+                                    QString::number(alreadyDownloaded),
+                                    QString::number(endSize),
+                                    STR("0"),
+                                    STR("0")));
     progress->setValue(0);
     connect(reply, &QNetworkReply::downloadProgress, this, &ModelDownloader::downloadProgress);
     connect(reply, &QIODevice::readyRead, this, &ModelDownloader::save);
@@ -279,7 +283,7 @@ void ModelDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 
     // Update progress dialog
     progress->setValue(int((bytesReceived + alreadyDownloaded) * 100 / endSize));
-    progress->setLabelText(tr("Downloading %1\n%2 of %3\n%4 - %5 remaining")
+    progress->setLabelText(tr("Downloading %1\n%2 from %3\n%4 - %5 remaining")
                                .arg(progress->property("file").toString(),
                                     makeSizeRedalbe(alreadyDownloaded + bytesReceived),
                                     makeSizeRedalbe(endSize),
