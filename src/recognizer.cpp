@@ -173,7 +173,7 @@ void SpeechToText::reset()
         vosk_recognizer_reset(globalRecognizer);
 }
 
-void SpeechToText::setUpModel()
+bool SpeechToText::setUpModel()
 {
     qDebug() << "[debug] Setting up model and recognizer";
 
@@ -182,7 +182,7 @@ void SpeechToText::setUpModel()
     QDir dir(dir::modelDir());
     if (dir.isEmpty(QDir::Dirs)) {
         setState(ModelsMissing);
-        return;
+        return false;
     }
 
     for (const auto &lang : uiLangs) {
@@ -198,7 +198,7 @@ void SpeechToText::setUpModel()
 
         if (!model || !globalRecognizer) {
             setState(ErrorWhileLoading);
-            return;
+            return false;
         }
 
         m_language = lang;
@@ -207,11 +207,12 @@ void SpeechToText::setUpModel()
         qDebug() << "[debug] SpeechToText loaded successful";
 
         Q_EMIT modelLoaded();
-        return;
+        return true;
     }
 
     setState(NoModelFound);
     qDebug() << "[debug] No model found!";
+    return false;
 }
 
 void SpeechToText::setUpMic()

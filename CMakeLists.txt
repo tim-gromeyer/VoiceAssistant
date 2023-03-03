@@ -47,6 +47,7 @@ set(PROJECT_SOURCES
     ${RC_FILES}
     plugins/base.h
     plugins/bridge.h
+    plugins/settingswidget.h
     src/commanddialog.cpp
     src/commanddialog.h
     src/global.h
@@ -59,9 +60,13 @@ set(PROJECT_SOURCES
     src/modeldownloader.h
     src/recognizer.cpp
     src/recognizer.h
+    src/settingsdialog.cpp
+    src/settingsdialog.h
     src/utils.cpp
     src/utils.h
-    ui/mainwindow.ui)
+    ui/mainwindow.ui
+    ui/settingsdialog.ui
+)
 
 add_translations(TS ${TS_FILES})
 

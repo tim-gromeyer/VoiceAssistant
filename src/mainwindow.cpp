@@ -4,6 +4,7 @@
 #include "modeldownloader.h"
 #include "plugins/bridge.h"
 #include "recognizer.h"
+#include "settingsdialog.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
 
@@ -119,6 +120,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
     connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
+    connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::openSettings);
     connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
 
     // Set up time timer
@@ -253,7 +255,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::setupTextToSpeech()
 {
-    // Use QThread here because otherwise the stateChanged signal doesn't get emitted
     qDebug() << "[debug] TTS: Setup QTextToSpeech";
     engine = new QTextToSpeech();
     engine->moveToThread(engineThread);
@@ -433,6 +434,12 @@ void MainWindow::openModelDownloader()
             recognizer,
             &SpeechToText::setup,
             Qt::QueuedConnection);
+    dia.exec();
+}
+
+void MainWindow::openSettings()
+{
+    SettingsDialog dia(this);
     dia.exec();
 }
 
@@ -655,11 +662,15 @@ void MainWindow::loadPlugins()
             &MainWindow::bridgeSayAndWait,
             Qt::QueuedConnection);
     connect(bridge, &PluginBridge::_ask, this, &MainWindow::bridgeAsk, Qt::QueuedConnection);
-    connect(bridge,
-            &PluginBridge::useWidget,
-            ui->content,
-            &QScrollArea::setWidget,
-            Qt::QueuedConnection);
+    connect(
+        bridge,
+        &PluginBridge::useWidget,
+        ui->content,
+        [this](QWidget *w) {
+            ui->content->takeWidget();
+            ui->content->setWidget(w);
+        },
+        Qt::QueuedConnection);
 }
 
 void MainWindow::say(const QString &text)
@@ -878,4 +889,3 @@ MainWindow::~MainWindow()
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Add options for controlling text to speech
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example
-// TODO: The TextToSpeech voice is horrible, change it!

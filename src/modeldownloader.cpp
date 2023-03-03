@@ -271,7 +271,8 @@ void ModelDownloader::downloadProgress(qint64 bytesReceived, qint64 bytesTotal)
     using namespace download;
     using namespace file;
 
-    if (bytesTotal <= 0)
+    // Prevent overflow
+    if (bytesTotal <= 0 || bytesTotal + alreadyDownloaded > (LLONG_MAX / 100))
         return;
 
     // Calculate download speed

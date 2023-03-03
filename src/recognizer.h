@@ -67,8 +67,9 @@ public:
         NotStarted = 3,         // SpeechToText not set up or not listening
         NoMicrophone = 4,       // No microphone was found or the microphone is not accessible
         IncompatibleFormat = 5, // Incompatible microphone, must support PCM 16bit mono
-        Running = 6,            // The recognizer is set up and proceeds data
-        Paused = 7              // The microphone input is paused
+        PermissionMissing = 6,  //
+        Running = 7,            // The recognizer is set up and proceeds data
+        Paused = 8              // The microphone input is paused
     };
     Q_ENUM(State);
 
@@ -86,11 +87,11 @@ public:
 
     static void ask();
 
-    void setup();
-
     explicit operator bool() const;
 
 public Q_SLOTS:
+    void setup();
+
     void pause();
     void resume();
 
@@ -107,11 +108,11 @@ Q_SIGNALS:
 private Q_SLOTS:
     void onAnswerReady(const QString &);
 
+    bool setUpModel();
+    void setUpMic();
+
 private:
     void setState(SpeechToText::State s);
-
-    void setUpModel();
-    void setUpMic();
 
     QScopedPointer<AUDIOINPUT> audio;
     QScopedPointer<Listener> m_device;

@@ -103,6 +103,7 @@ private Q_SLOTS:
     void onHasWord();
 
     void openModelDownloader();
+    void openSettings();
 
     // Setup
     static void setupTextToSpeech();
