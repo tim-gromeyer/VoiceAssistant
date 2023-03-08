@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(
-  VoiceAssistant
-  VERSION 0.1.0
-  LANGUAGES CXX)
+project(VoiceAssistant VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -21,6 +18,11 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
+list(APPEND CMAKE_MODULE_PATH
+    ${PROJECT_SOURCE_DIR}/cmake)
+
+add_subdirectory(speechtotext)
+
 # Disable debug messages in release mode and improve performance
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
@@ -31,12 +33,8 @@ else()
   option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
-find_package(
-  QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia
-                                       Network TextToSpeech)
-find_package(
-  Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg
-                                            Multimedia Network TextToSpeech)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
 
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
@@ -60,12 +58,15 @@ set(PROJECT_SOURCES
     src/modeldownloader.h
     src/recognizer.cpp
     src/recognizer.h
+    src/settings.cpp
+    src/settings.h
     src/settingsdialog.cpp
     src/settingsdialog.h
     src/utils.cpp
     src/utils.h
     ui/mainwindow.ui
     ui/settingsdialog.ui
+    speechtotext/speechtotextplugin.h
 )
 
 add_translations(TS ${TS_FILES})
@@ -92,8 +93,7 @@ endif()
 
 target_include_directories(voiceassistant PRIVATE src vosk)
 target_link_directories(voiceassistant PRIVATE vosk)
-target_link_libraries(
-  voiceassistant
+target_link_libraries(voiceassistant
   PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
           Qt${QT_VERSION_MAJOR}::Svg
           Qt${QT_VERSION_MAJOR}::Multimedia
@@ -103,8 +103,7 @@ target_link_libraries(
           vosk
           elzip)
 
-target_compile_definitions(
-  voiceassistant
+target_compile_definitions(voiceassistant
   PUBLIC
     APP_VERSION="${PROJECT_VERSION}"
     APP_DIR="${CMAKE_SOURCE_DIR}"
@@ -116,16 +115,17 @@ set(ANDROID_EXTRA_LIBS ${CMAKE_SOURCE_DIR}/vosk/libvosk.so)
 
 set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
 
-set_target_properties(
-  voiceassistant
-  PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER org.qtproject.voiceassistant
-             MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-             MACOSX_BUNDLE_SHORT_VERSION_STRING
-             ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-             MACOSX_BUNDLE TRUE
-             WIN32_EXECUTABLE TRUE
-             QT_ANDROID_EXTRA_LIBS "${ANDROID_EXTRA_LIBS}"
-             QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_SOURCE_DIR})
+set_target_properties(voiceassistant
+  PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER org.qtproject.voiceassistant
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING
+    ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
+    QT_ANDROID_EXTRA_LIBS "${ANDROID_EXTRA_LIBS}"
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_SOURCE_DIR}
+)
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(voiceassistant)
