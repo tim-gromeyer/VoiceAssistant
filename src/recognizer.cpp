@@ -22,7 +22,7 @@ using namespace utils::literals;
 VoskModel *model = nullptr;
 VoskRecognizer *globalRecognizer = nullptr;
 
-// Declare a string for the "wake word" (defaults to `alexa` + empty character so it doesn't trigger on alexander)
+// Declare a string for the "wake word" (defaults to `computer` + empty character so it doesn't trigger on alexander)
 QLatin1String _wakeWord = L1("computer ");
 
 bool asking = false;

@@ -93,30 +93,27 @@ endif()
 
 target_include_directories(voiceassistant PRIVATE src vosk)
 target_link_directories(voiceassistant PRIVATE vosk)
-target_link_libraries(voiceassistant
-  PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
-          Qt${QT_VERSION_MAJOR}::Svg
-          Qt${QT_VERSION_MAJOR}::Multimedia
-          Qt${QT_VERSION_MAJOR}::Network
-          Qt${QT_VERSION_MAJOR}::TextToSpeech
-          ${INTL_LDFLAGS}
-          vosk
-          elzip)
+target_link_libraries(voiceassistant PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Svg
+    Qt${QT_VERSION_MAJOR}::Multimedia
+    Qt${QT_VERSION_MAJOR}::Network
+    Qt${QT_VERSION_MAJOR}::TextToSpeech
+    ${INTL_LDFLAGS}
+    vosk
+    elzip
+    ${TTS_PLUGINS})
 
-target_compile_definitions(voiceassistant
-  PUBLIC
+target_compile_definitions(voiceassistant PUBLIC
     APP_VERSION="${PROJECT_VERSION}"
     APP_DIR="${CMAKE_SOURCE_DIR}"
     QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
     QT_USE_QSTRINGBUILDER
     QT${QT_VERSION_MAJOR})
 
-set(ANDROID_EXTRA_LIBS ${CMAKE_SOURCE_DIR}/vosk/libvosk.so)
-
 set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
 
-set_target_properties(voiceassistant
-  PROPERTIES
+set_target_properties(voiceassistant PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER org.qtproject.voiceassistant
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING
