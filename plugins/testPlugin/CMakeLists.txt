@@ -15,4 +15,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 add_library(testPlugin MODULE ../base.h ../bridge.h plugintest.cpp plugintest.h)
 target_link_libraries(testPlugin Qt${QT_VERSION_MAJOR}::Widgets)
 
-install(TARGETS testPlugin LIBRARY DESTINATION lib)
+add_custom_command(TARGET testPlugin POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:testPlugin> ${CMAKE_SOURCE_DIR}/plugins
+  COMMAND_EXPAND_LISTS
+)

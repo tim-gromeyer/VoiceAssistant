@@ -1,42 +1,71 @@
 # Pre-Alpha!
 
-Currently, only basics work. See [`Add Commands`](#add-commands) for more.
-
 # VoiceAssistant
 
-Resource-efficient voice assistant that is still in the early stages of development.
+This is a resource-efficient voice assistant that is still in the early stages of development but already functional.
 
 ## Table of Contents
 
+- [Goal](#goal)
+- [Supported Platforms](#supported-platforms)
+- [To-Do's](#to-dos)
 - [Customization](#customization)
-- [Add commands](#add-commands)
+- [Add Commands](#add-commands)
 - [Credits](#credits)
+
+## Goal
+
+The main goal of VoiceAssistant is to provide a fully customizable and extendable voice assistant that can be controlled entirely using voice commands. 
+
+Users can define the commands in the `commands/<your_language>/default.json` file. See [Add Commands](#add-commands).
+
+## Supported Platforms
+
+The project has been tested on x86_64 Linux, but it should theoretically work on the following platforms:
+
+- [x] Aarch64/Arm64 Linux/Android/Raspberry Pi
+- [x] Armv7l Linux/Android
+- [x] Riscv64 Linux
+- [x] x86 Linux/Android
+- [x] x86_64 Linux/Android
+- [x] 64-Bit Windows
+- [ ] MacOS (Intel)
+- [ ] MacOS (M1)
+- [ ] iOS
+- [ ] WebAssembly
+
+## To-Do's
+
+- [ ] Full customizability
+- [ ] Cross-platform compatibility
+- [ ] Implement Whisper.cpp backend (this will increase the number of supported platforms)
 
 ## Customization
 
-To customize the commands edit following file: `commands/<your_language>/default.json`.  
-There are some default commands. More customization and documentation coming soon!
+**In the near future I'll add settings to the app! **  
+*I'm struggling with a plugin system for the settings and the GUI.*
 
-## Add commands
+To customize the commands, edit the `commands/<your_language>/default.json` file. 
 
-To add your own command edit this file: `commands/<your_language>/default.json`
-Supported values:
+There are some default commands. See [Add Commands](#add-commands).
 
-| Name        | Type             | Description                                                |
-|-------------|------------------|------------------------------------------------------------|
-| `commands`  | Array of strings | Required. All commands it reacts to                        |
-| `funcName`  | String           | The name of the function to call(`MainWindow::<funcName>`) |
-| `responses` | Array of strings | It selects a random response from the Array                |
-| `program`   | String           | A program to execute                                       |
-| `args`      | Array of strings | Arguments passed to the executable `program`               |
-| `sound`     | String           | Path to local or remote file which gets played             |
+## Add Commands
 
+To add your own command, edit the `commands/<your_language>/default.json` file. The supported values are:
+
+| Name        | Type             | Description                                                 | Notes                                           |
+|-------------|------------------|-------------------------------------------------------------|-------------------------------------------------|
+| `commands`  | Array of strings | All commands that the voice assistant should react to       | Required                                        |
+| `funcName`  | String           | The name of the function to call (`MainWindow::<funcName>`) |                                                 |
+| `responses` | Array of strings | It selects a random response from the array                 |                                                 |
+| `program`   | String           | A program to execute                                        |                                                 |
+| `args`      | Array of strings | Arguments passed to `program`                               | `${TEXT}` will be replaced with the voice input |
+| `sound`     | String           | Path to local or remote file that gets played               | Volume can be controlled via voice/GUI          |
 
 ## Credits
 
-| Name                                         | License                                                                | What is's used for     |
+| Name                                         | License                                                                | What it's used for      |
 |----------------------------------------------|------------------------------------------------------------------------|------------------------|
 | [Vosk](https://github.com/alphacep/vosk-api) | [Apache 2.0](https://github.com/alphacep/vosk-api/blob/master/COPYING) | Voice recognition      |
 | [11Zip](https://github.com/Sygmei/11Zip)     | [MIT](https://github.com/Sygmei/11Zip/blob/master/LICENSE)             | Unzipping voice models |
 | [JokeAPI](https://jokeapi.dev)               | [MIT](https://github.com/Sv443/JokeAPI/blob/master/LICENSE.txt)        | Telling jokes          |
-

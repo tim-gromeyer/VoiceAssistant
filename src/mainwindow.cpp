@@ -68,10 +68,19 @@ void MainWindow::Action::run(const QString &text) const
         int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
         say(responses.at(randomIndex));
     }
+
     if (!program.isEmpty()) {
         QProcess p(instance());
         p.setProgram(program);
-        p.setArguments(args);
+
+        auto index = args.indexOf(L1("${TEXT}"));
+        if (index != -1) {
+            auto newArgs = args; // The function must be const so we need to create a copy
+            newArgs[index] = text;
+            p.setArguments(newArgs);
+        } else
+            p.setArguments(args);
+
         p.startDetached();
     }
     if (!sound.isEmpty())
