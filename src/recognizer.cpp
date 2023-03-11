@@ -46,7 +46,7 @@ qint64 Listener::writeData(const char *data, qint64 size)
 void Listener::parseText(const char *json)
 {
     auto obj = QJsonDocument::fromJson(json);
-    QString text = obj[L1("text")].toString();
+    QString text = obj[STR("text")].toString();
 
     if (text.isEmpty())
         return;
@@ -71,7 +71,7 @@ void Listener::parseText(const char *json)
 void Listener::parsePartial(const char *json)
 {
     auto obj = QJsonDocument::fromJson(json);
-    QString text = obj[L1("partial")].toString();
+    QString text = obj[STR("partial")].toString();
     if (text.isEmpty())
         return;
     text.append(u' ');

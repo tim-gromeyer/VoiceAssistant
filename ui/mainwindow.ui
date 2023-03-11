@@ -115,13 +115,19 @@
    </widget>
    <widget class="QMenu" name="menu_Models">
     <property name="title">
-     <string>&amp;Model</string>
+     <string>Voice &amp;recognition</string>
     </property>
     <addaction name="actionHas_word"/>
     <addaction name="actionOpen_downloader"/>
    </widget>
+   <widget class="QMenu" name="menuCommands">
+    <property name="title">
+     <string>&amp;Commands</string>
+    </property>
+   </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Models"/>
+   <addaction name="menuCommands"/>
    <addaction name="menu_Help"/>
   </widget>
   <action name="action_About">
@@ -136,7 +142,7 @@
   </action>
   <action name="actionHas_word">
    <property name="text">
-    <string>Contains word</string>
+    <string>Can recognize word</string>
    </property>
   </action>
   <action name="actionOpen_downloader">
