@@ -25,7 +25,7 @@ public:
     };
     Q_ENUM(State);
 
-    virtual void setup(const QString &modelDir, bool *succes) = 0;
+    virtual void setup(const QString &modelDir, bool *success) = 0;
 
     // Reimplementation of the writeData method from QIODevice, which takes
     // the incoming audio data and size as arguments and processes them

@@ -70,7 +70,7 @@ void VoskPlugin::parsePartial(const char *json)
     Q_EMIT textUpdated(text);
 }
 
-void VoskPlugin::setup(const QString &modelDir, bool *succes)
+void VoskPlugin::setup(const QString &modelDir, bool *success)
 {
     qDebug() << "[debug] Setting up model and recognizer";
 
@@ -79,7 +79,7 @@ void VoskPlugin::setup(const QString &modelDir, bool *succes)
     QDir dir(modelDir);
     if (dir.isEmpty(QDir::Dirs)) {
         setState(ModelsMissing);
-        *succes = false;
+        *success = false;
         return;
     }
 
@@ -103,13 +103,13 @@ void VoskPlugin::setup(const QString &modelDir, bool *succes)
 
         Q_EMIT loaded();
         setState(Running);
-        *succes = true;
+        *success = true;
         return;
     }
 
     setState(NoModelFound);
     qDebug() << "[debug] No model found!";
-    *succes = false;
+    *success = false;
 }
 
 bool VoskPlugin::canRecognizeWord(const QString &word)

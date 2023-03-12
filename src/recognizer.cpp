@@ -157,12 +157,12 @@ void SpeechToText::reset()
 
 bool SpeechToText::setUpModel()
 {
-    bool succes = false;
-    m_plugin->setup(dir::modelDir(), &succes);
-    if (succes)
+    bool success = false;
+    m_plugin->setup(dir::modelDir(), &success);
+    if (success)
         Q_EMIT languageChanged();
 
-    return succes;
+    return success;
 }
 
 void SpeechToText::setUpMic()
