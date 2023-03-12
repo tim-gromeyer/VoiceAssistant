@@ -1,5 +1,6 @@
 #include "recognizer.h" // Include the header file for the SpeechToText class
 #include "global.h"
+#include "speechtotext/speechtotextplugin.h"
 #include "utils.h"
 
 #include <QCoreApplication>
@@ -8,91 +9,67 @@
 #include <QJsonDocument>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPluginLoader>
 #include <QThreadPool>
 
 #if NEED_MICROPHONE_PERMISSION
 #include <QPermission>
 #endif
 
-#include "vosk_api.h" // Include the Vosk API header file
-
 using namespace utils::literals;
 
-// Declare global variables for the Vosk model and recognizer
-VoskModel *model = nullptr;
-VoskRecognizer *globalRecognizer = nullptr;
-
-// Declare a string for the "wake word" (defaults to `computer` + empty character so it doesn't trigger on alexander)
-QLatin1String _wakeWord = L1("computer ");
-
-bool asking = false;
-
-Listener::Listener(QObject *parent)
-    : QIODevice(parent)
+SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
+    : QObject{parent}
 {
-    open(QIODevice::ReadWrite);
-};
-
-qint64 Listener::writeData(const char *data, qint64 size)
-{
-    if (vosk_recognizer_accept_waveform(globalRecognizer, data, (int) size))
-        parseText(vosk_recognizer_result(globalRecognizer));
-    else
-        parsePartial(vosk_recognizer_partial_result(globalRecognizer));
-
-    return size;
-}
-
-void Listener::parseText(const char *json)
-{
-    auto obj = QJsonDocument::fromJson(json);
-    QString text = obj[STR("text")].toString();
-
-    if (text.isEmpty())
-        return;
-    else if (asking) {
-        Q_EMIT answerReady(text);
-        return;
+    const auto staticInstances = QPluginLoader::staticInstances();
+    for (QObject *pluginObject : staticInstances) {
+        auto *plugin = qobject_cast<SpeechToTextPlugin *>(pluginObject);
+        if (!plugin)
+            continue;
+        m_plugins.append(plugin);
     }
 
-    text.append(u' ');
+    QDir pluginsDir;
+    pluginsDir.setPath(dir::speechToTextPluginDir());
 
-    if (!text.contains(_wakeWord))
-        return;
+    const auto entryList = pluginsDir.entryList(QDir::Files);
 
-    text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
-    text = text.trimmed();
+    for (const QString &fileName : entryList) {
+        if (!QLibrary::isLibrary(fileName))
+            continue;
 
-    Q_EMIT textUpdated(text);
-    qDebug() << "[debug] Text:" << text;
-    Q_EMIT doneListening();
-}
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        if (!loader.load()) {
+            qWarning() << "Failed to load plugin" << fileName
+                       << "due to following reason:" << loader.errorString()
+                       << "\nUse `qtplugininfo` for a more advanced error message!";
+        }
+        QObject *pluginObject = loader.instance();
+        if (!pluginObject)
+            continue;
 
-void Listener::parsePartial(const char *json)
-{
-    auto obj = QJsonDocument::fromJson(json);
-    QString text = obj[STR("partial")].toString();
-    if (text.isEmpty())
-        return;
-    text.append(u' ');
+        pluginObject->setParent(this);
 
-    if (text.contains(_wakeWord)) {
-        Q_EMIT wakeWord();
-        text = text.mid(text.indexOf(_wakeWord) + _wakeWord.size());
-    } else if (!asking)
-        return;
+        SpeechToTextPlugin *plugin = qobject_cast<SpeechToTextPlugin *>(pluginObject);
+        if (!plugin)
+            continue;
 
-    Q_EMIT textUpdated(text);
-}
+        qInfo() << "Loaded speech to text plugin:" << plugin->pluginName();
+        m_plugins.append(plugin);
 
-SpeechToText::SpeechToText(QObject *parent)
-    : QObject{parent}
-    , m_device(new Listener(this))
-{
-    connect(m_device.get(), &Listener::answerReady, this, &SpeechToText::onAnswerReady);
+        if (plugin->pluginName() != pluginName)
+            continue;
 
-    // Disable kaldi info messages
-    vosk_set_log_level(-1);
+        m_plugin = plugin;
+        connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
+    }
+
+    if (m_plugins.isEmpty())
+        qCritical() << "No speech to text plugin found!";
+    Q_ASSERT(!m_plugins.isEmpty());
+
+    if (m_plugin == nullptr)
+        m_plugin = m_plugins.at(0);
 
 #if NEED_MICROPHONE_PERMISSION
     QMicrophonePermission microphonePermission;
@@ -112,24 +89,28 @@ SpeechToText::SpeechToText(QObject *parent)
 
 void SpeechToText::onAnswerReady(const QString &answer)
 {
-    asking = false;
+    if (m_plugin)
+        m_plugin->setAsking(false);
     Q_EMIT answerReady(answer);
 }
 
 void SpeechToText::ask()
 {
-    asking = true;
+    if (m_plugin)
+        m_plugin->setAsking(true);
 }
 
 SpeechToText::operator bool() const
 {
-    return audio && m_device && globalRecognizer;
+    return audio && m_plugin;
 }
 
 void SpeechToText::pause()
 {
-    if (asking)
+    if (m_plugin && m_plugin->isAsking())
         Q_EMIT answerReady(QLatin1String());
+
+    m_muted = true;
 
     if (!audio)
         return;
@@ -137,9 +118,10 @@ void SpeechToText::pause()
     reset();
     // audio->stop(); // This somehow crashes
     QMetaObject::invokeMethod(
-        audio.get(), [this] { audio->stop(); }, Qt::QueuedConnection);
+        audio, [this] { audio->stop(); }, Qt::QueuedConnection);
 
-    asking = false;
+    if (m_plugin)
+        m_plugin->setAsking(false);
 
     setState(Paused);
 }
@@ -149,6 +131,8 @@ void SpeechToText::resume()
     if (!audio)
         return;
 
+    m_muted = false;
+
     switch (audio->state()) {
     case QAudio::ActiveState:
         return;
@@ -156,7 +140,7 @@ void SpeechToText::resume()
         audio->resume();
         break;
     case QAudio::StoppedState:
-        audio->start(m_device.get());
+        audio->start(m_plugin);
         break;
     default:
         break;
@@ -167,59 +151,23 @@ void SpeechToText::resume()
 
 void SpeechToText::reset()
 {
-    m_device->reset();
-
-    if (globalRecognizer)
-        vosk_recognizer_reset(globalRecognizer);
+    if (m_plugin)
+        m_plugin->reset();
 }
 
 bool SpeechToText::setUpModel()
 {
-    qDebug() << "[debug] Setting up model and recognizer";
-
-    const QStringList uiLangs = QLocale::system().uiLanguages();
-
-    QDir dir(dir::modelDir());
-    if (dir.isEmpty(QDir::Dirs)) {
-        setState(ModelsMissing);
-        return false;
-    }
-
-    for (const auto &lang : uiLangs) {
-        QString formattedLang = lang.toLower().replace(u'_', u'-');
-        if (!QDir(dir::modelDir() + formattedLang).exists())
-            continue;
-
-        model = vosk_model_new(QString(dir::modelDir() + formattedLang).toUtf8());
-        if (model) {
-            qDebug() << "[debug] Loaded model, language:" << lang;
-            globalRecognizer = vosk_recognizer_new(model, 16000.0);
-        }
-
-        if (!model || !globalRecognizer) {
-            setState(ErrorWhileLoading);
-            return false;
-        }
-
-        m_language = lang;
+    bool succes = false;
+    m_plugin->setup(dir::modelDir(), &succes);
+    if (succes)
         Q_EMIT languageChanged();
 
-        qDebug() << "[debug] SpeechToText loaded successful";
-
-        Q_EMIT modelLoaded();
-        return true;
-    }
-
-    setState(NoModelFound);
-    qDebug() << "[debug] No model found!";
-    return false;
+    return succes;
 }
 
 void SpeechToText::setUpMic()
 {
-    if (!globalRecognizer)
-        return;
-    if (m_state != NotStarted)
+    if (m_state != NotStarted || !m_plugin)
         return;
 
     qDebug() << "[debug] Prepare microphone";
@@ -247,13 +195,18 @@ void SpeechToText::setUpMic()
         return;
     }
 
-    audio.reset(new AUDIOINPUT(format, this));
-    connect(audio.get(), &AUDIOINPUT::stateChanged, this, [](QAudio::State state) {
+    audio = new AUDIOINPUT(format, this);
+    connect(audio, &AUDIOINPUT::stateChanged, this, [](QAudio::State state) {
         qDebug() << "[debug] Microphone state:" << state;
     });
     audio->setBufferSize(8000);
-    audio->start(m_device.get());
-    setState(Running);
+
+    if (m_muted)
+        setState(Paused);
+    else {
+        audio->start(m_plugin);
+        setState(Running);
+    }
 
     qDebug() << "[debug] Microphone set up";
 }
@@ -271,8 +224,8 @@ void SpeechToText::setup()
     case ModelsMissing:
     case NoModelFound:
     case NotStarted:
-        connect(this,
-                &SpeechToText::modelLoaded,
+        connect(m_plugin,
+                &SpeechToTextPlugin::loaded,
                 this,
                 &SpeechToText::setUpMic,
                 Qt::UniqueConnection);
@@ -286,22 +239,31 @@ void SpeechToText::setup()
 
 bool SpeechToText::hasWord(const QString &word)
 {
-    if (!model)
+    if (!m_plugin || !m_plugin->hasLoopupSupport())
         return false;
 
-    if (word.isEmpty())
-        return true;
-
-    return vosk_model_find_word(model, word.toLower().toUtf8()) != -1;
+    return m_plugin->canRecognizeWord(word);
 }
 
 void SpeechToText::setWakeWord(const QString &word)
 {
-    _wakeWord = QLatin1String(word.toLatin1() + ' ');
+    if (m_plugin)
+        m_plugin->setWakeWord(word);
 }
 QString SpeechToText::wakeWord()
 {
-    return _wakeWord.left(_wakeWord.size() - 1);
+    if (m_plugin)
+        return m_plugin->wakeWord();
+    else
+        return QLatin1String();
+}
+
+QString SpeechToText::language()
+{
+    if (m_plugin)
+        return m_plugin->language();
+    else
+        return QLatin1String();
 }
 
 void SpeechToText::setState(SpeechToText::State s)
@@ -344,8 +306,4 @@ void SpeechToText::setState(SpeechToText::State s)
     Q_EMIT stateChanged();
 }
 
-SpeechToText::~SpeechToText()
-{
-    vosk_recognizer_free(globalRecognizer);
-    vosk_model_free(model);
-}
+SpeechToText::~SpeechToText() {}

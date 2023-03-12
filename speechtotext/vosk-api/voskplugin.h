@@ -5,6 +5,9 @@
 class VoskPlugin : public SpeechToTextPlugin
 {
     Q_OBJECT
+    Q_PLUGIN_METADATA(IID SpeechToText_iid)
+    Q_INTERFACES(SpeechToTextPlugin)
+
 public:
     explicit VoskPlugin(QObject *parent = nullptr);
     ~VoskPlugin();
@@ -13,7 +16,7 @@ public:
 
     qint64 writeData(const char *data, qint64 size) override;
 
-    void setup(const QString &modelDir) override;
+    void setup(const QString &modelDir, bool *) override;
 
     inline State state() override { return m_state; };
     inline QString errorString() override { return m_errorString; };
@@ -33,6 +36,9 @@ public:
         Q_EMIT askingChanged();
     };
 
+    inline bool hasLoopupSupport() override { return true; };
+    bool canRecognizeWord(const QString &) override;
+
 private:
     // Private method that takes a JSON string containing the recognized text
     // and parses it to extract the text and emit the appropriate signals
@@ -44,7 +50,7 @@ private:
 
     void setState(State);
 
-    QString m_wakeWord;
+    QString m_wakeWord = QStringLiteral("computer ");
     bool m_isAsking = false;
 
     State m_state = NotStarted;

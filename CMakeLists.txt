@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
     plugins/base.h
     plugins/bridge.h
     plugins/settingswidget.h
+    speechtotext/speechtotextplugin.h
     src/commanddialog.cpp
     src/commanddialog.h
     src/global.h
@@ -62,11 +63,12 @@ set(PROJECT_SOURCES
     src/settings.h
     src/settingsdialog.cpp
     src/settingsdialog.h
+    src/sliderwithtext.cpp
+    src/sliderwithtext.h
     src/utils.cpp
     src/utils.h
     ui/mainwindow.ui
     ui/settingsdialog.ui
-    speechtotext/speechtotextplugin.h
 )
 
 add_translations(TS ${TS_FILES})
@@ -91,8 +93,7 @@ if(BUILD_TEST_PLUGIN)
   add_subdirectory(plugins/testPlugin)
 endif()
 
-target_include_directories(voiceassistant PRIVATE src vosk)
-target_link_directories(voiceassistant PRIVATE vosk)
+target_include_directories(voiceassistant PRIVATE src)
 target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Svg
@@ -100,7 +101,6 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::TextToSpeech
     ${INTL_LDFLAGS}
-    vosk
     elzip
     ${TTS_PLUGINS})
 

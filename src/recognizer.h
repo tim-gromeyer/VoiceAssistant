@@ -1,6 +1,8 @@
 #ifndef RECOGNIZER_H
 #define RECOGNIZER_H
 
+#include "speechtotext/speechtotextplugin.h"
+
 #include <QIODevice>
 
 #ifdef QT6
@@ -13,51 +15,12 @@
 #define AUDIOINPUT QAudioInput
 #endif
 
-// Define the Listener class, which inherits from QIODevice
-class Listener : public QIODevice
-{
-    Q_OBJECT
-
-public:
-    // Constructor for the Listener class, which takes a parent object
-    // and calls the QIODevice constructor to open the device in read-write mode
-    explicit Listener(QObject *parent);
-
-    // Reimplementation of the writeData method from QIODevice, which takes
-    // the incoming audio data and size as arguments and passes them to
-    // the Vosk recognizer to convert the audio to text
-    qint64 writeData(const char *data, qint64 size) override;
-
-    inline qint64 readData(char *data, qint64 size) override { return size; };
-
-Q_SIGNALS:
-    // Signal emitted when the wake word is detected in the audio input
-    void wakeWord();
-
-    // Signal emitted when the recognizer has finished listening for audio input
-    void doneListening();
-
-    // Signal emitted when the recognizer has recognized some text in the audio input
-    void textUpdated(const QString &text);
-
-    void answerReady(QString);
-
-private:
-    // Private method that takes a JSON string containing the recognized text
-    // and parses it to extract the text and emit the appropriate signals
-    void parseText(const char *json);
-
-    // Private method that takes a JSON string containing partial recognized text
-    // and parses it to extract the text and emit the appropriate signals
-    void parsePartial(const char *json);
-};
-
 class SpeechToText : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit SpeechToText(QObject *parent = nullptr);
+    explicit SpeechToText(const QString & = QStringLiteral("vosk"), QObject *parent = nullptr);
     ~SpeechToText();
 
     enum State {
@@ -76,16 +39,16 @@ public:
     [[nodiscard]] inline State state() const { return m_state; }
     inline QString errorString() { return m_errorString; }
 
-    [[nodiscard]] inline Listener *device() const { return m_device.get(); }
+    [[nodiscard]] inline SpeechToTextPlugin *device() const { return m_plugin; }
 
-    static bool hasWord(const QString &word);
+    bool hasWord(const QString &word);
 
-    static void setWakeWord(const QString &word);
-    static QString wakeWord();
+    void setWakeWord(const QString &word);
+    QString wakeWord();
 
-    inline QString language() { return m_language; };
+    QString language();
 
-    static void ask();
+    void ask();
 
     explicit operator bool() const;
 
@@ -114,13 +77,17 @@ private Q_SLOTS:
 private:
     void setState(SpeechToText::State s);
 
-    QScopedPointer<AUDIOINPUT> audio;
-    QScopedPointer<Listener> m_device;
+    AUDIOINPUT *audio = nullptr;
+
+    SpeechToTextPlugin *m_plugin = nullptr;
+    QList<SpeechToTextPlugin *> m_plugins;
 
     State m_state = NotStarted;
     QString m_errorString;
 
     QString m_language;
+
+    bool m_muted = false;
 };
 
 #endif // RECOGNIZER_H

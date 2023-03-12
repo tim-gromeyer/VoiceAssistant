@@ -1,0 +1,5 @@
+set(VOSK_DIR ${CMAKE_SOURCE_DIR}/vosk)
+
+# plugins
+set(SPEECHTOTEXT_PLUGINS_DIR ${CMAKE_SOURCE_DIR}/speechtotext)
+set(PLUGINS_DIR ${CMAKE_SOURCE_DIR}/plugins)

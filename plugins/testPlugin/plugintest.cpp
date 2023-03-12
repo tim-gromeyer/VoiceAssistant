@@ -14,7 +14,7 @@ void PluginTest::run(const QString & /* text */)
     bridge->ask(tr("How are you"));
     bridge->say(tr("Okay"));
 
-    auto *w = new QWidget(this);
+    auto *w = new QWidget(qobject_cast<QWidget *>(parent()));
     auto *l = new QVBoxLayout(w);
     auto *label = new QLabel(tr("It works!"), w);
     l->addWidget(label, 1, Qt::AlignCenter);

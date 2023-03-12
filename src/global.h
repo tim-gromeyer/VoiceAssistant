@@ -36,4 +36,9 @@ static const QString &modelDir()
     static const QString dir = baseDir() + QStringLiteral("/models/");
     return dir;
 }
+static const QString &speechToTextPluginDir()
+{
+    static const QString dir = baseDir() + QStringLiteral("/speechtotext/");
+    return dir;
+}
 } // namespace dir

@@ -2,6 +2,6 @@
 vosk/
 models/
 android/
-plugins/*.so
+*.so
 plugins/build-*
 data/

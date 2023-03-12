@@ -5,6 +5,8 @@
 #include "plugins/bridge.h"
 #include "recognizer.h"
 #include "settingsdialog.h"
+#include "sliderwithtext.h"
+#include "speechtotext/speechtotextplugin.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
 
@@ -28,6 +30,7 @@
 #include <QThreadPool>
 #include <QTime>
 #include <QTimer>
+#include <QWidgetAction>
 
 #ifdef QT6
 #include <QAudioOutput>
@@ -109,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
     player->setAudioOutput(audioOutput);
 #endif
     // Set up recognizer
-    recognizer = new SpeechToText(this);
+    recognizer = new SpeechToText(STR("vosk"), this);
     connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);
     connect(recognizer,
             &SpeechToText::languageChanged,
@@ -138,9 +141,15 @@ MainWindow::MainWindow(QWidget *parent)
     timeTimer->start();
     updateTime();
 
-    connect(recognizer->device(), &Listener::doneListening, this, &MainWindow::doneListening);
-    connect(recognizer->device(), &Listener::textUpdated, this, &MainWindow::updateText);
-    connect(recognizer->device(), &Listener::wakeWord, this, &MainWindow::onWakeWord);
+    connect(recognizer->device(),
+            &SpeechToTextPlugin::doneListening,
+            this,
+            &MainWindow::doneListening);
+    connect(recognizer->device(), &SpeechToTextPlugin::textUpdated, this, &MainWindow::updateText);
+    connect(recognizer->device(),
+            &SpeechToTextPlugin::wakeWordDetected,
+            this,
+            &MainWindow::onWakeWord);
 
     connect(ui->action_Quit, &QAction::triggered, this, &QWidget::close);
     connect(ui->muteButton, &QCheckBox::clicked, this, &MainWindow::mute);
@@ -150,6 +159,13 @@ MainWindow::MainWindow(QWidget *parent)
     loadPlugins();
 
     QTimer::singleShot(3s, jokes, &Jokes::setup);
+
+    //        auto *slider = new SliderWithText(this);
+    //        slider->setOrientation(Qt::Horizontal);
+    //        slider->setRange(0, 10);
+    //        auto *a = new QWidgetAction(this);
+    //        a->setDefaultWidget(slider);
+    //        ui->menuCommands->addAction(a);
 }
 
 void MainWindow::addCommand(const Action &a)
@@ -409,8 +425,8 @@ void MainWindow::onHasWord()
             wordEdit->setStyleSheet(QString());
             return;
         }
-
-        bool hasWord = SpeechToText::hasWord(word);
+        // TODO: Add warning if the stt plugin doesn't support word lookups
+        bool hasWord = recognizer->hasWord(word);
         if (hasWord)
             wordEdit->setStyleSheet(STR("color: green"));
         else
@@ -730,7 +746,7 @@ QString MainWindow::ask(const QString &text)
 
     if (instance()->m_muted)
         return {QLatin1String()};
-    SpeechToText::ask();
+    recognizer->ask();
     instance()->ui->statusLabel->setText(tr("Waiting for answer..."));
     loop.exec();
     instance()->ui->statusLabel->setText(tr("Waiting for wake word"));

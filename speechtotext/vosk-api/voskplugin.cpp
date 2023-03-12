@@ -14,6 +14,8 @@ VoskPlugin::VoskPlugin(QObject *parent)
     : SpeechToTextPlugin(parent)
 {
     open(QIODevice::ReadWrite);
+
+    vosk_set_log_level(-1);
 };
 
 qint64 VoskPlugin::writeData(const char *data, qint64 size)
@@ -68,7 +70,7 @@ void VoskPlugin::parsePartial(const char *json)
     Q_EMIT textUpdated(text);
 }
 
-void VoskPlugin::setup(const QString &modelDir)
+void VoskPlugin::setup(const QString &modelDir, bool *succes)
 {
     qDebug() << "[debug] Setting up model and recognizer";
 
@@ -77,6 +79,7 @@ void VoskPlugin::setup(const QString &modelDir)
     QDir dir(modelDir);
     if (dir.isEmpty(QDir::Dirs)) {
         setState(ModelsMissing);
+        *succes = false;
         return;
     }
 
@@ -91,21 +94,33 @@ void VoskPlugin::setup(const QString &modelDir)
             _globalRecognizer = vosk_recognizer_new(_model, 16000.0);
         }
 
-        if (!_model || !_globalRecognizer) {
-            setState(ErrorWhileLoading);
-        }
+        if (!_model || !_globalRecognizer)
+            continue;
 
         m_language = lang;
 
         qDebug() << "[debug] SpeechToText loaded successful";
 
+        Q_EMIT loaded();
         setState(Running);
+        *succes = true;
         return;
     }
 
     setState(NoModelFound);
     qDebug() << "[debug] No model found!";
-    return;
+    *succes = false;
+}
+
+bool VoskPlugin::canRecognizeWord(const QString &word)
+{
+    if (!_model)
+        return false;
+
+    if (word.isEmpty())
+        return true;
+
+    return vosk_model_find_word(_model, word.toLower().toUtf8()) != -1;
 }
 
 void VoskPlugin::setState(State s)

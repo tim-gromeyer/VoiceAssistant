@@ -1,8 +1,8 @@
-set(__voskDir ${CMAKE_SOURCE_DIR}/vosk)
+include(Dirs)
 
 find_library(__voskFile
     NAMES vosk-api vosk libvosk
-    PATHS ${__voskDir}
+    PATHS ${VOSK_DIR}
     NO_DEFAULT_PATH
 )
 
@@ -18,4 +18,4 @@ set(Vosk_FOUND ON)
 add_library(Vosk STATIC IMPORTED GLOBAL)
 set_target_properties(Vosk PROPERTIES
     IMPORTED_LOCATION ${__voskFile}
-    INTERFACE_INCLUDE_DIRECTORIES ${__voskDir})
+    INTERFACE_INCLUDE_DIRECTORIES ${VOSK_DIR})

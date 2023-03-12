@@ -11,6 +11,7 @@ class SpeechToTextPlugin : public QIODevice
 
 public:
     explicit SpeechToTextPlugin(QObject *parent = nullptr){};
+    virtual ~SpeechToTextPlugin() = default;
 
     virtual QString pluginName() = 0;
 
@@ -24,7 +25,7 @@ public:
     };
     Q_ENUM(State);
 
-    virtual void setup(const QString &modelDir) = 0;
+    virtual void setup(const QString &modelDir, bool *succes) = 0;
 
     // Reimplementation of the writeData method from QIODevice, which takes
     // the incoming audio data and size as arguments and processes them
@@ -42,7 +43,13 @@ public:
     virtual bool isAsking() = 0;
     virtual void setAsking(bool) = 0;
 
+    virtual bool hasLoopupSupport() = 0;                // Word loopup support
+    virtual bool canRecognizeWord(const QString &) = 0; // Can it recognize the word?
+
 Q_SIGNALS:
+    // Emit this signal when setup() was succesful
+    void loaded();
+
     void stateChanged();
 
     // Signal emitted when the wake word is detected in the audio input

@@ -4,7 +4,7 @@
 
 #include <QMainWindow>
 
-class PluginTest : public QWidget, PluginInterface
+class PluginTest : public QObject, PluginInterface
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID PLUGIN_iid FILE "metadata.json")
@@ -12,7 +12,7 @@ class PluginTest : public QWidget, PluginInterface
 
 public:
     explicit PluginTest(QObject *parent = nullptr)
-        : QWidget(qobject_cast<QMainWindow *>(parent)){};
+        : QObject(parent){};
 
     bool isValid(const QString &) override;
     void run(const QString &) override;
