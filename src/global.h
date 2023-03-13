@@ -41,4 +41,9 @@ static const QString &speechToTextPluginDir()
     static const QString dir = baseDir() + QStringLiteral("/speechtotext/");
     return dir;
 }
+static const QString &commandsBaseDir()
+{
+    static const QString dir = baseDir() + QStringLiteral("/commands/");
+    return dir;
+}
 } // namespace dir

@@ -24,15 +24,13 @@ public:
     ~SpeechToText();
 
     enum State {
-        NoModelFound = 0,       // No Vosk model was found for the system languages
-        ModelsMissing = 1,      // The directory where the Vosk models are stored is empty
-        ErrorWhileLoading = 2,  // Unknown error loading Vosk model or recognizer
-        NotStarted = 3,         // SpeechToText not set up or not listening
-        NoMicrophone = 4,       // No microphone was found or the microphone is not accessible
-        IncompatibleFormat = 5, // Incompatible microphone, must support PCM 16bit mono
-        PermissionMissing = 6,  //
-        Running = 7,            // The recognizer is set up and proceeds data
-        Paused = 8              // The microphone input is paused
+        PluginError = 0,
+        NotStarted = 1,         // SpeechToText not set up or not listening
+        NoMicrophone = 2,       // No microphone was found or the microphone is not accessible
+        IncompatibleFormat = 3, // Incompatible microphone, must support PCM 16bit mono
+        PermissionMissing = 4,  //
+        Running = 5,            // The recognizer is set up and proceeds data
+        Paused = 6              // The microphone input is paused
     };
     Q_ENUM(State);
 
@@ -60,11 +58,11 @@ public Q_SLOTS:
 
     void reset();
 
+    void pluginStateChanged();
+
 Q_SIGNALS:
     void stateChanged();
     void languageChanged();
-
-    void modelLoaded();
 
     void answerReady(QString);
 

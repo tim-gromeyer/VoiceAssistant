@@ -346,8 +346,14 @@ void MainWindow::onSTTStateChanged()
     case SpeechToText::Running:
         ui->statusLabel->setText(tr("Waiting for wake word"));
         break;
-    case SpeechToText::NoModelFound:
-    case SpeechToText::ModelsMissing:
+    case SpeechToText::PluginError:
+        if (!recognizer->device())
+            return;
+
+        if (recognizer->device()->state() != SpeechToTextPlugin::NoModelFound
+            && recognizer->device()->state() != SpeechToTextPlugin::ModelsMissing)
+            return;
+
         ui->statusLabel->setText(recognizer->errorString());
         openModelDownloader();
         break;
@@ -401,31 +407,47 @@ void MainWindow::onHasWord()
     QDialog dia(this);
     dia.setWindowTitle(tr("Contains word?"));
 
+    auto *warningLayout = new QVBoxLayout(&dia);
+    QMargins m = warningLayout->contentsMargins();
+    warningLayout->setContentsMargins(0, 0, 0, 0);
+
     auto *layout = new QVBoxLayout(&dia);
+    layout->setContentsMargins(m);
 
     auto *infoLabel
         = new QLabel(tr("Check if the current language model can (not does) recognize a word."),
                      &dia);
     infoLabel->setWordWrap(true);
-    layout->addWidget(infoLabel);
 
     auto *wordLabel = new QLabel(tr("Word:"), &dia);
-    layout->addWidget(wordLabel);
 
     auto *wordEdit = new QLineEdit(&dia);
     wordEdit->setPlaceholderText(tr("Enter word"));
-    layout->addWidget(wordEdit);
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, &dia);
-    layout->addWidget(buttonBox);
 
-    connect(wordEdit, &QLineEdit::textChanged, wordEdit, [wordEdit](const QString &w) {
+    // Check if the stt plugin supports word lookups
+    auto *warningLabel
+        = new QLabel(tr("Warning: the current STT plugin does not support word lookups"), &dia);
+    warningLabel->setStyleSheet(
+        STR("background-color: rgb(255, 107, 0); color: black; border-bottom-left-radius: 5px; "
+            "border-bottom-right-radius: 5px"));
+    warningLabel->setVisible(recognizer->device() && !recognizer->device()->hasLoopupSupport());
+
+    warningLayout->addWidget(warningLabel);
+    layout->addWidget(infoLabel);
+    layout->addWidget(wordLabel);
+    layout->addWidget(wordEdit);
+    layout->addWidget(buttonBox);
+    warningLayout->addLayout(layout);
+    dia.setLayout(warningLayout);
+
+    connect(wordEdit, &QLineEdit::textChanged, wordEdit, [wordEdit, warningLabel](const QString &w) {
         auto word = w.trimmed().toLower();
         if (word.isEmpty()) {
             wordEdit->setStyleSheet(QString());
             return;
         }
-        // TODO: Add warning if the stt plugin doesn't support word lookups
         bool hasWord = recognizer->hasWord(word);
         if (hasWord)
             wordEdit->setStyleSheet(STR("color: green"));
@@ -443,12 +465,14 @@ void MainWindow::onHasWord()
     wordLabel->deleteLater();
     wordEdit->deleteLater();
     buttonBox->deleteLater();
+    warningLabel->deleteLater();
 
     delete layout;
     delete infoLabel;
     delete wordLabel;
     delete wordEdit;
     delete buttonBox;
+    delete warningLabel;
 }
 
 void MainWindow::openModelDownloader()
@@ -497,7 +521,7 @@ void MainWindow::loadCommands()
 {
     commands.clear();
 
-    const QString dir = dir::baseDir() + STR("/commands/") + recognizer->language();
+    const QString dir = dir::commandsBaseDir() + recognizer->language();
 
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
@@ -572,7 +596,7 @@ void MainWindow::loadCommands()
 
 void MainWindow::saveCommands()
 {
-    const QString dir = dir::baseDir() + STR("/commands/") + recognizer->language();
+    const QString dir = dir::commandsBaseDir() + recognizer->language();
 
     QJsonArray jsonArray;
 

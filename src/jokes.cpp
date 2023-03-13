@@ -173,12 +173,24 @@ void Jokes::loadJokes()
         return;
 
     QDataStream in(&f);
+
+    QString cachedJokesLanguage;
+    in >> cachedJokesLanguage;
+    if (cachedJokesLanguage != jokeLang) {
+        qInfo().noquote() << tr("The language of the cached jokes (%1) does not match the current "
+                                "language of the jokes (%2)")
+                                 .arg(cachedJokesLanguage, jokeLang);
+        f.remove();
+        return;
+    }
+
     while (!in.atEnd()) {
         Joke j;
         in >> j;
         if (!jokes.contains(j))
             jokes.append(j);
     }
+    qDebug().nospace().noquote() << "Jokes: Using " << jokes.size() << " cached jokes";
     f.close();
 }
 
@@ -189,6 +201,7 @@ void Jokes::saveJokes()
         return;
 
     QDataStream out(&f);
+    out << jokeLang;
     for (const Joke &j : qAsConst(jokes)) {
         out << j;
     }

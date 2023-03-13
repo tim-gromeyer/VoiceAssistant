@@ -16,12 +16,12 @@ public:
     virtual QString pluginName() = 0;
 
     enum State {
-        NoModelFound = 0,      // No model was found for the system languages
-        ModelsMissing = 1,     // The directory where the models are stored is empty
-        ErrorWhileLoading = 2, // Unknown error loading the model or recognizer
-        NotStarted = 3,        // Not set up yet
-        Running = 7,           // The recognizer is set up and proceeds data
-        Paused = 8             // The microphone input is paused
+        NotStarted = 0,       // Not set up yet
+        Running = 1,          // The recognizer is set up and proceeds data
+        Paused = 2,           // The microphone input is paused
+        NoModelFound = 3,     // No model was found for the system languages
+        ModelsMissing = 4,    // The directory where the models are stored is empty
+        ErrorWhileLoading = 5 // Unknown error loading the model or recognizer
     };
     Q_ENUM(State);
 

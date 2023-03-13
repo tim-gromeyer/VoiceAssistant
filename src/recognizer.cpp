@@ -38,7 +38,7 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
         if (!QLibrary::isLibrary(fileName))
             continue;
 
-        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName), this);
         if (!loader.load()) {
             qWarning() << "Failed to load plugin" << fileName
                        << "due to following reason:" << loader.errorString()
@@ -61,7 +61,6 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
             continue;
 
         m_plugin = plugin;
-        connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
     }
 
     if (m_plugins.isEmpty())
@@ -70,6 +69,9 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
 
     if (m_plugin == nullptr)
         m_plugin = m_plugins.at(0);
+
+    connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
+    connect(m_plugin, &SpeechToTextPlugin::stateChanged, this, &SpeechToText::pluginStateChanged);
 
 #if NEED_MICROPHONE_PERMISSION
     QMicrophonePermission microphonePermission;
@@ -220,9 +222,6 @@ void SpeechToText::setup()
     case NoMicrophone:
         setUpMic();
         break;
-    case ErrorWhileLoading:
-    case ModelsMissing:
-    case NoModelFound:
     case NotStarted:
         connect(m_plugin,
                 &SpeechToTextPlugin::loaded,
@@ -266,6 +265,17 @@ QString SpeechToText::language()
         return QLatin1String();
 }
 
+void SpeechToText::pluginStateChanged()
+{
+    if (!m_plugin)
+        return;
+
+    SpeechToTextPlugin::State s = m_plugin->state();
+
+    if (3 <= s)
+        setState(PluginError);
+}
+
 void SpeechToText::setState(SpeechToText::State s)
 {
     m_state = s;
@@ -274,15 +284,9 @@ void SpeechToText::setState(SpeechToText::State s)
     case Running:
         m_errorString.clear();
         break;
-    case NoModelFound:
-        m_errorString = tr("No Vosk model was found for the system languages");
-        break;
-    case ModelsMissing:
-        m_errorString = tr("The directory where the Vosk models are stored is empty");
-        break;
-    case ErrorWhileLoading:
-        m_errorString = tr(
-            "An unknown error occurred while loading the Vosk model and/or recognizer");
+    case PluginError:
+        if (m_plugin)
+            m_errorString = m_plugin->errorString();
         break;
     case NotStarted:
         m_errorString = tr("The recognizer has not yet been set up");
