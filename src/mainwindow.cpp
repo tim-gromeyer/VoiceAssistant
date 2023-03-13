@@ -411,7 +411,7 @@ void MainWindow::onHasWord()
     QMargins m = warningLayout->contentsMargins();
     warningLayout->setContentsMargins(0, 0, 0, 0);
 
-    auto *layout = new QVBoxLayout(&dia);
+    auto *layout = new QVBoxLayout();
     layout->setContentsMargins(m);
 
     auto *infoLabel
