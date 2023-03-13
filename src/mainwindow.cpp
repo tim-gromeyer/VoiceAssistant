@@ -432,7 +432,7 @@ void MainWindow::onHasWord()
     warningLabel->setStyleSheet(
         STR("background-color: rgb(255, 107, 0); color: black; border-bottom-left-radius: 5px; "
             "border-bottom-right-radius: 5px"));
-    warningLabel->setVisible(recognizer->device() && !recognizer->device()->hasLoopupSupport());
+    warningLabel->setVisible(recognizer->device() && !recognizer->device()->hasLookupSupport());
 
     warningLayout->addWidget(warningLabel);
     layout->addWidget(infoLabel);

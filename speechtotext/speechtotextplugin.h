@@ -43,7 +43,7 @@ public:
     virtual bool isAsking() = 0;
     virtual void setAsking(bool) = 0;
 
-    virtual bool hasLoopupSupport() = 0;                // Word loopup support
+    virtual bool hasLookupSupport() = 0;                // Word loopup support
     virtual bool canRecognizeWord(const QString &) = 0; // Can it recognize the word?
 
 Q_SIGNALS:

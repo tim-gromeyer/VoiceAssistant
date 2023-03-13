@@ -238,7 +238,7 @@ void SpeechToText::setup()
 
 bool SpeechToText::hasWord(const QString &word)
 {
-    if (!m_plugin || !m_plugin->hasLoopupSupport())
+    if (!m_plugin || !m_plugin->hasLookupSupport())
         return false;
 
     return m_plugin->canRecognizeWord(word);

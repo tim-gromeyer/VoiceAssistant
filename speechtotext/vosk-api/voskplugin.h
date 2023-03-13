@@ -36,7 +36,7 @@ public:
         Q_EMIT askingChanged();
     };
 
-    inline bool hasLoopupSupport() override { return true; };
+    inline bool hasLookupSupport() override { return true; };
     bool canRecognizeWord(const QString &) override;
 
 private:
