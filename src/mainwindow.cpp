@@ -423,6 +423,7 @@ void MainWindow::onHasWord()
 
     auto *wordEdit = new QLineEdit(&dia);
     wordEdit->setPlaceholderText(tr("Enter word"));
+    wordEdit->setClearButtonEnabled(true);
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, &dia);
 

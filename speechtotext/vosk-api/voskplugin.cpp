@@ -7,8 +7,6 @@
 #include "vosk_api.h" // Include the Vosk API header file
 
 // Declare global variables for the Vosk model and recognizer
-VoskModel *_model = nullptr;
-VoskRecognizer *_globalRecognizer = nullptr;
 
 VoskPlugin::VoskPlugin(QObject *parent)
     : SpeechToTextPlugin(parent)
@@ -20,10 +18,10 @@ VoskPlugin::VoskPlugin(QObject *parent)
 
 qint64 VoskPlugin::writeData(const char *data, qint64 size)
 {
-    if (vosk_recognizer_accept_waveform(_globalRecognizer, data, (int) size))
-        parseText(vosk_recognizer_result(_globalRecognizer));
+    if (vosk_recognizer_accept_waveform(recognizer, data, (int) size))
+        parseText(vosk_recognizer_result(recognizer));
     else
-        parsePartial(vosk_recognizer_partial_result(_globalRecognizer));
+        parsePartial(vosk_recognizer_partial_result(recognizer));
 
     return size;
 }
@@ -88,13 +86,13 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
         if (!QDir(modelDir + formattedLang).exists())
             continue;
 
-        _model = vosk_model_new(QString(modelDir + formattedLang).toUtf8());
-        if (_model) {
+        model = vosk_model_new(QString(modelDir + formattedLang).toUtf8());
+        if (model) {
             qDebug() << "[debug] Loaded model, language:" << lang;
-            _globalRecognizer = vosk_recognizer_new(_model, 16000.0);
+            recognizer = vosk_recognizer_new(model, 16000.0);
         }
 
-        if (!_model || !_globalRecognizer)
+        if (!model || !recognizer)
             continue;
 
         m_language = lang;
@@ -114,13 +112,13 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
 
 bool VoskPlugin::canRecognizeWord(const QString &word)
 {
-    if (!_model)
+    if (!model)
         return false;
 
     if (word.isEmpty())
         return true;
 
-    return vosk_model_find_word(_model, word.toLower().toUtf8()) != -1;
+    return vosk_model_find_word(model, word.toLower().toUtf8()) != -1;
 }
 
 void VoskPlugin::setState(State s)
@@ -158,6 +156,6 @@ void VoskPlugin::setState(State s)
 
 VoskPlugin::~VoskPlugin()
 {
-    vosk_recognizer_free(_globalRecognizer);
-    vosk_model_free(_model);
+    vosk_recognizer_free(recognizer);
+    vosk_model_free(model);
 }

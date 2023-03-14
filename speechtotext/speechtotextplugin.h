@@ -29,6 +29,7 @@ public:
 
     // Reimplementation of the writeData method from QIODevice, which takes
     // the incoming audio data and size as arguments and processes them
+    // Audio format: PCM 16-Bit mono
     /// qint64 writeData(const char *data, qint64 size) override;
 
     virtual State state() = 0;
@@ -39,7 +40,7 @@ public:
     virtual QString wakeWord() = 0;
     virtual void setWakeWord(const QString &) = 0;
 
-    // Asking mode. We don't emit the wakeWordDetected signal.
+    // Asking mode. We don't need to wait for the wake word
     virtual bool isAsking() = 0;
     virtual void setAsking(bool) = 0;
 

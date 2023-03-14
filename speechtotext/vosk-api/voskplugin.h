@@ -2,6 +2,9 @@
 
 #include "../speechtotextplugin.h"
 
+class VoskModel;
+class VoskRecognizer;
+
 class VoskPlugin : public SpeechToTextPlugin
 {
     Q_OBJECT
@@ -57,4 +60,7 @@ private:
     QString m_errorString;
 
     QString m_language;
+
+    VoskModel *model = nullptr;
+    VoskRecognizer *recognizer = nullptr;
 };
