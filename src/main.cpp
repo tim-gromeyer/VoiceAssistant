@@ -1,16 +1,17 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
-
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.svg")));
     QApplication::setApplicationName(QStringLiteral("VoiceAssistant"));
+    QApplication::setApplicationVersion(QStringLiteral(APP_VER));
 
     QTranslator translator, qtTranslator;
     QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
@@ -30,6 +31,15 @@ int main(int argc, char *argv[])
                         QStringLiteral("_"),
                         QStringLiteral(":/translations")))
         QApplication::installTranslator(&translator);
+
+    QCommandLineParser parser;
+    parser.setApplicationDescription(
+        translator.translate("cmd",
+                             "Resource-efficient voice assistant that is still in the early stages "
+                             "of development but already functional."));
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.process(a);
 
     MainWindow w;
     w.show();
