@@ -1,0 +1,70 @@
+name: Test build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Building on ${{ matrix.os }} with Qt ${{ matrix.QT_VER }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            QT_VER: 5.12.8
+            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-linux-x86_64-0.3.42.zip
+          - os: ubuntu-22.04
+            QT_VER: 5.15.3
+            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-linux-x86_64-0.3.42.zip
+          - os: windows-latest
+            QT_VER: 6.5.0
+            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-win64-0.3.42.zip
+          - os: macos-latest
+            QT_VER: 6.5.0
+            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-osx-0.3.42.zip
+
+    steps:
+    - name: Checkout repo and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+
+    - if: contains( matrix.os, 'windows') || contains( matrix.os, 'macos')
+      name: Install Qt on Windows and Mac
+      uses: jurplel/install-qt-action@v3
+      with:
+        aqtversion: '==3.1.*'
+        cache: true
+        version: '6.5.0'
+        modules: 'qtimageformats qtmultimedia qtspeech'
+
+    - if: contains( matrix.os, 'ubuntu')
+      name: Install Qt on Linux
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct 
+
+    - name: Download and extract Vosk
+      run: |
+        mkdir -p vosk && cd vosk
+        curl -L -O ${{ matrix.VOSK_URL }}
+        unzip -q '*.zip'
+        for d in */; do
+          mv "$d"* .
+        done
+        rm -rf */
+        cd ..
+      shell: bash
+
+    - name: Build
+      run: |
+        mkdir -p build && cd build
+        cmake -DCMAKE_BUILD_TYPE=Release ..
+        cmake --build . -j8
+      shell: bash
+

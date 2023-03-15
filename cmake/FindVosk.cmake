@@ -1,4 +1,5 @@
 include(Dirs)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
 
 find_library(__voskFile
     NAMES vosk-api vosk libvosk
@@ -6,7 +7,8 @@ find_library(__voskFile
     NO_DEFAULT_PATH
 )
 
-if (${__voskFile} STREQUAL "Vosk-NOTFOUND")
+if (${__voskFile} STREQUAL "__voskFile-NOTFOUND")
+    message(FATAL_ERROR "Vosk library file not found. Download it from https://github.com/alphacep/vosk-api/releases/tag/v0.3.42 and unpack it to ${VOSK_DIR}")
    set(Vosk_FOUND OFF)
    return()
 endif()
