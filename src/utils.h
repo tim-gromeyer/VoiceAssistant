@@ -2,10 +2,6 @@
 
 #include <QString>
 
-#include <functional>
-
-class QThread;
-
 namespace utils {
 inline namespace numbers {
 int wordToNumber(const QString &);
@@ -18,11 +14,6 @@ constexpr QLatin1String L1(const char *str)
 #define STR(str) QStringLiteral(str)
 } // namespace literals
 } // namespace utils
-
-namespace threading {
-void runFunctionInThreadPool(std::function<void()>);
-QThread *runFunction(std::function<void()>);
-}
 
 namespace file {
 QString makeSizeRedalbe(qint64);

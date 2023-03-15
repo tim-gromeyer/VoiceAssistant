@@ -31,6 +31,7 @@
 #include <QTime>
 #include <QTimer>
 #include <QWidgetAction>
+#include <QtConcurrentRun>
 
 #ifdef QT6
 #include <QAudioOutput>
@@ -127,7 +128,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Set up text to speech
     engineThread = new QThread(this);
     connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
-    threading::runFunctionInThreadPool(&MainWindow::setupTextToSpeech);
+    std::ignore = QtConcurrent::run(&MainWindow::setupTextToSpeech);
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);

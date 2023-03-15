@@ -19,7 +19,11 @@ class PluginBridge : public QObject
 public:
     explicit PluginBridge(QObject *parent = nullptr)
         : QObject(parent){};
-    ~PluginBridge() { mutex.unlock(); }
+    ~PluginBridge()
+    {
+        if (mutex.tryLock())
+            mutex.unlock();
+    }
 
     inline QString ask(const QString &text)
     {

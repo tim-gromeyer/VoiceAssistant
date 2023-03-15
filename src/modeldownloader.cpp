@@ -5,6 +5,7 @@
 #include <QClipboard>
 #include <QDir>
 #include <QElapsedTimer>
+#include <QFutureWatcher>
 #include <QGuiApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -20,6 +21,7 @@
 #include <QTableWidget>
 #include <QThread>
 #include <QVBoxLayout>
+#include <QtConcurrentRun>
 
 #include "elzip.hpp"
 
@@ -345,21 +347,27 @@ void ModelDownloader::downloadFinished()
     file->close();
 
     QGuiApplication::setOverrideCursor(Qt::WaitCursor);
-    qInfo() << "Unzipping" << file->fileName() << "to" << dir::modelDir();
+    qDebug() << "Unzipping" << file->fileName() << "to" << dir::modelDir();
     try {
-        auto *thread = threading::runFunction([&] {
+        QFuture<void> future = QtConcurrent::run([this] {
             elz::extractZip(file->fileName().toStdString(), dir::modelDir().toStdString());
         });
-        thread->start();
+
         if (senderButton)
             senderButton->setText(tr("Unziping"));
-        while (thread->isRunning()) {
-            QCoreApplication::processEvents();
-        }
-        thread->deleteLater();
 
-        // elz::extractZip(file.fileName().toStdString(), SpeechToText::modelDir().toStdString());
-        qInfo() << "Renaming folder ...";
+        QFutureWatcher<void> watcher;
+        QEventLoop loop;
+        connect(&watcher,
+                &QFutureWatcherBase::finished,
+                &loop,
+                &QEventLoop::quit,
+                Qt::QueuedConnection);
+        watcher.setFuture(future);
+
+        loop.exec();
+
+        qDebug() << "Renaming folder ...";
         QDir dir(dir::modelDir());
         if (!dir.rename(info.name, info.lang)) {
             qCritical() << "Can't rename the folder, do it yourself!\nOriginal name:" << info.name
@@ -367,7 +375,6 @@ void ModelDownloader::downloadFinished()
             error = true;
         }
 
-        delete thread;
     } catch (elz::zip_exception &e) {
         qCritical() << "Can't unzip voice model: " << e.what();
         if (senderButton) {

@@ -1,5 +1,6 @@
 #include "voskplugin.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QJsonDocument>
 #include <QLocale>

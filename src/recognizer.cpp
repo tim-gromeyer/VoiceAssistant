@@ -1,7 +1,6 @@
 #include "recognizer.h" // Include the header file for the SpeechToText class
 #include "global.h"
 #include "speechtotext/speechtotextplugin.h"
-#include "utils.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -10,13 +9,11 @@
 #include <QLocale>
 #include <QMessageBox>
 #include <QPluginLoader>
-#include <QThreadPool>
+#include <QtConcurrentRun>
 
 #if NEED_MICROPHONE_PERMISSION
 #include <QPermission>
 #endif
-
-using namespace utils::literals;
 
 SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
     : QObject{parent}
@@ -227,15 +224,20 @@ void SpeechToText::setup()
     case NoMicrophone:
         setUpMic();
         break;
-    case NotStarted:
+    case NotStarted: {
         connect(m_plugin,
                 &SpeechToTextPlugin::loaded,
                 this,
                 &SpeechToText::setUpMic,
                 Qt::UniqueConnection);
 
-        threading::runFunctionInThreadPool([this] { setUpModel(); });
+#if QT5
+        QtConcurrent::run(this, &SpeechToText::setUpModel);
+#else
+        std::ignore = QtConcurrent::run(&SpeechToText::setUpModel, this);
+#endif
         break;
+    }
     default:
         break;
     }

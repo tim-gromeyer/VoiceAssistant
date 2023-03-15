@@ -34,8 +34,8 @@ else()
   option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
 
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
@@ -101,6 +101,7 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Multimedia
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::TextToSpeech
+    Qt${QT_VERSION_MAJOR}::Concurrent
     ${INTL_LDFLAGS}
     elzip
     ${TTS_PLUGINS})
@@ -111,7 +112,7 @@ target_compile_definitions(voiceassistant PUBLIC
     APP_VER="${APP_VERSION}"
     QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
     QT_USE_QSTRINGBUILDER
-    QT${QT_VERSION_MAJOR})
+    QT${QT_VERSION_MAJOR}=1)
 
 set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
 

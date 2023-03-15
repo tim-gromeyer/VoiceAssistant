@@ -2,9 +2,6 @@
 
 #include <QCoreApplication>
 #include <QHash>
-#include <QRunnable>
-#include <QThread>
-#include <QThreadPool>
 
 namespace utils {
 inline namespace numbers {
@@ -30,46 +27,6 @@ int wordToNumber(const QString &word)
 }
 } // namespace numbers
 } // namespace utils
-
-class FunctionRunnable : public QRunnable
-{
-    std::function<void()> m_functionToRun;
-
-public:
-    explicit FunctionRunnable(std::function<void()> functionToRun)
-        : m_functionToRun(std::move(functionToRun))
-    {}
-    void run() override { m_functionToRun(); }
-};
-class FunctionThread : public QThread
-{
-    std::function<void()> m_functionToRun;
-
-public:
-    explicit FunctionThread(std::function<void()> functionToRun)
-        : m_functionToRun(std::move(functionToRun))
-    {}
-    void run() override { m_functionToRun(); }
-};
-namespace threading {
-void runFunctionInThreadPool(std::function<void()> f)
-{
-#if QT6
-    QThreadPool::globalInstance()->start(std::move(f));
-#else
-    if (!f)
-        return;
-
-    QRunnable *runnable = new FunctionRunnable(std::move(f));
-    QThreadPool::globalInstance()->start(runnable);
-#endif
-}
-QThread *runFunction(std::function<void()> f)
-{
-    auto *thread = new FunctionThread(std::move(f));
-    return thread;
-}
-} // namespace threading
 
 namespace file {
 QString makeSizeRedalbe(qint64 size)
