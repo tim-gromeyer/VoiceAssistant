@@ -32,7 +32,7 @@ jobs:
     - name: Checkout repo and submodules
       uses: actions/checkout@v3
       with:
-        submodules: 'true'
+        submodules: 'recursive'
 
     - if: contains( matrix.os, 'windows') || contains( matrix.os, 'macos')
       name: Install Qt on Windows and Mac
