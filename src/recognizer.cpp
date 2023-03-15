@@ -159,6 +159,11 @@ void SpeechToText::reset()
 
 bool SpeechToText::setUpModel()
 {
+    if (!m_plugin) {
+        setState(State::PluginError);
+        return false;
+    }
+
     bool success = false;
     m_plugin->setup(dir::modelDir(), &success);
     if (success)

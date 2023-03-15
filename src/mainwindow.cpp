@@ -111,6 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
     audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);
 #endif
+
     // Set up recognizer
     recognizer = new SpeechToText(STR("vosk"), this);
     connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);

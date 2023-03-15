@@ -7,6 +7,10 @@
 #error Threading required!
 #endif
 
+#ifdef QT_NO_DEBUG
+#include <QCoreApplication>
+#endif
+
 #define NEED_MICROPHONE_PERMISSION (QT_FEATURE_permissions == 1)
 
 namespace dir {
@@ -15,7 +19,9 @@ static const QString &baseDir()
 #ifdef QT_DEBUG
     static const QString dir = QStringLiteral(APP_DIR);
 #else
-    static const QString dir = QCoreApplication::applicationDirPath();
+    static QString dir;
+    if (dir.isEmpty() && QCoreApplication::instance())
+        dir = QCoreApplication::applicationDirPath();
 #endif
 
     return dir;

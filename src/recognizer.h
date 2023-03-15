@@ -19,6 +19,8 @@ class SpeechToText : public QObject
 {
     Q_OBJECT
 
+    friend class MainWindow;
+
 public:
     explicit SpeechToText(const QString & = QStringLiteral("vosk"), QObject *parent = nullptr);
     ~SpeechToText();
