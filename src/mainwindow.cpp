@@ -855,7 +855,7 @@ void MainWindow::applyVolume()
 void MainWindow::volumeUp()
 {
     if (volume != 1)
-        volume += 0.1;
+        volume += 0.1F;
 
     applyVolume();
 }
@@ -863,7 +863,7 @@ void MainWindow::volumeUp()
 void MainWindow::volumeDown()
 {
     if (volume != 0)
-        volume -= 0.1;
+        volume -= 0.1F;
 
     applyVolume();
 }
