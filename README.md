@@ -11,6 +11,7 @@ Resource-efficient and customizable voice assistant that is still in the early s
 - [To-Do's](#to-dos)
 - [Customization](#customization)
 - [Add Commands](#add-commands)
+- [Build](#build)
 - [Credits](#credits)
 
 ## Goal
@@ -28,8 +29,9 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 - [x] Riscv64 Linux
 - [x] x86 Linux/Android
 - [x] x86_64 Linux/Android
+- [x] 32-Bit Windows (not suggested and untested)
 - [x] 64-Bit Windows
-- [ ] MacOS (Intel)
+- [x] MacOS (Intel)
 - [ ] MacOS (M1)
 - [ ] iOS
 - [ ] WebAssembly
@@ -38,7 +40,7 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 
 - [ ] Full customizability
 - [ ] Cross-platform compatibility
-- [ ] Implement Whisper.cpp backend (this will increase the number of supported platforms)
+- [ ] Implement Whisper.cpp backend (this will add WebAssembly, iOS and ARM MacOS support)
 
 ## Customization
 
@@ -61,6 +63,10 @@ To add your own command, edit the `commands/<your_language>/default.json` file. 
 | `program`   | String           | A program to execute                                        |                                                 |
 | `args`      | Array of strings | Arguments passed to `program`                               | `${TEXT}` will be replaced with the voice input |
 | `sound`     | String           | Path to local or remote file that gets played               | Volume can be controlled via voice/GUI          |
+
+## Build
+
+See the build section in [INSTALL.md](INSTALL.md) ([direct link](INSTALL.md#build))
 
 ## Credits
 

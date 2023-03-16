@@ -17,16 +17,12 @@ jobs:
         include:
           - os: ubuntu-20.04
             QT_VER: 5.12.8
-            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-linux-x86_64-0.3.42.zip
           - os: ubuntu-22.04
             QT_VER: 5.15.3
-            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-linux-x86_64-0.3.42.zip
           - os: windows-latest
             QT_VER: 6.5.0
-            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-win64-0.3.42.zip
           - os: macos-latest
             QT_VER: 6.5.0
-            VOSK_URL: https://github.com/alphacep/vosk-api/releases/download/v0.3.42/vosk-osx-0.3.42.zip
 
     steps:
     - name: Checkout repo and submodules
