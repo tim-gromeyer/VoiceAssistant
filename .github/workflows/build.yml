@@ -52,14 +52,15 @@ jobs:
 
     - name: Download and extract Vosk
       run: |
-        mkdir -p vosk && cd vosk
-        curl -L -O ${{ matrix.VOSK_URL }}
-        unzip -q '*.zip'
-        for d in */; do
-          mv "$d"* .
-        done
-        rm -rf */
-        cd ..
+        #mkdir -p vosk && cd vosk
+        #curl -L -O ${{ matrix.VOSK_URL }}
+        #unzip -q '*.zip'
+        #for d in */; do
+        #  mv "$d"* .
+        #done
+        #rm -rf */
+        #cd ..
+        echo "Vosk is automatically downloaded by CMake"
       shell: bash
 
     - name: Build

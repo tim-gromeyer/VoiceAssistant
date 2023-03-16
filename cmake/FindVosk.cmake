@@ -1,5 +1,16 @@
+if (TARGET Vosk)
+    return()
+endif()
+
 include(Dirs)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY BOTH)
+
+isFileEmpty(${VOSK_ZIP} __voskZipIsNotEmpty)
+
+if(${__voskZipIsNotEmpty})
+    include(DownloadVosk)
+    download_vosk_if_needed()
+endif()
 
 find_library(__voskFile
     NAMES vosk-api vosk libvosk
