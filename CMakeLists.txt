@@ -22,8 +22,6 @@ endif()
 list(APPEND CMAKE_MODULE_PATH
     ${PROJECT_SOURCE_DIR}/cmake)
 
-add_subdirectory(speechtotext)
-
 # Disable debug messages in release mode and improve performance
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
@@ -40,7 +38,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
 
-include(cmake/Translation.cmake)
+include(Translation)
 
 set(PROJECT_SOURCES
     ${RC_FILES}
@@ -89,6 +87,7 @@ if(WIN32)
 endif(WIN32)
 
 add_subdirectory(3rdparty)
+add_subdirectory(speechtotext)
 if(BUILD_TEST_PLUGIN)
   message(STATUS "Build test plugin")
   add_subdirectory(plugins/testPlugin)
@@ -103,8 +102,7 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::TextToSpeech
     Qt${QT_VERSION_MAJOR}::Concurrent
     ${INTL_LDFLAGS}
-    elzip
-    ${TTS_PLUGINS})
+    elzip)
 
 target_compile_definitions(voiceassistant PUBLIC
     APP_VERSION="${PROJECT_VERSION}"
@@ -130,3 +128,39 @@ set_target_properties(voiceassistant PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(voiceassistant)
 endif()
+
+# Set installation directories
+if (UNIX AND NOT APPLE AND NOT ANDROID)
+    set(CPACK_SET_DESTDIR true)
+    set(CPACK_INSTALL_PREFIX /opt/VoiceAssistant)
+    set(CMAKE_INSTALL_PREFIX ${CPACK_INSTALL_PREFIX})
+endif()
+
+include(GNUInstallDirs)
+
+# Install the main executable
+install(TARGETS voiceassistant
+    RUNTIME DESTINATION .
+)
+
+# Install TTS plugins
+install(TARGETS ${TTS_PLUGINS}
+        DESTINATION speechtotext
+)
+
+# Install other plugins
+install(TARGETS ${PLUGINS}
+        DESTINATION plugins
+)
+
+# Install the default commands
+install(DIRECTORY commands
+        DESTINATION .
+)
+
+# Create a symbolic link to the executable in /usr/local/bin
+if (UNIX AND NOT APPLE)
+    # install(CODE "execute_process(COMMAND ln -sf ${CMAKE_INSTALL_PREFIX}/voiceassistant /usr/local/bin/voiceassistant)")
+endif()
+
+include(Packaging)

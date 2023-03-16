@@ -21,3 +21,5 @@ add_custom_command(TARGET testPlugin POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:testPlugin> ${PLUGINS_DIR}
   COMMAND_EXPAND_LISTS
 )
+
+set(PLUGINS ${PLUGINS} testPlugin PARENT_SCOPE)

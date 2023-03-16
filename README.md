@@ -2,7 +2,7 @@
 
 # VoiceAssistant
 
-This is a resource-efficient voice assistant that is still in the early stages of development but already functional.
+Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
 
 ## Table of Contents
 

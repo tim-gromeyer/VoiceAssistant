@@ -12,8 +12,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 add_library(voskPlugin MODULE ../speechtotextplugin.h voskplugin.cpp voskplugin.h)
 target_link_libraries(voskPlugin Qt${QT_VERSION_MAJOR}::Core Vosk)
 
-install(TARGETS voskPlugin LIBRARY DESTINATION lib)
-
 set(TTS_PLUGINS ${TTS_PLUGINS} voskPlugin PARENT_SCOPE)
 list(APPEND ANDROID_EXTRA_LIBS ${CMAKE_SOURCE_DIR}/vosk/libvosk.so)
 
@@ -21,4 +19,3 @@ add_custom_command(TARGET voskPlugin POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:voskPlugin> ${SPEECHTOTEXT_PLUGINS_DIR}
   COMMAND_EXPAND_LISTS
 )
-

@@ -1,12 +1,15 @@
 include(InstallRequiredSystemLibraries)
 
+set(PROJECT_HOMEPAGE_URL "https://github.com/tim-gromeyer/VoiceAssistant")
+
 set(CPACK_STRIP_FILES ON)
+set(CPACK_SOURCE_STRIP_FILES ON)
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_CONTACT "Tim Gromeyer")
 set(CPACK_PACKAGE_VENDOR ${CPACK_PACKAGE_CONTACT})
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
-set(CPACK_PACKAGE_DESCRIPTION "MarkdownEdit is, as the name suggests, a simple and lightweight program for creating and editing Markdown files.")
+set(CPACK_PACKAGE_DESCRIPTION "Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.")
 
 set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/COPYING)
 set(CPACK_RESOURCE_FILE_README ${PROJECT_SOURCE_DIR}/README.md)
@@ -20,7 +23,6 @@ set(CPACK_RPM_PACKAGE_LICENSE "MIT")
 set(CPACK_RPM_PACKAGE_GROUP "Development/Tools")
 set(CPACK_RPM_PACKAGE_URL ${PROJECT_HOMEPAGE_URL})
 # set(CPACK_RPM_PACKAGE_REQUIRES "/sbin/chkconfig, /bin/mktemp, /bin/rm, /bin/mv, libstdc++ >= 2.96") # TODO: Find correct packages
-# set(CPACK_RPM_PACKAGE_SUGGESTS "doxygen-latex, doxygen-doc, doxygen-gui, graphviz, libclang1")
 
 # Variables specific to CPack DEB generator
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
@@ -29,7 +31,7 @@ set(CPACK_DEBIAN_PACKAGE_HOMEPAGE ${PROJECT_HOMEPAGE_URL})
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS YES)
 set(CPACK_DEBIAN_PACKAGE_SUGGESTS "qt5ct")
 set(CPACK_DEBIAN_PACKAGE_CONFLICTS "")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_CONTACT} <${PROJECT_CONTACT}>")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_CONTACT} <tim.gromeyer@gmail.com>")
 
 # Variables specific to CPack NSIS generator
 set(CPACK_NSIS_MUI_ICON "${PROJECT_SOURCE_DIR}/ressources/logo/Icon.ico") # Installer icon
@@ -44,10 +46,10 @@ set(CPACK_NSIS_URL_INFO_ABOUT ${PROJECT_HOMEPAGE_URL})
 set(CPACK_NSIS_CONTACT ${PROJECT_CONTACT})
 set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 set(CPACK_NSIS_CREATE_ICONS_EXTRA
-"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\MarkdownEdit.lnk' '$INSTDIR\\\\bin\\\\markdownedit.exe' '' '$INSTDIR\\\\Icon.ico'")
+"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_NAME}.lnk' '$INSTDIR\\\\bin\\\\voiceassistant.exe' '' '$INSTDIR\\\\Icon.ico'")
 set(CPACK_NSIS_DELETE_ICONS_EXTRA
-    "Delete '$SMPROGRAMS\\\\$START_MENU\\\\MarkdownEdit.lnk'"
-)
+    "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_NAME}.lnk'"
+) # INFO: Maybe CPACK_PACKAGE_EXECUTABLES will do the job
 
 # Variables specific to CPack DragNDrop generator
 set(CPACK_DMG_FORMAT "UDBZ") # UDRO=UDIF-Read-Only, UDZO=zlib, UDBZ=bzip2 -- See hdiutil
@@ -91,9 +93,11 @@ elseif(UNIX AND NOT EXMSCRIPTEN AND NOT ANDROID)
  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${release}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
 
  else()
- set(CPACK_GENERATOR "TGZ;STGZ")
+ set(CPACK_GENERATOR "STGZ")
  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${release}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
  endif()
+
+ set(CPACK_GENERATOR "${CPACK_GENERATOR};TGZ")
 endif()
 
 # Store the packages in a separat dir
