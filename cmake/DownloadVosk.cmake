@@ -24,19 +24,24 @@ function(download_vosk_if_needed)
         endif()
     endif()
 
-    message(STATUS "${VOSK_URL} ${CMAKE_SYSTEM_PROCESSOR}")
+    message(STATUS "Downloading vosk from ${VOSK_URL}")
 
     # Download and extract the ZIP file
-    file(DOWNLOAD "${VOSK_URL}" "${VOSK_ZIP}")
-    file(MAKE_DIRECTORY ${VOSK_DIR})
-    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xf "${VOSK_ZIP}" WORKING_DIRECTORY "${VOSK_DIR}")
+    file(DOWNLOAD "${VOSK_URL}" "${VOSK_ZIP}" STATUS VOSK_DOWNLOAD_STATUS)
+    list(GET VOSK_DOWNLOAD_STATUS 0 VOSK_DOWNLOAD_ERROR)
+    if(VOSK_DOWNLOAD_ERROR)
+        message(FATAL_ERROR "Failed to download vosk: ${VOSK_DOWNLOAD_ERROR}")
+    endif()
+
+    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/tempDir")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E tar xf "${VOSK_ZIP}" WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/tempDir")
 
     # Move the extracted contents to another directory
-    file(GLOB VOSK_FILES "${VOSK_DIR}/*/*")
-    message(STATUS ${VOSK_FILES})
+    file(MAKE_DIRECTORY ${VOSK_DIR})
+
+    file(GLOB VOSK_FILES "${CMAKE_BINARY_DIR}/tempDir/*/*")
+    message(STATUS "${VOSK_FILES}")
     foreach(VOSK_FILE ${VOSK_FILES})
-        if (NOT ${VOSK_FILE} STREQUAL ${VOSK_ZIP})
-            file(COPY ${VOSK_FILE} DESTINATION ${VOSK_DIR})
-        endif()
+        file(COPY ${VOSK_FILE} DESTINATION ${VOSK_DIR})
     endforeach()
 endfunction()

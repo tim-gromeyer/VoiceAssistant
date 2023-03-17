@@ -1,4 +1,4 @@
-set(VOSK_DIR "${CMAKE_SOURCE_DIR}/vosk")
+set(VOSK_DIR "${CMAKE_BINARY_DIR}/vosk")
 set(VOSK_ZIP "${CMAKE_BINARY_DIR}/vosk.zip")
 
 # plugins
