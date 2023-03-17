@@ -2,9 +2,10 @@ name: Test build
 
 on:
   push:
-    branches:
-      - main
+    paths: ['.github/workflows/**', 'CMakeLists.txt', '**.cmake', '**.h', '*.c', '**.cpp']
   pull_request:
+    types: [opened, synchronize, edited, reopened, review_requested, ready_for_review]
+    paths: ['CMakeLists.txt', '**.cmake', '**.h', '*.c', '**.cpp']
   workflow_dispatch:
 
 jobs:
@@ -45,6 +46,12 @@ jobs:
       run: |
         sudo apt-fast update
         sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct 
+
+    - name: Cache build directory
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: ${{ runner.os }}-build-${{ matrix.QT_VER }}
 
     - name: Build
       run: |
