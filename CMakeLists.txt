@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(VoiceAssistant VERSION 0.1.0 LANGUAGES CXX)
-set(APP_VERSION "${CMAKE_PROJECT_VERSION}")
+project(VoiceAssistant VERSION 1.0.0 LANGUAGES CXX)
+set(APP_VERSION "${CMAKE_PROJECT_VERSION}-alpha")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -105,9 +105,8 @@ target_link_libraries(voiceassistant PRIVATE
     elzip)
 
 target_compile_definitions(voiceassistant PUBLIC
-    APP_VERSION="${PROJECT_VERSION}"
     APP_DIR="${CMAKE_SOURCE_DIR}"
-    APP_VER="${APP_VERSION}"
+    APP_VERSION="${APP_VERSION}"
     QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
     QT_USE_QSTRINGBUILDER
     QT${QT_VERSION_MAJOR}=1)

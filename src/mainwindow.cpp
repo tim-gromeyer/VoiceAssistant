@@ -229,7 +229,7 @@ void MainWindow::onHelpAbout()
            "<p>This project also uses&nbsp;<a href=\"https://github.com/Sygmei/11Zip\" "
            "target=\"_blank\" rel=\"noopener\">11Zip</a>&nbsp;to unpack the downloaded voice "
            "modells.</p>")
-            .arg(STR("beta"), qVersion()));
+            .arg(STR(APP_VERSION), qVersion()));
 }
 
 void MainWindow::mute(bool mute)

@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.svg")));
     QApplication::setApplicationName(QStringLiteral("VoiceAssistant"));
-    QApplication::setApplicationVersion(QStringLiteral(APP_VER));
+    QApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
 
     QTranslator translator, qtTranslator;
     QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
