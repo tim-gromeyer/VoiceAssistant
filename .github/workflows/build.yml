@@ -46,23 +46,10 @@ jobs:
         sudo apt-fast update
         sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct 
 
-    - name: Download and extract Vosk
-      run: |
-        #mkdir -p vosk && cd vosk
-        #curl -L -O ${{ matrix.VOSK_URL }}
-        #unzip -q '*.zip'
-        #for d in */; do
-        #  mv "$d"* .
-        #done
-        #rm -rf */
-        #cd ..
-        echo "Vosk is automatically downloaded by CMake"
-      shell: bash
-
     - name: Build
       run: |
         mkdir -p build && cd build
-        cmake -DCMAKE_BUILD_TYPE=Release ..
-        cmake --build . -j8
+        cmake ..
+        cmake --build .
       shell: bash
 

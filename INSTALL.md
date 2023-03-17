@@ -24,7 +24,7 @@ On Arch run this command: `pacman -S qt5-base qt5-declarative qt5-tools qt5-mult
     cd VoiceAssistant
     mkdir -p build && cd build
     cmake ..
-    cmake --build . -j3
+    cmake --build .
     cmake --build . --target package
     ```
 
@@ -43,7 +43,7 @@ On Arch run this command: `pacman -S qt5-base qt5-declarative qt5-tools qt5-mult
     cd VoiceAssistant
     mkdir -p build && cd build
     cmake ..
-    cmake --build . -j3
+    cmake --build .
     cmake --build . --target package
     ```
 
