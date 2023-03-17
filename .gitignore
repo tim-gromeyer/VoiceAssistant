@@ -3,5 +3,6 @@ vosk/
 models/
 android/
 *.so
+*.dll
 plugins/build-*
 data/
