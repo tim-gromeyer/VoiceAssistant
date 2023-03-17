@@ -29,7 +29,7 @@ endif()
 set(Vosk_FOUND ON)
 
 add_library(Vosk INTERFACE)
-target_link_libraries(Vosk INTERFACE "vosk")
+target_link_libraries(Vosk INTERFACE "-lvosk")
 target_link_directories(Vosk INTERFACE "${VOSK_DIR}")
 target_include_directories(Vosk INTERFACE "${VOSK_DIR}")
 set_target_properties(Vosk PROPERTIES
