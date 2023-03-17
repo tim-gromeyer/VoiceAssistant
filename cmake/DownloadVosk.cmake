@@ -40,7 +40,6 @@ function(download_vosk_if_needed)
     file(MAKE_DIRECTORY ${VOSK_DIR})
 
     file(GLOB VOSK_FILES "${CMAKE_BINARY_DIR}/tempDir/*/*")
-    message(STATUS "${VOSK_FILES}")
     foreach(VOSK_FILE ${VOSK_FILES})
         file(COPY ${VOSK_FILE} DESTINATION ${VOSK_DIR})
     endforeach()
