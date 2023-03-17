@@ -37,6 +37,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg
 set(TS_FILES translations/VoiceAssistant_de_DE.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
 
+include(Dirs)
 include(Translation)
 
 set(PROJECT_SOURCES
@@ -124,13 +125,6 @@ set_target_properties(voiceassistant PROPERTIES
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(voiceassistant)
-endif()
-
-# Set installation directories
-if (UNIX AND NOT APPLE AND NOT ANDROID)
-    set(CPACK_SET_DESTDIR true)
-    set(CPACK_INSTALL_PREFIX /opt/VoiceAssistant)
-    set(CMAKE_INSTALL_PREFIX ${CPACK_INSTALL_PREFIX})
 endif()
 
 include(GNUInstallDirs)

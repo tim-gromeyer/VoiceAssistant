@@ -24,3 +24,10 @@ function(isFileEmpty FILENAME RESULT_VARIABLE)
         set(${RESULT_VARIABLE} FALSE PARENT_SCOPE)
     endif()
 endfunction()
+
+# Set installation directories
+if (UNIX AND NOT APPLE AND NOT ANDROID)
+    set(CPACK_SET_DESTDIR true)
+    set(CPACK_INSTALL_PREFIX /opt/VoiceAssistant)
+    set(CMAKE_INSTALL_PREFIX ${CPACK_INSTALL_PREFIX})
+endif()

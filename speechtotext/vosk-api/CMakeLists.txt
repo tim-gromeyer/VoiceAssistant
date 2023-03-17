@@ -1,4 +1,4 @@
-find_package(Vosk QUIET)
+find_package(Vosk)
 
 if (NOT ${Vosk_FOUND})
     message(WARNING "Vosk not found! Download vosk from https://github.com/alphacep/vosk-api/releases
@@ -18,4 +18,8 @@ list(APPEND ANDROID_EXTRA_LIBS ${CMAKE_SOURCE_DIR}/vosk/libvosk.so)
 add_custom_command(TARGET voskPlugin POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:voskPlugin> ${SPEECHTOTEXT_PLUGINS_DIR}
   COMMAND_EXPAND_LISTS
+)
+
+install(DIRECTORY "${CMAKE_BINARY_DIR}/vosk/"
+        DESTINATION speechtotext
 )
