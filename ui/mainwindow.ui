@@ -16,7 +16,7 @@
   <widget class="QWidget" name="container">
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0,0,0">
       <item>
        <widget class="QLabel" name="statusLabel">
         <property name="text">
@@ -41,6 +41,25 @@
         <property name="icon">
          <iconset theme="audio-input-microphone">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="volumeSlider">
+        <property name="maximum">
+         <number>10</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::NoTicks</enum>
         </property>
        </widget>
       </item>

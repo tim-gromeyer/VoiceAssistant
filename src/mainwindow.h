@@ -78,6 +78,7 @@ public Q_SLOTS:
     static void resume();  // Resume the playing of music
     static void volumeUp();
     static void volumeDown();
+    static void setVolume(int);
     static void setVolume(const QString &);
     static void restart(); // Restart the application
 

@@ -5,7 +5,6 @@
 #include "plugins/bridge.h"
 #include "recognizer.h"
 #include "settingsdialog.h"
-#include "sliderwithtext.h"
 #include "speechtotext/speechtotextplugin.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
@@ -136,6 +135,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::openSettings);
     connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
+    connect(ui->volumeSlider, &QSlider::sliderMoved, this, qOverload<int>(&MainWindow::setVolume));
 
     // Set up time timer
     timeTimer->setInterval(1s);
@@ -384,7 +384,7 @@ void MainWindow::onWakeWord()
 #else
         player->setVolume(int(30 * volume));
 #endif
-    engine->setVolume(.3 * volume);
+    engine->setVolume(0.3F * volume);
 }
 
 void MainWindow::doneListening()
@@ -396,7 +396,7 @@ void MainWindow::doneListening()
 
     if (player)
 #ifdef QT6
-        audioOutput->setVolume(1 * volume);
+        audioOutput->setVolume(1.0F * volume);
 #else
         player->setVolume(int(100 * volume));
 #endif
@@ -868,12 +868,17 @@ void MainWindow::volumeDown()
     applyVolume();
 }
 
+void MainWindow::setVolume(int volumeInt)
+{
+    volume = (float) volumeInt / 10.0F;
+    applyVolume();
+}
+
 void MainWindow::setVolume(const QString &text)
 {
     int volumeInt = utils::wordToNumber(text);
-
-    volume = (float) volumeInt / 10.0F;
-    applyVolume();
+    instance()->ui->volumeSlider->setValue(volumeInt);
+    setVolume(volumeInt);
 }
 
 void MainWindow::tellJoke()
