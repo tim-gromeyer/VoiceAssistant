@@ -62,8 +62,6 @@ set(PROJECT_SOURCES
     src/settings.h
     src/settingsdialog.cpp
     src/settingsdialog.h
-    src/sliderwithtext.cpp
-    src/sliderwithtext.h
     src/utils.cpp
     src/utils.h
     ui/mainwindow.ui

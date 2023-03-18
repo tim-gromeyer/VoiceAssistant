@@ -82,6 +82,8 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
         return;
     }
 
+    bool errorWhileLoading = false;
+
     for (const auto &lang : uiLangs) {
         QString formattedLang = lang.toLower().replace(u'_', u'-');
         if (!QDir(modelDir + formattedLang).exists())
@@ -93,8 +95,10 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
             recognizer = vosk_recognizer_new(model, 16000.0);
         }
 
-        if (!model || !recognizer)
+        if (!model || !recognizer) {
+            errorWhileLoading = true;
             continue;
+        }
 
         m_language = lang;
 
@@ -106,8 +110,15 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
         return;
     }
 
-    setState(NoModelFound);
+    if (errorWhileLoading) {
+        qInfo() << "[debug] An unknown error occured while loading the model or recognizer";
+        setState(ErrorWhileLoading);
+        *success = false;
+        return;
+    }
+
     qDebug() << "[debug] No model found!";
+    setState(NoModelFound);
     *success = false;
 }
 
