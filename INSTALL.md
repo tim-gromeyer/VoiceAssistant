@@ -6,7 +6,7 @@ Not available yet! Follow the build instruction down below and run `cmake --inst
 
 ## Build
 
-Needed Qt modules: base, multimedia, network and speech.
+Needed Qt modules: base, multimedia and speech.
 
 ### Linux
 
