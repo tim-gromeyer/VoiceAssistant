@@ -10,7 +10,7 @@
 class QWidget;
 #endif
 
-class PluginBridge : public QObject
+class PluginBridge final : public QObject
 {
     Q_OBJECT
 
@@ -27,9 +27,6 @@ public:
 
     inline QString ask(const QString &text)
     {
-        if (text.isEmpty())
-            return {tr("Did you try to spy on the user?")};
-
         mutex.lock();
         pause = true;
 
