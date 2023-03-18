@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml/badge.svg)](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml)
+
 # Pre-Alpha!
 
 # VoiceAssistant
@@ -44,7 +46,7 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 
 ## Customization
 
-**In the near future I'll add settings to the app! **  
+**In the near future I'll add settings to the app!**  
 *I'm struggling with a plugin system for the settings and the GUI.*
 
 To customize the commands, edit the `commands/<your_language>/default.json` file. 
