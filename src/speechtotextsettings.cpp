@@ -9,14 +9,16 @@
 #include <QTextToSpeech>
 #include <QVBoxLayout>
 
+#if QT5
 Q_DECLARE_METATYPE(QVoice);
+#endif
 
 SpeechToTextSettings::SpeechToTextSettings(QTextToSpeech *tts, QWidget *parent)
     : SettingsWidget(parent)
     , m_tts(tts)
 {
-    setDisplayCategory(tr("General settings"));
-    setDisplayName(tr("Speech to text"));
+    setDisplayCategory(tr("General"));
+    setDisplayName(tr("Text to speech"));
 
     setupUi();
     populateComboBoxes();

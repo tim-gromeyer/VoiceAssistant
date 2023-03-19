@@ -25,7 +25,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../src/jokes.cpp" line="180"/>
         <source>The language of the cached jokes (%1) does not match the current language of the jokes (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Sprache der zwischengespeicherten Witze (%1) stimmt nicht mit der aktuellen Sprache der Witze (%2) überein</translation>
     </message>
 </context>
 <context>
@@ -37,10 +37,10 @@ Sprachen der Witze: %2</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
-        <location filename="../src/mainwindow.cpp" line="249"/>
         <location filename="../src/mainwindow.cpp" line="250"/>
-        <location filename="../src/mainwindow.cpp" line="301"/>
+        <location filename="../src/mainwindow.cpp" line="251"/>
         <location filename="../src/mainwindow.cpp" line="302"/>
+        <location filename="../src/mainwindow.cpp" line="303"/>
         <source>Mute</source>
         <translation>Stummschalten</translation>
     </message>
@@ -77,12 +77,12 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="137"/>
         <source>Voice &amp;recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache&amp;rkennung</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="144"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Befehle</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="154"/>
@@ -97,20 +97,20 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="164"/>
         <source>Can recognize word</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann Wort erkennen</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="189"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="202"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>About VoiceAssistant</source>
         <translation>Über VoiceAssistant</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="203"/>
+        <location filename="../src/mainwindow.cpp" line="204"/>
         <source>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
 &lt;p&gt;A resource-efficient and customizable voice assistant written in c++.&lt;/p&gt;
 &lt;h3&gt;About&lt;/h3&gt;
@@ -157,70 +157,70 @@ Sprachen der Witze: %2</translation>
 &lt;p&gt;Dieses Projekt verwendet auch&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;um die heruntergeladenen Sprachmodelle zu entpacken. &lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="244"/>
         <location filename="../src/mainwindow.cpp" line="245"/>
+        <location filename="../src/mainwindow.cpp" line="246"/>
         <source>Unmute</source>
         <translation>Stummschaltung aufheben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="277"/>
+        <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Quit?</source>
         <translation>Beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="277"/>
+        <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Do you really want to quit?</source>
         <translation>Möchten sie wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="349"/>
-        <location filename="../src/mainwindow.cpp" line="392"/>
-        <location filename="../src/mainwindow.cpp" line="779"/>
+        <location filename="../src/mainwindow.cpp" line="350"/>
+        <location filename="../src/mainwindow.cpp" line="393"/>
+        <location filename="../src/mainwindow.cpp" line="782"/>
         <source>Waiting for wake word</source>
         <translation>Warten auf Weckwort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
+        <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Listening ...</source>
         <translation>Zuhören ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="410"/>
+        <location filename="../src/mainwindow.cpp" line="411"/>
         <source>Contains word?</source>
         <translation>Enthält Wort?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="420"/>
+        <location filename="../src/mainwindow.cpp" line="421"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
         <translation>Prüfen Sie, ob das aktuelle Sprachmodell ein Wort erkennen kann (nicht wird).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="424"/>
+        <location filename="../src/mainwindow.cpp" line="425"/>
         <source>Word:</source>
         <translation>Wort:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="427"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
         <source>Enter word</source>
         <translation>Wort eingeben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="434"/>
+        <location filename="../src/mainwindow.cpp" line="435"/>
         <source>Warning: the current STT plugin does not support word lookups</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Das aktuelle STT-Plugin unterstützt keine Wortsuche</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="520"/>
+        <location filename="../src/mainwindow.cpp" line="523"/>
         <source>I have not understood this!</source>
         <translation>Dies habe ich nicht verstanden!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="651"/>
+        <location filename="../src/mainwindow.cpp" line="654"/>
         <source>Failed to save file</source>
         <translation>Datei konnte nicht gespeichert werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="652"/>
+        <location filename="../src/mainwindow.cpp" line="655"/>
         <source>Failed to write &lt;em&gt;%1&lt;/em&gt;.
 %2
 Copy following text and save it manually:
@@ -231,30 +231,30 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="777"/>
+        <location filename="../src/mainwindow.cpp" line="780"/>
         <source>Waiting for answer...</source>
         <translation>Warten auf Antwort...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="822"/>
-        <location filename="../src/mainwindow.cpp" line="891"/>
+        <location filename="../src/mainwindow.cpp" line="825"/>
+        <location filename="../src/mainwindow.cpp" line="894"/>
         <source>Are you sure?</source>
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="824"/>
-        <location filename="../src/mainwindow.cpp" line="893"/>
+        <location filename="../src/mainwindow.cpp" line="827"/>
+        <location filename="../src/mainwindow.cpp" line="896"/>
         <source>yes</source>
         <translation>ja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="825"/>
-        <location filename="../src/mainwindow.cpp" line="896"/>
+        <location filename="../src/mainwindow.cpp" line="828"/>
+        <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Okay</source>
         <translation>Okay</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="838"/>
+        <location filename="../src/mainwindow.cpp" line="841"/>
         <source>It is %1</source>
         <translation>Es ist %1</translation>
     </message>
@@ -383,35 +383,35 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="13"/>
         <source>Hello</source>
-        <translation type="unfinished"></translation>
+        <translation>Hallo</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
         <source>How are you</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie geht es dir</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
         <source>Okay</source>
-        <translation type="unfinished">Okay</translation>
+        <translation>Okay</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
         <source>It works!</source>
-        <translation type="unfinished"></translation>
+        <translation>Es funktioniert!</translation>
     </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <location filename="../ui/settingsdialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
         <source>Search ...</source>
-        <translation type="unfinished">Suche ...</translation>
+        <translation>Suche ...</translation>
     </message>
 </context>
 <context>
@@ -440,14 +440,59 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 <context>
     <name>SpeechToTextSettings</name>
     <message>
-        <location filename="../src/speechtotextsettings.cpp" line="6"/>
-        <source>General settings</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/speechtotextsettings.cpp" line="18"/>
+        <source>General</source>
+        <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../src/speechtotextsettings.cpp" line="7"/>
-        <source>Speech to text</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/speechtotextsettings.cpp" line="19"/>
+        <source>Text to speech</source>
+        <translation>Text zu Sprache</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="83"/>
+        <source>Settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="84"/>
+        <source>Engine</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="85"/>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="86"/>
+        <source>Voice</source>
+        <translation>Stimme</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="87"/>
+        <source>Pitch</source>
+        <translation>Stimmhöhe</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="88"/>
+        <source>Rate</source>
+        <translation>Sprachgeschwindigkeit</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="89"/>
+        <source>Test</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="90"/>
+        <source>Enter some text here to test the settings</source>
+        <translation>Geben Sie hier einen Text ein, um die Einstellungen zu testen</translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="91"/>
+        <source>Say</source>
+        <translation>Sagen</translation>
     </message>
 </context>
 <context>
@@ -455,27 +500,27 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="145"/>
         <source>No Vosk model was found for the system languages</source>
-        <translation type="unfinished">Es wurde kein Vosk-Sprachmodell für die Systemsprachen gefunden</translation>
+        <translation>Es wurde kein Vosk-Sprachmodell für die Systemsprachen gefunden</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="148"/>
         <source>The directory where the Vosk models are stored is empty</source>
-        <translation type="unfinished">Das Verzeichnis, in dem die Vosk-Sprachmodelle gespeichert sind, ist leer</translation>
+        <translation>Das Verzeichnis, in dem die Vosk-Sprachmodelle gespeichert sind, ist leer</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="151"/>
         <source>An unknown error occurred while loading the Vosk model and/or recognizer</source>
-        <translation type="unfinished">Beim Laden des Vosk-Sprachodells und/oder des Erkennungsprogramms ist ein unbekannter Fehler aufgetreten</translation>
+        <translation>Beim Laden des Vosk-Sprachodells und/oder des Erkennungsprogramms ist ein unbekannter Fehler aufgetreten</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="155"/>
         <source>The recognizer has not yet been set up</source>
-        <translation type="unfinished">Der Erkenner wurde noch nicht eingerichtet</translation>
+        <translation>Der Erkenner wurde noch nicht eingerichtet</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="158"/>
         <source>The audio device is closed, and is not processing any audio data</source>
-        <translation type="unfinished">Das Audiogerät ist geschlossen und verarbeitet keine Audiodaten</translation>
+        <translation>Das Audiogerät ist geschlossen und verarbeitet keine Audiodaten</translation>
     </message>
 </context>
 <context>
@@ -483,7 +528,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../ui/addCommand.ui" line="14"/>
         <source>Add command</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehl hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -491,7 +536,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../src/main.cpp" line="37"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein ressourceneffizienter Sprachassistent, der sich noch im Entwicklungsstadium befindet, aber bereits funktioniert.</translation>
     </message>
 </context>
 <context>
