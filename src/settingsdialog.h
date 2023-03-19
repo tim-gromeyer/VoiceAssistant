@@ -6,6 +6,8 @@
 namespace Ui {
 class SettingsDialog;
 }
+class QAbstractButton;
+class QTabWidget;
 class SettingsWidget;
 
 class SettingsDialog : public QDialog
@@ -16,13 +18,18 @@ public:
     explicit SettingsDialog(QWidget *parent = nullptr);
     ~SettingsDialog();
 
-    void addCatecory(const QString &, const QIcon &icon, SettingsWidget *);
+    void addSettingsWidget(SettingsWidget *w);
 
 private Q_SLOTS:
     void changeCategory(const QString &);
 
+    void onClicked(QAbstractButton *);
+
+    void search(const QString &);
+
 private:
     Ui::SettingsDialog *ui;
 
-    QHash<QString, SettingsWidget *> categories;
+    QList<SettingsWidget *> m_settingsWidgets;
+    QHash<QString, QTabWidget *> m_categories;
 };

@@ -6,6 +6,7 @@
 #include "recognizer.h"
 #include "settingsdialog.h"
 #include "speechtotext/speechtotextplugin.h"
+#include "speechtotextsettings.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
 
@@ -492,6 +493,8 @@ void MainWindow::openModelDownloader()
 void MainWindow::openSettings()
 {
     SettingsDialog dia(this);
+    SpeechToTextSettings sttSettings(engine, &dia);
+    dia.addSettingsWidget(&sttSettings);
     dia.exec();
 }
 

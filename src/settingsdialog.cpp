@@ -14,8 +14,10 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui->label->setFont(bold);
 
     connect(ui->listWidget, &QListWidget::currentTextChanged, this, &SettingsDialog::changeCategory);
+    connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &SettingsDialog::onClicked);
+    connect(ui->lineEdit, &QLineEdit::textEdited, this, &SettingsDialog::search);
 
-    if (!categories.empty())
+    if (!m_categories.empty())
         changeCategory(ui->listWidget->item(0)->text());
 }
 
@@ -23,23 +25,84 @@ void SettingsDialog::changeCategory(const QString &text)
 {
     ui->scrollArea->takeWidget();
 
-    QWidget *widget = categories.value(text);
-    if (!widget) {
+    QTabWidget *tab = m_categories.value(text);
+    if (!tab) {
         ui->scrollArea->setWidget(ui->scrollAreaWidgetContents);
         return;
     }
 
-    ui->scrollArea->setWidget(widget);
+    ui->scrollArea->setWidget(tab);
 
     ui->label->setText(text);
 }
 
-void SettingsDialog::addCatecory(const QString &catecory, const QIcon &icon, SettingsWidget *w)
+void SettingsDialog::addSettingsWidget(SettingsWidget *w)
 {
-    auto *item = new QListWidgetItem(icon, catecory, ui->listWidget);
+    if (!w)
+        return;
 
-    categories[catecory] = w;
+    w->setParent(this);
+
+    auto *tab = m_categories.value(w->displayCategory(), nullptr);
+    if (tab) {
+        tab->addTab(w, w->displayName());
+        return;
+    }
+
+    tab = new QTabWidget(this);
+    tab->addTab(w, w->displayName());
+
+    m_categories[w->displayCategory()] = tab;
+
+    auto *item = new QListWidgetItem(ui->listWidget);
+    item->setText(w->displayCategory());
+    item->setIcon(w->categoryIcon());
+
     ui->listWidget->addItem(item);
+
+    if (ui->scrollArea->widget() == ui->scrollAreaWidgetContents)
+        changeCategory(w->displayCategory());
+}
+
+void SettingsDialog::onClicked(QAbstractButton *button)
+{
+    switch (ui->buttonBox->buttonRole(button)) {
+    case QDialogButtonBox::InvalidRole:
+        return;
+    case QDialogButtonBox::AcceptRole:
+        for (auto *settingsWidget : qAsConst(m_settingsWidgets))
+            settingsWidget->finish();
+    case QDialogButtonBox::ApplyRole:
+        for (auto *settingsWidget : qAsConst(m_settingsWidgets))
+            settingsWidget->apply();
+    default:
+        break;
+    }
+}
+
+void SettingsDialog::search(const QString &text)
+{
+    for (SettingsWidget *settingsWidget : qAsConst(m_settingsWidgets)) {
+        bool keywordsContainsText = false;
+
+        for (const QString &keyword : settingsWidget->keyWords()) {
+            if (!keyword.contains(text, Qt::CaseInsensitive))
+                continue;
+
+            keywordsContainsText = true;
+            break;
+        }
+
+        if (keywordsContainsText)
+            return;
+
+        auto list = ui->listWidget->findItems(settingsWidget->displayCategory(), Qt::MatchExactly);
+        if (list.isEmpty())
+            return;
+
+        list.at(0)->setHidden(true);
+    }
+    Q_UNUSED(text);
 }
 
 SettingsDialog::~SettingsDialog()
