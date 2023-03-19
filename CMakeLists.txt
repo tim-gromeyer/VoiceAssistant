@@ -126,6 +126,23 @@ install(TARGETS voiceassistant
     BUNDLE DESTINATION . # Specify the bundle destination for MACOSX_BUNDLE
 )
 
+if(QT_VERSION GREATER_EQUAL 6.3.0)
+    if (QT_VERSION GREATER_EQUAL 6.5.0)
+        qt_generate_deploy_app_script(
+            TARGET voiceassistant
+            OUTPUT_SCRIPT deploy_script
+            NO_UNSUPPORTED_PLATFORM_ERROR
+        )
+    else()
+    qt_generate_deploy_app_script(
+        TARGET voiceassistant
+        FILENAME_VARIABLE deploy_script
+        NO_UNSUPPORTED_PLATFORM_ERROR
+    )
+    endif()
+    install(SCRIPT ${deploy_script})
+endif()
+
 # Install TTS plugins
 install(TARGETS ${TTS_PLUGINS}
         DESTINATION speechtotext
