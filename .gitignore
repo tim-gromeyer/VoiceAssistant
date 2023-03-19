@@ -4,5 +4,5 @@ models/
 android/
 *.so
 *.dll
-build-*/
+build*/
 data/
