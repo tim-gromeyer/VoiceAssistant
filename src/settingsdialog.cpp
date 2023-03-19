@@ -18,7 +18,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     connect(ui->lineEdit, &QLineEdit::textEdited, this, &SettingsDialog::search);
 
     if (!m_categories.empty())
-        changeCategory(ui->listWidget->item(0)->text());
+        ui->listWidget->setCurrentRow(0);
 }
 
 void SettingsDialog::changeCategory(const QString &text)
@@ -61,7 +61,7 @@ void SettingsDialog::addSettingsWidget(SettingsWidget *w)
     ui->listWidget->addItem(item);
 
     if (ui->scrollArea->widget() == ui->scrollAreaWidgetContents)
-        changeCategory(w->displayCategory());
+        ui->listWidget->setCurrentRow(0);
 }
 
 void SettingsDialog::onClicked(QAbstractButton *button)

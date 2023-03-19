@@ -45,6 +45,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QScrollArea" name="scrollArea">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
@@ -53,8 +56,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>534</width>
-          <height>353</height>
+          <width>536</width>
+          <height>355</height>
          </rect>
         </property>
        </widget>
