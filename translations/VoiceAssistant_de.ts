@@ -4,7 +4,7 @@
 <context>
     <name>Jokes</name>
     <message>
-        <location filename="../src/jokes.cpp" line="62"/>
+        <location filename="../src/jokes.cpp" line="64"/>
         <source>No jokes are available for your language.
 Your languages: %1
 Joke languages: %2</source>
@@ -13,14 +13,19 @@ Deine Sprachen: %1
 Sprachen der Witze: %2</translation>
     </message>
     <message>
-        <location filename="../src/jokes.cpp" line="80"/>
+        <location filename="../src/jokes.cpp" line="82"/>
         <source>Sorry, something went wrong</source>
         <translation>Entschuldigung, etwas ist schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../src/jokes.cpp" line="148"/>
+        <location filename="../src/jokes.cpp" line="150"/>
         <source>Could not fetch joke: %1</source>
         <translation>Konnte den Witz nicht abrufen: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/jokes.cpp" line="180"/>
+        <source>The language of the cached jokes (%1) does not match the current language of the jokes (%2)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -32,45 +37,35 @@ Sprachen der Witze: %2</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
-        <location filename="../src/mainwindow.cpp" line="220"/>
-        <location filename="../src/mainwindow.cpp" line="221"/>
-        <location filename="../src/mainwindow.cpp" line="273"/>
-        <location filename="../src/mainwindow.cpp" line="274"/>
+        <location filename="../src/mainwindow.cpp" line="249"/>
+        <location filename="../src/mainwindow.cpp" line="250"/>
+        <location filename="../src/mainwindow.cpp" line="301"/>
+        <location filename="../src/mainwindow.cpp" line="302"/>
         <source>Mute</source>
         <translation>Stummschalten</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="103"/>
+        <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="109"/>
+        <location filename="../ui/mainwindow.ui" line="130"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="116"/>
-        <source>&amp;Model</source>
-        <translation>&amp;Model</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="137"/>
-        <source>Contains word</source>
-        <translation>Enthält Wort</translation>
-    </message>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="142"/>
+        <location filename="../ui/mainwindow.ui" line="169"/>
         <source>Open downloader</source>
         <translation>Downloader öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="151"/>
+        <location filename="../ui/mainwindow.ui" line="178"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="154"/>
+        <location filename="../ui/mainwindow.ui" line="181"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
@@ -80,22 +75,42 @@ Sprachen der Witze: %2</translation>
         <translation>VoiceAssistant - Vorabversion!</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="127"/>
+        <location filename="../ui/mainwindow.ui" line="137"/>
+        <source>Voice &amp;recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="144"/>
+        <source>&amp;Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="154"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="132"/>
+        <location filename="../ui/mainwindow.ui" line="159"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="173"/>
+        <location filename="../ui/mainwindow.ui" line="164"/>
+        <source>Can recognize word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="189"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="202"/>
         <source>About VoiceAssistant</source>
         <translation>Über VoiceAssistant</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="174"/>
+        <location filename="../src/mainwindow.cpp" line="203"/>
         <source>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
 &lt;p&gt;A resource-efficient and customizable voice assistant written in c++.&lt;/p&gt;
 &lt;h3&gt;About&lt;/h3&gt;
@@ -142,65 +157,70 @@ Sprachen der Witze: %2</translation>
 &lt;p&gt;Dieses Projekt verwendet auch&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;um die heruntergeladenen Sprachmodelle zu entpacken. &lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="215"/>
-        <location filename="../src/mainwindow.cpp" line="216"/>
+        <location filename="../src/mainwindow.cpp" line="244"/>
+        <location filename="../src/mainwindow.cpp" line="245"/>
         <source>Unmute</source>
         <translation>Stummschaltung aufheben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="248"/>
+        <location filename="../src/mainwindow.cpp" line="277"/>
         <source>Quit?</source>
         <translation>Beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="248"/>
+        <location filename="../src/mainwindow.cpp" line="277"/>
         <source>Do you really want to quit?</source>
         <translation>Möchten sie wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="321"/>
-        <location filename="../src/mainwindow.cpp" line="358"/>
-        <location filename="../src/mainwindow.cpp" line="716"/>
+        <location filename="../src/mainwindow.cpp" line="349"/>
+        <location filename="../src/mainwindow.cpp" line="392"/>
+        <location filename="../src/mainwindow.cpp" line="779"/>
         <source>Waiting for wake word</source>
         <translation>Warten auf Weckwort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="345"/>
+        <location filename="../src/mainwindow.cpp" line="379"/>
         <source>Listening ...</source>
         <translation>Zuhören ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="410"/>
         <source>Contains word?</source>
         <translation>Enthält Wort?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="381"/>
+        <location filename="../src/mainwindow.cpp" line="420"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
         <translation>Prüfen Sie, ob das aktuelle Sprachmodell ein Wort erkennen kann (nicht wird).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="386"/>
+        <location filename="../src/mainwindow.cpp" line="424"/>
         <source>Word:</source>
         <translation>Wort:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="390"/>
+        <location filename="../src/mainwindow.cpp" line="427"/>
         <source>Enter word</source>
         <translation>Wort eingeben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="461"/>
+        <location filename="../src/mainwindow.cpp" line="434"/>
+        <source>Warning: the current STT plugin does not support word lookups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="520"/>
         <source>I have not understood this!</source>
         <translation>Dies habe ich nicht verstanden!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="592"/>
+        <location filename="../src/mainwindow.cpp" line="651"/>
         <source>Failed to save file</source>
         <translation>Datei konnte nicht gespeichert werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="593"/>
+        <location filename="../src/mainwindow.cpp" line="652"/>
         <source>Failed to write &lt;em&gt;%1&lt;/em&gt;.
 %2
 Copy following text and save it manually:
@@ -211,30 +231,30 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="714"/>
+        <location filename="../src/mainwindow.cpp" line="777"/>
         <source>Waiting for answer...</source>
         <translation>Warten auf Antwort...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="759"/>
-        <location filename="../src/mainwindow.cpp" line="823"/>
+        <location filename="../src/mainwindow.cpp" line="822"/>
+        <location filename="../src/mainwindow.cpp" line="891"/>
         <source>Are you sure?</source>
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="761"/>
-        <location filename="../src/mainwindow.cpp" line="825"/>
+        <location filename="../src/mainwindow.cpp" line="824"/>
+        <location filename="../src/mainwindow.cpp" line="893"/>
         <source>yes</source>
         <translation>ja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="762"/>
-        <location filename="../src/mainwindow.cpp" line="828"/>
+        <location filename="../src/mainwindow.cpp" line="825"/>
+        <location filename="../src/mainwindow.cpp" line="896"/>
         <source>Okay</source>
         <translation>Okay</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="775"/>
+        <location filename="../src/mainwindow.cpp" line="838"/>
         <source>It is %1</source>
         <translation>Es ist %1</translation>
     </message>
@@ -242,70 +262,70 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 <context>
     <name>ModelDownloader</name>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="34"/>
+        <location filename="../src/modeldownloader.cpp" line="36"/>
         <source>Model downloader</source>
         <translation>Modell-Downloader</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="62"/>
+        <location filename="../src/modeldownloader.cpp" line="64"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="63"/>
+        <location filename="../src/modeldownloader.cpp" line="65"/>
         <source>Could not download model info file:
 %1</source>
         <translation>Die Modellinformationsdatei konnte nicht heruntergeladen werden:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="85"/>
+        <location filename="../src/modeldownloader.cpp" line="87"/>
         <source>Failed to load model information!</source>
         <translation>Das Laden der Modellinformationen ist fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="86"/>
+        <location filename="../src/modeldownloader.cpp" line="88"/>
         <source>Parsing error at %1:
 %2</source>
         <translation>Parsing-Fehler bei %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="119"/>
+        <location filename="../src/modeldownloader.cpp" line="121"/>
         <source>Search ...</source>
         <translation>Suche ...</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="124"/>
+        <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="124"/>
+        <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Size</source>
         <translation>Größe</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="124"/>
+        <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Name</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="124"/>
-        <location filename="../src/modeldownloader.cpp" line="146"/>
-        <location filename="../src/modeldownloader.cpp" line="323"/>
-        <location filename="../src/modeldownloader.cpp" line="339"/>
+        <location filename="../src/modeldownloader.cpp" line="126"/>
+        <location filename="../src/modeldownloader.cpp" line="148"/>
+        <location filename="../src/modeldownloader.cpp" line="326"/>
+        <location filename="../src/modeldownloader.cpp" line="342"/>
         <source>Download</source>
         <translation>Herunterladen</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="207"/>
+        <location filename="../src/modeldownloader.cpp" line="209"/>
         <source>Downloading</source>
         <translation>Lädt herunter</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="252"/>
-        <location filename="../src/modeldownloader.cpp" line="286"/>
+        <location filename="../src/modeldownloader.cpp" line="254"/>
+        <location filename="../src/modeldownloader.cpp" line="289"/>
         <source>Downloading %1
 %2 from %3
 %4 - %5 remaining</source>
@@ -314,142 +334,220 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %4 - %5 verbleibend</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="354"/>
+        <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unziping</source>
         <translation>Entpacken</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="373"/>
+        <location filename="../src/modeldownloader.cpp" line="381"/>
         <source>Failed. Try again</source>
         <translation>Fehlgeschlagen. Erneut versuchen</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="36"/>
+        <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
         <translation>Herunterladen...</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="233"/>
+        <location filename="../src/modeldownloader.cpp" line="235"/>
         <source>Could not open file</source>
         <translation>Konnte Datei nicht öffnen</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="234"/>
+        <location filename="../src/modeldownloader.cpp" line="236"/>
         <source>Could not open %1 for writing:
 %2</source>
         <translation>Konnte %1 nicht zum Schreiben öffnen:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="317"/>
+        <location filename="../src/modeldownloader.cpp" line="320"/>
         <source>Download failed!</source>
         <translation>Herunterladen fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="318"/>
+        <location filename="../src/modeldownloader.cpp" line="321"/>
         <source>The download failed for following reason:
 %1</source>
         <translation>Der Download ist aus folgendem Grund fehlgeschlagen:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="382"/>
+        <location filename="../src/modeldownloader.cpp" line="390"/>
         <source>Downloaded</source>
         <translation>Heruntergeladen</translation>
     </message>
 </context>
 <context>
+    <name>PluginTest</name>
+    <message>
+        <location filename="../plugins/testPlugin/plugintest.cpp" line="13"/>
+        <source>Hello</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
+        <source>How are you</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
+        <source>Okay</source>
+        <translation type="unfinished">Okay</translation>
+    </message>
+    <message>
+        <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
+        <source>It works!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="../ui/settingsdialog.ui" line="14"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/settingsdialog.ui" line="22"/>
+        <source>Search ...</source>
+        <translation type="unfinished">Suche ...</translation>
+    </message>
+</context>
+<context>
     <name>SpeechToText</name>
     <message>
-        <location filename="../src/recognizer.cpp" line="315"/>
-        <source>No Vosk model was found for the system languages</source>
-        <translation>Es wurde kein Vosk-Sprachmodell für die Systemsprachen gefunden</translation>
-    </message>
-    <message>
-        <location filename="../src/recognizer.cpp" line="318"/>
-        <source>The directory where the Vosk models are stored is empty</source>
-        <translation>Das Verzeichnis, in dem die Vosk-Sprachmodelle gespeichert sind, ist leer</translation>
-    </message>
-    <message>
-        <location filename="../src/recognizer.cpp" line="321"/>
-        <source>An unknown error occurred while loading the Vosk model and/or recognizer</source>
-        <translation>Beim Laden des Vosk-Sprachodells und/oder des Erkennungsprogramms ist ein unbekannter Fehler aufgetreten</translation>
-    </message>
-    <message>
-        <location filename="../src/recognizer.cpp" line="325"/>
+        <location filename="../src/recognizer.cpp" line="299"/>
         <source>The recognizer has not yet been set up</source>
         <translation>Der Erkenner wurde noch nicht eingerichtet</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="328"/>
+        <location filename="../src/recognizer.cpp" line="302"/>
         <source>No microphone was found or the microphone is not accessible</source>
         <translation>Es wurde kein Mikrofon gefunden oder das Mikrofon ist nicht erreichbar</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="331"/>
+        <location filename="../src/recognizer.cpp" line="305"/>
         <source>The microphone is incompatible with the required audio format (PCM 16bit mono)</source>
         <translation>Das Mikrofon ist nicht mit dem geforderten Audioformat kompatibel (PCM 16bit mono)</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="335"/>
+        <location filename="../src/recognizer.cpp" line="309"/>
         <source>The audio device is closed, and is not processing any audio data</source>
         <translation>Das Audiogerät ist geschlossen und verarbeitet keine Audiodaten</translation>
     </message>
 </context>
 <context>
+    <name>SpeechToTextSettings</name>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="6"/>
+        <source>General settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/speechtotextsettings.cpp" line="7"/>
+        <source>Speech to text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VoskPlugin</name>
+    <message>
+        <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="145"/>
+        <source>No Vosk model was found for the system languages</source>
+        <translation type="unfinished">Es wurde kein Vosk-Sprachmodell für die Systemsprachen gefunden</translation>
+    </message>
+    <message>
+        <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="148"/>
+        <source>The directory where the Vosk models are stored is empty</source>
+        <translation type="unfinished">Das Verzeichnis, in dem die Vosk-Sprachmodelle gespeichert sind, ist leer</translation>
+    </message>
+    <message>
+        <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="151"/>
+        <source>An unknown error occurred while loading the Vosk model and/or recognizer</source>
+        <translation type="unfinished">Beim Laden des Vosk-Sprachodells und/oder des Erkennungsprogramms ist ein unbekannter Fehler aufgetreten</translation>
+    </message>
+    <message>
+        <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="155"/>
+        <source>The recognizer has not yet been set up</source>
+        <translation type="unfinished">Der Erkenner wurde noch nicht eingerichtet</translation>
+    </message>
+    <message>
+        <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="158"/>
+        <source>The audio device is closed, and is not processing any audio data</source>
+        <translation type="unfinished">Das Audiogerät ist geschlossen und verarbeitet keine Audiodaten</translation>
+    </message>
+</context>
+<context>
+    <name>Wizard</name>
+    <message>
+        <location filename="../ui/addCommand.ui" line="14"/>
+        <source>Add command</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>cmd</name>
+    <message>
+        <location filename="../src/main.cpp" line="37"/>
+        <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>number</name>
     <message>
-        <location filename="../src/utils.cpp" line="16"/>
+        <location filename="../src/utils.cpp" line="13"/>
         <source>zero</source>
         <translation>null</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="17"/>
+        <location filename="../src/utils.cpp" line="14"/>
         <source>one</source>
         <translation>eins</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="18"/>
+        <location filename="../src/utils.cpp" line="15"/>
         <source>two</source>
         <translation>zwei</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="19"/>
+        <location filename="../src/utils.cpp" line="16"/>
         <source>three</source>
         <translation>drei</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="20"/>
+        <location filename="../src/utils.cpp" line="17"/>
         <source>four</source>
         <translation>vier</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="21"/>
+        <location filename="../src/utils.cpp" line="18"/>
         <source>five</source>
         <translation>fünf</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="22"/>
+        <location filename="../src/utils.cpp" line="19"/>
         <source>six</source>
         <translation>sechs</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="23"/>
+        <location filename="../src/utils.cpp" line="20"/>
         <source>seven</source>
         <translation>sieben</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="24"/>
+        <location filename="../src/utils.cpp" line="21"/>
         <source>eight</source>
         <translation>acht</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="25"/>
+        <location filename="../src/utils.cpp" line="22"/>
         <source>nine</source>
         <translation>neun</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="26"/>
+        <location filename="../src/utils.cpp" line="23"/>
         <source>ten</source>
         <translation>zehn</translation>
     </message>
@@ -457,27 +555,27 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 <context>
     <name>time</name>
     <message>
-        <location filename="../src/utils.cpp" line="97"/>
+        <location filename="../src/utils.cpp" line="54"/>
         <source>%1 seconds</source>
         <translation>%1 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="102"/>
+        <location filename="../src/utils.cpp" line="59"/>
         <source>%1 minute(s), %2 secounds</source>
         <translation>%1 Minute(n), %2 Sekunden</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="107"/>
+        <location filename="../src/utils.cpp" line="64"/>
         <source>%1 hour(s), %2 minute(s)</source>
         <translation>%1 Stunde(n), %2 Minute(n)</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="112"/>
+        <location filename="../src/utils.cpp" line="69"/>
         <source>%1 day(s), %2 hour(s)</source>
         <translation>%1 Tag(e), %2 Stunde(n)</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="117"/>
+        <location filename="../src/utils.cpp" line="74"/>
         <source>%1 year(s), %2 day(s)</source>
         <translation>%1 Jahr(e), %2 Tag(e)</translation>
     </message>

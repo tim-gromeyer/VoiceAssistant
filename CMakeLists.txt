@@ -34,7 +34,7 @@ endif()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
 
-set(TS_FILES translations/VoiceAssistant_de_DE.ts)
+set(TS_FILES translations/VoiceAssistant_de.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
 
 include(Dirs)
@@ -46,24 +46,17 @@ set(PROJECT_SOURCES
     plugins/bridge.h
     plugins/settingswidget.h
     speechtotext/speechtotextplugin.h
-    src/commanddialog.cpp
-    src/commanddialog.h
+    src/commanddialog.cpp src/commanddialog.h
     src/global.h
-    src/jokes.cpp
-    src/jokes.h
+    src/jokes.cpp src/jokes.h
     src/main.cpp
-    src/mainwindow.cpp
-    src/mainwindow.h
-    src/modeldownloader.cpp
-    src/modeldownloader.h
-    src/recognizer.cpp
-    src/recognizer.h
-    src/settings.cpp
-    src/settings.h
-    src/settingsdialog.cpp
-    src/settingsdialog.h
-    src/utils.cpp
-    src/utils.h
+    src/mainwindow.cpp src/mainwindow.h
+    src/modeldownloader.cpp src/modeldownloader.h
+    src/recognizer.cpp src/recognizer.h
+    src/settings.cpp src/settings.h
+    src/settingsdialog.cpp src/settingsdialog.h
+    src/speechtotextsettings.cpp src/speechtotextsettings.h
+    src/utils.cpp src/utils.h
     ui/mainwindow.ui
     ui/settingsdialog.ui
 )
