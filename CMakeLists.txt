@@ -79,8 +79,15 @@ endif(WIN32)
 
 add_subdirectory(3rdparty)
 add_subdirectory(speechtotext)
+
+include(CTest)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+    set(BUILD_TEST_PLUGIN ON)
+endif()
+
 if(BUILD_TEST_PLUGIN)
-  message(STATUS "Build test plugin")
+  message(STATUS "Building a test plugin")
   add_subdirectory(plugins/testPlugin)
 endif()
 
