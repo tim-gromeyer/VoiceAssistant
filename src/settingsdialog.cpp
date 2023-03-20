@@ -102,7 +102,6 @@ void SettingsDialog::search(const QString &text)
 
         list.at(0)->setHidden(true);
     }
-    Q_UNUSED(text);
 }
 
 SettingsDialog::~SettingsDialog()
