@@ -9,9 +9,15 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.svg")));
     QApplication::setApplicationName(QStringLiteral("VoiceAssistant"));
     QApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
+#ifdef Q_OS_DARWIN
+    QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.icns")));
+#elif defined(Q_OS_WIN)
+    QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.ico")));
+#else
+    QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.svg")));
+#endif
 
     QTranslator translator, qtTranslator;
     QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
