@@ -56,7 +56,7 @@ set(PROJECT_SOURCES
     src/recognizer.cpp src/recognizer.h
     src/settings.cpp src/settings.h
     src/settingsdialog.cpp src/settingsdialog.h
-    src/speechtotextsettings.cpp src/speechtotextsettings.h
+    src/texttospeechsettings.cpp src/texttospeechsettings.h
     src/utils.cpp src/utils.h
     ui/mainwindow.ui
     ui/settingsdialog.ui

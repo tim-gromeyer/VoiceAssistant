@@ -12,19 +12,31 @@ class QSlider;
 class QVBoxLayout;
 class QTextToSpeech;
 
-class SpeechToTextSettings : public SettingsWidget
+class TextToSpeechSettings : public SettingsWidget
 {
     Q_OBJECT
 public:
-    explicit SpeechToTextSettings(QTextToSpeech *tts, QWidget *parent = nullptr);
-    ~SpeechToTextSettings() = default;
+    explicit TextToSpeechSettings(QTextToSpeech *tts, QWidget *parent = nullptr);
+    ~TextToSpeechSettings() = default;
 
     void apply() override;
     void finish() override;
 
+private Q_SLOTS:
+    void onEngineChanged();
+    void onLanguageChanged();
+    void onVoiceChanged();
+    void onPitchChanged();
+    void onRateChanged();
+
+    void say();
+
+    void onTTSChanged();
+
 private:
     void setupUi();
-    void populateComboBoxes();
+    void populateComboBoxes(bool useNewTTS = false);
+    void setupTTS(bool override = true);
 
     QComboBox *engineComboBox = nullptr;
     QComboBox *languageComboBox = nullptr;
@@ -45,4 +57,5 @@ private:
     QVBoxLayout *verticalLayout_2 = nullptr;
 
     QTextToSpeech *m_tts = nullptr;
+    QTextToSpeech *m_newtts = nullptr;
 };
