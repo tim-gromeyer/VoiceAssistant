@@ -19,6 +19,12 @@ int main(int argc, char *argv[])
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.svg")));
 #endif
 
+#if (QT_FEATURE_static == 1)
+    // FIXME: multiple definition of `PluginBridge::metaObject()`. It works in the tests because of -DNO_BRIDGE
+    Q_IMPORT_PLUGIN(PluginTest);
+//    Q_IMPORT_PLUGIN(VoskPlugin);
+#endif
+
     QTranslator translator, qtTranslator;
     QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     if (qtTranslationsPath.isEmpty())

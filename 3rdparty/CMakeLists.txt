@@ -11,4 +11,6 @@ set(MZ_SIGNING OFF)
 
 set(MZ_DECOMPRESS_ONLY ON)
 
+set(BUILD_SHARED_LIBS OFF)
+
 add_subdirectory(11Zip)

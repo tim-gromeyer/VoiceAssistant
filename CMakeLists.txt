@@ -39,6 +39,7 @@ set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
 
 include(Dirs)
 include(Translation)
+include(Plugins)
 
 set(PROJECT_SOURCES
     ${RC_FILES}
@@ -73,10 +74,6 @@ else()
   endif()
 endif()
 
-if(WIN32)
-  set(INTL_LDFLAGS -lintl)
-endif(WIN32)
-
 add_subdirectory(3rdparty)
 add_subdirectory(speechtotext)
 
@@ -99,8 +96,8 @@ target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::TextToSpeech
     Qt${QT_VERSION_MAJOR}::Concurrent
-    ${INTL_LDFLAGS}
-    elzip)
+    elzip
+)
 
 target_compile_definitions(voiceassistant PUBLIC
     APP_DIR="${CMAKE_SOURCE_DIR}"
