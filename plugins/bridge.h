@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLUGINBRIDGE_H
+#define PLUGINBRIDGE_H
 
 #include <QCoreApplication>
 #include <QMutex>
@@ -17,9 +18,9 @@ class PluginBridge final : public QObject
     friend class MainWindow;
 
 public:
-    explicit PluginBridge(QObject *parent = nullptr)
+    inline explicit PluginBridge(QObject *parent = nullptr)
         : QObject(parent){};
-    ~PluginBridge()
+    inline ~PluginBridge() final
     {
         if (mutex.tryLock())
             mutex.unlock();
@@ -71,3 +72,5 @@ private:
 
     QMutex mutex;
 };
+
+#endif

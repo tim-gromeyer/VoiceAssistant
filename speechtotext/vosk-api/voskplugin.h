@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VOSKPLUGIN_H
+#define VOSKPLUGIN_H
 
 #include "../speechtotextplugin.h"
 
@@ -64,3 +65,5 @@ private:
     VoskModel *model = nullptr;
     VoskRecognizer *recognizer = nullptr;
 };
+
+#endif

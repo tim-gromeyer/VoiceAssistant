@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPEECHTOTEXTPLUGIN_H
+#define SPEECHTOTEXTPLUGIN_H
 
 #include <QIODevice>
 
@@ -74,3 +75,5 @@ private:
 
 #define SpeechToText_iid "voiceassistant.speechtotext/1.0"
 Q_DECLARE_INTERFACE(SpeechToTextPlugin, SpeechToText_iid)
+
+#endif
