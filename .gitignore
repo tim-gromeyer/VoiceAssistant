@@ -2,6 +2,7 @@
 vosk/
 models/
 android/
+*.a
 *.so
 *.dll
 build*/
