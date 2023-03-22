@@ -8,22 +8,24 @@
         <source>No jokes are available for your language.
 Your languages: %1
 Joke languages: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Для вашего языка нет шуток.
+Ваши языки: %1
+Языки шуток: %2</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="82"/>
         <source>Sorry, something went wrong</source>
-        <translation type="unfinished"></translation>
+        <translation>Извините, что-то пошло не так</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="150"/>
         <source>Could not fetch joke: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось получить шутку: %1</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="180"/>
         <source>The language of the cached jokes (%1) does not match the current language of the jokes (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык кэшированных шуток (%1) не соответствует текущему языку шуток (%2)</translation>
     </message>
 </context>
 <context>
@@ -31,7 +33,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка...</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
@@ -40,47 +42,47 @@ Joke languages: %2</source>
         <location filename="../src/mainwindow.cpp" line="302"/>
         <location filename="../src/mainwindow.cpp" line="303"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить звук</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="130"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Помощь</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="169"/>
         <source>Open downloader</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть загрузчик</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="178"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="181"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
         <source>VoiceAssistant - Pre alpha!</source>
-        <translation type="unfinished"></translation>
+        <translation>VoiceAssistant - предварительная альфа-версия!</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="137"/>
         <source>Voice &amp;recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>Распознавание голоса</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="144"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Команды</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="154"/>
@@ -90,22 +92,22 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="159"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>О &amp;Qt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="164"/>
         <source>Can recognize word</source>
-        <translation type="unfinished"></translation>
+        <translation>Может распознавать слова</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="189"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="203"/>
         <source>About VoiceAssistant</source>
-        <translation type="unfinished"></translation>
+        <translation>О VoiceAssistant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="204"/>
