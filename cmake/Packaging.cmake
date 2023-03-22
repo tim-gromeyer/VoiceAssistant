@@ -46,9 +46,9 @@ set(CPACK_NSIS_URL_INFO_ABOUT ${PROJECT_HOMEPAGE_URL})
 set(CPACK_NSIS_CONTACT ${PROJECT_CONTACT})
 set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
 set(CPACK_NSIS_CREATE_ICONS_EXTRA
-"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROJECT_NAME}.lnk' '$INSTDIR\\\\bin\\\\voiceassistant.exe' '' '$INSTDIR\\\\Icon.ico'")
+"CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\VoiceAssistant.lnk' '$INSTDIR\\\\voiceassistant.exe' '' '$INSTDIR\\\\Icon.ico'")
 set(CPACK_NSIS_DELETE_ICONS_EXTRA
-    "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROJECT_NAME}.lnk'"
+    "Delete '$SMPROGRAMS\\\\$START_MENU\\\\VoiceAssistant.lnk'"
 ) # INFO: Maybe CPACK_PACKAGE_EXECUTABLES will do the job
 
 # Variables specific to CPack DragNDrop generator
@@ -58,10 +58,16 @@ set(CPACK_DMG_BACKGROUND_IMAGE "") # TODO: Add icon
 
 if(WIN32)
  set(CPACK_GENERATOR "ZIP;NSIS")
+ install(FILES "${CMAKE_SOURCE_DIR}/ressources/logo/Icon.ico"
+         DESTINATION .
+ )
 
 elseif(APPLE)
  set(CPACK_GENERATOR "ZIP;DragNDrop;PackageMaker;Bundle" )
  set(CPACK_SYSTEM_NAME "OSX" )
+ install(FILES "${CMAKE_SOURCE_DIR}/ressources/logo/Icon.icns"
+         DESTINATION .
+ )
 
 elseif(UNIX AND NOT EXMSCRIPTEN AND NOT ANDROID)
  # Determine distribution and release

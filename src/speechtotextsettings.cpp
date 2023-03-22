@@ -109,4 +109,9 @@ void SpeechToTextSettings::populateComboBoxes()
     voiceComboBox->setCurrentText(m_tts->voice().name());
     pitchSlider->setValue(int(m_tts->pitch() * 10));
     rateSlider->setValue(int(m_tts->rate() * 10));
+
+    // Sort the combo boxes
+    engineComboBox->model()->sort(0);
+    languageComboBox->model()->sort(0);
+    voiceComboBox->model()->sort(0);
 }

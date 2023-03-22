@@ -10,6 +10,25 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
+#if (QT_FEATURE_static == 1)
+    Q_IMPORT_PLUGIN(PluginTest);
+#endif
+
+    // Test static plugins
+    const auto staticPlugins = QPluginLoader::staticInstances();
+    std::cout << "Amount of static plugins: " << staticPlugins.size() << '\n';
+
+    for (auto *plugin : staticPlugins) {
+        auto *interface = qobject_cast<PluginInterface *>(plugin);
+        if (interface)
+            return 0;
+    }
+    if (!staticPlugins.isEmpty()) {
+        std::cerr << "Failed to cast at least one static plugin to PluginInterface" << std::endl;
+        return 1;
+    }
+
+    // Test shared plugins
     QPluginLoader loader;
     loader.setFileName(QStringLiteral(PLUGIN));
     if (!loader.load()) {
