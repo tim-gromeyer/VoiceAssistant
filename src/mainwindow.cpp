@@ -121,6 +121,8 @@ MainWindow::MainWindow(QWidget *parent)
             this,
             &MainWindow::loadCommands,
             Qt::QueuedConnection);
+    if (recognizer->state() != SpeechToText::NotStarted)
+        onSTTStateChanged();
 #if !NEED_MICROPHONE_PERMISSION
     recognizer->setup();
 #endif
@@ -144,15 +146,20 @@ MainWindow::MainWindow(QWidget *parent)
     timeTimer->start();
     updateTime();
 
-    connect(recognizer->device(),
-            &SpeechToTextPlugin::doneListening,
-            this,
-            &MainWindow::doneListening);
-    connect(recognizer->device(), &SpeechToTextPlugin::textUpdated, this, &MainWindow::updateText);
-    connect(recognizer->device(),
-            &SpeechToTextPlugin::wakeWordDetected,
-            this,
-            &MainWindow::onWakeWord);
+    if (recognizer->device()) {
+        connect(recognizer->device(),
+                &SpeechToTextPlugin::doneListening,
+                this,
+                &MainWindow::doneListening);
+        connect(recognizer->device(),
+                &SpeechToTextPlugin::textUpdated,
+                this,
+                &MainWindow::updateText);
+        connect(recognizer->device(),
+                &SpeechToTextPlugin::wakeWordDetected,
+                this,
+                &MainWindow::onWakeWord);
+    }
 
     connect(ui->action_Quit, &QAction::triggered, this, &QWidget::close);
     connect(ui->muteButton, &QCheckBox::clicked, this, &MainWindow::mute);

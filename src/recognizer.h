@@ -26,13 +26,14 @@ public:
     ~SpeechToText();
 
     enum State {
-        PluginError = 0,
-        NotStarted = 1,         // SpeechToText not set up or not listening
-        NoMicrophone = 2,       // No microphone was found or the microphone is not accessible
-        IncompatibleFormat = 3, // Incompatible microphone, must support PCM 16bit mono
-        PermissionMissing = 4,  //
-        Running = 5,            // The recognizer is set up and proceeds data
-        Paused = 6              // The microphone input is paused
+        NoPluginFound = 0,      // No speech to text plugin could be found or loaded
+        PluginError = 1,        // An error occured in the plugin, see errorString()
+        NotStarted = 2,         // SpeechToText not set up or not listening
+        NoMicrophone = 3,       // No microphone was found or the microphone is not accessible
+        IncompatibleFormat = 4, // Incompatible microphone, must support PCM 16bit mono
+        PermissionMissing = 5,  //
+        Running = 6,            // The recognizer is set up and proceeds data
+        Paused = 7              // The microphone input is paused
     };
     Q_ENUM(State);
 

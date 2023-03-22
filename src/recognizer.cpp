@@ -20,6 +20,7 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
 {
     const auto staticInstances = QPluginLoader::staticInstances();
     for (QObject *pluginObject : staticInstances) {
+        pluginObject->setParent(this);
         auto *plugin = qobject_cast<SpeechToTextPlugin *>(pluginObject);
         if (!plugin)
             continue;
@@ -60,9 +61,11 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
         m_plugin = plugin;
     }
 
-    if (m_plugins.isEmpty())
+    if (m_plugins.isEmpty()) {
         qCritical() << "No speech to text plugin found!";
-    Q_ASSERT(!m_plugins.isEmpty());
+        setState(NoPluginFound);
+        return;
+    }
 
     if (m_plugin == nullptr)
         m_plugin = m_plugins.at(0);
@@ -290,6 +293,10 @@ void SpeechToText::setState(SpeechToText::State s)
     switch (m_state) {
     case Running:
         m_errorString.clear();
+        break;
+    case NoPluginFound:
+        m_errorString = tr("The app is unable to transcribe speech to text because the necessary "
+                           "plugin is missing or could not be loaded.");
         break;
     case PluginError:
         if (m_plugin)
