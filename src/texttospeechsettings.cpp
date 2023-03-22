@@ -132,17 +132,17 @@ void TextToSpeechSettings::populateComboBoxes(bool useNewTTS)
     voiceComboBox->model()->sort(0);
 
     connect(engineComboBox,
-            &QComboBox::currentIndexChanged,
+            qOverload<int>(&QComboBox::currentIndexChanged),
             this,
             &TextToSpeechSettings::onEngineChanged,
             Qt::UniqueConnection);
     connect(languageComboBox,
-            &QComboBox::currentIndexChanged,
+            qOverload<int>(&QComboBox::currentIndexChanged),
             this,
             &TextToSpeechSettings::onLanguageChanged,
             Qt::UniqueConnection);
     connect(voiceComboBox,
-            &QComboBox::currentIndexChanged,
+            qOverload<int>(&QComboBox::currentIndexChanged),
             this,
             &TextToSpeechSettings::onVoiceChanged,
             Qt::UniqueConnection);
@@ -228,11 +228,13 @@ void TextToSpeechSettings::setupTTS(bool override)
     if (override || !m_newtts)
         m_newtts = new QTextToSpeech(engineComboBox->currentText());
 
+#if QT6
     connect(m_newtts,
             &QTextToSpeech::engineChanged,
             this,
             &TextToSpeechSettings::onTTSChanged,
             Qt::UniqueConnection);
+#endif
     connect(m_newtts,
             &QTextToSpeech::localeChanged,
             this,
