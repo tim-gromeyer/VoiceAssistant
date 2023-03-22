@@ -34,7 +34,7 @@ endif()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
 
-set(TS_FILES translations/VoiceAssistant_de.ts)
+file(GLOB TS_FILES translations/VoiceAssistant_*.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
 
 include(Dirs)
