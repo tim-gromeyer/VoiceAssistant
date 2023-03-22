@@ -8,22 +8,24 @@
         <source>No jokes are available for your language.
 Your languages: %1
 Joke languages: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune blague n&apos;est disponible pour votre langue.
+Vos langues&#xa0;: %1
+Langues des blagues&#xa0;: %2</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="82"/>
         <source>Sorry, something went wrong</source>
-        <translation type="unfinished"></translation>
+        <translation>Désolé, quelque chose n&apos;a pas fonctionné</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="150"/>
         <source>Could not fetch joke: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de récupérer la blague : %1</translation>
     </message>
     <message>
         <location filename="../src/jokes.cpp" line="180"/>
         <source>The language of the cached jokes (%1) does not match the current language of the jokes (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>La langue des blagues mises en cache (%1) ne correspond pas à la langue actuelle des blagues (%2)</translation>
     </message>
 </context>
 <context>
@@ -31,7 +33,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Chargement…</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
@@ -40,72 +42,72 @@ Joke languages: %2</source>
         <location filename="../src/mainwindow.cpp" line="302"/>
         <location filename="../src/mainwindow.cpp" line="303"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Sourdine</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fichier</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="130"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aide</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="169"/>
         <source>Open downloader</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le téléchargeur</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="178"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="181"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
         <source>VoiceAssistant - Pre alpha!</source>
-        <translation type="unfinished"></translation>
+        <translation>VoiceAssistant - Pré-alpha !</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="137"/>
         <source>Voice &amp;recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reconnaissance vocale</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="144"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Commandes</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="154"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;À propos</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="159"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de &amp;Qt</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="164"/>
         <source>Can recognize word</source>
-        <translation type="unfinished"></translation>
+        <translation>Peut reconnaître un mot</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="189"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="203"/>
         <source>About VoiceAssistant</source>
-        <translation type="unfinished"></translation>
+        <translation>À propos de VoiceAssistant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="204"/>
@@ -137,17 +139,17 @@ Joke languages: %2</source>
         <location filename="../src/mainwindow.cpp" line="245"/>
         <location filename="../src/mainwindow.cpp" line="246"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le son</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Quitter&#xa0;?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous vraiment quitter&#xa0;?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="350"/>
@@ -213,24 +215,24 @@ Copy following text and save it manually:
         <location filename="../src/mainwindow.cpp" line="825"/>
         <location filename="../src/mainwindow.cpp" line="894"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr·e&#xa0;?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="827"/>
         <location filename="../src/mainwindow.cpp" line="896"/>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>oui</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="828"/>
         <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>D&apos;accord</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="841"/>
         <source>It is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>C&apos;est %1</translation>
     </message>
 </context>
 <context>
@@ -238,49 +240,51 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="36"/>
         <source>Model downloader</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargeur de modèles</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="65"/>
         <source>Could not download model info file:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de télécharger le fichier d&apos;informations sur le modèle :
+%1</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="87"/>
         <source>Failed to load model information!</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du chargement des informations sur le modèle&#xa0;!</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="88"/>
         <source>Parsing error at %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;analyse à %1 :
+%2</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="121"/>
         <source>Search ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche…</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Langue</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
@@ -288,12 +292,12 @@ Copy following text and save it manually:
         <location filename="../src/modeldownloader.cpp" line="326"/>
         <location filename="../src/modeldownloader.cpp" line="342"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Télécharger</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="209"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargement</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="254"/>
@@ -301,27 +305,29 @@ Copy following text and save it manually:
         <source>Downloading %1
 %2 from %3
 %4 - %5 remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargement de %1
+%2 sur %3
+%4 - %5 restants</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unziping</source>
-        <translation type="unfinished"></translation>
+        <translation>Décompresser</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="381"/>
         <source>Failed. Try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec. Réessayez</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargement…</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
         <source>Could not open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="236"/>
@@ -343,7 +349,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
         <source>Downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Téléchargé</translation>
     </message>
 </context>
 <context>
@@ -351,17 +357,17 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="13"/>
         <source>Hello</source>
-        <translation type="unfinished"></translation>
+        <translation>Bonjour</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
         <source>How are you</source>
-        <translation type="unfinished"></translation>
+        <translation>Comment allez-vous</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>D&apos;accord</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
@@ -374,7 +380,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../ui/settingsdialog.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
