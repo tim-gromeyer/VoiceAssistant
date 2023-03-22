@@ -33,7 +33,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading ...</source>
-        <translation>Laden ...</translation>
+        <translation>Wird geladen&#xa0;…</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
@@ -346,7 +346,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
-        <translation>Herunterladen...</translation>
+        <translation>Wird heruntergeladen&#xa0;…</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
