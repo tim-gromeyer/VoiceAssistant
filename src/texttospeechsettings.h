@@ -22,6 +22,9 @@ public:
     void apply() override;
     void finish() override;
 
+Q_SIGNALS:
+    void setNewTTS(QTextToSpeech *);
+
 private Q_SLOTS:
     void onEngineChanged();
     void onLanguageChanged();

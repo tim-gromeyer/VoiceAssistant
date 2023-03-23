@@ -2,6 +2,8 @@
 #include "plugins/settingswidget.h"
 #include "ui_settingsdialog.h"
 
+#include <QGuiApplication>
+
 SettingsDialog::SettingsDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -59,6 +61,8 @@ void SettingsDialog::addSettingsWidget(SettingsWidget *w)
     item->setIcon(w->categoryIcon());
 
     ui->listWidget->addItem(item);
+
+    m_settingsWidgets.append(w);
 
     if (ui->scrollArea->widget() == ui->scrollAreaWidgetContents)
         ui->listWidget->setCurrentRow(0);

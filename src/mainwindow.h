@@ -15,6 +15,7 @@ class QAudioOutput;
 class QMediaPlayer;
 class QPluginLoader;
 class QSystemTrayIcon;
+class QTextToSpeech;
 class QTimer;
 QT_END_NAMESPACE
 

@@ -26,7 +26,18 @@ TextToSpeechSettings::TextToSpeechSettings(QTextToSpeech *tts, QWidget *parent)
     populateComboBoxes();
 }
 
-void TextToSpeechSettings::apply() {}
+void TextToSpeechSettings::apply()
+{
+    if (!m_tts || !m_newtts)
+        return;
+
+    if (m_newtts == m_tts)
+        return;
+
+    m_newtts->moveToThread(m_tts->thread());
+    m_tts = m_newtts;
+    Q_EMIT setNewTTS(m_tts);
+}
 
 void TextToSpeechSettings::finish() {}
 

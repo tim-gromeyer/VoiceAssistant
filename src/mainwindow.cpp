@@ -499,9 +499,18 @@ void MainWindow::openModelDownloader()
 
 void MainWindow::openSettings()
 {
+    QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+
     SettingsDialog dia(this);
+
     TextToSpeechSettings sttSettings(engine, &dia);
     dia.addSettingsWidget(&sttSettings);
+    connect(&sttSettings, &TextToSpeechSettings::setNewTTS, this, [this](QTextToSpeech *tts) {
+        qDebug() << "Set new tts engine";
+        engine = tts;
+    });
+
+    QGuiApplication::restoreOverrideCursor();
     dia.exec();
 }
 
