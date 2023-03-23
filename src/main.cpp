@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     // load translation for Qt
     if (qtTranslator.load(QLocale::system(),
-                          QStringLiteral("qtbase"),
+                          QStringLiteral("qt"),
                           QStringLiteral("_"),
                           qtTranslationsPath))
         QApplication::installTranslator(&qtTranslator);
