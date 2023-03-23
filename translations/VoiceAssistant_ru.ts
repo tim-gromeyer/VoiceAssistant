@@ -87,7 +87,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="154"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>О приложении</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="159"/>
@@ -133,70 +133,91 @@ Joke languages: %2</source>
 &lt;h3&gt;Credits&lt;/h3&gt;
 &lt;p&gt;This project uses &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; which is licensed under the &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This project also uses&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;to unpack the downloaded voice modells.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
+&lt;p&gt;Ресурсоэффективный и настраиваемый голосовой помощник, написанный на c++.&lt;/p&gt;
+&lt;h3&gt;О Voice Assistant &lt;/h3&gt;
+&lt;table border=&quot;0&quot; style=&quot;border-collapse: collapse; width: 100%;&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Версия:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Версия Qt:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Домашняя страница:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;&lt;a href=&quot;https://github.com/tim-gromeyer/VoiceAssistant&quot;&gt;https://github.com/tim-gromeyer/VoiceAssistant&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;Права&lt;/h3&gt;
+&lt;p&gt;В данном проекте используется &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; который лицензирована под &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В этом проекте также используется&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;для распаковки загруженных голосовых моделей.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="245"/>
         <location filename="../src/mainwindow.cpp" line="246"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить звук</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="278"/>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите выйти?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="350"/>
         <location filename="../src/mainwindow.cpp" line="393"/>
         <location filename="../src/mainwindow.cpp" line="782"/>
         <source>Waiting for wake word</source>
-        <translation type="unfinished"></translation>
+        <translation>В ожидании пробуждающего слова</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Listening ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Слушаю...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="411"/>
         <source>Contains word?</source>
-        <translation type="unfinished"></translation>
+        <translation>Содержит слова?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="421"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверьте, может ли текущая языковая модель распознавать слово (не распознает).</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="425"/>
         <source>Word:</source>
-        <translation type="unfinished"></translation>
+        <translation>Слово:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="428"/>
         <source>Enter word</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите слово</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="435"/>
         <source>Warning: the current STT plugin does not support word lookups</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: текущий плагин STT не поддерживает поиск слов</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="523"/>
         <source>I have not understood this!</source>
-        <translation type="unfinished"></translation>
+        <translation>Я этого не понял!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="654"/>
         <source>Failed to save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось сохранить файл</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="655"/>
@@ -204,35 +225,38 @@ Joke languages: %2</source>
 %2
 Copy following text and save it manually:
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось записать &lt;em&gt;%1&lt;/em&gt;.
+%2
+Скопируйте следующий текст и сохраните его вручную:
+%3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="780"/>
         <source>Waiting for answer...</source>
-        <translation type="unfinished"></translation>
+        <translation>В ожидании ответа...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="825"/>
         <location filename="../src/mainwindow.cpp" line="894"/>
         <source>Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="827"/>
         <location filename="../src/mainwindow.cpp" line="896"/>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>да</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="828"/>
         <location filename="../src/mainwindow.cpp" line="899"/>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>Окей</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="841"/>
         <source>It is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Это %1</translation>
     </message>
 </context>
 <context>
@@ -240,49 +264,51 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="36"/>
         <source>Model downloader</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузчик моделей</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="65"/>
         <source>Could not download model info file:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить файл информации о модели:
+%1</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="87"/>
         <source>Failed to load model information!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось загрузить информацию о модели!</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="88"/>
         <source>Parsing error at %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка парсинга на %1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="121"/>
         <source>Search ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск...</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Вес</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
@@ -290,12 +316,12 @@ Copy following text and save it manually:
         <location filename="../src/modeldownloader.cpp" line="326"/>
         <location filename="../src/modeldownloader.cpp" line="342"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Скачать</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="209"/>
         <source>Downloading</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="254"/>
@@ -303,49 +329,53 @@ Copy following text and save it manually:
         <source>Downloading %1
 %2 from %3
 %4 - %5 remaining</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка %1
+%2 с %3
+осталось %4 - %5</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unziping</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковка</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="381"/>
         <source>Failed. Try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось. Попробуйте еще раз</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка...</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
         <source>Could not open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть файл</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="236"/>
         <source>Could not open %1 for writing:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть %1 для записи:
+%2</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="320"/>
         <source>Download failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка не удалась!</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="321"/>
         <source>The download failed for following reason:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка не удалась по следующей причине:
+%1</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
         <source>Downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Загружено</translation>
     </message>
 </context>
 <context>
@@ -353,22 +383,22 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="13"/>
         <source>Hello</source>
-        <translation type="unfinished"></translation>
+        <translation>Привет</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
         <source>How are you</source>
-        <translation type="unfinished"></translation>
+        <translation>Как ты</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>Окей</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
         <source>It works!</source>
-        <translation type="unfinished"></translation>
+        <translation>Это работает!</translation>
     </message>
 </context>
 <context>
@@ -376,12 +406,12 @@ Copy following text and save it manually:
     <message>
         <location filename="../ui/settingsdialog.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
         <source>Search ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск...</translation>
     </message>
 </context>
 <context>
@@ -389,22 +419,22 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/recognizer.cpp" line="299"/>
         <source>The recognizer has not yet been set up</source>
-        <translation type="unfinished"></translation>
+        <translation>Распознаватель ещё не настроен</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="302"/>
         <source>No microphone was found or the microphone is not accessible</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофон не найден или недоступен</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="305"/>
         <source>The microphone is incompatible with the required audio format (PCM 16bit mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофон несовместим с требуемым форматом звука (PCM, 16 бит, моно)</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="309"/>
         <source>The audio device is closed, and is not processing any audio data</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудиоустройство закрыто и не обрабатывает аудиоданные</translation>
     </message>
 </context>
 <context>
@@ -412,57 +442,57 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="20"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Основные</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="21"/>
         <source>Text to speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Текст в речь</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="85"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="86"/>
         <source>Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Двигатель</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="87"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="88"/>
         <source>Voice</source>
-        <translation type="unfinished"></translation>
+        <translation>Голос</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="89"/>
         <source>Pitch</source>
-        <translation type="unfinished"></translation>
+        <translation>Высота</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="90"/>
         <source>Rate</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="91"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Попробовать</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="92"/>
         <source>Enter some text here to test the settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите здесь текст для проверки настроек</translation>
     </message>
     <message>
         <location filename="../src/speechtotextsettings.cpp" line="93"/>
         <source>Say</source>
-        <translation type="unfinished"></translation>
+        <translation>Скажите</translation>
     </message>
 </context>
 <context>
@@ -470,27 +500,27 @@ Copy following text and save it manually:
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="145"/>
         <source>No Vosk model was found for the system languages</source>
-        <translation type="unfinished"></translation>
+        <translation>Для языка системы не было найдено ни одной модели Vosk</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="148"/>
         <source>The directory where the Vosk models are stored is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Каталог, в котором хранятся модели Vosk, пуст</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="151"/>
         <source>An unknown error occurred while loading the Vosk model and/or recognizer</source>
-        <translation type="unfinished"></translation>
+        <translation>При загрузке модели и/или распознавателя Vosk произошла неизвестная ошибка</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="155"/>
         <source>The recognizer has not yet been set up</source>
-        <translation type="unfinished"></translation>
+        <translation>Распознаватель еще не настроен</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="158"/>
         <source>The audio device is closed, and is not processing any audio data</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудиоустройство закрыто и не обрабатывает аудиоданные</translation>
     </message>
 </context>
 <context>
@@ -498,7 +528,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../ui/addCommand.ui" line="14"/>
         <source>Add command</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить команду</translation>
     </message>
 </context>
 <context>
@@ -506,7 +536,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/main.cpp" line="37"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ресурсоэффективный голосовой помощник, который пока находится на ранней стадии разработки, но уже функционирует.</translation>
     </message>
 </context>
 <context>
@@ -514,57 +544,57 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/utils.cpp" line="13"/>
         <source>zero</source>
-        <translation type="unfinished"></translation>
+        <translation>ноль</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="14"/>
         <source>one</source>
-        <translation type="unfinished"></translation>
+        <translation>один</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="15"/>
         <source>two</source>
-        <translation type="unfinished"></translation>
+        <translation>два</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="16"/>
         <source>three</source>
-        <translation type="unfinished"></translation>
+        <translation>три</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="17"/>
         <source>four</source>
-        <translation type="unfinished"></translation>
+        <translation>четыре</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="18"/>
         <source>five</source>
-        <translation type="unfinished"></translation>
+        <translation>пять</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="19"/>
         <source>six</source>
-        <translation type="unfinished"></translation>
+        <translation>шесть</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="20"/>
         <source>seven</source>
-        <translation type="unfinished"></translation>
+        <translation>семь</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="21"/>
         <source>eight</source>
-        <translation type="unfinished"></translation>
+        <translation>восемь</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="22"/>
         <source>nine</source>
-        <translation type="unfinished"></translation>
+        <translation>девять</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="23"/>
         <source>ten</source>
-        <translation type="unfinished"></translation>
+        <translation>десять</translation>
     </message>
 </context>
 <context>
@@ -572,27 +602,27 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/utils.cpp" line="54"/>
         <source>%1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 секунд</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="59"/>
         <source>%1 minute(s), %2 secounds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 минута(ы), %2 секунд</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="64"/>
         <source>%1 hour(s), %2 minute(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 час(а), %2 минут(ы)</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="69"/>
         <source>%1 day(s), %2 hour(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 день(ей), %2 час(а)</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="74"/>
         <source>%1 year(s), %2 day(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 год(а), %2 дней(я)</translation>
     </message>
 </context>
 </TS>
