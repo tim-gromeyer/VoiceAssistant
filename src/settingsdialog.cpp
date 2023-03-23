@@ -4,9 +4,9 @@
 
 #include <QGuiApplication>
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::SettingsDialog)
+SettingsDialog::SettingsDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
 
