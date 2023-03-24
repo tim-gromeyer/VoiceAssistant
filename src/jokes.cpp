@@ -75,7 +75,6 @@ void Jokes::setup()
 void Jokes::tellJoke()
 {
     qDebug() << "Jokes: Telling a joke. Cached amount of jokes:" << jokes.size();
-    // TODO: Slow down voice temporarily
     if (jokes.isEmpty()) {
         fetchJokes();
         if (jokes.isEmpty()) {
@@ -134,17 +133,16 @@ Jokes::Joke parseJson(const QByteArray &json)
 void Jokes::fetchJokes()
 {
     qDebug() << "Jokes: Fetching jokes";
-    int tries = 0;
+    uint8_t tries = 0;
 
     while (jokes.size() <= 2 && tries <= 5) {
         ++tries;
 
-        QUrl url(STR("https://v2.jokeapi.dev/joke/Any?safe-mode&lang=%1").arg(jokeLang));
+        static QUrl url(STR("https://v2.jokeapi.dev/joke/Any?safe-mode&lang=%1").arg(jokeLang));
         reply = manager->get(QNetworkRequest(url));
 
-        QEventLoop loop(this);
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-        loop.exec();
+        while (reply->isRunning())
+            QCoreApplication::processEvents();
 
         if (reply->error() != QNetworkReply::NoError) {
             qCritical() << tr("Could not fetch joke: %1").arg(reply->errorString());
