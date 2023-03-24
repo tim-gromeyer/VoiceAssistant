@@ -10,7 +10,8 @@ endif()
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 
-add_plugin(voskPlugin ../speechtotextplugin.h voskplugin.cpp voskplugin.h)
+add_plugin(voskPlugin)
+target_sources(voskPlugin PUBLIC ../speechtotextplugin.h voskplugin.cpp voskplugin.h)
 target_link_libraries(voskPlugin Qt${QT_VERSION_MAJOR}::Core Vosk)
 
 set(TTS_PLUGINS ${TTS_PLUGINS} voskPlugin PARENT_SCOPE)

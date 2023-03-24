@@ -7,8 +7,8 @@ endif()
 
 if (Qt6_FOUND)
     # Use the built-in qt_add_plugin function if Qt6 is available
-    function(add_plugin target)
-        qt_add_plugin(${target} ${ARGN})
+    function(add_plugin)
+        qt_add_plugin(${ARGV})
     endfunction()
 else()
     # Define our own function for Qt5
