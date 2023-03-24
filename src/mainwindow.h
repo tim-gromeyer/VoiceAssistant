@@ -17,6 +17,7 @@ class QPluginLoader;
 class QSystemTrayIcon;
 class QTextToSpeech;
 class QTimer;
+class QSettings;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -108,7 +109,11 @@ private Q_SLOTS:
     void openSettings();
 
     // Setup
-    static void setupTextToSpeech();
+    static void setupTextToSpeech(const QString &engineName,
+                                  const QLocale &language,
+                                  const QString &voiceName,
+                                  float pitch,
+                                  float rate);
     void setupTrayIcon();
 
     void mute(bool mute);
@@ -118,6 +123,9 @@ private Q_SLOTS:
     void saveCommands();
 
     void loadPlugins();
+
+    void loadSettings();
+    void saveSettings();
 
 private:
     static void applyVolume();
@@ -139,6 +147,8 @@ private:
     PluginBridge *bridge;
 
     QSharedPointer<QSystemTrayIcon> trayIcon;
+
+    QSettings *settings = nullptr;
 
     QList<MainWindow::Action> commands;
 };

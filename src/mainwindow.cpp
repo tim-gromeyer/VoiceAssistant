@@ -25,6 +25,7 @@
 #include <QProcess>
 #include <QRandomGenerator>
 #include <QSaveFile>
+#include <QSettings>
 #include <QSystemTrayIcon>
 #include <QTextToSpeech>
 #include <QThreadPool>
@@ -98,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent)
     , timeTimer(new QTimer(this))
     , jokes(new Jokes(this))
     , bridge(new PluginBridge(this))
+    , settings(new QSettings(this))
 {
     // Set up UI
     ui->setupUi(this);
@@ -128,9 +130,16 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     // Set up text to speech
+    settings->beginGroup(STR("TextToSpeech"));
     engineThread = new QThread(this);
     connect(engineThread, &QThread::finished, engineThread, &QObject::deleteLater);
-    std::ignore = QtConcurrent::run(&MainWindow::setupTextToSpeech);
+    std::ignore = QtConcurrent::run(&MainWindow::setupTextToSpeech,
+                                    settings->value(STR("Engine"), QLatin1String()).toString(),
+                                    settings->value(STR("Language"), QLocale::system()).toLocale(),
+                                    settings->value(STR("Voice"), QLatin1String()).toString(),
+                                    settings->value(STR("Pitch"), 0.0F).toFloat(),
+                                    settings->value(STR("Rate"), 0.0F).toFloat());
+    settings->endGroup();
 
     // Connect the actions
     connect(ui->actionAbout_Qt, &QAction::triggered, qApp, &QApplication::aboutQt);
@@ -288,13 +297,23 @@ void MainWindow::closeEvent(QCloseEvent *e)
         e->ignore();
 }
 
-void MainWindow::setupTextToSpeech()
+void MainWindow::setupTextToSpeech(const QString &engineName,
+                                   const QLocale &language,
+                                   const QString &voiceName,
+                                   float pitch,
+                                   float rate)
 {
     qDebug() << "[debug] TTS: Setup QTextToSpeech";
-    engine = new QTextToSpeech();
+    engine = new QTextToSpeech(engineName.isEmpty() ? QLatin1String() : engineName);
     engine->moveToThread(engineThread);
     engineThread->start();
-    engine->setLocale(QLocale::system()); // WARNING: This might fail!
+    engine->setLocale(language);
+    for (const QVoice &voice : engine->availableVoices()) {
+        if (voice.name() == voiceName)
+            engine->setVoice(voice);
+    }
+    engine->setPitch(pitch);
+    engine->setRate(rate);
     connect(engine, &QTextToSpeech::stateChanged, _instance, &MainWindow::onTTSStateChanged);
     qDebug() << "[debug] TTS: Setup finished";
 }
@@ -504,6 +523,7 @@ void MainWindow::openSettings()
     SettingsDialog dia(this);
 
     TextToSpeechSettings sttSettings(engine, &dia);
+    sttSettings.setSettings(settings);
     dia.addSettingsWidget(&sttSettings);
     connect(&sttSettings, &TextToSpeechSettings::setNewTTS, this, [this](QTextToSpeech *tts) {
         qDebug() << "Set new tts engine";
@@ -744,6 +764,10 @@ void MainWindow::loadPlugins()
         Qt::QueuedConnection);
 }
 
+void MainWindow::loadSettings() {}
+
+void MainWindow::saveSettings() {}
+
 void MainWindow::say(const QString &text)
 {
     if (!engine) {
@@ -788,7 +812,7 @@ QString MainWindow::ask(const QString &text)
     connect(recognizer, &SpeechToText::answerReady, &loop, [&loop](const QString &asw) {
         answer = asw;
     });
-    connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit);
+    connect(recognizer, &SpeechToText::answerReady, &loop, &QEventLoop::quit, Qt::QueuedConnection);
 
     if (instance()->m_muted)
         return {QLatin1String()};
@@ -963,5 +987,4 @@ MainWindow::~MainWindow()
  *      https://doc.qt.io/qt-6/qwizard.html
  *      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html */
 // TODO: Add settings like disabling tray icon, store language and model path and so on
-// TODO: Add options for controlling text to speech
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example

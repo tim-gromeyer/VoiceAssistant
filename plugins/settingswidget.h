@@ -53,7 +53,7 @@ protected:
     void setDisplayName(const QString &displayName) { m_displayName = displayName; }
     void setDisplayCategory(const QString &displayCategory) { m_displayCategory = displayCategory; }
     void setCategoryIcon(const QIcon &categoryIcon) { m_categoryIcon = categoryIcon; }
-    void settings(QSettings *settings) { m_settings = settings; };
+    QSettings *settings() { return m_settings; };
 
 private:
     bool m_keywordsInitialized = false;

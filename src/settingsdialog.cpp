@@ -76,9 +76,11 @@ void SettingsDialog::onClicked(QAbstractButton *button)
     case QDialogButtonBox::AcceptRole:
         for (auto *settingsWidget : qAsConst(m_settingsWidgets))
             settingsWidget->finish();
+        break;
     case QDialogButtonBox::ApplyRole:
         for (auto *settingsWidget : qAsConst(m_settingsWidgets))
             settingsWidget->apply();
+        break;
     default:
         break;
     }

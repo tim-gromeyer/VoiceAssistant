@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QApplication::setApplicationName(QStringLiteral("VoiceAssistant"));
     QApplication::setApplicationVersion(QStringLiteral(APP_VERSION));
+    QApplication::setOrganizationName(QStringLiteral("VoiceAssistant"));
+    QApplication::setOrganizationDomain(QStringLiteral("tim-gromeyer.github.io/VoiceAssistant"));
 #ifdef Q_OS_DARWIN
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/logo/Icon.icns")));
 #elif defined(Q_OS_WIN)

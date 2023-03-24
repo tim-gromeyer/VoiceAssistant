@@ -7,6 +7,7 @@
 #include <QGroupBox>
 #include <QGuiApplication>
 #include <QPlainTextEdit>
+#include <QSettings>
 #include <QSlider>
 #include <QTextToSpeech>
 #include <QVBoxLayout>
@@ -39,7 +40,19 @@ void TextToSpeechSettings::apply()
     Q_EMIT setNewTTS(m_tts);
 }
 
-void TextToSpeechSettings::finish() {}
+void TextToSpeechSettings::finish()
+{
+    if (!settings())
+        return;
+
+    settings()->beginGroup(QStringLiteral("TextToSpeech"));
+    settings()->setValue(QStringLiteral("Engine"), engineComboBox->currentText());
+    settings()->setValue(QStringLiteral("Language"), languageComboBox->currentData());
+    settings()->setValue(QStringLiteral("Voice"), voiceComboBox->currentText());
+    settings()->setValue(QStringLiteral("Pitch"), pitchSlider->value());
+    settings()->setValue(QStringLiteral("Rate"), rateSlider->value());
+    settings()->endGroup();
+}
 
 void TextToSpeechSettings::setupUi()
 {
