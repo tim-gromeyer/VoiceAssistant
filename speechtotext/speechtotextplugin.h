@@ -48,6 +48,9 @@ public:
     virtual bool hasLookupSupport() = 0;                // Word loopup support
     virtual bool canRecognizeWord(const QString &) = 0; // Can it recognize the word?
 
+    // Clear all recognized words and start from the very beginning
+    virtual void clear() = 0;
+
 Q_SIGNALS:
     // Emit this signal when setup() was succesful
     void loaded();

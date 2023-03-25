@@ -133,6 +133,12 @@ bool VoskPlugin::canRecognizeWord(const QString &word)
     return vosk_model_find_word(model, word.toLower().toUtf8()) != -1;
 }
 
+void VoskPlugin::clear()
+{
+    if (recognizer)
+        vosk_recognizer_reset(recognizer);
+}
+
 void VoskPlugin::setState(State s)
 {
     m_state = s;

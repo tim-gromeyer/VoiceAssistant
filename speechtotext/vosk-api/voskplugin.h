@@ -43,6 +43,8 @@ public:
     inline bool hasLookupSupport() override { return true; };
     bool canRecognizeWord(const QString &) override;
 
+    void clear() override;
+
 private:
     // Private method that takes a JSON string containing the recognized text
     // and parses it to extract the text and emit the appropriate signals
