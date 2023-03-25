@@ -22,6 +22,7 @@ TextToSpeechSettings::TextToSpeechSettings(QTextToSpeech *tts, QWidget *parent)
 {
     setDisplayCategory(tr("General"));
     setDisplayName(tr("Text to speech"));
+    setCategoryIcon(QIcon::fromTheme(QStringLiteral("settings")));
 
     setupUi();
     populateComboBoxes();
