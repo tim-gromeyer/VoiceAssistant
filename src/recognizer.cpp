@@ -288,6 +288,9 @@ void SpeechToText::pluginStateChanged()
 
 void SpeechToText::setState(SpeechToText::State s)
 {
+    if (m_state == s)
+        return;
+
     m_state = s;
 
     switch (m_state) {
