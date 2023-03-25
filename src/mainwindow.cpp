@@ -780,13 +780,19 @@ void MainWindow::say(const QString &text)
 
 void MainWindow::sayAndWait(const QString &text)
 {
-    if (!engine)
+    if (!engine || text.isEmpty())
         return;
+
     QEventLoop loop(instance());
-    connect(engine, &QTextToSpeech::stateChanged, &loop, [&loop](QTextToSpeech::State s) {
-        if (s != QTextToSpeech::Speaking)
-            loop.quit();
-    });
+    connect(
+        engine,
+        &QTextToSpeech::stateChanged,
+        &loop,
+        [&loop](QTextToSpeech::State s) {
+            if (s != QTextToSpeech::Speaking)
+                loop.quit();
+        },
+        Qt::QueuedConnection);
     say(text);
     loop.exec();
 }
