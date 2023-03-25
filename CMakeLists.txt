@@ -54,7 +54,6 @@ set(PROJECT_SOURCES
     src/mainwindow.cpp src/mainwindow.h
     src/modeldownloader.cpp src/modeldownloader.h
     src/recognizer.cpp src/recognizer.h
-    src/settings.cpp src/settings.h
     src/settingsdialog.cpp src/settingsdialog.h
     src/texttospeechsettings.cpp src/texttospeechsettings.h
     src/utils.cpp src/utils.h
