@@ -23,8 +23,6 @@ Resource-efficient and customizable voice assistant that is still in the early s
 
 The main goal of VoiceAssistant is to provide a fully customizable and extendable voice assistant that can be controlled entirely using voice commands. 
 
-Users can define the commands in the `commands/<your_language>/default.json` file. See [Add Commands](#add-commands).
-
 ## Supported Platforms
 
 The project has been tested on x86_64 Linux, but it should theoretically work on the following platforms:
@@ -50,7 +48,6 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 ## Customization
 
 **In the near future I'll add settings to the app!**  
-*I'm struggling with a plugin system for the settings and the GUI.*
 
 To customize the commands, edit the `commands/<your_language>/default.json` file. 
 
@@ -82,7 +79,7 @@ You can check the translation status of VoiceAssistant on Weblate (click the ima
 
 ## Credits
 
-| Name                                         | License                                                                | What it's used for      |
+| Name                                         | License                                                                | What it's used for     |
 |----------------------------------------------|------------------------------------------------------------------------|------------------------|
 | [Vosk](https://github.com/alphacep/vosk-api) | [Apache 2.0](https://github.com/alphacep/vosk-api/blob/master/COPYING) | Voice recognition      |
 | [11Zip](https://github.com/Sygmei/11Zip)     | [MIT](https://github.com/Sygmei/11Zip/blob/master/LICENSE)             | Unzipping voice models |
