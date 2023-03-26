@@ -153,8 +153,16 @@ void SpeechToText::resume()
 
 void SpeechToText::reset()
 {
-    if (m_plugin)
-        m_plugin->reset();
+    if (!m_plugin || !audio)
+        return;
+
+    audio->reset();
+
+    m_plugin->reset();
+    m_plugin->clear();
+
+    if (audio->state() == QAudio::StoppedState)
+        resume();
 }
 
 bool SpeechToText::setUpModel()
