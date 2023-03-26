@@ -269,10 +269,7 @@ void SpeechToText::setWakeWord(const QString &word)
 }
 QString SpeechToText::wakeWord()
 {
-    if (m_plugin)
-        return m_plugin->wakeWord();
-    else
-        return QLatin1String();
+    return m_plugin ? m_plugin->wakeWord() : QLatin1String();
 }
 
 QString SpeechToText::language()
@@ -330,7 +327,8 @@ void SpeechToText::setState(SpeechToText::State s)
         break;
     }
 
-    qDebug() << "[debug] SpeechToText state changed:" << s << ":" << m_errorString;
+    qDebug().noquote().nospace() << "[debug] SpeechToText state changed: " << s << ": "
+                                 << m_errorString;
 
     Q_EMIT stateChanged();
 }
