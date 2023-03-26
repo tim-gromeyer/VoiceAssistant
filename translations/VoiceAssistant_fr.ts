@@ -156,17 +156,17 @@ Langues des blagues&#xa0;: %2</translation>
         <location filename="../src/mainwindow.cpp" line="393"/>
         <location filename="../src/mainwindow.cpp" line="782"/>
         <source>Waiting for wake word</source>
-        <translation type="unfinished"></translation>
+        <translation>En attente d&apos;un mot de réveil</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="380"/>
         <source>Listening ...</source>
-        <translation type="unfinished"></translation>
+        <translation>À l&apos;écoute…</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="411"/>
         <source>Contains word?</source>
-        <translation type="unfinished"></translation>
+        <translation>Contient le mot&amp;nbsp;?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="421"/>
