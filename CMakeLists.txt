@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif()
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # Disable debug messages in release mode and improve performance
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -47,7 +47,7 @@ set(PROJECT_SOURCES
     plugins/bridge.h
     plugins/settingswidget.h
     speechtotext/speechtotextplugin.h
-    src/commanddialog.cpp src/commanddialog.h
+    src/commandwizard.cpp src/commandwizard.h
     src/global.h
     src/jokes.cpp src/jokes.h
     src/main.cpp
@@ -116,6 +116,10 @@ set_target_properties(voiceassistant PROPERTIES
     QT_ANDROID_EXTRA_LIBS "${ANDROID_EXTRA_LIBS}"
     QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_SOURCE_DIR}
 )
+
+if (EMSCRIPTEN)
+    target_link_options(voiceassistant PUBLIC "-sASYNCIFY -Os")
+endif()
 
 if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(voiceassistant)

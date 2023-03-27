@@ -5,7 +5,7 @@ set(TTS_PLUGINS ${TTS_PLUGINS})
 add_subdirectory(vosk-api)
 
 if (NOT TTS_PLUGINS)
-    message(FATAL_ERROR "No speech to text plugin found!")
+    message(WARNING "No speech to text plugin found!")
 endif()
 
 set(TTS_PLUGINS ${TTS_PLUGINS} PARENT_SCOPE)

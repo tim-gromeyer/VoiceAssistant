@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "commandwizard.h"
 #include "global.h"
 #include "jokes.h"
 #include "modeldownloader.h"
@@ -74,6 +75,7 @@ void MainWindow::Action::run(const QString &text) const
         say(responses.at(randomIndex));
     }
 
+#ifndef Q_OS_WASM
     if (!program.isEmpty()) {
         QProcess p(instance());
         p.setProgram(program);
@@ -88,6 +90,7 @@ void MainWindow::Action::run(const QString &text) const
 
         p.startDetached();
     }
+#endif
     if (!sound.isEmpty())
         instance()->playSound(sound);
 }
@@ -146,6 +149,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionHas_word, &QAction::triggered, this, &MainWindow::onHasWord);
     connect(ui->actionOpen_downloader, &QAction::triggered, this, &MainWindow::openModelDownloader);
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::openSettings);
+    connect(ui->actionAddCommand, &QAction::triggered, this, &MainWindow::openCommandWizard);
     connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
     connect(ui->volumeSlider, &QSlider::sliderMoved, this, qOverload<int>(&MainWindow::setVolume));
 
@@ -308,7 +312,8 @@ void MainWindow::setupTextToSpeech(const QString &engineName,
     engine->moveToThread(engineThread);
     engineThread->start();
     engine->setLocale(language);
-    for (const QVoice &voice : engine->availableVoices()) {
+    const auto availableVoices = engine->availableVoices();
+    for (const QVoice &voice : availableVoices) {
         if (voice.name() == voiceName)
             engine->setVoice(voice);
     }
@@ -533,6 +538,12 @@ void MainWindow::openSettings()
     QGuiApplication::restoreOverrideCursor();
     dia.exec();
 }
+
+void MainWindow::openCommandWizard()
+{
+    CommandWizard wizard(bridge, this);
+    wizard.exec();
+};
 
 void MainWindow::processText(const QString &text)
 {
@@ -801,6 +812,8 @@ QString MainWindow::ask(const QString &text)
 {
     if (instance()->m_muted)
         return {QLatin1String()};
+    else if (recognizer->state() != SpeechToText::Running)
+        return recognizer->errorString();
 
     sayAndWait(text);
 
@@ -814,7 +827,6 @@ QString MainWindow::ask(const QString &text)
 
     QEventLoop loop;
 
-    recognizer->reset();
     connect(recognizer, &SpeechToText::answerReady, &loop, [&loop](const QString &asw) {
         answer = asw;
     });
@@ -822,7 +834,9 @@ QString MainWindow::ask(const QString &text)
 
     if (instance()->m_muted)
         return {QLatin1String()};
+
     recognizer->ask();
+    recognizer->reset();
     instance()->ui->statusLabel->setText(tr("Waiting for answer..."));
     loop.exec();
     instance()->ui->statusLabel->setText(tr("Waiting for wake word"));
@@ -946,7 +960,10 @@ void MainWindow::restart()
 
     QStringList args = qApp->arguments();
     args.removeFirst();
+    // TODO: This doesn't work on webassembly
+#ifndef Q_OS_WASM
     QProcess::startDetached(qApp->applicationFilePath(), args);
+#endif
     qApp->quit();
 }
 

@@ -30,7 +30,7 @@ function(download_vosk_if_needed)
     file(DOWNLOAD "${VOSK_URL}" "${VOSK_ZIP}" STATUS VOSK_DOWNLOAD_STATUS)
     list(GET VOSK_DOWNLOAD_STATUS 0 VOSK_DOWNLOAD_ERROR)
     if(VOSK_DOWNLOAD_ERROR)
-        message(FATAL_ERROR "Failed to download vosk: ${VOSK_DOWNLOAD_ERROR}")
+        message(WARNING "Failed to download vosk: ${VOSK_DOWNLOAD_ERROR}")
     endif()
 
     file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/tempDir")

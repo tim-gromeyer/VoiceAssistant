@@ -138,11 +138,20 @@ void Jokes::fetchJokes()
     while (jokes.size() <= 2 && tries <= 5) {
         ++tries;
 
+        qDebug() << "Set url";
         static QUrl url(STR("https://v2.jokeapi.dev/joke/Any?safe-mode&lang=%1").arg(jokeLang));
+        qDebug() << "Make request";
         reply = manager->get(QNetworkRequest(url));
+        qDebug() << "Wait for answer";
 
-        while (reply->isRunning())
-            QCoreApplication::processEvents();
+        // FIXME: This crashes the app in WebAssembly
+        //        while (reply->isRunning())
+        //            QCoreApplication::processEvents();
+        QEventLoop loop;
+        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit, Qt::QueuedConnection);
+        loop.exec();
+
+        qDebug() << "Read data";
 
         if (reply->error() != QNetworkReply::NoError) {
             qCritical() << tr("Could not fetch joke: %1").arg(reply->errorString());
@@ -150,6 +159,7 @@ void Jokes::fetchJokes()
         }
 
         QByteArray data = reply->readAll();
+        qDebug() << "Parse json";
         Joke joke = parseJson(data);
         if (joke.error)
             continue;

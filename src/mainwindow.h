@@ -107,6 +107,7 @@ private Q_SLOTS:
 
     void openModelDownloader();
     void openSettings();
+    void openCommandWizard();
 
     // Setup
     static void setupTextToSpeech(const QString &engineName,

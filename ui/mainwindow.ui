@@ -143,6 +143,7 @@
     <property name="title">
      <string>&amp;Commands</string>
     </property>
+    <addaction name="actionAddCommand"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Models"/>
@@ -187,6 +188,11 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionAddCommand">
+   <property name="text">
+    <string>Add command</string>
    </property>
   </action>
  </widget>

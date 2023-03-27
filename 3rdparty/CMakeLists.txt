@@ -8,3 +8,7 @@ set(BUILD_SHARED_LIBS OFF)
 set(ELZIP_DECOMPRESS_ONLY ON)
 
 add_subdirectory(11Zip)
+
+if (EMSCRIPTEN)
+    target_compile_options(elzip PUBLIC "-pthread")
+endif()

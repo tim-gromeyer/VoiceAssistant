@@ -17,7 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 add_plugin(testPlugin)
 target_sources(testPlugin PUBLIC ../base.h ../bridge.h plugintest.cpp plugintest.h)
-target_link_libraries(testPlugin Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(testPlugin PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
 
 add_custom_command(TARGET testPlugin POST_BUILD
   COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:testPlugin> ${PLUGINS_DIR}

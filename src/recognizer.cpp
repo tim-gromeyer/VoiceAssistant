@@ -80,7 +80,7 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
         qApp->requestPermission(microphonePermission, this, &SpeechToText::setup);
         return;
     case Qt::PermissionStatus::Denied:
-        setState(State::NoMicrophone);
+        setState(PermissionMissing);
         return;
     case Qt::PermissionStatus::Granted:
         setup();
@@ -230,6 +230,12 @@ void SpeechToText::setup()
 {
     switch (m_state) {
     case Running:
+    case Paused:
+    case NoPluginFound:
+    case PluginError:
+        return;
+    case PermissionMissing:
+        //TODO: Show a dialog
         return;
     case IncompatibleFormat:
     case NoMicrophone:
@@ -249,8 +255,6 @@ void SpeechToText::setup()
 #endif
         break;
     }
-    default:
-        break;
     }
 }
 
