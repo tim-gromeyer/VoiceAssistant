@@ -462,12 +462,19 @@ void MainWindow::onHasWord()
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok, &dia);
 
     // Check if the stt plugin supports word lookups
-    auto *warningLabel
-        = new QLabel(tr("Warning: the current STT plugin does not support word lookups"), &dia);
+    auto *warningLabel = new QLabel(&dia);
     warningLabel->setStyleSheet(
         STR("background-color: rgb(255, 107, 0); color: black; border-bottom-left-radius: 5px; "
             "border-bottom-right-radius: 5px"));
-    warningLabel->setVisible(recognizer->device() && !recognizer->device()->hasLookupSupport());
+
+    if (recognizer->device() && !recognizer->device()->hasLookupSupport())
+        warningLabel->setText(tr("Warning: The current STT plugin does not support word lookups"));
+    if (recognizer->state() == SpeechToText::NoPluginFound)
+        warningLabel->setText(tr("Warning: No STT plugin found!"));
+    else if (recognizer->state() == SpeechToText::PluginError)
+        warningLabel->setText(tr("Warning: There is a error with the STT plugin."));
+    else
+        warningLabel->setVisible(false);
 
     warningLayout->addWidget(warningLabel);
     layout->addWidget(infoLabel);
@@ -477,7 +484,7 @@ void MainWindow::onHasWord()
     warningLayout->addLayout(layout);
     dia.setLayout(warningLayout);
 
-    connect(wordEdit, &QLineEdit::textChanged, wordEdit, [wordEdit, warningLabel](const QString &w) {
+    connect(wordEdit, &QLineEdit::textChanged, wordEdit, [wordEdit](const QString &w) {
         auto word = w.trimmed().toLower();
         if (word.isEmpty()) {
             wordEdit->setStyleSheet(QString());
