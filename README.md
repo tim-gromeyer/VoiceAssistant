@@ -39,11 +39,12 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 - [ ] iOS
 - [ ] WebAssembly
 
+Note: The Android build works and it starts but I can't load the speech to text plugin
+
 ## To-Do's
 
 - [ ] Full customizability
-- [ ] Cross-platform compatibility
-- [ ] Implement Whisper.cpp backend (this will add WebAssembly, iOS and ARM MacOS support)
+- [ ] Implement Whisper.cpp backend (this will add WebAssembly, iOS and M1 MacOS support)
 
 ## Customization
 
