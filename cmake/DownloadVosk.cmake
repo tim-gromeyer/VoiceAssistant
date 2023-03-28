@@ -2,7 +2,7 @@ include(Dirs)
 
 function(download_vosk_if_needed)
     # Set the URL for the ZIP file based on platform and architecture
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    if (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ANDROID)
         if (${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
             set(VOSK_URL "https://github.com/alphacep/vosk-api/releases/download/v0.3.45/vosk-linux-aarch64-0.3.45.zip")
         elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES "armv7l")
@@ -27,7 +27,7 @@ function(download_vosk_if_needed)
     message(STATUS "Downloading vosk from ${VOSK_URL}")
 
     # Download and extract the ZIP file
-    file(DOWNLOAD "${VOSK_URL}" "${VOSK_ZIP}" STATUS VOSK_DOWNLOAD_STATUS)
+    file(DOWNLOAD "${VOSK_URL}" "${VOSK_ZIP}" SHOW_PROGRESS STATUS VOSK_DOWNLOAD_STATUS)
     list(GET VOSK_DOWNLOAD_STATUS 0 VOSK_DOWNLOAD_ERROR)
     if(VOSK_DOWNLOAD_ERROR)
         message(WARNING "Failed to download vosk: ${VOSK_DOWNLOAD_ERROR}")

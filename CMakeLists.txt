@@ -131,6 +131,7 @@ include(GNUInstallDirs)
 install(TARGETS voiceassistant
     RUNTIME DESTINATION .
     BUNDLE DESTINATION . # Specify the bundle destination for MACOSX_BUNDLE
+    LIBRARY DESTINATION . # For Android
 )
 
 if(QT_VERSION GREATER_EQUAL 6.3.0)
