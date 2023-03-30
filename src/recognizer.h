@@ -55,6 +55,7 @@ public:
 
 public Q_SLOTS:
     void setup();
+    bool requestMicrophonePermission();
 
     void pause();
     void resume();

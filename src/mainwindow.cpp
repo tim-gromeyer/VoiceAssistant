@@ -128,9 +128,6 @@ MainWindow::MainWindow(QWidget *parent)
             Qt::QueuedConnection);
     if (recognizer->state() != SpeechToText::NotStarted)
         onSTTStateChanged();
-#if !NEED_MICROPHONE_PERMISSION
-    recognizer->setup();
-#endif
 
     // Set up text to speech
     settings->beginGroup(STR("TextToSpeech"));
@@ -182,6 +179,9 @@ MainWindow::MainWindow(QWidget *parent)
     loadPlugins();
 
     QTimer::singleShot(3s, jokes, &Jokes::setup);
+
+    if (recognizer->requestMicrophonePermission())
+        recognizer->setup();
 
     //        auto *slider = new SliderWithText(this);
     //        slider->setOrientation(Qt::Horizontal);

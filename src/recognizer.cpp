@@ -72,21 +72,6 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
 
     connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
     connect(m_plugin, &SpeechToTextPlugin::stateChanged, this, &SpeechToText::pluginStateChanged);
-
-#if NEED_MICROPHONE_PERMISSION
-    QMicrophonePermission microphonePermission;
-    switch (qApp->checkPermission(microphonePermission)) {
-    case Qt::PermissionStatus::Undetermined:
-        qApp->requestPermission(microphonePermission, this, &SpeechToText::setup);
-        return;
-    case Qt::PermissionStatus::Denied:
-        setState(PermissionMissing);
-        return;
-    case Qt::PermissionStatus::Granted:
-        setup();
-        break; // Proceed
-    }
-#endif
 }
 
 void SpeechToText::onAnswerReady(const QString &answer)
@@ -256,6 +241,34 @@ void SpeechToText::setup()
         break;
     }
     }
+}
+
+bool SpeechToText::requestMicrophonePermission()
+{
+#if NEED_MICROPHONE_PERMISSION
+    static bool hasPermission = false;
+    hasPermission = false;
+
+    QMicrophonePermission microphonePermission;
+    switch (qApp->checkPermission(microphonePermission)) {
+    case Qt::PermissionStatus::Undetermined: {
+        QEventLoop loop(this);
+        qApp->requestPermission(microphonePermission, [&loop](const QPermission &permission) {
+            hasPermission = (permission.status() == Qt::PermissionStatus::Granted);
+            loop.quit();
+        });
+        loop.exec();
+        return hasPermission;
+    }
+    case Qt::PermissionStatus::Denied:
+        setState(PermissionMissing);
+        return false;
+    case Qt::PermissionStatus::Granted:
+        return true;
+    }
+#endif
+
+    return true;
 }
 
 bool SpeechToText::hasWord(const QString &word)
