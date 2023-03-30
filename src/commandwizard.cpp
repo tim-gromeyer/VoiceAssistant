@@ -64,7 +64,6 @@ void AddCommandPage::addCommand()
 {
     listenButton->setDisabled(true);
     QString text = bridge->ask(QLatin1String());
-    qDebug() << text;
     commandsList->addItem(text);
     listenButton->setDisabled(false);
 }

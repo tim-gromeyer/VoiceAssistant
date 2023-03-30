@@ -112,6 +112,23 @@ MainWindow::MainWindow(QWidget *parent)
     // Set instance for instance()
     _instance = this;
 
+    connect(bridge, &PluginBridge::_say, this, &MainWindow::say, Qt::QueuedConnection);
+    connect(bridge,
+            &PluginBridge::_sayAndWait,
+            this,
+            &MainWindow::bridgeSayAndWait,
+            Qt::QueuedConnection);
+    connect(bridge, &PluginBridge::_ask, this, &MainWindow::bridgeAsk, Qt::QueuedConnection);
+    connect(
+        bridge,
+        &PluginBridge::useWidget,
+        ui->content,
+        [this](QWidget *w) {
+            ui->content->takeWidget();
+            ui->content->setWidget(w);
+        },
+        Qt::QueuedConnection);
+
     // Set audio output device
 #ifdef QT6
     audioOutput = new QAudioOutput(this);
@@ -782,26 +799,6 @@ void MainWindow::loadPlugins()
         qInfo() << "Loaded plugin:" << loader.fileName();
         plugins.append(plugin);
     }
-
-    if (plugins.isEmpty())
-        return;
-
-    connect(bridge, &PluginBridge::_say, this, &MainWindow::say, Qt::QueuedConnection);
-    connect(bridge,
-            &PluginBridge::_sayAndWait,
-            this,
-            &MainWindow::bridgeSayAndWait,
-            Qt::QueuedConnection);
-    connect(bridge, &PluginBridge::_ask, this, &MainWindow::bridgeAsk, Qt::QueuedConnection);
-    connect(
-        bridge,
-        &PluginBridge::useWidget,
-        ui->content,
-        [this](QWidget *w) {
-            ui->content->takeWidget();
-            ui->content->setWidget(w);
-        },
-        Qt::QueuedConnection);
 }
 
 void MainWindow::loadSettings() {}
@@ -1034,9 +1031,6 @@ MainWindow::~MainWindow()
     delete timeTimer;
 }
 
-/* TODO: Let user add commands via GUI, 
- * see: https://doc.qt.io/qt-6/qwizardpage.html,
- *      https://doc.qt.io/qt-6/qwizard.html
- *      https://doc.qt.io/qt-6/qtwidgets-dialogs-classwizard-example.html */
+// TODO: Let user add commands via GUI (implement the backend, the GUI is already there)
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example

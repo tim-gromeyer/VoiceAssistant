@@ -115,7 +115,7 @@ void SpeechToText::pause()
 
 void SpeechToText::resume()
 {
-    if (!audio)
+    if (!audio || m_state == PermissionMissing)
         return;
 
     m_muted = false;

@@ -47,6 +47,11 @@ Jokes::Jokes(QObject *parent)
 
 void Jokes::setup()
 {
+#ifdef Q_OS_WASM
+    // BUG: Temporary solution for wasm
+    return;
+#endif
+
     qDebug() << "Jokes: setup";
     static const QStringList jokeLangs(
         {STR("cs"), STR("de"), STR("en"), STR("es"), STR("fr"), STR("pt")});
