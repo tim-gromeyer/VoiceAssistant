@@ -220,7 +220,6 @@ void SpeechToText::setup()
     case PluginError:
         return;
     case PermissionMissing:
-        //TODO: Show a dialog
         return;
     case IncompatibleFormat:
     case NoMicrophone:
@@ -251,22 +250,23 @@ bool SpeechToText::requestMicrophonePermission()
 
     QMicrophonePermission microphonePermission;
     switch (qApp->checkPermission(microphonePermission)) {
+    case Qt::PermissionStatus::Denied:
     case Qt::PermissionStatus::Undetermined: {
         QEventLoop loop(this);
-        qApp->requestPermission(microphonePermission, [&loop](const QPermission &permission) {
+        qApp->requestPermission(microphonePermission, [this, &loop](const QPermission &permission) {
             hasPermission = (permission.status() == Qt::PermissionStatus::Granted);
+            if (!hasPermission)
+                setState(PermissionMissing);
             loop.quit();
         });
         loop.exec();
         return hasPermission;
     }
-    case Qt::PermissionStatus::Denied:
-        setState(PermissionMissing);
-        return false;
     case Qt::PermissionStatus::Granted:
         return true;
     }
 #endif
+    Q_UNUSED(this); // For the "`x` can be made static" warning
 
     return true;
 }

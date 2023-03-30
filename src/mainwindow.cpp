@@ -180,8 +180,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     QTimer::singleShot(3s, jokes, &Jokes::setup);
 
-    if (recognizer->requestMicrophonePermission())
-        recognizer->setup();
+    // Use this otherwise we have a black screen on wasm
+    QMetaObject::invokeMethod(
+        this,
+        [this] {
+            if (recognizer->requestMicrophonePermission())
+                recognizer->setup();
+        },
+        Qt::QueuedConnection);
 
     //        auto *slider = new SliderWithText(this);
     //        slider->setOrientation(Qt::Horizontal);
@@ -380,6 +386,22 @@ void MainWindow::onSTTStateChanged()
     case SpeechToText::Running:
         ui->statusLabel->setText(tr("Waiting for wake word"));
         break;
+    case SpeechToText::PermissionMissing: {
+        QMessageBox msgBox(this);
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setWindowTitle(tr("Microphone Access Denied"));
+        msgBox.setText(tr("Access to the microphone has been denied. This feature requires "
+                          "microphone access to function properly."));
+        msgBox.setInformativeText(tr(
+            "Please grant microphone access to enable speech-to-text functionality and allow the "
+            "app to convert your spoken words into text. Your audio data will only be used for "
+            "this purpose and will be handled securely in accordance with our privacy policy."));
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+
+        // Show dialog and wait for user response
+        msgBox.exec();
+    }
     case SpeechToText::PluginError:
         if (!recognizer->device())
             return;
