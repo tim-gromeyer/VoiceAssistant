@@ -123,10 +123,10 @@ ActionPage::ActionPage(QWidget *parent)
     randomResponseButton->setText(tr("Select"));
     programmLabel->setText(tr("Execute program"));
     selectProgrammButton->setText(QStringLiteral("..."));
-    argumentLabel->setText(tr("Programm arguments"));
+    argumentLabel->setText(tr("Program arguments"));
     argumentButton->setText(tr("Select"));
     playLabel->setText(tr("Play a sound"));
-    soundEdit->setPlaceholderText(tr("URL's are also supported"));
+    soundEdit->setPlaceholderText(tr("URLs are also supported"));
 }
 
 CommandWizard::CommandWizard(PluginBridge *b, QWidget *parent)

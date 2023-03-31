@@ -354,7 +354,7 @@ void ModelDownloader::downloadFinished()
         });
 
         if (senderButton)
-            senderButton->setText(tr("Unziping"));
+            senderButton->setText(tr("Unzipping"));
 
         QFutureWatcher<void> watcher;
         QEventLoop loop;

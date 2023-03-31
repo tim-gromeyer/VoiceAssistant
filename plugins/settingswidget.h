@@ -32,7 +32,7 @@ public:
         if (m_keywordsInitialized)
             return m_keywords;
 
-        // find common subwidgets
+        // find common sub-widgets
         for (const QLabel *label : findChildren<QLabel *>())
             m_keywords << label->text();
         for (const QCheckBox *checkbox : findChildren<QCheckBox *>())

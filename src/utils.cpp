@@ -56,7 +56,7 @@ QString makeSecoundsReadable(qint64 secondsRemaining)
     } else if (secondsRemaining < 3600) {
         qint64 minutes = secondsRemaining / 60;
         qint64 seconds = secondsRemaining % 60;
-        timeString = QCoreApplication::translate("time", "%1 minute(s), %2 secounds")
+        timeString = QCoreApplication::translate("time", "%1 minute(s), %2 seconds")
                          .arg(QString::number(minutes), QString::number(seconds));
     } else if (secondsRemaining < 86400) {
         qint64 hours = secondsRemaining / 3600;

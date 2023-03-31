@@ -272,7 +272,7 @@ void MainWindow::onHelpAbout()
            "2.0</a>.</p>\n"
            "<p>This project also uses&nbsp;<a href=\"https://github.com/Sygmei/11Zip\" "
            "target=\"_blank\" rel=\"noopener\">11Zip</a>&nbsp;to unpack the downloaded voice "
-           "modells.</p>")
+           "models.</p>")
             .arg(STR(APP_VERSION), qVersion()));
 }
 
@@ -328,8 +328,14 @@ void MainWindow::closeEvent(QCloseEvent *e)
 {
     auto ret = QMessageBox::question(this, tr("Quit?"), tr("Do you really want to quit?"));
 
-    if (ret != QMessageBox::Yes)
+    if (ret != QMessageBox::Yes) {
         e->ignore();
+        return;
+    }
+
+    saveSettings();
+    e->accept();
+    QMainWindow::closeEvent(e);
 }
 
 void MainWindow::setupTextToSpeech(const QString &engineName,
@@ -1039,6 +1045,6 @@ MainWindow::~MainWindow()
     delete timeTimer;
 }
 
-// TODO: Let user add commands via GUI (implement the backend, the GUI is already there)
+// TODO: Let user add commands via GUI (implement the back-end, the GUI is already there)
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example
