@@ -313,7 +313,15 @@ void MainWindow::toggleMute()
 
 void MainWindow::toggleVisibilty()
 {
-    setVisible(!isVisible());
+    static QPoint position;
+
+    if (isVisible()) {
+        position = pos();
+        hide();
+    } else {
+        move(position);
+        show();
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)
@@ -349,7 +357,7 @@ void MainWindow::setupTextToSpeech(const QString &engineName,
 void MainWindow::setupTrayIcon()
 {
     trayIcon.reset(new QSystemTrayIcon(QGuiApplication::windowIcon(), this));
-    connect(trayIcon.get(), &QSystemTrayIcon::activated, this, [this] { setVisible(!isVisible()); });
+    connect(trayIcon.get(), &QSystemTrayIcon::activated, this, &MainWindow::toggleVisibilty);
 
     muteAction = new QAction(this);
     muteAction->setCheckable(true);
