@@ -32,9 +32,6 @@ add_library(Vosk INTERFACE)
 target_link_libraries(Vosk INTERFACE "${VOSK_LIBRARY}")
 target_link_directories(Vosk INTERFACE "${VOSK_DIR}")
 target_include_directories(Vosk INTERFACE "${VOSK_DIR}")
-set_target_properties(Vosk PROPERTIES
-    IMPORTED_NO_SONAME true
-)
 
 if (CMAKE_CROSSCOMPILING)
     set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
