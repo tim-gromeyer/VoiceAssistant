@@ -113,7 +113,7 @@ set_target_properties(voiceassistant PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
-    QT_ANDROID_EXTRA_LIBS "${ANDROID_EXTRA_LIBS}"
+    QT_ANDROID_EXTRA_LIBS "${CMAKE_BINARY_DIR}/plugins/libplugins__voskPlugin_arm64-v8a.so;${CMAKE_BINARY_DIR}/vosk/libvosk.so;/home/tim/qtprojegt/build-VoiceAssistant-Android_Qt_6_5_0_Clang_arm64_v8a-Debug/plugins/libatomic.so"
     QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_PACKAGE_SOURCE_DIR}
 )
 

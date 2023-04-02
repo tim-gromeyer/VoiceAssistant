@@ -61,7 +61,7 @@ void Jokes::setup()
                                uiLangs.end(),
                                QString(QLatin1String()),
                                [](const QString &a, const QString &b) {
-                                   const QString lang = b.right(2);
+                                   const QString lang = b.mid(0, 2);
                                    return jokeLangs.contains(lang) ? lang : a;
                                });
 

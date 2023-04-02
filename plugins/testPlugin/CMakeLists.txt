@@ -15,7 +15,7 @@ include(Plugins)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-add_plugin(testPlugin)
+add_plugin(testPlugin CLASS_NAME PluginTest)
 target_sources(testPlugin PUBLIC ../base.h ../bridge.h plugintest.cpp plugintest.h)
 target_link_libraries(testPlugin PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
 

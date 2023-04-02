@@ -35,11 +35,7 @@ else()
 
         if(QT_ADD_PLUGIN_CLASS_NAME)
             target_compile_definitions(${target} PRIVATE QT_PLUGIN_CLASS_NAME=${QT_ADD_PLUGIN_CLASS_NAME})
-            set_property(${target} PROPERTY QT_PLUGIN_CLASS_NAME=${QT_ADD_PLUGIN_CLASS_NAME})
-        endif()
-
-        if(QT_ADD_PLUGIN_OUTPUT_TARGETS)
-            set(${QT_ADD_PLUGIN_OUTPUT_TARGETS} "${target};Qt5::Core;Qt5::Gui;Qt5::Widgets" PARENT_SCOPE)
+            set_target_properties(${target} PROPERTIES QT_PLUGIN_CLASS_NAME ${QT_ADD_PLUGIN_CLASS_NAME})
         endif()
     endfunction()
 endif()
