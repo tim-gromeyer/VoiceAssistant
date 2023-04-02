@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "plugins/base.h"
+#include "utils.h"
 
 #include <QMainWindow>
 
@@ -30,29 +31,11 @@ public:
 
     static MainWindow *instance();
 
-    struct Action
-    {
-        QString funcName;
-        QStringList responses;
-
-        // Execute program
-        QString program;
-        QStringList args;
-
-        // Commands it reacts to
-        QStringList commands;
-
-        // A sound to play
-        QString sound;
-
-        void run(const QString &) const;
-    };
-
     // Say something and wait to be done
     static void sayAndWait(const QString &);
 
     // Add a command
-    static void addCommand(const Action &);
+    static void addCommand(const actions::Action &);
 
 Q_SIGNALS:
     void muted();
@@ -151,7 +134,7 @@ private:
 
     QSettings *settings = nullptr;
 
-    QList<MainWindow::Action> commands;
+    QList<actions::Action> commands;
 };
 
 #endif // MAINWINDOW_H

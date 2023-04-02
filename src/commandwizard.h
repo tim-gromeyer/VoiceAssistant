@@ -1,6 +1,8 @@
 #ifndef COMMANDWIZARD_H
 #define COMMANDWIZARD_H
 
+#include "utils.h"
+
 #include <QWizard>
 
 class PluginBridge;
@@ -60,7 +62,18 @@ class ActionPage : public QWizardPage
 public:
     explicit ActionPage(QWidget *parent = nullptr);
 
+    actions::Action getAction(bool *ok);
+
+private Q_SLOTS:
+    void selectAppPath();
+    void selectAppArgs();
+    bool checkAppPath(const QString &text);
+
+    void selectRandomResponses();
+
 private:
+    actions::Action action;
+
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QFormLayout *formLayout;

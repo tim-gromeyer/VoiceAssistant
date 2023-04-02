@@ -43,6 +43,7 @@
 
 using namespace std::chrono_literals;
 using namespace utils::literals;
+using actions::Action;
 
 SpeechToText *recognizer = nullptr;
 QTextToSpeech *engine = nullptr;
@@ -59,25 +60,27 @@ MainWindow *_instance = nullptr;
 
 float volume = 1.0;
 
-void MainWindow::Action::run(const QString &text) const
+void actions::Action::run(const QString &text) const
 {
     if (!funcName.isEmpty()) {
         if (MainWindow::staticMetaObject.indexOfMethod(QString(funcName + L1("()")).toUtf8()) == -1)
-            QMetaObject::invokeMethod(instance(),
+            QMetaObject::invokeMethod((QObject *) MainWindow::instance(),
                                       funcName.toUtf8(),
                                       Qt::QueuedConnection,
                                       Q_ARG(QString, text));
         else
-            QMetaObject::invokeMethod(instance(), funcName.toUtf8(), Qt::QueuedConnection);
+            QMetaObject::invokeMethod((QObject *) MainWindow::instance(),
+                                      funcName.toUtf8(),
+                                      Qt::QueuedConnection);
     }
     if (!responses.isEmpty()) {
         int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
-        say(responses.at(randomIndex));
+        MainWindow::say(responses.at(randomIndex));
     }
 
 #ifndef Q_OS_WASM
     if (!program.isEmpty()) {
-        QProcess p(instance());
+        QProcess p((QObject *) MainWindow::instance());
         p.setProgram(program);
 
         auto index = args.indexOf(L1("${TEXT}"));
@@ -92,7 +95,7 @@ void MainWindow::Action::run(const QString &text) const
     }
 #endif
     if (!sound.isEmpty())
-        instance()->playSound(sound);
+        MainWindow::instance()->playSound(sound);
 }
 
 MainWindow::MainWindow(QWidget *parent)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QStringList>
 
 namespace utils {
 inline namespace numbers {
@@ -23,3 +24,23 @@ namespace download {
 QString makeSecoundsReadable(qint64);
 QString makeDownloadSpeedReadable(qint64);
 } // namespace download
+
+namespace actions {
+struct Action
+{
+    QString funcName;
+    QStringList responses;
+
+    // Execute program
+    QString program;
+    QStringList args;
+
+    // Commands it reacts to
+    QStringList commands;
+
+    // A sound to play
+    QString sound;
+
+    void run(const QString &) const;
+};
+} // namespace actions

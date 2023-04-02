@@ -2,6 +2,7 @@
 #include "plugins/bridge.h"
 
 #include <QCommandLinkButton>
+#include <QFileDialog>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
@@ -127,7 +128,42 @@ ActionPage::ActionPage(QWidget *parent)
     argumentButton->setText(tr("Select"));
     playLabel->setText(tr("Play a sound"));
     soundEdit->setPlaceholderText(tr("URLs are also supported"));
+
+    connect(programEdit, &QLineEdit::textChanged, this, &ActionPage::checkAppPath);
+    connect(selectProgrammButton, &QToolButton::clicked, this, &ActionPage::selectAppPath);
 }
+
+bool ActionPage::checkAppPath(const QString &text)
+{
+    if (QFile::exists(text) || text.isEmpty()) {
+        programEdit->setStyleSheet(QStringLiteral("color: green"));
+        return true;
+    } else {
+        programEdit->setStyleSheet(QStringLiteral("color: red"));
+        return false;
+    }
+}
+
+void ActionPage::selectAppPath()
+{
+    QFileDialog dia(this, tr("Select executable"));
+    dia.setAcceptMode(QFileDialog::AcceptOpen);
+    dia.setMimeTypeFilters({QStringLiteral("application/x-executable")});
+#ifdef Q_OS_LINUX
+    // https://github.com/KDAB/hotspot/issues/286
+    dia.setOption(QFileDialog::DontUseNativeDialog);
+#endif
+    if (!dia.exec())
+        return;
+
+    auto files = dia.selectedFiles();
+    if (files.isEmpty())
+        return;
+
+    programEdit->setText(files.at(0));
+}
+void ActionPage::selectAppArgs() {}
+void ActionPage::selectRandomResponses() {}
 
 CommandWizard::CommandWizard(PluginBridge *b, QWidget *parent)
     : QWizard(parent)
