@@ -123,6 +123,7 @@
     </property>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
+    <addaction name="actionCloseWindow"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
@@ -193,6 +194,11 @@
   <action name="actionAddCommand">
    <property name="text">
     <string>Add command</string>
+   </property>
+  </action>
+  <action name="actionCloseWindow">
+   <property name="text">
+    <string>Close window</string>
    </property>
   </action>
  </widget>

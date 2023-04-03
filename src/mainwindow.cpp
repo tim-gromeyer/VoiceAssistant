@@ -169,6 +169,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAddCommand, &QAction::triggered, this, &MainWindow::openCommandWizard);
     connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
     connect(ui->volumeSlider, &QSlider::sliderMoved, this, qOverload<int>(&MainWindow::setVolume));
+    connect(ui->actionCloseWindow, &QAction::triggered, this, &MainWindow::toggleVisibilty);
 
     // Set up time timer
     timeTimer->setInterval(1s);
@@ -209,12 +210,8 @@ MainWindow::MainWindow(QWidget *parent)
         },
         Qt::QueuedConnection);
 
-    //        auto *slider = new SliderWithText(this);
-    //        slider->setOrientation(Qt::Horizontal);
-    //        slider->setRange(0, 10);
-    //        auto *a = new QWidgetAction(this);
-    //        a->setDefaultWidget(slider);
-    //        ui->menuCommands->addAction(a);
+    ui->actionCloseWindow->setShortcuts(QKeySequence::Close);
+    ui->action_Quit->setShortcuts(QKeySequence::Quit);
 }
 
 void MainWindow::addCommand(const Action &a)
@@ -324,6 +321,7 @@ void MainWindow::toggleVisibilty()
     } else {
         move(position);
         show();
+        ui->content->setFocus();
     }
 }
 
