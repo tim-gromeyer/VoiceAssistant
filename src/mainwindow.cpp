@@ -106,6 +106,7 @@ MainWindow::MainWindow(QWidget *parent)
     , jokes(new Jokes(this))
     , bridge(new PluginBridge(this))
     , settings(new QSettings(this))
+    , trayIcon(new QSystemTrayIcon(qApp->windowIcon(), this))
 {
     // Set up UI
     ui->setupUi(this);
@@ -157,8 +158,8 @@ MainWindow::MainWindow(QWidget *parent)
                                     settings->value(STR("Engine"), QLatin1String()).toString(),
                                     settings->value(STR("Language"), QLocale::system()).toLocale(),
                                     settings->value(STR("Voice"), QLatin1String()).toString(),
-                                    settings->value(STR("Pitch"), 0.0F).toFloat(),
-                                    settings->value(STR("Rate"), 0.0F).toFloat());
+                                    settings->value(STR("Pitch"), -1.0F).toFloat(),
+                                    settings->value(STR("Rate"), -1.0F).toFloat());
     settings->endGroup();
 
     // Connect the actions
@@ -355,16 +356,17 @@ void MainWindow::setupTextToSpeech(const QString &engineName,
         if (voice.name() == voiceName)
             engine->setVoice(voice);
     }
-    engine->setPitch(pitch);
-    engine->setRate(rate);
+    if (pitch != -1.0F)
+        engine->setPitch(pitch);
+    if (rate != -1.0F)
+        engine->setRate(rate);
     connect(engine, &QTextToSpeech::stateChanged, _instance, &MainWindow::onTTSStateChanged);
     qDebug() << "[debug] TTS: Setup finished";
 }
 
 void MainWindow::setupTrayIcon()
 {
-    trayIcon.reset(new QSystemTrayIcon(QGuiApplication::windowIcon(), this));
-    connect(trayIcon.get(), &QSystemTrayIcon::activated, this, &MainWindow::toggleVisibilty);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::toggleVisibilty);
 
     muteAction = new QAction(this);
     muteAction->setCheckable(true);

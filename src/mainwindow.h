@@ -15,10 +15,10 @@ class PluginBridge;
 class QAudioOutput;
 class QMediaPlayer;
 class QPluginLoader;
+class QSettings;
 class QSystemTrayIcon;
 class QTextToSpeech;
 class QTimer;
-class QSettings;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -130,7 +130,7 @@ private:
 
     PluginBridge *bridge;
 
-    QSharedPointer<QSystemTrayIcon> trayIcon;
+    QSystemTrayIcon *trayIcon;
 
     QSettings *settings = nullptr;
 
