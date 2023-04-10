@@ -1,27 +1,27 @@
 [
     {
-        "funcName": "sayTime",
         "commands": [
             "wie spät",
             "aktuelle uhrzeit",
             "wie viel uhr",
             "wieviel uhr"
-        ]
+        ],
+        "funcName": "sayTime"
     },
     {
-        "funcName": "stop",
         "commands": [
             "shop",
             "stock",
             "stopp"
-        ]
+        ],
+        "funcName": "stop"
     },
     {
-        "funcName": "say",
         "commands": [
             "sprich mir nach",
             "wiederhole mich"
-        ]
+        ],
+        "funcName": "say"
     },
     {
         "commands": [
