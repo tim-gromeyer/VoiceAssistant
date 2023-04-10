@@ -2,9 +2,38 @@
 
 #include <QApplication>
 #include <QCommandLineParser>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonParseError>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
+
+void reformatJsonFile(const QString &fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open JSON file: " << fileName;
+        return;
+    }
+
+    QJsonParseError error{};
+
+    QByteArray jsonData = file.readAll();
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &error);
+
+    file.close();
+
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "Failed to parse JSON file: " << error.errorString();
+        return;
+    }
+
+    // write reformatted JSON data back to file
+    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+    file.write(jsonDoc.toJson(QJsonDocument::Indented));
+    file.close();
+}
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +51,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if (QT_FEATURE_static == 1)
-    // FIXME: multiple definition of `PluginBridge::metaObject()`. It works in the tests because of -DNO_BRIDGE
+//     FIXME: multiple definition of `PluginBridge::metaObject()`. It works in the tests because of -DNO_BRIDGE
 //    Q_IMPORT_PLUGIN(PluginTest);
 //    Q_IMPORT_PLUGIN(VoskPlugin);
 #endif
@@ -47,13 +76,25 @@ int main(int argc, char *argv[])
         QApplication::installTranslator(&translator);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(
-        translator.translate("cmd",
-                             "Resource-efficient voice assistant that is still in the early stages "
-                             "of development but already functional."));
+    parser.setApplicationDescription(QCoreApplication::translate(
+        "cmd",
+        "Resource-efficient voice assistant that is still in the early stages "
+        "of development but already functional."));
     parser.addHelpOption();
     parser.addVersionOption();
+
+    QCommandLineOption reformatOption(QStringLiteral("reformat"),
+                                      QCoreApplication::translate("cmd", "Reformat JSON file"),
+                                      QCoreApplication::translate("cmd", "file"));
+    parser.addOption(reformatOption);
+
     parser.process(a);
+
+    if (parser.isSet(reformatOption)) {
+        QString fileName = parser.value(reformatOption);
+        reformatJsonFile(fileName);
+        return 0;
+    }
 
     MainWindow w;
     w.show();
