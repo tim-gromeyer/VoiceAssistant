@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="87"/>
         <source>Listen</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuhöhren</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation>&amp;amp;Datei</translation>
+        <translation>&amp;Datei</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="131"/>
@@ -167,7 +167,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading …</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden …</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="138"/>
@@ -292,7 +292,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="467"/>
         <source>Listening …</source>
-        <translation type="unfinished"></translation>
+        <translation>Zuhöhren …</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="498"/>
@@ -461,7 +461,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../src/modeldownloader.cpp" line="121"/>
         <source>Search …</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen …</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
@@ -531,7 +531,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
         <source>Search …</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchen …</translation>
     </message>
 </context>
 <context>
