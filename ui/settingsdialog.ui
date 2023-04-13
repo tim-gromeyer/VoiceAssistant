@@ -19,7 +19,7 @@
      <item row="0" column="0">
       <widget class="QLineEdit" name="lineEdit">
        <property name="placeholderText">
-        <string>Search ...</string>
+        <string>Search …</string>
        </property>
        <property name="clearButtonEnabled">
         <bool>true</bool>

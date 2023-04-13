@@ -64,7 +64,6 @@
     <name>AddCommandPage</name>
     <message>
         <location filename="../src/commandwizard.cpp" line="84"/>
-        <location filename="../src/commandwizard.cpp" line="87"/>
         <source>Add command</source>
         <translation>Befehl hinzufügen</translation>
     </message>
@@ -72,6 +71,11 @@
         <location filename="../src/commandwizard.cpp" line="85"/>
         <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
         <translation>Tippen Sie auf &quot;Zuhören&quot;, um die Spracherkennung zu aktivieren. Sprechen Sie natürlich und die App wandelt Ihre gesprochenen Worte in Text um.</translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="87"/>
+        <source>Listen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -111,11 +115,6 @@ Sprachen der Witze: %2</translation>
 </context>
 <context>
     <name>MainWindow</name>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="23"/>
-        <source>Loading ...</source>
-        <translation>Wird geladen …</translation>
-    </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
         <location filename="../src/mainwindow.cpp" line="294"/>
@@ -164,6 +163,11 @@ Sprachen der Witze: %2</translation>
         <location filename="../ui/mainwindow.ui" line="14"/>
         <source>VoiceAssistant - Pre alpha!</source>
         <translation>VoiceAssistant - Vorabversion!</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="23"/>
+        <source>Loading …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="138"/>
@@ -287,8 +291,8 @@ Sprachen der Witze: %2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="467"/>
-        <source>Listening ...</source>
-        <translation>Zuhören ...</translation>
+        <source>Listening …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="498"/>
@@ -407,11 +411,6 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="121"/>
-        <source>Search ...</source>
-        <translation>Suche ...</translation>
-    </message>
-    <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Language</source>
         <translation>Sprache</translation>
@@ -458,6 +457,11 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
         <translation>Wird heruntergeladen …</translation>
+    </message>
+    <message>
+        <location filename="../src/modeldownloader.cpp" line="121"/>
+        <source>Search …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
@@ -526,8 +530,8 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
-        <source>Search ...</source>
-        <translation>Suche ...</translation>
+        <source>Search …</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,9 @@
 ﻿#include "commandwizard.h"
+#include "listwidget.h"
+#include "mainwindow.h"
 #include "plugins/bridge.h"
 
+#include <QAction>
 #include <QCommandLinkButton>
 #include <QFileDialog>
 #include <QFormLayout>
@@ -15,6 +18,26 @@
 #include <QVBoxLayout>
 
 #include <QDebug>
+
+using namespace CommandWizardNS;
+
+ListWidgetPage::ListWidgetPage(QWidget *parent)
+    : QWizardPage(parent)
+    , listWidget(new ListWidget)
+{
+    auto *layout = new QHBoxLayout(this);
+    layout->addWidget(listWidget);
+};
+
+void ListWidgetPage::add(const QString &item)
+{
+    listWidget->add(item);
+}
+
+QStringList ListWidgetPage::items()
+{
+    return listWidget->allItems();
+}
 
 WelcomePage::WelcomePage(QWidget *parent)
     : QWizardPage(parent)
@@ -43,7 +66,7 @@ AddCommandPage::AddCommandPage(PluginBridge *b, QWidget *parent)
     , horizontalLayout(new QHBoxLayout())
     , listenButton(new QPushButton(this))
     , commandLabel(new QLabel(this))
-    , commandsList(new QListWidget(this))
+    , commandsList(new ListWidget(this))
 {
     horizontalLayout->addWidget(commandLabel);
 
@@ -53,24 +76,45 @@ AddCommandPage::AddCommandPage(PluginBridge *b, QWidget *parent)
 
     verticalLayout->addWidget(commandsList);
 
+    registerField(QStringLiteral("commands"), commandsList);
+}
+
+void AddCommandPage::initializePage()
+{
     setTitle(tr("Add command"));
     setSubTitle(tr("Tap 'Listen' to turn on voice recognition. Speak naturally and the app will "
                    "convert your spoken words into text."));
-    listenButton->setText(tr("Add command"));
+    listenButton->setText(tr("Listen"));
 
-    connect(listenButton, &QPushButton::clicked, this, &AddCommandPage::addCommand);
+    connect(listenButton,
+            &QPushButton::clicked,
+            this,
+            &AddCommandPage::addCommand,
+            Qt::UniqueConnection);
 }
 
 void AddCommandPage::addCommand()
 {
     listenButton->setDisabled(true);
+    Q_EMIT completeChanged();
+
     QString text = bridge->ask(QLatin1String());
-    commandsList->addItem(text);
+    if (!text.isEmpty())
+        commandsList->add(text);
+
     listenButton->setDisabled(false);
+
+    Q_EMIT completeChanged();
 }
 
-ActionPage::ActionPage(QWidget *parent)
+bool AddCommandPage::isComplete() const
+{
+    return !commandsList->isEmpty() && listenButton->isEnabled();
+}
+
+ActionPage::ActionPage(ListWidgetPage *page, QWidget *parent)
     : QWizardPage(parent)
+    , listWidgetPage(page)
     , verticalLayout(new QVBoxLayout(this))
     , groupBox(new QGroupBox(this))
     , formLayout(new QFormLayout(groupBox))
@@ -129,8 +173,24 @@ ActionPage::ActionPage(QWidget *parent)
     playLabel->setText(tr("Play a sound"));
     soundEdit->setPlaceholderText(tr("URLs are also supported"));
 
+    connect(functionEdit, &QLineEdit::textEdited, this, &ActionPage::checkFunctionExists);
     connect(programEdit, &QLineEdit::textChanged, this, &ActionPage::checkAppPath);
     connect(selectProgrammButton, &QToolButton::clicked, this, &ActionPage::selectAppPath);
+}
+
+bool ActionPage::checkFunctionExists(const QString &funcName)
+{
+    QMetaObject object = MainWindow::staticMetaObject;
+
+    int index = object.indexOfMethod(QString(funcName + "()").toUtf8());
+
+    if (index == -1) {
+        functionEdit->setStyleSheet(QStringLiteral("color: red"));
+        return false;
+    } else {
+        functionEdit->setStyleSheet(QStringLiteral("color: green"));
+        return true;
+    }
 }
 
 bool ActionPage::checkAppPath(const QString &text)
@@ -168,11 +228,21 @@ void ActionPage::selectRandomResponses() {}
 CommandWizard::CommandWizard(PluginBridge *b, QWidget *parent)
     : QWizard(parent)
     , bridge(b)
+    , listWidgetPage(new ListWidgetPage(this))
     , welcomePage(new WelcomePage(this))
     , addCommandPage(new AddCommandPage(bridge, this))
-    , actionPage(new ActionPage(this))
+    , actionPage(new ActionPage(listWidgetPage, this))
 {
-    addPage(welcomePage);
-    addPage(addCommandPage);
-    addPage(actionPage);
+    setWindowTitle(tr("Add command"));
+
+    setPage(Page_Welcome, welcomePage);
+    setPage(Page_AddCommand, addCommandPage);
+    setPage(Page_Action, actionPage);
+    setPage(Page_ListWidget, listWidgetPage);
+
+    connect(actionPage, &ActionPage::gotoListWidgetPage, this, [this] {
+        // Note: Untested
+        setProperty("currentId", Page_ListWidget);
+        Q_EMIT currentIdChanged(Page_ListWidget);
+    });
 }

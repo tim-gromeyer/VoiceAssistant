@@ -31,8 +31,8 @@ else()
   option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Svg Multimedia Network TextToSpeech Concurrent)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
 
 file(GLOB TS_FILES translations/VoiceAssistant_*.ts)
 set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
@@ -50,6 +50,7 @@ set(PROJECT_SOURCES
     src/commandwizard.cpp src/commandwizard.h
     src/global.h
     src/jokes.cpp src/jokes.h
+    src/listwidget.h
     src/main.cpp
     src/mainwindow.cpp src/mainwindow.h
     src/modeldownloader.cpp src/modeldownloader.h

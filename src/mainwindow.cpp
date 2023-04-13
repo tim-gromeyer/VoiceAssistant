@@ -464,7 +464,7 @@ void MainWindow::updateText(const QString &text)
 
 void MainWindow::onWakeWord()
 {
-    ui->statusLabel->setText(tr("Listening ..."));
+    ui->statusLabel->setText(tr("Listening …"));
 
     if (player)
 #ifdef QT6

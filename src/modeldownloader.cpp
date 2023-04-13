@@ -118,7 +118,7 @@ void ModelDownloader::setupUi()
     auto *layout = new QVBoxLayout(this);
 
     auto *searchBar = new QLineEdit(this);
-    searchBar->setPlaceholderText(tr("Search ..."));
+    searchBar->setPlaceholderText(tr("Search …"));
     connect(searchBar, &QLineEdit::textChanged, this, &ModelDownloader::search);
     layout->addWidget(searchBar);
 
