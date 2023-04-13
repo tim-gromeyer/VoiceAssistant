@@ -42,17 +42,17 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="171"/>
         <source>Program arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Programm-Argumente</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="174"/>
         <source>URLs are also supported</source>
-        <translation type="unfinished"></translation>
+        <translation>URLs werden ebenfalls unterstützt</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="209"/>
         <source>Select executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausführbare Datei auswählen</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="173"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="85"/>
         <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tippen Sie auf &quot;Zuhören&quot;, um die Spracherkennung zu aktivieren. Sprechen Sie natürlich und die App wandelt Ihre gesprochenen Worte in Text um.</translation>
     </message>
 </context>
 <context>
@@ -79,7 +79,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="236"/>
         <source>Add command</source>
-        <translation type="unfinished">Befehl hinzufügen</translation>
+        <translation>Befehl hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -128,7 +128,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation>&amp;amp;Datei</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="131"/>
@@ -158,7 +158,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="201"/>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster schließen</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
@@ -224,7 +224,28 @@ Sprachen der Witze: %2</translation>
 &lt;h3&gt;Credits&lt;/h3&gt;
 &lt;p&gt;This project uses &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; which is licensed under the &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This project also uses&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;to unpack the downloaded voice models.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Sprachassistent&lt;/h1&gt;
+&lt;p&gt;Ein ressourceneffizienter und anpassbarer Sprachassistent, geschrieben in C++.&lt;/p&gt;
+&lt;h3&gt;Über uns&lt;/h3&gt;
+&lt;table border=&quot;0&quot; style=&quot;border-collapse: collapse; width: 100%;&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Version:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Qt Version:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Homepage:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;&lt;a href=&quot;https://github.com/tim-gromeyer/VoiceAssistant&quot;&gt;https://github.com/tim-gromeyer/VoiceAssistant&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;Gutschriften&lt;/h3&gt;
+&lt;p&gt;Dieses Projekt verwendet &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt;, das unter der &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt; lizenziert ist.&lt;/p&gt;
+&lt;p&gt;Dieses Projekt verwendet außerdem&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;zum Entpacken der heruntergeladenen Sprachmodelle.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="289"/>
@@ -252,17 +273,17 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="426"/>
         <source>Microphone Access Denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrofonzugriff verweigert</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="427"/>
         <source>Access to the microphone has been denied. This feature requires microphone access to function properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Zugriff auf das Mikrofon wurde verweigert. Diese Funktion erfordert den Zugriff auf das Mikrofon, um ordnungsgemäß zu funktionieren.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="429"/>
         <source>Please grant microphone access to enable speech-to-text functionality and allow the app to convert your spoken words into text. Your audio data will only be used for this purpose and will be handled securely in accordance with our privacy policy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gewähren Sie den Zugang zum Mikrofon, um die Sprache-zu-Text-Funktion zu aktivieren und der App zu erlauben, Ihre gesprochenen Worte in Text umzuwandeln. Ihre Audiodaten werden nur zu diesem Zweck verwendet und gemäß unserer Datenschutzrichtlinie sicher behandelt.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="467"/>
@@ -292,17 +313,17 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="527"/>
         <source>Warning: The current STT plugin does not support word lookups</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Das aktuelle STT-Plugin unterstützt keine Wortsuche</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="529"/>
         <source>Warning: No STT plugin found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Kein STT-Plugin gefunden!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="531"/>
         <source>Warning: There is a error with the STT plugin.</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Es gibt einen Fehler mit dem STT Plugin.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="633"/>
@@ -465,7 +486,7 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <message>
         <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unzipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Entpacken</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
@@ -648,12 +669,12 @@ Drücken Sie &quot;Weiter&quot;, um fortzufahren.</translation>
     <message>
         <location filename="../src/main.cpp" line="88"/>
         <source>Reformat JSON file</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON-Datei neu formatieren</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="89"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei</translation>
     </message>
 </context>
 <context>
@@ -724,7 +745,7 @@ Drücken Sie &quot;Weiter&quot;, um fortzufahren.</translation>
     <message>
         <location filename="../src/utils.cpp" line="59"/>
         <source>%1 minute(s), %2 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Minute(n), %2 Sekunden</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="64"/>
