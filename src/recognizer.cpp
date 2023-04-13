@@ -218,7 +218,6 @@ void SpeechToText::setup()
     case Paused:
     case NoPluginFound:
     case PluginError:
-        return;
     case PermissionMissing:
         return;
     case IncompatibleFormat:

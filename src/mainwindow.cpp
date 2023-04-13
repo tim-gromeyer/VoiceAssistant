@@ -440,10 +440,6 @@ void MainWindow::onSTTStateChanged()
         if (!recognizer->device())
             return;
 
-        if (recognizer->device()->state() != SpeechToTextPlugin::NoModelFound
-            && recognizer->device()->state() != SpeechToTextPlugin::ModelsMissing)
-            return;
-
         ui->statusLabel->setText(recognizer->errorString());
         openModelDownloader();
         break;
@@ -576,11 +572,15 @@ void MainWindow::onHasWord()
 void MainWindow::openModelDownloader()
 {
     ModelDownloader dia(this);
-    connect(&dia,
-            &ModelDownloader::modelDownloaded,
-            recognizer,
-            &SpeechToText::setup,
-            Qt::QueuedConnection);
+    connect(
+        &dia,
+        &ModelDownloader::modelDownloaded,
+        this,
+        [this] {
+            if (recognizer->requestMicrophonePermission())
+                recognizer->setup();
+        },
+        Qt::QueuedConnection);
     dia.exec();
 }
 

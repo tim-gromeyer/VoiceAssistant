@@ -69,7 +69,7 @@ elseif(APPLE)
          DESTINATION .
  )
 
-elseif(UNIX AND NOT EXMSCRIPTEN AND NOT ANDROID)
+elseif(UNIX AND NOT EMSCRIPTEN AND NOT ANDROID)
  # Determine distribution and release
  execute_process(COMMAND lsb_release -si OUTPUT_VARIABLE distribution OUTPUT_STRIP_TRAILING_WHITESPACE)
  execute_process(COMMAND lsb_release -sc OUTPUT_VARIABLE release OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -104,6 +104,12 @@ elseif(UNIX AND NOT EXMSCRIPTEN AND NOT ANDROID)
  endif()
 
  set(CPACK_GENERATOR "TGZ;${CPACK_GENERATOR}")
+ install(FILES "${CMAKE_SOURCE_DIR}/ressources/logo/Icon.svg"
+         DESTINATION .
+ )
+ # Install the desktop file
+ install(FILES packaging/VoiceAssistant.desktop
+         DESTINATION /usr/share/applications)
 endif()
 
 # Store the packages in a separat dir

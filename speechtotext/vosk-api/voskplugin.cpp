@@ -111,7 +111,7 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
     }
 
     if (errorWhileLoading) {
-        qInfo() << "[debug] An unknown error occured while loading the model or recognizer";
+        qInfo() << "[debug] An unknown error occurred while loading the model or recognizer";
         setState(ErrorWhileLoading);
         *success = false;
         return;
