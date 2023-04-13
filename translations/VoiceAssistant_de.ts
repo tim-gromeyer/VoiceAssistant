@@ -4,75 +4,88 @@
 <context>
     <name>ActionPage</name>
     <message>
-        <location filename="../src/commandwizard.cpp" line="125"/>
+        <location filename="../src/commandwizard.cpp" line="163"/>
         <source>Select Action</source>
         <translation>Aktion auswählen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="126"/>
+        <location filename="../src/commandwizard.cpp" line="164"/>
         <source>Select the action(s) to be performed when the command is recognized</source>
         <translation>Wählen Sie die Aktion(en), die ausgeführt werden soll(en), wenn der Befehl erkannt wird</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="127"/>
+        <location filename="../src/commandwizard.cpp" line="165"/>
         <source>Actions</source>
         <translation>Aktionen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="128"/>
+        <location filename="../src/commandwizard.cpp" line="166"/>
         <source>Execute function</source>
         <translation>Funktion ausführen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="129"/>
+        <location filename="../src/commandwizard.cpp" line="167"/>
         <source>Random response</source>
         <translation>Zufällige Antwort</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="130"/>
-        <location filename="../src/commandwizard.cpp" line="134"/>
+        <location filename="../src/commandwizard.cpp" line="168"/>
+        <location filename="../src/commandwizard.cpp" line="172"/>
         <source>Select</source>
         <translation>Auswählen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="131"/>
+        <location filename="../src/commandwizard.cpp" line="169"/>
         <source>Execute program</source>
         <translation>Programm ausführen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="133"/>
-        <source>Programm arguments</source>
-        <translation>Programm Argumente</translation>
+        <location filename="../src/commandwizard.cpp" line="171"/>
+        <source>Program arguments</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="135"/>
+        <location filename="../src/commandwizard.cpp" line="174"/>
+        <source>URLs are also supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="209"/>
+        <source>Select executable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="173"/>
         <source>Play a sound</source>
         <translation>Einen Ton abspielen</translation>
-    </message>
-    <message>
-        <location filename="../src/commandwizard.cpp" line="136"/>
-        <source>URL&apos;s are also supported</source>
-        <translation>URLs werden ebenfalls unterstützt</translation>
     </message>
 </context>
 <context>
     <name>AddCommandPage</name>
     <message>
-        <location filename="../src/commandwizard.cpp" line="58"/>
-        <location filename="../src/commandwizard.cpp" line="60"/>
+        <location filename="../src/commandwizard.cpp" line="84"/>
+        <location filename="../src/commandwizard.cpp" line="87"/>
         <source>Add command</source>
         <translation>Befehl hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="59"/>
-        <source>Press the button to add a command.</source>
-        <translation>Drücken Sie die Schaltfläche, um einen Befehl hinzuzufügen.</translation>
+        <location filename="../src/commandwizard.cpp" line="85"/>
+        <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CommandWizard</name>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="236"/>
+        <source>Add command</source>
+        <translation type="unfinished">Befehl hinzufügen</translation>
     </message>
 </context>
 <context>
     <name>Jokes</name>
     <message>
-        <location filename="../src/jokes.cpp" line="64"/>
+        <location filename="../src/jokes.cpp" line="69"/>
         <source>No jokes are available for your language.
 Your languages: %1
 Joke languages: %2</source>
@@ -81,17 +94,17 @@ Deine Sprachen: %1
 Sprachen der Witze: %2</translation>
     </message>
     <message>
-        <location filename="../src/jokes.cpp" line="81"/>
+        <location filename="../src/jokes.cpp" line="86"/>
         <source>Sorry, something went wrong</source>
         <translation>Entschuldigung, etwas ist schief gelaufen</translation>
     </message>
     <message>
-        <location filename="../src/jokes.cpp" line="148"/>
+        <location filename="../src/jokes.cpp" line="162"/>
         <source>Could not fetch joke: %1</source>
         <translation>Konnte den Witz nicht abrufen: %1</translation>
     </message>
     <message>
-        <location filename="../src/jokes.cpp" line="178"/>
+        <location filename="../src/jokes.cpp" line="193"/>
         <source>The language of the cached jokes (%1) does not match the current language of the jokes (%2)</source>
         <translation>Die Sprache der zwischengespeicherten Witze (%1) stimmt nicht mit der aktuellen Sprache der Witze (%2) überein</translation>
     </message>
@@ -100,118 +113,95 @@ Sprachen der Witze: %2</translation>
     <name>MainWindow</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="192"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="192"/>
         <source>Loading ...</source>
         <translation>Wird geladen …</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="193"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="193"/>
-        <location filename="../src/mainwindow.cpp" line="268"/>
-        <location filename="../src/mainwindow.cpp" line="269"/>
-        <location filename="../src/mainwindow.cpp" line="331"/>
-        <location filename="../src/mainwindow.cpp" line="332"/>
+        <location filename="../src/mainwindow.cpp" line="294"/>
+        <location filename="../src/mainwindow.cpp" line="295"/>
+        <location filename="../src/mainwindow.cpp" line="373"/>
+        <location filename="../src/mainwindow.cpp" line="374"/>
         <source>Mute</source>
         <translation>Stummschalten</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="196"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="196"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="130"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="197"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="197"/>
+        <location filename="../ui/mainwindow.ui" line="131"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="170"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="186"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="186"/>
+        <location filename="../ui/mainwindow.ui" line="171"/>
         <source>Open downloader</source>
         <translation>Downloader öffnen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="179"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="187"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="187"/>
+        <location filename="../ui/mainwindow.ui" line="180"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="182"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="189"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="189"/>
+        <location filename="../ui/mainwindow.ui" line="183"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="195"/>
+        <location filename="../ui/mainwindow.ui" line="196"/>
         <source>Add command</source>
         <translation>Befehl hinzufügen</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.ui" line="201"/>
+        <source>Close window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="182"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="182"/>
         <source>VoiceAssistant - Pre alpha!</source>
         <translation>VoiceAssistant - Vorabversion!</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="137"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="198"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="198"/>
+        <location filename="../ui/mainwindow.ui" line="138"/>
         <source>Voice &amp;recognition</source>
         <translation>Sprache&amp;rkennung</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="144"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="199"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="199"/>
+        <location filename="../ui/mainwindow.ui" line="145"/>
         <source>&amp;Commands</source>
         <translation>&amp;Befehle</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="155"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="183"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="183"/>
+        <location filename="../ui/mainwindow.ui" line="156"/>
         <source>&amp;About</source>
         <translation>&amp;Über</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="160"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="184"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="184"/>
+        <location filename="../ui/mainwindow.ui" line="161"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="165"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="185"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="185"/>
+        <location filename="../ui/mainwindow.ui" line="166"/>
         <source>Can recognize word</source>
         <translation>Kann Wort erkennen</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.ui" line="190"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_mainwindow.h" line="191"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_mainwindow.h" line="191"/>
+        <location filename="../ui/mainwindow.ui" line="191"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="221"/>
+        <location filename="../src/mainwindow.cpp" line="247"/>
         <source>About VoiceAssistant</source>
         <translation>Über VoiceAssistant</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="222"/>
+        <location filename="../src/mainwindow.cpp" line="248"/>
         <source>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
 &lt;p&gt;A resource-efficient and customizable voice assistant written in c++.&lt;/p&gt;
 &lt;h3&gt;About&lt;/h3&gt;
@@ -233,95 +223,99 @@ Sprachen der Witze: %2</translation>
 &lt;/table&gt;
 &lt;h3&gt;Credits&lt;/h3&gt;
 &lt;p&gt;This project uses &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; which is licensed under the &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This project also uses&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;to unpack the downloaded voice modells.&lt;/p&gt;</source>
-        <translation>&lt;h1&gt;VoiceAssistant&lt;/h1&gt;
-&lt;p&gt;Ein ressourcenarmer und anpassbarer Sprachassistent, geschrieben in C++.&lt;/p&gt;
-&lt;h3&gt;Über&lt;/h3&gt;
-&lt;table border=&quot;0&quot; style=&quot;border-collapse: collapse; width: 100%;&quot;&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Version:&lt;/td&gt;
-&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%1&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Qt-Version:&lt;/td&gt;
-&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%2&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Homepage:&lt;/td&gt;
-&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;&lt;a href=&quot;https://github.com/tim-gromeyer/VoiceAssistant&quot;&gt;https://github.com/tim-gromeyer /VoiceAssistant&lt;/a&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3&gt;Credits&lt;/h3&gt;
-&lt;p&gt;Dieses Projekt verwendet &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt;, welches unter &lt;a href=&quot;https://github.com/alphacep lizenziert ist /vosk-api/blob/master/COPYING&quot;&gt;Apache-Lizenz 2.0&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Dieses Projekt verwendet auch&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;um die heruntergeladenen Sprachmodelle zu entpacken. &lt;/p&gt;</translation>
+&lt;p&gt;This project also uses&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;to unpack the downloaded voice models.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="263"/>
-        <location filename="../src/mainwindow.cpp" line="264"/>
+        <location filename="../src/mainwindow.cpp" line="289"/>
+        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Unmute</source>
         <translation>Stummschaltung aufheben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="296"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Quit?</source>
         <translation>Beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="296"/>
+        <location filename="../src/mainwindow.cpp" line="331"/>
         <source>Do you really want to quit?</source>
         <translation>Möchten sie wirklich beenden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="379"/>
-        <location filename="../src/mainwindow.cpp" line="422"/>
-        <location filename="../src/mainwindow.cpp" line="838"/>
+        <location filename="../src/mainwindow.cpp" line="421"/>
+        <location filename="../src/mainwindow.cpp" line="480"/>
+        <location filename="../src/mainwindow.cpp" line="885"/>
         <source>Waiting for wake word</source>
         <translation>Warten auf Weckwort</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="409"/>
+        <location filename="../src/mainwindow.cpp" line="426"/>
+        <source>Microphone Access Denied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="427"/>
+        <source>Access to the microphone has been denied. This feature requires microphone access to function properly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="429"/>
+        <source>Please grant microphone access to enable speech-to-text functionality and allow the app to convert your spoken words into text. Your audio data will only be used for this purpose and will be handled securely in accordance with our privacy policy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="467"/>
         <source>Listening ...</source>
         <translation>Zuhören ...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="440"/>
+        <location filename="../src/mainwindow.cpp" line="498"/>
         <source>Contains word?</source>
         <translation>Enthält Wort?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="450"/>
+        <location filename="../src/mainwindow.cpp" line="508"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
         <translation>Prüfen Sie, ob das aktuelle Sprachmodell ein Wort erkennen kann (nicht wird).</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="454"/>
+        <location filename="../src/mainwindow.cpp" line="512"/>
         <source>Word:</source>
         <translation>Wort:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="457"/>
+        <location filename="../src/mainwindow.cpp" line="515"/>
         <source>Enter word</source>
         <translation>Wort eingeben</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="464"/>
-        <source>Warning: the current STT plugin does not support word lookups</source>
-        <translation>Warnung: Das aktuelle STT-Plugin unterstützt keine Wortsuche</translation>
+        <location filename="../src/mainwindow.cpp" line="527"/>
+        <source>Warning: The current STT plugin does not support word lookups</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="568"/>
+        <location filename="../src/mainwindow.cpp" line="529"/>
+        <source>Warning: No STT plugin found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="531"/>
+        <source>Warning: There is a error with the STT plugin.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="633"/>
         <source>I have not understood this!</source>
         <translation>Dies habe ich nicht verstanden!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="699"/>
+        <location filename="../src/mainwindow.cpp" line="764"/>
         <source>Failed to save file</source>
         <translation>Datei konnte nicht gespeichert werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="700"/>
+        <location filename="../src/mainwindow.cpp" line="765"/>
         <source>Failed to write &lt;em&gt;%1&lt;/em&gt;.
 %2
 Copy following text and save it manually:
@@ -332,30 +326,30 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="836"/>
+        <location filename="../src/mainwindow.cpp" line="883"/>
         <source>Waiting for answer...</source>
         <translation>Warten auf Antwort...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="881"/>
-        <location filename="../src/mainwindow.cpp" line="950"/>
+        <location filename="../src/mainwindow.cpp" line="928"/>
+        <location filename="../src/mainwindow.cpp" line="997"/>
         <source>Are you sure?</source>
         <translation>Bist du sicher?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="883"/>
-        <location filename="../src/mainwindow.cpp" line="952"/>
+        <location filename="../src/mainwindow.cpp" line="930"/>
+        <location filename="../src/mainwindow.cpp" line="999"/>
         <source>yes</source>
         <translation>ja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="884"/>
-        <location filename="../src/mainwindow.cpp" line="955"/>
+        <location filename="../src/mainwindow.cpp" line="931"/>
+        <location filename="../src/mainwindow.cpp" line="1002"/>
         <source>Okay</source>
         <translation>Okay</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="897"/>
+        <location filename="../src/mainwindow.cpp" line="944"/>
         <source>It is %1</source>
         <translation>Es ist %1</translation>
     </message>
@@ -435,11 +429,6 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %4 - %5 verbleibend</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="357"/>
-        <source>Unziping</source>
-        <translation>Entpacken</translation>
-    </message>
-    <message>
         <location filename="../src/modeldownloader.cpp" line="381"/>
         <source>Failed. Try again</source>
         <translation>Fehlgeschlagen. Erneut versuchen</translation>
@@ -474,6 +463,11 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 %1</translation>
     </message>
     <message>
+        <location filename="../src/modeldownloader.cpp" line="357"/>
+        <source>Unzipping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
         <source>Downloaded</source>
         <translation>Heruntergeladen</translation>
@@ -506,15 +500,11 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
     <name>SettingsDialog</name>
     <message>
         <location filename="../ui/settingsdialog.ui" line="14"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_settingsdialog.h" line="100"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_settingsdialog.h" line="100"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
-        <location filename="../build-linux/voiceassistant_autogen/include/ui_settingsdialog.h" line="101"/>
-        <location filename="../build-windows/voiceassistant_autogen/include/ui_settingsdialog.h" line="101"/>
         <source>Search ...</source>
         <translation>Suche ...</translation>
     </message>
@@ -522,27 +512,27 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 <context>
     <name>SpeechToText</name>
     <message>
-        <location filename="../src/recognizer.cpp" line="306"/>
+        <location filename="../src/recognizer.cpp" line="323"/>
         <source>The app is unable to transcribe speech to text because the necessary plugin is missing or could not be loaded.</source>
         <translation>Die App ist nicht in der Lage, Sprache in Text zu transkribieren, da das erforderliche Plugin fehlt oder nicht geladen werden konnte.</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="314"/>
+        <location filename="../src/recognizer.cpp" line="331"/>
         <source>The recognizer has not yet been set up</source>
         <translation>Der Erkenner wurde noch nicht eingerichtet</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="317"/>
+        <location filename="../src/recognizer.cpp" line="334"/>
         <source>No microphone was found or the microphone is not accessible</source>
         <translation>Es wurde kein Mikrofon gefunden oder das Mikrofon ist nicht erreichbar</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="320"/>
+        <location filename="../src/recognizer.cpp" line="337"/>
         <source>The microphone is incompatible with the required audio format (PCM 16bit mono)</source>
         <translation>Das Mikrofon ist nicht mit dem geforderten Audioformat kompatibel (PCM 16bit mono)</translation>
     </message>
     <message>
-        <location filename="../src/recognizer.cpp" line="324"/>
+        <location filename="../src/recognizer.cpp" line="341"/>
         <source>The audio device is closed, and is not processing any audio data</source>
         <translation>Das Audiogerät ist geschlossen und verarbeitet keine Audiodaten</translation>
     </message>
@@ -636,12 +626,12 @@ Kopieren Sie den folgenden Text und speichern Sie ihn manuell:
 <context>
     <name>WelcomePage</name>
     <message>
-        <location filename="../src/commandwizard.cpp" line="31"/>
+        <location filename="../src/commandwizard.cpp" line="55"/>
         <source>Welcome to Command Wizard</source>
         <translation>Willkommen beim Befehlsassistenten</translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="33"/>
+        <location filename="../src/commandwizard.cpp" line="57"/>
         <source>This wizard allows you to add commands.
 Press &apos;Next&apos; to continue.</source>
         <translation>Mit diesem Assistenten können Sie Befehle hinzufügen.
@@ -651,9 +641,19 @@ Drücken Sie &quot;Weiter&quot;, um fortzufahren.</translation>
 <context>
     <name>cmd</name>
     <message>
-        <location filename="../src/main.cpp" line="51"/>
+        <location filename="../src/main.cpp" line="80"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
         <translation>Ein ressourceneffizienter Sprachassistent, der sich noch im Entwicklungsstadium befindet, aber bereits funktioniert.</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="88"/>
+        <source>Reformat JSON file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="89"/>
+        <source>file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -723,8 +723,8 @@ Drücken Sie &quot;Weiter&quot;, um fortzufahren.</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="59"/>
-        <source>%1 minute(s), %2 secounds</source>
-        <translation>%1 Minute(n), %2 Sekunden</translation>
+        <source>%1 minute(s), %2 seconds</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="64"/>
