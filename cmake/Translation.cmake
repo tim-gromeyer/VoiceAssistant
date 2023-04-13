@@ -1,4 +1,11 @@
+find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS LinguistTools)
+
 function(ADD_TRANSLATIONS res_file)
+    if (NOT Qt${QT_VERSION_MAJOR}LinguistTools_FOUND)
+        message(WARNING "Qt LinguistTools not found! Translations will not work!")
+        return()
+    endif()
+
     set(_rc_file ${CMAKE_CURRENT_BINARY_DIR}/app_translations.qrc)
 
     if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

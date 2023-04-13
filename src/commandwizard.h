@@ -5,6 +5,7 @@
 
 #include <QWizard>
 
+class ListWidget;
 class PluginBridge;
 class QCommandLinkButton;
 class QFormLayout;
@@ -12,12 +13,33 @@ class QGroupBox;
 class QHBoxLayout;
 class QLabel;
 class QLineEdit;
-class QListWidget;
 class QPushButton;
 class QSpacerItem;
 class QToolButton;
 class QVBoxLayout;
 class QWizardPage;
+
+namespace CommandWizardNS {
+enum Pages { Page_Welcome = 0, Page_AddCommand = 1, Page_Action = 2, Page_ListWidget = 3 };
+
+} // namespace CommandWizardNS
+
+class ListWidgetPage : public QWizardPage
+{
+    Q_OBJECT
+
+public:
+    explicit ListWidgetPage(QWidget *parent = nullptr);
+
+    void add(const QString &);
+
+    QStringList items();
+
+    [[nodiscard]] inline int nextId() const override { return CommandWizardNS::Page_AddCommand; };
+
+private:
+    ListWidget *listWidget;
+};
 
 class WelcomePage : public QWizardPage
 {
@@ -41,18 +63,23 @@ class AddCommandPage : public QWizardPage
 public:
     explicit AddCommandPage(PluginBridge *b, QWidget *parent = nullptr);
 
+    void initializePage() override;
+    [[nodiscard]] bool isComplete() const override;
+
+Q_SIGNALS:
+    void completeChanged();
+
 private Q_SLOTS:
     void addCommand();
 
 private:
     PluginBridge *bridge;
-    bool m_asking = false;
 
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QPushButton *listenButton;
     QLabel *commandLabel;
-    QListWidget *commandsList;
+    ListWidget *commandsList;
 };
 
 class ActionPage : public QWizardPage
@@ -60,11 +87,18 @@ class ActionPage : public QWizardPage
     Q_OBJECT
 
 public:
-    explicit ActionPage(QWidget *parent = nullptr);
+    explicit ActionPage(ListWidgetPage *, QWidget *parent = nullptr);
 
     actions::Action getAction(bool *ok);
 
+    [[nodiscard]] inline int nextId() const override { return -1; };
+
+Q_SIGNALS:
+    void gotoListWidgetPage();
+
 private Q_SLOTS:
+    bool checkFunctionExists(const QString &funcName);
+
     void selectAppPath();
     void selectAppArgs();
     bool checkAppPath(const QString &text);
@@ -73,6 +107,8 @@ private Q_SLOTS:
 
 private:
     actions::Action action;
+
+    ListWidgetPage *listWidgetPage;
 
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
@@ -101,6 +137,8 @@ public:
 
 private:
     PluginBridge *bridge;
+
+    ListWidgetPage *listWidgetPage;
 
     WelcomePage *welcomePage;
     AddCommandPage *addCommandPage;

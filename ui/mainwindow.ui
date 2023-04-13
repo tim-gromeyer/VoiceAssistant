@@ -20,7 +20,7 @@
       <item>
        <widget class="QLabel" name="statusLabel">
         <property name="text">
-         <string>Loading ...</string>
+         <string>Loading …</string>
         </property>
         <property name="textFormat">
          <enum>Qt::RichText</enum>

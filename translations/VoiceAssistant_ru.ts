@@ -64,13 +64,17 @@
     <name>AddCommandPage</name>
     <message>
         <location filename="../src/commandwizard.cpp" line="84"/>
-        <location filename="../src/commandwizard.cpp" line="87"/>
         <source>Add command</source>
         <translation type="unfinished">Добавить команду</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="85"/>
         <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="87"/>
+        <source>Listen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -111,11 +115,6 @@ Joke languages: %2</source>
 </context>
 <context>
     <name>MainWindow</name>
-    <message>
-        <location filename="../ui/mainwindow.ui" line="23"/>
-        <source>Loading ...</source>
-        <translation>Загрузка...</translation>
-    </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
         <location filename="../src/mainwindow.cpp" line="294"/>
@@ -164,6 +163,11 @@ Joke languages: %2</source>
         <location filename="../ui/mainwindow.ui" line="14"/>
         <source>VoiceAssistant - Pre alpha!</source>
         <translation>VoiceAssistant - предварительная альфа-версия!</translation>
+    </message>
+    <message>
+        <location filename="../ui/mainwindow.ui" line="23"/>
+        <source>Loading …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="138"/>
@@ -266,8 +270,8 @@ Joke languages: %2</source>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="467"/>
-        <source>Listening ...</source>
-        <translation>Слушаю...</translation>
+        <source>Listening …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="498"/>
@@ -386,11 +390,6 @@ Copy following text and save it manually:
 %2</translation>
     </message>
     <message>
-        <location filename="../src/modeldownloader.cpp" line="121"/>
-        <source>Search ...</source>
-        <translation>Поиск...</translation>
-    </message>
-    <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Language</source>
         <translation>Язык</translation>
@@ -437,6 +436,11 @@ Copy following text and save it manually:
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
         <translation>Загрузка...</translation>
+    </message>
+    <message>
+        <location filename="../src/modeldownloader.cpp" line="121"/>
+        <source>Search …</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
@@ -505,8 +509,8 @@ Copy following text and save it manually:
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
-        <source>Search ...</source>
-        <translation>Поиск...</translation>
+        <source>Search …</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
