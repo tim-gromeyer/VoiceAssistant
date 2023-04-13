@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=VoiceAssistant
+Comment=Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
+Exec=/opt/VoiceAssistant/voiceassistant
+Icon=/opt/VoiceAssistant/Icon.svg
+Categories=Utility;
+Keywords=voice;assistant;AI;speech;recognition;
+
