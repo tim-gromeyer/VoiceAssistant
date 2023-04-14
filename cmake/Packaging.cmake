@@ -1,6 +1,7 @@
 include(InstallRequiredSystemLibraries)
 
 set(PROJECT_HOMEPAGE_URL "https://github.com/tim-gromeyer/VoiceAssistant")
+set(PROJECT_DESCRIPTION "Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.")
 
 set(CPACK_STRIP_FILES ON)
 set(CPACK_SOURCE_STRIP_FILES ON)
@@ -9,7 +10,7 @@ set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_CONTACT "Tim Gromeyer")
 set(CPACK_PACKAGE_VENDOR ${CPACK_PACKAGE_CONTACT})
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
-set(CPACK_PACKAGE_DESCRIPTION "Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.")
+set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_DESCRIPTION}")
 
 set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/COPYING)
 set(CPACK_RESOURCE_FILE_README ${PROJECT_SOURCE_DIR}/README.md)
@@ -107,8 +108,9 @@ elseif(UNIX AND NOT EMSCRIPTEN AND NOT ANDROID)
  install(FILES "${CMAKE_SOURCE_DIR}/ressources/logo/Icon.svg"
          DESTINATION .
  )
+ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/packaging/VoiceAssistant.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/packaging/VoiceAssistant.desktop)
  # Install the desktop file
- install(FILES packaging/VoiceAssistant.desktop
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/packaging/VoiceAssistant.desktop
          DESTINATION /usr/share/applications)
 endif()
 

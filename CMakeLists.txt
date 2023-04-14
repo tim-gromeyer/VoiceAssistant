@@ -130,7 +130,7 @@ include(GNUInstallDirs)
 
 # Install the main executable
 install(TARGETS voiceassistant
-    RUNTIME DESTINATION .
+    RUNTIME DESTINATION bin
     BUNDLE DESTINATION . # Specify the bundle destination for MACOSX_BUNDLE
     LIBRARY DESTINATION . # For Android
 )

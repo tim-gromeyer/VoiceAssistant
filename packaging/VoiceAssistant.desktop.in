@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=VoiceAssistant
+Version=${PROJECT_VERSION}
+Comment=${PROJECT_DESCRIPTION}
+Exec=env LD_LIBRARY_PATH="${CPACK_INSTALL_PREFIX}/lib:$LD_LIBRARY_PATH" ${CPACK_INSTALL_PREFIX}/bin/voiceassistant
+Icon=${CPACK_INSTALL_PREFIX}/Icon.svg
+Categories=Utility;
+Keywords=voice;assistant;AI;speech;recognition;
+
