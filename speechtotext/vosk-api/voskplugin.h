@@ -64,6 +64,8 @@ private:
 
     QString m_language;
 
+    bool is_listining_because_wakeword = false;
+
     VoskModel *model = nullptr;
     VoskRecognizer *recognizer = nullptr;
 };

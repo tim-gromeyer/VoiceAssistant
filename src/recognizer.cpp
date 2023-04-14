@@ -72,6 +72,11 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
 
     connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
     connect(m_plugin, &SpeechToTextPlugin::stateChanged, this, &SpeechToText::pluginStateChanged);
+    connect(m_plugin, &SpeechToTextPlugin::falsePositiveWakeWord, this, [this] {
+        qDebug() << "SpeechToText: False positive wake word";
+        Q_EMIT m_plugin->textUpdated({});
+        onAnswerReady({});
+    });
 }
 
 void SpeechToText::onAnswerReady(const QString &answer)

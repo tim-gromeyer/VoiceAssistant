@@ -57,8 +57,15 @@ Q_SIGNALS:
 
     void stateChanged();
 
-    // Signal emitted when the wake word is detected in the audio input
+    // Signal emitted when the wake word is detected in the audio input, also note falsePositiveWakeWord
     void wakeWordDetected();
+
+    /*!
+     * \brief Signal emitted when the program detects the wake word in audio input incorrectly, indicating other parts of the program should take corrective action.
+     * 
+     * This signal is emitted when the program falsely detects the wake word in the audio input. This can occur due to background noise, interference, or other factors. When this signal is emitted, it indicates that the program has encountered a false detection and may prompt other parts of the program or plugins to take corrective action.
+     */
+    void falsePositiveWakeWord();
 
     // Emit this signal when the wake word changes!
     void wakeWordChanged();
