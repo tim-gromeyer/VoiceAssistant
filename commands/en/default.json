@@ -2,13 +2,17 @@
     {
         "commands": [
             "how late",
+            "what time is it",
+            "current time",
             "what's the time",
-            "what time is it"
+            "tell me the time"
         ],
         "funcName": "sayTime"
     },
     {
         "commands": [
+            "shop",
+            "stock",
             "stop"
         ],
         "funcName": "stop"
@@ -16,22 +20,124 @@
     {
         "commands": [
             "repeat after me",
-            "repeat me"
+            "say it again"
         ],
-        "funcName": "repeat"
+        "funcName": "say"
     },
     {
         "commands": [
-            "hello"
+            "good evening",
+            "good afternoon",
+            "good day",
+            "hello",
+            "hi",
+            "hey",
+            "greetings",
+            "howdy",
+            "good morning"
         ],
         "responses": [
-            "hello"
+            "hello",
+            "hi there",
+            "hi, nice to hear from you",
+            "Hello! How can I assist you today?"
         ]
     },
     {
         "commands": [
-            "shut down"
+            "play a song",
+            "play some music"
+        ],
+        "sound": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+    },
+    {
+        "commands": [
+            "reload commands",
+            "reload command",
+            "reload"
+        ],
+        "funcName": "loadCommands"
+    },
+    {
+        "commands": [
+            "mute",
+            "mute sound"
+        ],
+        "funcName": "toggleMute"
+    },
+    {
+        "commands": [
+            "pause"
+        ],
+        "funcName": "pause"
+    },
+    {
+        "commands": [
+            "resume",
+            "continue"
+        ],
+        "funcName": "resume"
+    },
+    {
+        "commands": [
+            "shutdown",
+            "shut down",
+            "power off",
+            "turn off"
         ],
         "funcName": "quit"
+    },
+    {
+        "commands": [
+            "volume up",
+            "increase volume",
+            "turn up the volume"
+        ],
+        "funcName": "volumeUp"
+    },
+    {
+        "commands": [
+            "volume down",
+            "decrease volume",
+            "turn down the volume"
+        ],
+        "funcName": "volumeDown"
+    },
+    {
+        "commands": [
+            "set volume to",
+            "change volume to"
+        ],
+        "funcName": "setVolume"
+    },
+    {
+        "commands": [
+            "tell me a joke",
+            "tell a joke",
+            "say a joke",
+            "say something funny"
+        ],
+        "funcName": "tellJoke"
+    },
+    {
+        "commands": [
+            "restart"
+        ],
+        "funcName": "restart"
+    },
+    {
+        "commands": [
+            "coin toss",
+            "toss a coin",
+            "flip a coin"
+        ],
+        "responses": [
+            "Heads",
+            "Tails",
+            "You got Heads",
+            "You got Tails",
+            "It's Heads",
+            "It's Tails"
+        ]
     }
 ]

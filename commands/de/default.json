@@ -116,5 +116,21 @@
             "neustart"
         ],
         "funcName": "restart"
+    },
+    {
+        "commands": [
+            "kopf oder zahl",
+            "münz wurf",
+            "münze werfen",
+            "würfle eine münze"
+        ],
+        "responses": [
+            "Kopf",
+            "Zahl",
+            "Du hast Kopf",
+            "Du hast Zahl",
+            "Es ist Kopf",
+            "Es ist Zahl"
+        ]
     }
 ]
