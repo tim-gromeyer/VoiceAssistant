@@ -822,6 +822,15 @@ void MainWindow::loadSettings() {}
 
 void MainWindow::saveSettings() {}
 
+//void MainWindow::say(const QString &text)
+//{
+//    if (!engine) {
+//        qWarning() << "Can not say following text:" << text << "\nTextToSpeech not set up!";
+//        return;
+//    }
+
+//    engine->say(text);
+//}
 void MainWindow::say(const QString &text)
 {
     if (!engine) {
@@ -829,7 +838,29 @@ void MainWindow::say(const QString &text)
         return;
     }
 
-    engine->say(text);
+    static QRegularExpression regex(QStringLiteral("\\[wait (\\d+)\\]"));
+    QStringList tokens = text.split(regex);
+    QList<int> waitTimes;
+    QRegularExpressionMatchIterator it = regex.globalMatch(text);
+    while (it.hasNext()) {
+        QRegularExpressionMatch match = it.next();
+        int waitTime = match.captured(1).toInt();
+        waitTimes.append(waitTime);
+    }
+
+    QEventLoop loop;
+    QTimer timer;
+    timer.setSingleShot(true);
+    connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+    for (int i = 0; i < tokens.size(); ++i) {
+        sayAndWait(tokens[i]);
+
+        if (i < waitTimes.size()) {
+            timer.start(waitTimes[i]);
+            loop.exec();
+        }
+    }
 }
 
 void MainWindow::sayAndWait(const QString &text)
@@ -847,7 +878,7 @@ void MainWindow::sayAndWait(const QString &text)
                 loop.quit();
         },
         Qt::QueuedConnection);
-    say(text);
+    engine->say(text);
     loop.exec();
 }
 
