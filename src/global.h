@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QDir>
+#include <QLibraryInfo>
+#include <QStandardPaths>
 #include <QString>
 
 #if !QT_CONFIG(thread)
@@ -20,15 +22,27 @@ static const QString &baseDir()
     static const QString dir = QStringLiteral(APP_DIR);
 #else
     static QString dir;
-    if (dir.isEmpty() && QCoreApplication::instance())
-        dir = QCoreApplication::applicationDirPath();
+
+    if (QCoreApplication::instance() && dir.isEmpty()) {
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+        if (QCoreApplication::applicationDirPath().endsWith(QLatin1String("bin")))
+#if QT5
+            dir = QLibraryInfo::location(QLibraryInfo::PrefixPath);
+#else
+            dir = QLibraryInfo::path(QLibraryInfo::PrefixPath);
+#endif
+        else
+            dir = QCoreApplication::applicationDirPath();
+#endif
+    }
+
 #endif
 
     return dir;
 }
 static const QString &dataDir()
 {
-    static const QString dir = baseDir() + QStringLiteral("/data/");
+    static const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     return dir;
 }
 
@@ -39,7 +53,8 @@ static const QString &pluginDir()
 }
 static const QString &modelDir()
 {
-    static const QString dir = baseDir() + QStringLiteral("/models/");
+    static const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                               + QStringLiteral("/models/");
     return dir;
 }
 static const QString &speechToTextPluginDir()
