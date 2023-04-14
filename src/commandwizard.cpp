@@ -77,6 +77,8 @@ AddCommandPage::AddCommandPage(PluginBridge *b, QWidget *parent)
     verticalLayout->addWidget(commandsList);
 
     registerField(QStringLiteral("commands"), commandsList);
+
+    connect(commandsList, &ListWidget::itemDeleted, this, [this] { Q_EMIT completeChanged(); });
 }
 
 void AddCommandPage::initializePage()

@@ -22,8 +22,11 @@ public:
             const auto selected = selectedItems();
 
             for (auto *item : selected) {
-                items.removeOne(item->text());
+                QString itemText = item->text();
+
+                items.removeOne(itemText);
                 delete item;
+                Q_EMIT itemDeleted(itemText);
             }
         });
     };
@@ -50,6 +53,9 @@ public Q_SLOTS:
         QListWidget::clear();
         items.clear();
     };
+
+Q_SIGNALS:
+    void itemDeleted(const QString &item);
 
 private:
     QAction *actionRemove = nullptr;
