@@ -25,6 +25,8 @@
 #include <QPluginLoader>
 #include <QProcess>
 #include <QRandomGenerator>
+#include <QRegularExpression>
+#include <QRegularExpressionMatchIterator>
 #include <QSaveFile>
 #include <QSettings>
 #include <QSystemTrayIcon>
