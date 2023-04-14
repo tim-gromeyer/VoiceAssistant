@@ -66,9 +66,6 @@ public:
     void initializePage() override;
     [[nodiscard]] bool isComplete() const override;
 
-Q_SIGNALS:
-    void completeChanged();
-
 private Q_SLOTS:
     void addCommand();
 
