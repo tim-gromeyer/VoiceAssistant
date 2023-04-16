@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="87"/>
         <source>Listen</source>
-        <translation>Zuhöhren</translation>
+        <translation>Hören</translation>
     </message>
 </context>
 <context>
@@ -292,7 +292,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="467"/>
         <source>Listening …</source>
-        <translation>Zuhöhren …</translation>
+        <translation>Zuhören …</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="498"/>
