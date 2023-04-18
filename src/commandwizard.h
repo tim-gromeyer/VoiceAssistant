@@ -66,6 +66,8 @@ public:
     void initializePage() override;
     [[nodiscard]] bool isComplete() const override;
 
+    QStringList commands() const;
+
 private Q_SLOTS:
     void addCommand();
 
@@ -84,14 +86,11 @@ class ActionPage : public QWizardPage
     Q_OBJECT
 
 public:
-    explicit ActionPage(ListWidgetPage *, QWidget *parent = nullptr);
+    explicit ActionPage(QWidget *parent = nullptr);
 
-    actions::Action getAction(bool *ok);
+    actions::Action getAction(bool *valid);
 
     [[nodiscard]] inline int nextId() const override { return -1; };
-
-Q_SIGNALS:
-    void gotoListWidgetPage();
 
 private Q_SLOTS:
     bool checkFunctionExists(const QString &funcName);
@@ -103,10 +102,13 @@ private Q_SLOTS:
     void selectRandomResponses();
 
 private:
+    enum Mode { Nothing = -1, RandomResponse = 0, AppArguments = 1 };
+
+    Mode currentMode = Nothing;
+
     actions::Action action;
 
-    ListWidgetPage *listWidgetPage;
-
+    QWidget *contentWidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QFormLayout *formLayout;
@@ -122,6 +124,10 @@ private:
     QPushButton *argumentButton;
     QLabel *playLabel;
     QLineEdit *soundEdit;
+
+    QPushButton *addButton;
+    ListWidget *listWidget;
+    QPushButton *okayButton;
 };
 
 class CommandWizard : public QWizard
@@ -134,8 +140,6 @@ public:
 
 private:
     PluginBridge *bridge;
-
-    ListWidgetPage *listWidgetPage;
 
     WelcomePage *welcomePage;
     AddCommandPage *addCommandPage;

@@ -40,6 +40,11 @@ public:
         addItem(item);
         items.append(item);
     };
+    inline void addList(const QStringList &items)
+    {
+        for (const QString &item : items)
+            add(item);
+    }
     [[nodiscard]] inline bool containsItem(const QString &item) const
     {
         return items.contains(item);

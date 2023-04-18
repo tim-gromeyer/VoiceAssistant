@@ -1,4 +1,4 @@
-﻿#include "commandwizard.h"
+#include "commandwizard.h"
 #include "listwidget.h"
 #include "mainwindow.h"
 #include "plugins/bridge.h"
@@ -9,6 +9,7 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
@@ -76,8 +77,6 @@ AddCommandPage::AddCommandPage(PluginBridge *b, QWidget *parent)
 
     verticalLayout->addWidget(commandsList);
 
-    registerField(QStringLiteral("commands"), commandsList);
-
     connect(commandsList, &ListWidget::itemDeleted, this, [this] { Q_EMIT completeChanged(); });
 }
 
@@ -114,10 +113,10 @@ bool AddCommandPage::isComplete() const
     return !commandsList->isEmpty() && listenButton->isEnabled();
 }
 
-ActionPage::ActionPage(ListWidgetPage *page, QWidget *parent)
+ActionPage::ActionPage(QWidget *parent)
     : QWizardPage(parent)
-    , listWidgetPage(page)
-    , verticalLayout(new QVBoxLayout(this))
+    , contentWidget(new QWidget(this))
+    , verticalLayout(new QVBoxLayout(contentWidget))
     , groupBox(new QGroupBox(this))
     , formLayout(new QFormLayout(groupBox))
     , executeLabel(new QLabel(groupBox))
@@ -132,6 +131,9 @@ ActionPage::ActionPage(ListWidgetPage *page, QWidget *parent)
     , argumentButton(new QPushButton(groupBox))
     , playLabel(new QLabel(groupBox))
     , soundEdit(new QLineEdit(groupBox))
+    , addButton(new QPushButton(this))
+    , listWidget(new ListWidget(this))
+    , okayButton(new QPushButton(this))
 {
     formLayout->setWidget(0, QFormLayout::LabelRole, executeLabel);
     formLayout->setWidget(0, QFormLayout::FieldRole, functionEdit);
@@ -162,6 +164,17 @@ ActionPage::ActionPage(ListWidgetPage *page, QWidget *parent)
 
     verticalLayout->addWidget(groupBox);
 
+    auto *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(contentWidget);
+    layout->addWidget(addButton);
+    layout->addWidget(listWidget);
+    layout->addWidget(okayButton);
+    addButton->hide();
+    listWidget->hide();
+    okayButton->hide();
+
     setTitle(tr("Select Action"));
     setSubTitle(tr("Select the action(s) to be performed when the command is recognized"));
     groupBox->setTitle(tr("Actions"));
@@ -174,17 +187,56 @@ ActionPage::ActionPage(ListWidgetPage *page, QWidget *parent)
     argumentButton->setText(tr("Select"));
     playLabel->setText(tr("Play a sound"));
     soundEdit->setPlaceholderText(tr("URLs are also supported"));
+    okayButton->setText(tr("Done"));
+    addButton->setText(tr("Add a entry"));
 
     connect(functionEdit, &QLineEdit::textEdited, this, &ActionPage::checkFunctionExists);
     connect(programEdit, &QLineEdit::textChanged, this, &ActionPage::checkAppPath);
     connect(selectProgrammButton, &QToolButton::clicked, this, &ActionPage::selectAppPath);
+    connect(argumentButton, &QPushButton::clicked, this, &ActionPage::selectAppArgs);
+    connect(randomResponseButton, &QPushButton::clicked, this, &ActionPage::selectRandomResponses);
+    connect(okayButton, &QPushButton::clicked, this, [this] {
+        if (currentMode == AppArguments)
+            action.args = listWidget->allItems();
+        else if (currentMode == RandomResponse)
+            action.responses = listWidget->allItems();
+
+        addButton->hide();
+        listWidget->hide();
+        okayButton->hide();
+        contentWidget->show();
+
+        currentMode = Nothing;
+    });
+    connect(addButton, &QPushButton::clicked, this, [this] {
+        QString text;
+
+        if (currentMode == AppArguments)
+            text = QInputDialog::getText(this, tr("Add app argument"), tr("Add app argument"));
+        else if (currentMode == RandomResponse)
+            text = QInputDialog::getText(this, tr("Add random response"), tr("Add random response"));
+
+        listWidget->add(text);
+    });
+}
+
+actions::Action ActionPage::getAction(bool *valid)
+{
+    action.funcName = functionEdit->text();
+    action.program = programEdit->text();
+    action.sound = soundEdit->text();
+
+    return action;
 }
 
 bool ActionPage::checkFunctionExists(const QString &funcName)
 {
     QMetaObject object = MainWindow::staticMetaObject;
 
-    int index = object.indexOfMethod(QString(funcName + "()").toUtf8());
+    int index = object.indexOfMethod(QString(funcName + QStringLiteral("()")).toUtf8());
+    if (index == -1) {
+        index = object.indexOfMethod(QString(funcName + QStringLiteral("(QString)")).toUtf8());
+    }
 
     if (index == -1) {
         functionEdit->setStyleSheet(QStringLiteral("color: red"));
@@ -224,27 +276,37 @@ void ActionPage::selectAppPath()
 
     programEdit->setText(files.at(0));
 }
-void ActionPage::selectAppArgs() {}
-void ActionPage::selectRandomResponses() {}
+void ActionPage::selectAppArgs()
+{
+    currentMode = AppArguments;
+    listWidget->clear();
+    listWidget->addList(action.args);
+    contentWidget->hide();
+    addButton->show();
+    listWidget->show();
+    okayButton->show();
+}
+void ActionPage::selectRandomResponses()
+{
+    currentMode = RandomResponse;
+    listWidget->clear();
+    listWidget->addList(action.responses);
+    contentWidget->hide();
+    addButton->show();
+    okayButton->show();
+    listWidget->show();
+}
 
 CommandWizard::CommandWizard(PluginBridge *b, QWidget *parent)
     : QWizard(parent)
     , bridge(b)
-    , listWidgetPage(new ListWidgetPage(this))
     , welcomePage(new WelcomePage(this))
     , addCommandPage(new AddCommandPage(bridge, this))
-    , actionPage(new ActionPage(listWidgetPage, this))
+    , actionPage(new ActionPage(this))
 {
     setWindowTitle(tr("Add command"));
 
     setPage(Page_Welcome, welcomePage);
     setPage(Page_AddCommand, addCommandPage);
     setPage(Page_Action, actionPage);
-    setPage(Page_ListWidget, listWidgetPage);
-
-    connect(actionPage, &ActionPage::gotoListWidgetPage, this, [this] {
-        // Note: Untested
-        setProperty("currentId", Page_ListWidget);
-        Q_EMIT currentIdChanged(Page_ListWidget);
-    });
 }
