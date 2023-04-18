@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Build type
 if(NOT CMAKE_BUILD_TYPE)
   message(STATUS "Build type not specified. Release is used.")
-  set(CMAKE_BUILD_TYPE "Release")
+  set(CMAKE_BUILD_TYPE "Release" FORCE)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
