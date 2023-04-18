@@ -53,8 +53,7 @@ static const QString &pluginDir()
 }
 static const QString &modelDir()
 {
-    static const QString dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                               + QStringLiteral("/models/");
+    static const QString dir = dataDir() + QStringLiteral("/models/");
     return dir;
 }
 static const QString &speechToTextPluginDir()
