@@ -44,7 +44,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
-using namespace utils::literals;
+using namespace utils::strings::literals;
 using actions::Action;
 
 SpeechToText *recognizer = nullptr;
@@ -1036,7 +1036,6 @@ void MainWindow::restart()
 
     QStringList args = qApp->arguments();
     args.removeFirst();
-    // TODO: This doesn't work on webassembly
 #ifndef Q_OS_WASM
     QProcess::startDetached(qApp->applicationFilePath(), args);
 #endif

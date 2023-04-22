@@ -23,12 +23,12 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # Disable debug messages in release mode and improve performance
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
-  string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-  string(REPLACE "-O2" "-O3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-  add_compile_definitions(QT_NO_DEBUG_OUTPUT)
-  option(BUILD_TEST_PLUGIN "Build a test plugin" OFF)
+    string(REPLACE "-O2" "-O3" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+    string(REPLACE "-O2" "-O3" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    add_compile_definitions(QT_NO_DEBUG_OUTPUT)
+    option(BUILD_TEST_PLUGIN "Build a test plugin" OFF)
 else()
-  option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
+    option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)

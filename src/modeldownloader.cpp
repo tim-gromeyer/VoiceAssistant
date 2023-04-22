@@ -25,7 +25,7 @@
 
 #include "elzip.hpp"
 
-using namespace utils::literals;
+using namespace utils::strings::literals;
 
 ModelDownloader::ModelDownloader(QWidget *parent)
     : QDialog{parent}

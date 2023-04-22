@@ -15,7 +15,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
-using namespace utils::literals;
+using namespace utils::strings::literals;
 
 inline QDataStream &operator<<(QDataStream &out, const Jokes::Joke &j)
 {
@@ -149,12 +149,8 @@ void Jokes::fetchJokes()
         reply = manager->get(QNetworkRequest(url));
         qDebug() << "Wait for answer";
 
-        // FIXME: This crashes the app in WebAssembly
-        //        while (reply->isRunning())
-        //            QCoreApplication::processEvents();
-        QEventLoop loop;
-        connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit, Qt::QueuedConnection);
-        loop.exec();
+        while (reply->isRunning())
+            QCoreApplication::processEvents();
 
         qDebug() << "Read data";
 

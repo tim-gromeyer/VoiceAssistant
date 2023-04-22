@@ -136,7 +136,7 @@ void TextToSpeechSettings::populateComboBoxes(bool useNewTTS)
 
     if (engineComboBox->count() == 0) {
         for (const QString &engine : QTextToSpeech::availableEngines())
-            if (engine != utils::literals::L1("mock"))
+            if (engine != utils::strings::literals::L1("mock"))
                 engineComboBox->addItem(engine);
     }
     for (auto &locale : useNewTTS ? m_newtts->availableLocales() : m_tts->availableLocales()) {
