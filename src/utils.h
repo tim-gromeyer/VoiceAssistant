@@ -9,17 +9,17 @@ int wordToNumber(const QString &);
 }
 namespace strings {
 // Implementation by ChatGPT
-inline double calculateSimilarity(const QString &str1, const QString &str2)
+inline double calculateSimilarity(const std::string &str1, const std::string &str2)
 {
-    int n = str1.length();
-    int m = str2.length();
+    int n = (int) str1.length();
+    int m = (int) str2.length();
 
     if (n == 0 || m == 0)
         return 0.0;
     else if (str1 == str2)
         return 1.0;
 
-    QVector<QVector<int>> dist(n + 1, QVector<int>(m + 1));
+    std::vector<std::vector<int>> dist(n + 1, std::vector<int>(m + 1));
 
     for (int i = 0; i <= n; ++i) {
         dist[i][0] = i;
@@ -31,13 +31,17 @@ inline double calculateSimilarity(const QString &str1, const QString &str2)
     for (int i = 1; i <= n; ++i) {
         for (int j = 1; j <= m; ++j) {
             int cost = (str1[i - 1] == str2[j - 1]) ? 0 : 1;
-            dist[i][j] = qMin(dist[i - 1][j] + 1,
-                              qMin(dist[i][j - 1] + 1, dist[i - 1][j - 1] + cost));
+            dist[i][j] = std::min(dist[i - 1][j] + 1,
+                                  std::min(dist[i][j - 1] + 1, dist[i - 1][j - 1] + cost));
         }
     }
 
-    double ratio = 1.0 - (double) dist[n][m] / qMax(n, m);
-    return qMax(ratio, 0.0);
+    double ratio = 1.0 - (double) dist[n][m] / std::max(n, m);
+    return std::max(ratio, 0.0);
+}
+inline double calculateSimilarity(const QString &str1, const QString &str2)
+{
+    return calculateSimilarity(str1.toStdString(), str2.toStdString());
 }
 
 namespace literals {
