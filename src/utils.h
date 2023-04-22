@@ -3,6 +3,10 @@
 #include <QString>
 #include <QStringList>
 
+#include <algorithm>
+#include <string>
+#include <vector>
+
 namespace utils {
 inline namespace numbers {
 int wordToNumber(const QString &);
