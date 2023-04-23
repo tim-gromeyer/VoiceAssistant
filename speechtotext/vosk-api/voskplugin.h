@@ -63,8 +63,8 @@ private:
     QString m_errorString;
 
     QString m_language;
-
-    bool is_listining_because_wakeword = false;
+    
+    bool is_listining_because_of_wakeword = false;
 
     VoskModel *model = nullptr;
     VoskRecognizer *recognizer = nullptr;

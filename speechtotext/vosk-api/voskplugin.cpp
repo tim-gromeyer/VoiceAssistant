@@ -42,10 +42,11 @@ void VoskPlugin::parseText(const char *json)
     text.append(u' ');
 
     if (!text.contains(m_wakeWord)) {
-        if (!is_listining_because_wakeword)
+        if (!is_listining_because_of_wakeword)
             return;
 
         Q_EMIT falsePositiveWakeWord();
+        is_listining_because_of_wakeword = false;
         return;
     }
 
@@ -68,9 +69,10 @@ void VoskPlugin::parsePartial(const char *json)
     if (text.contains(m_wakeWord)) {
         Q_EMIT wakeWordDetected();
         text = text.mid(text.indexOf(m_wakeWord) + m_wakeWord.size());
-        is_listining_because_wakeword = true;
-    } else if (is_listining_because_wakeword) {
+        is_listining_because_of_wakeword = true;
+    } else if (is_listining_because_of_wakeword) {
         Q_EMIT falsePositiveWakeWord();
+        is_listining_because_of_wakeword = false;
         return;
     } else if (!m_isAsking)
         return;
