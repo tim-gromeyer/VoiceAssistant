@@ -16,7 +16,7 @@ public:
     explicit VoskPlugin(QObject *parent = nullptr);
     ~VoskPlugin();
 
-    inline QString pluginName() override { return QStringLiteral("vosk"); };
+    [[nodiscard]] inline QString pluginName() const override { return QStringLiteral("vosk"); };
 
     qint64 writeData(const char *data, qint64 size) override;
 
@@ -63,7 +63,7 @@ private:
     QString m_errorString;
 
     QString m_language;
-    
+
     bool is_listining_because_of_wakeword = false;
 
     VoskModel *model = nullptr;

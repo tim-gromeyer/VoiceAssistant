@@ -14,7 +14,7 @@ public:
     explicit SpeechToTextPlugin(QObject *parent = nullptr){};
     virtual ~SpeechToTextPlugin() = default;
 
-    virtual QString pluginName() = 0;
+    [[nodiscard]] virtual QString pluginName() const = 0;
 
     enum State {
         NotStarted = 0,       // Not set up yet
