@@ -612,18 +612,26 @@ void MainWindow::openCommandWizard()
 
 void MainWindow::processText(const QString &text)
 {
+    using namespace utils::strings;
+
+    constexpr float SIMILARITY_THRESHOLD = 0.8;
+
     if (text.isEmpty())
         return;
 
+    // Loop for actions in commands
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
-            if (text.startsWith(command)) {
-                action.run(text.mid(command.length() + 1));
+            QString commandPrefix = text.mid(0, command.length());
+            if (calculateSimilarity(commandPrefix, command) >= SIMILARITY_THRESHOLD) {
+                QString parameter = text.mid(command.length() + 1);
+                action.run(parameter);
                 return;
             }
         }
     }
 
+    // Loop for plugins
     for (const Plugin &plugin : qAsConst(plugins)) {
         if (!plugin.interface->isValid(text))
             continue;
@@ -632,6 +640,7 @@ void MainWindow::processText(const QString &text)
         return;
     }
 
+    // Error handling: No matching action found
     say(tr("I have not understood this!"));
 }
 
