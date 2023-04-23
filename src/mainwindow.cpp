@@ -622,9 +622,9 @@ void MainWindow::processText(const QString &text)
     // Loop for actions in commands
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
-            QString commandPrefix = text.mid(0, command.length());
+            QString commandPrefix = text.left(command.length());
             if (calculateSimilarity(commandPrefix, command) >= SIMILARITY_THRESHOLD) {
-                QString parameter = text.mid(command.length() + 1);
+                QString parameter = text.mid(commandPrefix.length() + 1);
                 action.run(parameter);
                 return;
             }
