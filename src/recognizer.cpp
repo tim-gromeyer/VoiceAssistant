@@ -354,4 +354,4 @@ void SpeechToText::setState(SpeechToText::State s)
     Q_EMIT stateChanged();
 }
 
-SpeechToText::~SpeechToText() {}
+SpeechToText::~SpeechToText() = default;
