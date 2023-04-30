@@ -2,29 +2,101 @@
 
 #include <QCoreApplication>
 #include <QHash>
+#include <QTextStream>
+
+#include <sstream>
+#include <string>
 
 namespace utils {
 inline namespace numbers {
-int wordToNumber(const QString &word)
+int wordToNumber(QString text)
 {
-    // Maybe reading from a JSON file is a better approach
-    static QHash<QString, int> numbers;
-    if (numbers.isEmpty()) {
-        numbers[QCoreApplication::translate("number", "zero")] = 0;
-        numbers[QCoreApplication::translate("number", "one")] = 1;
-        numbers[QCoreApplication::translate("number", "two")] = 2;
-        numbers[QCoreApplication::translate("number", "three")] = 3;
-        numbers[QCoreApplication::translate("number", "four")] = 4;
-        numbers[QCoreApplication::translate("number", "five")] = 5;
-        numbers[QCoreApplication::translate("number", "six")] = 6;
-        numbers[QCoreApplication::translate("number", "seven")] = 7;
-        numbers[QCoreApplication::translate("number", "eight")] = 8;
-        numbers[QCoreApplication::translate("number", "nine")] = 9;
-        numbers[QCoreApplication::translate("number", "ten")] = 10;
+    static QHash<QString, int> numMap
+        = {{QCoreApplication::translate("number", "zero"), 0},
+           {QCoreApplication::translate("number", "one"), 1},
+           {QCoreApplication::translate("number", "two"), 2},
+           {QCoreApplication::translate("number", "three"), 3},
+           {QCoreApplication::translate("number", "four"), 4},
+           {QCoreApplication::translate("number", "five"), 5},
+           {QCoreApplication::translate("number", "six"), 6},
+           {QCoreApplication::translate("number", "seven"), 7},
+           {QCoreApplication::translate("number", "eight"), 8},
+           {QCoreApplication::translate("number", "nine"), 9},
+           {QCoreApplication::translate("number", "ten"), 10},
+           {QCoreApplication::translate("number", "eleven"), 11},
+           {QCoreApplication::translate("number", "twelve"), 12},
+           {QCoreApplication::translate("number", "thirteen"), 13},
+           {QCoreApplication::translate("number", "fourteen"), 14},
+           {QCoreApplication::translate("number", "fifteen"), 15},
+           {QCoreApplication::translate("number", "sixteen"), 16},
+           {QCoreApplication::translate("number", "seventeen"), 17},
+           {QCoreApplication::translate("number", "eighteen"), 18},
+           {QCoreApplication::translate("number", "nineteen"), 19},
+           {QCoreApplication::translate("number", "twenty"), 20},
+           {QCoreApplication::translate("number", "thirty"), 30},
+           {QCoreApplication::translate("number", "forty"), 40},
+           {QCoreApplication::translate("number", "fifty"), 50},
+           {QCoreApplication::translate("number", "sixty"), 60},
+           {QCoreApplication::translate("number", "seventy"), 70},
+           {QCoreApplication::translate("number", "eighty"), 80},
+           {QCoreApplication::translate("number", "ninety"), 90},
+           {QCoreApplication::translate("number", "hundred"), 100},
+           {QCoreApplication::translate("number", "thousand"), 1000},
+           {QCoreApplication::translate("number", "million"), 1000000},
+           {QCoreApplication::translate("number", "billion"), 1000000000}};
+
+    int result = 0;
+    int currNum = 0;
+    int prevNum = 0;
+    bool isNegative = false;
+
+    text = text.toLower();
+    for (const QString &word : text.split(u' ')) {
+        if (word == QCoreApplication::translate("number", "negative")) {
+            isNegative = true;
+        } else if (word == QCoreApplication::translate("number", "and")) {
+            // ignore "and"
+        } else if (numMap.contains(word)) {
+            if (numMap[word] >= 100 && currNum > 0) {
+                prevNum += currNum * numMap[word];
+                currNum = 0;
+            } else {
+                currNum += numMap[word];
+            }
+        } else if (word == QCoreApplication::translate("number", "hundred")) {
+            currNum *= 100;
+        } else if (word == QCoreApplication::translate("number", "thousand")
+                   || word == QCoreApplication::translate("number", "million")
+                   || word == QCoreApplication::translate("number", "billion")) {
+            result += (prevNum + currNum) * numMap[word];
+            prevNum = 0;
+            currNum = 0;
+        } else {
+            return -1; // unrecognized word/number
+        }
     }
 
-    return numbers.value(word, 10);
+    result += prevNum + currNum;
+    return isNegative ? -result : result;
 }
+
+//// Maybe reading from a JSON file is a better approach
+//static QHash<QString, int> numbers;
+//if (numbers.isEmpty()) {
+//    numbers[QCoreApplication::translate("number", "zero")] = 0;
+//    numbers[QCoreApplication::translate("number", "one")] = 1;
+//    numbers[QCoreApplication::translate("number", "two")] = 2;
+//    numbers[QCoreApplication::translate("number", "three")] = 3;
+//    numbers[QCoreApplication::translate("number", "four")] = 4;
+//    numbers[QCoreApplication::translate("number", "five")] = 5;
+//    numbers[QCoreApplication::translate("number", "six")] = 6;
+//    numbers[QCoreApplication::translate("number", "seven")] = 7;
+//    numbers[QCoreApplication::translate("number", "eight")] = 8;
+//    numbers[QCoreApplication::translate("number", "nine")] = 9;
+//    numbers[QCoreApplication::translate("number", "ten")] = 10;
+//}
+
+//return numbers.value(word, 10);
 } // namespace numbers
 } // namespace utils
 
@@ -43,6 +115,13 @@ QString makeSizeRedalbe(qint64 size)
     return sizeString;
 }
 } // namespace file
+
+namespace strings {
+int normalizeText(const QString &text)
+{
+    return utils::wordToNumber(text);
+}
+} // namespace strings
 
 namespace download {
 QString makeSecoundsReadable(qint64 secondsRemaining)

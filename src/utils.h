@@ -9,7 +9,7 @@
 
 namespace utils {
 inline namespace numbers {
-int wordToNumber(const QString &);
+int wordToNumber(QString);
 }
 namespace strings {
 // Implementation by ChatGPT
@@ -47,6 +47,7 @@ inline double calculateSimilarity(const QString &str1, const QString &str2)
 {
     return calculateSimilarity(str1.toStdString(), str2.toStdString());
 }
+QString normalizeText(const QString &);
 
 namespace literals {
 constexpr QLatin1String L1(const char *str)
