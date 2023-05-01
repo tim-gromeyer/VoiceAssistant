@@ -12,36 +12,34 @@ inline namespace numbers {
 int wordToNumber(QString);
 }
 namespace strings {
-// Implementation by ChatGPT
 inline double calculateSimilarity(const std::string &str1, const std::string &str2)
 {
-    int n = (int) str1.length();
-    int m = (int) str2.length();
+    const size_t len0 = str1.size() + 1;
+    const size_t len1 = str2.size() + 1;
 
-    if (n == 0 || m == 0)
-        return 0.0;
-    else if (str1 == str2)
-        return 1.0;
-
-    std::vector<std::vector<int>> dist(n + 1, std::vector<int>(m + 1));
-
-    for (int i = 0; i <= n; ++i) {
-        dist[i][0] = i;
-    }
-    for (int j = 0; j <= m; ++j) {
-        dist[0][j] = j;
+    if (str1.empty() || str2.empty()) {
+        return 0;
     }
 
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= m; ++j) {
-            int cost = (str1[i - 1] == str2[j - 1]) ? 0 : 1;
-            dist[i][j] = std::min(dist[i - 1][j] + 1,
-                                  std::min(dist[i][j - 1] + 1, dist[i - 1][j - 1] + cost));
+    std::vector<size_t> col(len1, 0);
+    std::vector<size_t> prevCol(len1, 0);
+
+    for (size_t i = 0; i < len1; i++) {
+        prevCol[i] = i;
+    }
+
+    for (size_t i = 0; i < len0; i++) {
+        col[0] = i;
+        for (size_t j = 1; j < len1; j++) {
+            col[j] = std::min(std::min(1 + col[j - 1], 1 + prevCol[j]),
+                              prevCol[j - 1] + (i > 0 && str1[i - 1] == str2[j - 1] ? 0 : 1));
         }
+        col.swap(prevCol);
     }
 
-    double ratio = 1.0 - (double) dist[n][m] / std::max(n, m);
-    return std::max(ratio, 0.0);
+    const size_t dist = prevCol[len1 - 1];
+
+    return 1.0F - float(dist / std::max(str1.size(), str2.size()));
 }
 inline double calculateSimilarity(const QString &str1, const QString &str2)
 {
