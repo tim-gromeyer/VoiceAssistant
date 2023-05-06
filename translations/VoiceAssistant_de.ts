@@ -95,7 +95,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="88"/>
         <source>Listen</source>
-        <translation>Hören</translation>
+        <translation>Zuhöhren</translation>
     </message>
 </context>
 <context>
@@ -147,7 +147,7 @@ Sprachen der Witze: %2</translation>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation>&amp;Datei</translation>
+        <translation type="unfinished">&amp;Datei</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="131"/>
