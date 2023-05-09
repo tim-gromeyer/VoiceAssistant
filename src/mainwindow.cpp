@@ -623,7 +623,10 @@ void MainWindow::processText(const QString &text)
     for (const auto &action : qAsConst(commands)) {
         for (const auto &command : action.commands) {
             QString commandPrefix = text.left(command.length());
-            if (calculateSimilarity(commandPrefix, command) >= SIMILARITY_THRESHOLD) {
+            float similaritry = calculateSimilarity(commandPrefix, command);
+            qDebug().noquote().nospace() << "calculateSimilarity(" << commandPrefix << ", "
+                                         << command << ") --> " << similaritry;
+            if (similaritry >= SIMILARITY_THRESHOLD || text.contains(command)) {
                 QString parameter = text.mid(commandPrefix.length() + 1);
                 action.run(parameter);
                 return;
