@@ -12,39 +12,41 @@ inline namespace numbers {
 int wordToNumber(QString);
 }
 namespace strings {
-inline double calculateSimilarity(const std::string &str1, const std::string &str2)
+inline float calculateSimilarity(const QString &str1, const QString &str2)
 {
-    const size_t len0 = str1.size() + 1;
-    const size_t len1 = str2.size() + 1;
+    using size = QString::size_type;
 
-    if (str1.empty() || str2.empty()) {
-        return 0;
+    const size len0 = str1.length() + 1;
+    const size len1 = str2.length() + 1;
+
+    if (str1.isEmpty() || str2.isEmpty()) {
+        return 0.0;
+    } else if (str1 == str2) {
+        return 1.0;
     }
 
-    std::vector<size_t> col(len1, 0);
-    std::vector<size_t> prevCol(len1, 0);
+    std::vector<size> col(len1, 0);
+    std::vector<size> prevCol(len1, 0);
+    prevCol.reserve(len1);
 
-    for (size_t i = 0; i < len1; i++) {
+    for (size i = 0; i < len1; i++) {
         prevCol[i] = i;
     }
 
-    for (size_t i = 0; i < len0; i++) {
+    for (size i = 0; i < len0; i++) {
         col[0] = i;
-        for (size_t j = 1; j < len1; j++) {
+        for (size j = 1; j < len1; j++) {
             col[j] = std::min(std::min(1 + col[j - 1], 1 + prevCol[j]),
                               prevCol[j - 1] + (i > 0 && str1[i - 1] == str2[j - 1] ? 0 : 1));
         }
         col.swap(prevCol);
     }
 
-    const size_t dist = prevCol[len1 - 1];
+    const size dist = prevCol[len1 - 1];
 
-    return 1.0F - float(dist / std::max(str1.size(), str2.size()));
+    return 1.0F - float(dist) / (float) std::max(str1.length(), str2.length());
 }
-inline double calculateSimilarity(const QString &str1, const QString &str2)
-{
-    return calculateSimilarity(str1.toStdString(), str2.toStdString());
-}
+
 QString normalizeText(const QString &);
 
 namespace literals {
