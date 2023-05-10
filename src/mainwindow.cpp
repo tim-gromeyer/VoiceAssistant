@@ -222,10 +222,16 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::firstSetup()
 {
-    if (QDir().exists(dir::commandsBaseDir()))
+    QDir dir;
+
+    if (dir.exists(dir::commandsBaseDir()))
         return;
 
     directory::copyRecursively(dir::commandsInstallBaseDir(), dir::commandsBaseDir());
+#ifndef QT_DEBUG
+    // NOTE: This might fail because on Linux /opt is read-only so we can't delete files/folders or write to files
+    dir.remove(dir::commandsInstallBaseDir());
+#endif
 }
 
 void MainWindow::addCommand(const Action &a)
