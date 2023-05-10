@@ -71,11 +71,17 @@ QString makeDownloadSpeedReadable(qint64);
 namespace actions {
 struct Action
 {
+    // Name of the action
+    QString name;
+
+    // Name of the function to execute (optional)
     QString funcName;
+    // A list of possible responses. A random response is chosen
     QStringList responses;
 
-    // Execute program
+    // Path/Name od the executable to run
     QString program;
+    // Arguments passed to the executable
     QStringList args;
 
     // Commands it reacts to

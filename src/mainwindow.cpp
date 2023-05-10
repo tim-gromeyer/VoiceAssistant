@@ -697,6 +697,9 @@ void MainWindow::loadCommands()
         // Command template
         Action c;
 
+        // get the name of the action
+        c.name = jsonObject[STR("name")].toString();
+
         // get the function name from the JSON object(optional)
         c.funcName = jsonObject[STR("funcName")].toString();
 
@@ -733,6 +736,8 @@ void MainWindow::saveCommands()
     for (const auto &c : qAsConst(commands)) {
         QJsonObject jsonObject;
 
+        if (!c.name.isEmpty())
+            jsonObject[STR("name")] = c.name;
         if (!c.funcName.isEmpty())
             jsonObject[STR("funcName")] = c.funcName;
         if (!c.program.isEmpty())
