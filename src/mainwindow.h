@@ -113,6 +113,7 @@ private Q_SLOTS:
 
 private:
     static void applyVolume();
+    void firstSetup();
 
     Ui::MainWindow *ui;
 

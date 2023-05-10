@@ -59,6 +59,10 @@ constexpr QLatin1String L1(const char *str)
 } // namespace strings
 } // namespace utils
 
+namespace directory {
+bool copyRecursively(const QString &fromDir, const QString &toDir, bool coverFileIfExist = false);
+} // namespace directory
+
 namespace file {
 QString makeSizeRedalbe(qint64);
 }

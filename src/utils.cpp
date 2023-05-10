@@ -1,6 +1,8 @@
 #include "utils.h"
 
 #include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
 #include <QHash>
 #include <QTextStream>
 
@@ -99,6 +101,41 @@ int wordToNumber(QString text)
 //return numbers.value(word, 10);
 } // namespace numbers
 } // namespace utils
+
+namespace directory {
+bool copyRecursively(const QString &fromDir, const QString &toDir, bool coverFileIfExist)
+{
+    QDir sourceDir(fromDir);
+    QDir targetDir(toDir);
+    if (!targetDir.exists()) { /* if directory don't exists, build it */
+        if (!targetDir.mkdir(targetDir.absolutePath()))
+            return false;
+    }
+
+    QFileInfoList fileInfoList = sourceDir.entryInfoList();
+    foreach (QFileInfo fileInfo, fileInfoList) {
+        if (fileInfo.fileName() == "." || fileInfo.fileName() == "..")
+            continue;
+
+        if (fileInfo.isDir()) { /* if it is directory, copy recursively*/
+            if (!copyRecursively(fileInfo.filePath(),
+                                 targetDir.filePath(fileInfo.fileName()),
+                                 coverFileIfExist))
+                return false;
+        } else { /* if coverFileIfExist == true, remove old file first */
+            if (coverFileIfExist && targetDir.exists(fileInfo.fileName())) {
+                targetDir.remove(fileInfo.fileName());
+            }
+
+            // files copy
+            if (!QFile::copy(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()))) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+} // namespace directory
 
 namespace file {
 QString makeSizeRedalbe(qint64 size)

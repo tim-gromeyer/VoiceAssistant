@@ -141,6 +141,9 @@ MainWindow::MainWindow(QWidget *parent)
     player->setAudioOutput(audioOutput);
 #endif
 
+    // TODO: Detect first startup (after installation) and show a instruction or so
+    firstSetup();
+
     // Set up recognizer
     recognizer = new SpeechToText(STR("vosk"), this);
     connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);
@@ -215,6 +218,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->actionCloseWindow->setShortcuts(QKeySequence::Close);
     ui->action_Quit->setShortcuts(QKeySequence::Quit);
+}
+
+void MainWindow::firstSetup()
+{
+    if (QDir().exists(dir::commandsBaseDir()))
+        return;
+
+    directory::copyRecursively(dir::commandsInstallBaseDir(), dir::commandsBaseDir());
 }
 
 void MainWindow::addCommand(const Action &a)
@@ -651,7 +662,12 @@ void MainWindow::loadCommands()
 {
     commands.clear();
 
-    const QString dir = dir::commandsBaseDir() + recognizer->language();
+    QString dir = dir::commandsBaseDir() + recognizer->language();
+
+    QDir testDir;
+    testDir.setPath(dir);
+    if (testDir.isEmpty())
+        dir = dir::commandsInstallBaseDir() + recognizer->language();
 
     QFile jsonFile(dir + STR("/default.json"));
     // open the JSON file
@@ -730,6 +746,9 @@ void MainWindow::loadCommands()
 void MainWindow::saveCommands()
 {
     const QString dir = dir::commandsBaseDir() + recognizer->language();
+    QDir makeDir;
+    makeDir.setPath(dir);
+    makeDir.mkpath(dir);
 
     QJsonArray jsonArray;
 
