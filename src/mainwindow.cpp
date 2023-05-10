@@ -722,6 +722,9 @@ void MainWindow::loadCommands()
         // get the name of the action
         c.name = jsonObject[STR("name")].toString();
 
+        // this is a default action
+        c.isUserAction = false;
+
         // get the function name from the JSON object(optional)
         c.funcName = jsonObject[STR("funcName")].toString();
 
@@ -757,6 +760,7 @@ void MainWindow::saveCommands()
     makeDir.mkpath(dir);
 
     QJsonArray jsonArray;
+    QJsonArray userArray;
 
     for (const auto &c : qAsConst(commands)) {
         QJsonObject jsonObject;
@@ -790,8 +794,12 @@ void MainWindow::saveCommands()
                 argsArray.append(arg);
             jsonObject[STR("args")] = argsArray;
         }
-        if (!jsonObject.isEmpty())
-            jsonArray.append(jsonObject);
+        if (!jsonObject.isEmpty()) {
+            if (c.isUserAction)
+                userArray.append(jsonObject);
+            else
+                jsonArray.append(jsonObject);
+        }
     }
 
     QJsonDocument jsonDoc(jsonArray);
@@ -808,6 +816,22 @@ void MainWindow::saveCommands()
             tr("Failed to save file"),
             tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
                 .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
+
+    QJsonDocument userJsonDoc(userArray);
+
+    QSaveFile userJsonFile(dir + STR("/user.json"));
+    if (!userJsonFile.open(QIODevice::WriteOnly)) {
+        qDebug() << STR("Failed to open %1\n%2")
+                        .arg(userJsonFile.fileName(), userJsonFile.errorString());
+        return;
+    }
+    userJsonFile.write(userJsonDoc.toJson());
+    if (!userJsonFile.commit())
+        QMessageBox::warning(
+            instance(),
+            tr("Failed to save file"),
+            tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
+                .arg(userJsonFile.fileName(), userJsonFile.errorString(), userJsonDoc.toJson()));
 }
 
 void MainWindow::loadPlugins()

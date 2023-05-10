@@ -78,6 +78,9 @@ struct Action
     // Name of the action
     QString name;
 
+    // Is this a user action or a default action
+    bool isUserAction = true;
+
     // Name of the function to execute (optional)
     QString funcName;
     // A list of possible responses. A random response is chosen
