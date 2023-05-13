@@ -113,12 +113,19 @@ bool AddCommandPage::isComplete() const
     return !commandsList->isEmpty() && listenButton->isEnabled();
 }
 
+QStringList AddCommandPage::commands() const
+{
+    return commandsList->allItems();
+}
+
 ActionPage::ActionPage(QWidget *parent)
     : QWizardPage(parent)
     , contentWidget(new QWidget(this))
     , verticalLayout(new QVBoxLayout(contentWidget))
     , groupBox(new QGroupBox(this))
     , formLayout(new QFormLayout(groupBox))
+    , actionNameLabel(new QLabel(groupBox))
+    , actionNameLineEdit(new QLineEdit(groupBox))
     , executeLabel(new QLabel(groupBox))
     , functionEdit(new QLineEdit(groupBox))
     , randomLabel(new QLabel(groupBox))
@@ -135,14 +142,17 @@ ActionPage::ActionPage(QWidget *parent)
     , listWidget(new ListWidget(this))
     , okayButton(new QPushButton(this))
 {
-    formLayout->setWidget(0, QFormLayout::LabelRole, executeLabel);
-    formLayout->setWidget(0, QFormLayout::FieldRole, functionEdit);
+    formLayout->setWidget(0, QFormLayout::LabelRole, actionNameLabel);
+    formLayout->setWidget(0, QFormLayout::FieldRole, actionNameLineEdit);
 
-    formLayout->setWidget(1, QFormLayout::LabelRole, randomLabel);
-    formLayout->setWidget(1, QFormLayout::FieldRole, randomResponseButton);
+    formLayout->setWidget(1, QFormLayout::LabelRole, executeLabel);
+    formLayout->setWidget(1, QFormLayout::FieldRole, functionEdit);
 
-    formLayout->setWidget(2, QFormLayout::LabelRole, playLabel);
-    formLayout->setWidget(2, QFormLayout::FieldRole, soundEdit);
+    formLayout->setWidget(2, QFormLayout::LabelRole, randomLabel);
+    formLayout->setWidget(2, QFormLayout::FieldRole, randomResponseButton);
+
+    formLayout->setWidget(3, QFormLayout::LabelRole, playLabel);
+    formLayout->setWidget(3, QFormLayout::FieldRole, soundEdit);
 
     horizontalLayout->addWidget(programEdit);
 
@@ -156,11 +166,11 @@ ActionPage::ActionPage(QWidget *parent)
 
     horizontalLayout->setStretch(0, 1);
 
-    formLayout->setWidget(3, QFormLayout::LabelRole, programmLabel);
-    formLayout->setLayout(3, QFormLayout::FieldRole, horizontalLayout);
+    formLayout->setWidget(4, QFormLayout::LabelRole, programmLabel);
+    formLayout->setLayout(4, QFormLayout::FieldRole, horizontalLayout);
 
-    formLayout->setWidget(4, QFormLayout::LabelRole, argumentLabel);
-    formLayout->setWidget(4, QFormLayout::FieldRole, argumentButton);
+    formLayout->setWidget(5, QFormLayout::LabelRole, argumentLabel);
+    formLayout->setWidget(5, QFormLayout::FieldRole, argumentButton);
 
     verticalLayout->addWidget(groupBox);
 
@@ -178,6 +188,8 @@ ActionPage::ActionPage(QWidget *parent)
     setTitle(tr("Select Action"));
     setSubTitle(tr("Select the action(s) to be performed when the command is recognized"));
     groupBox->setTitle(tr("Actions"));
+    actionNameLabel->setText(tr("Action name"));
+    actionNameLineEdit->setPlaceholderText(tr("Name of the action"));
     executeLabel->setText(tr("Execute function"));
     randomLabel->setText(tr("Random response"));
     randomResponseButton->setText(tr("Select"));
@@ -222,9 +234,41 @@ ActionPage::ActionPage(QWidget *parent)
 
 actions::Action ActionPage::getAction(bool *valid)
 {
+    action.name = actionNameLineEdit->text();
     action.funcName = functionEdit->text();
     action.program = programEdit->text();
+    // action.args is already populated
+    // action.responses is already populated
     action.sound = soundEdit->text();
+    action.isUserAction = true;
+
+    if (valid == nullptr)
+        return action;
+
+    /* Valid if:
+     * - There is a action name
+     * - one of the following things is true:
+     * - - `funcName` is not empty and valid
+     * - - `program` is given
+     * - - `responses` is given
+     * - - `sound` is given
+     */
+    /*
+     * *valid = !action.name.isEmpty(): This condition checks if action.name is not empty. If it is empty, valid will be set to false.
+     * 
+     * !action.funcName.isEmpty() && checkFunctionExists(action.funcName): This condition checks if action.funcName is not empty and if checkFunctionExists(action.funcName) returns true.
+     * If both conditions are satisfied, it indicates that funcName is valid.
+     * 
+     * !action.program.isEmpty(): This condition checks if action.program is not empty. If it is not empty, it indicates that program is given.
+     * 
+     * !action.responses.isEmpty(): This condition checks if action.responses is not empty. If it is not empty, it indicates that responses is given.
+     * 
+     * !action.sound.isEmpty(): This condition checks if action.sound is not empty. If it is not empty, it indicates that sound is given.
+     */
+    *valid = !action.name.isEmpty()
+             && ((!action.funcName.isEmpty() && checkFunctionExists(action.funcName))
+                 || !action.program.isEmpty() || !action.responses.isEmpty()
+                 || !action.sound.isEmpty());
 
     return action;
 }
@@ -309,4 +353,18 @@ CommandWizard::CommandWizard(PluginBridge *b, QWidget *parent)
     setPage(Page_Welcome, welcomePage);
     setPage(Page_AddCommand, addCommandPage);
     setPage(Page_Action, actionPage);
+}
+
+actions::Action CommandWizard::getAction(bool *valid)
+{
+    bool isActionValid = false;
+
+    actions::Action action = actionPage->getAction(&isActionValid);
+    action.commands = addCommandPage->commands();
+
+    if (valid != nullptr) {
+        *valid = isActionValid && !action.commands.isEmpty();
+    }
+
+    return action;
 }

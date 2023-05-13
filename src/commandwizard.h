@@ -112,6 +112,8 @@ private:
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
     QFormLayout *formLayout;
+    QLabel *actionNameLabel;
+    QLineEdit *actionNameLineEdit;
     QLabel *executeLabel;
     QLineEdit *functionEdit;
     QLabel *randomLabel;
@@ -137,6 +139,8 @@ class CommandWizard : public QWizard
 public:
     explicit CommandWizard(PluginBridge *b, QWidget *parent = nullptr);
     ~CommandWizard() = default;
+
+    actions::Action getAction(bool *valid);
 
 private:
     PluginBridge *bridge;

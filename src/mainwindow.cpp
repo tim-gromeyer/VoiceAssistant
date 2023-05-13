@@ -64,6 +64,8 @@ float volume = 1.0;
 
 void actions::Action::run(const QString &text) const
 {
+    qDebug().noquote().nospace() << "Running action: " << name;
+
     if (!funcName.isEmpty()) {
         if (MainWindow::staticMetaObject.indexOfMethod(QString(funcName + L1("()")).toUtf8()) == -1)
             QMetaObject::invokeMethod((QObject *) MainWindow::instance(),
@@ -625,6 +627,12 @@ void MainWindow::openCommandWizard()
 {
     CommandWizard wizard(bridge, this);
     wizard.exec();
+
+    bool isActionValid = false;
+    actions::Action action = wizard.getAction(&isActionValid);
+
+    if (isActionValid)
+        addCommand(action);
 };
 
 void MainWindow::processText(const QString &text)
@@ -1147,6 +1155,5 @@ MainWindow::~MainWindow()
     delete timeTimer;
 }
 
-// TODO: Let user add commands via GUI (implement the back-end, the GUI is already there)
 // TODO: Add settings like disabling tray icon, store language and model path and so on
 // TODO: Implement weather as a plugin(so it's easier to exclude), see Qt weather example
