@@ -88,6 +88,8 @@ void SettingsDialog::onClicked(QAbstractButton *button)
 
 void SettingsDialog::search(const QString &text)
 {
+    int pageCount = 0;
+
     for (SettingsWidget *settingsWidget : qAsConst(m_settingsWidgets)) {
         bool keywordsContainsText = false;
 
@@ -95,19 +97,26 @@ void SettingsDialog::search(const QString &text)
             if (!keyword.contains(text, Qt::CaseInsensitive))
                 continue;
 
+            ++pageCount;
             keywordsContainsText = true;
             break;
         }
-
-        if (keywordsContainsText)
-            return;
 
         auto list = ui->listWidget->findItems(settingsWidget->displayCategory(), Qt::MatchExactly);
         if (list.isEmpty())
             return;
 
-        list.at(0)->setHidden(true);
+        list.at(0)->setHidden(!keywordsContainsText);
     }
+
+    if (pageCount != 0) {
+        if (ui->listWidget->currentItem())
+            changeCategory(ui->listWidget->currentItem()->text());
+        return;
+    }
+
+    ui->scrollArea->takeWidget();
+    ui->scrollArea->setWidget(ui->scrollAreaWidgetContents);
 }
 
 SettingsDialog::~SettingsDialog()
