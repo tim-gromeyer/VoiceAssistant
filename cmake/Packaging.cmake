@@ -1,7 +1,11 @@
 include(InstallRequiredSystemLibraries)
 
 set(PROJECT_HOMEPAGE_URL "https://github.com/tim-gromeyer/VoiceAssistant")
-set(PROJECT_DESCRIPTION "Resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.")
+set(PROJECT_DESCRIPTION_SUMMARY "VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.")
+set(PROJECT_DESCRIPTION "VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
+
+Privacy is our top priority, and VoiceAssistant ensures that all operations are performed offline on your local device, keeping your data secure and protected."
+)
 
 set(CPACK_STRIP_FILES ON)
 set(CPACK_SOURCE_STRIP_FILES ON)
@@ -9,7 +13,7 @@ set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
 set(CPACK_PACKAGE_CONTACT "Tim Gromeyer")
 set(CPACK_PACKAGE_VENDOR ${CPACK_PACKAGE_CONTACT})
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION_SUMMARY})
 set(CPACK_PACKAGE_DESCRIPTION "${PROJECT_DESCRIPTION}")
 
 set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/COPYING)
