@@ -5,8 +5,10 @@ Encoding=UTF-8
 Name=VoiceAssistant
 Version=${PROJECT_VERSION}
 Comment=${PROJECT_DESCRIPTION}
+Comment[fr]=VoiceAssistant est un assistant vocal personnalisable et économe en ressources qui est encore aux premiers stades de développement mais déjà fonctionnel.
+Comment[es]=VoiceAssistant es un asistente de voz eficiente en recursos y personalizable que aún está en las primeras etapas de desarrollo pero ya es funcional.
+Comment[de]=VoiceAssistant ist ein ressourcenschonender und anpassbarer Sprachassistent, der sich noch in einem frühen Entwicklungsstadium befindet, aber bereits funktionsfähig ist.
 Exec=env LD_LIBRARY_PATH="${CPACK_INSTALL_PREFIX}/lib:$LD_LIBRARY_PATH" ${CPACK_INSTALL_PREFIX}/bin/voiceassistant
 Icon=${CPACK_INSTALL_PREFIX}/Icon.svg
 Categories=Utility;
 Keywords=voice;assistant;AI;speech;recognition;
-
