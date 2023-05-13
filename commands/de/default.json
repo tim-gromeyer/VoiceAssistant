@@ -29,6 +29,7 @@
     {
         "name": "Begrüßung",
         "commands": [
+            "guten morgen",
             "guten abend",
             "guten mittag",
             "guten tag",
@@ -36,8 +37,11 @@
             "mahlzeit"
         ],
         "responses": [
+            "guten morgen",
             "guten tag",
+            "guten abend",
             "hallo",
+            "mahlzeit",
             "hallo, freut mich von dir zu hören",
             "Hallo! Wie kann ich heute helfen?"
         ]

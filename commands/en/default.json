@@ -38,13 +38,23 @@
             "hey",
             "greetings",
             "howdy",
-            "good morning"
+            "good morning",
+            "bonjour",
+            "hola",
+            "ciao"
         ],
         "responses": [
             "hello",
             "hi there",
             "hi, nice to hear from you",
-            "Hello! How can I assist you today?"
+            "Hello! How can I assist you today?",
+            "good day",
+            "greetings",
+            "hey",
+            "howdy",
+            "bonjour",
+            "hola",
+            "ciao"
         ]
     },
     {
