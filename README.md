@@ -7,6 +7,8 @@
 
 VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
 
+Privacy is our top priority, and VoiceAssistant ensures that all operations are performed offline on your local device, keeping your data secure and protected.
+
 ## Goal
 
 The main goal of VoiceAssistant is to provide a fully customizable and extendable voice assistant that can be controlled entirely using voice commands.
@@ -16,7 +18,7 @@ The main goal of VoiceAssistant is to provide a fully customizable and extendabl
 - Fully customizable and extendable (I'm still working on this)
 - Offline functionality for enhanced privacy and security
 - Voice recognition for executing predefined commands
-- Ki integration planned for the future
+- Privacy-first approach with everything offline and local on the device
 
 ## Supported Platforms
 
@@ -53,14 +55,14 @@ There are some default commands. See [Add Commands](#add-commands).
 
 To add your command, edit the `commands/<your_language>/default.json` file. The supported values are:
 
-| Name        | Type             | Description                                                 | Notes                                           |
-|-------------|------------------|-------------------------------------------------------------|-------------------------------------------------|
-| `commands`  | Array of strings | All commands that the voice assistant should react to       | Required                                        |
-| `funcName`  | String           | The name of the function to call (`MainWindow::<funcName>`) |                                                 |
-| `responses` | Array of strings | It selects a random response from the array                 |                                                 |
-| `program`   | String           | A program to execute                                        |                                                 |
-| `args`      | Array of strings | Arguments passed to `program`                               | `${TEXT}` will be replaced with the voice input |
-| `sound`     | String           | Path to local or remote file that gets played               | Volume can be controlled via voice/GUI          |
+| Name        | Type             | Description                                                 | Notes                                             |
+|-------------|------------------|-------------------------------------------------------------|---------------------------------------------------|
+| `commands`  | Array of strings | All commands that the voice assistant should react to       | Required                                          |
+| `funcName`  | String           | The name of the function to call (`MainWindow::<funcName>`) |                                                   |
+| `responses` | Array of strings | It selects a random response from the array                 | Use `[wait <number of ms>]` to wait between words |
+| `program`   | String           | A program to execute                                        |                                                   |
+| `args`      | Array of strings | Arguments passed to `program`                               | `${TEXT}` will be replaced with the voice input   |
+| `sound`     | String           | Path to local or remote file that gets played               | Volume can be controlled via voice/GUI            |
 
 ## Build
 
