@@ -1,5 +1,6 @@
 [
     {
+        "name": "Uhrzeit anzeigen",
         "commands": [
             "wie spät",
             "aktuelle uhrzeit",
@@ -9,6 +10,7 @@
         "funcName": "sayTime"
     },
     {
+        "name": "Stopp",
         "commands": [
             "shop",
             "stock",
@@ -17,6 +19,7 @@
         "funcName": "stop"
     },
     {
+        "name": "Wiederholen",
         "commands": [
             "sprich mir nach",
             "wiederhole mich"
@@ -24,6 +27,7 @@
         "funcName": "say"
     },
     {
+        "name": "Begrüßung",
         "commands": [
             "guten abend",
             "guten mittag",
@@ -39,6 +43,7 @@
         ]
     },
     {
+        "name": "Lied abspielen",
         "commands": [
             "spiele ein lied",
             "spieler ein lied",
@@ -48,6 +53,7 @@
         "sound": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
     },
     {
+        "name": "Befehle neu laden",
         "commands": [
             "befehle neu laden",
             "befehl neu laden"
@@ -55,18 +61,21 @@
         "funcName": "loadCommands"
     },
     {
+        "name": "Stummschaltung umschalten",
         "commands": [
             "stumm schalten"
         ],
         "funcName": "toggleMute"
     },
     {
+        "name": "Pause",
         "commands": [
             "pause"
         ],
         "funcName": "pause"
     },
     {
+        "name": "Weiter",
         "commands": [
             "weiter",
             "fortsetzen"
@@ -74,24 +83,28 @@
         "funcName": "resume"
     },
     {
+        "name": "Herunterfahren",
         "commands": [
             "herunterfahren"
         ],
         "funcName": "quit"
     },
     {
+        "name": "Lautstärke erhöhen",
         "commands": [
             "lauter"
         ],
         "funcName": "volumeUp"
     },
     {
+        "name": "Lautstärke verringern",
         "commands": [
             "leiser"
         ],
         "funcName": "volumeDown"
     },
     {
+        "name": "Lautstärke festlegen",
         "commands": [
             "lautstärke",
             "lautstärker"
@@ -99,6 +112,7 @@
         "funcName": "setVolume"
     },
     {
+        "name": "Witz erzählen",
         "commands": [
             "erzähler ein witz",
             "erzähle ein wird",
@@ -112,12 +126,14 @@
         "funcName": "tellJoke"
     },
     {
+        "name": "Neustart",
         "commands": [
             "neustart"
         ],
         "funcName": "restart"
     },
     {
+        "name": "Kopf oder Zahl",
         "commands": [
             "kopf oder zahl",
             "münz wurf",
