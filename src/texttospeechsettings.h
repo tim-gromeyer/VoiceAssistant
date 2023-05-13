@@ -12,6 +12,7 @@ class QSlider;
 class QVBoxLayout;
 class QTextToSpeech;
 
+// TODO: Improve text to speech settings. It's far from perfect
 class TextToSpeechSettings : public SettingsWidget
 {
     Q_OBJECT
