@@ -107,8 +107,8 @@ MainWindow::MainWindow(QWidget *parent)
     , timeTimer(new QTimer(this))
     , jokes(new Jokes(this))
     , bridge(new PluginBridge(this))
-    , settings(new QSettings(this))
     , trayIcon(new QSystemTrayIcon(qApp->windowIcon(), this))
+    , settings(new QSettings(this))
 {
     // Set up UI
     ui->setupUi(this);
@@ -670,6 +670,7 @@ void MainWindow::loadCommands()
 
     QString dir = dir::commandsBaseDir() + recognizer->language();
 
+    // Fallback solution if `firstSetup` failed to copy the folder
     QDir testDir;
     testDir.setPath(dir);
     if (testDir.isEmpty())
