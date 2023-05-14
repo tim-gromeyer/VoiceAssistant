@@ -48,13 +48,11 @@ jobs:
         sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct 
 
     - name: Cache build directory
+      if: matrix.os != 'windows-latest'
       uses: actions/cache@v3
       with:
         path: build
         key: ${{ matrix.os }}-build-${{ matrix.QT_VER }}
-      exclude: |
-          build/.git
-          build/.gitignore
 
     - name: Build
       run: |
