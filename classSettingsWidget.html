@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.6"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="VoiceAssistant" />
+<meta property="og:image" content="https://raw.githubusercontent.com/tim-gromeyer/VoiceAssistant/main/ressources/logo/Icon.svg" />
+<meta property="og:description" content="Resource-efficient and customizable voice assistant" />
+<meta property="og:url" content="https://github.com/tim-gromeyer/VoiceAssistant" />
+<!-- END opengraph metadata -->
+<title>SettingsWidget Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href=""/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+</script>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    const directory = document.querySelector('.directory');
+    if (directory) {
+        const table = directory.querySelector('table');
+        for (const row of table.rows) {
+          if (row.querySelector('.iconfclosed') && !row.querySelector('.arrow')) {
+            row.remove();
+          }
+        }
+    }
+  });
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/tim-gromeyer/VoiceAssistant" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="Icon.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">VoiceAssistant
+   &#160;<span id="projectnumber">main</span>
+   </div>
+   <div id="projectbrief">Resource-efficient, customizable voice assistant</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.6 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classSettingsWidget.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classSettingsWidget-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">SettingsWidget Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for SettingsWidget:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSettingsWidget__inherit__graph.svg" width="120" height="111"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for SettingsWidget:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classSettingsWidget__coll__graph.svg" width="120" height="111"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ad6b264d0455806fd3761a7f0e7b75dfd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#ad6b264d0455806fd3761a7f0e7b75dfd">SettingsWidget</a> (QWidget *parent=nullptr)</td></tr>
+<tr class="memdesc:ad6b264d0455806fd3761a7f0e7b75dfd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classSettingsWidget.html">SettingsWidget</a> constructor.  <br /></td></tr>
+<tr class="separator:ad6b264d0455806fd3761a7f0e7b75dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9373f89a7417a48df50c0d7ac31e4a1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a9373f89a7417a48df50c0d7ac31e4a1c">~SettingsWidget</a> ()=default</td></tr>
+<tr class="memdesc:a9373f89a7417a48df50c0d7ac31e4a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classSettingsWidget.html">SettingsWidget</a> destructor.  <br /></td></tr>
+<tr class="separator:a9373f89a7417a48df50c0d7ac31e4a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aafb62b340dbe16c69fb2a758007a9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a1aafb62b340dbe16c69fb2a758007a9f">apply</a> ()=0</td></tr>
+<tr class="memdesc:a1aafb62b340dbe16c69fb2a758007a9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">apply applies the changes made in the settings widget.  <br /></td></tr>
+<tr class="separator:a1aafb62b340dbe16c69fb2a758007a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0359f38cc8115fd9b4afbbacbb0837"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a3f0359f38cc8115fd9b4afbbacbb0837">finish</a> ()=0</td></tr>
+<tr class="memdesc:a3f0359f38cc8115fd9b4afbbacbb0837"><td class="mdescLeft">&#160;</td><td class="mdescRight">finish writes the settings to storage.  <br /></td></tr>
+<tr class="separator:a3f0359f38cc8115fd9b4afbbacbb0837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4249c2cdbd34266120054330ea54396"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#ad4249c2cdbd34266120054330ea54396">displayName</a> () const</td></tr>
+<tr class="memdesc:ad4249c2cdbd34266120054330ea54396"><td class="mdescLeft">&#160;</td><td class="mdescRight">displayName returns the display name of the settings widget.  <br /></td></tr>
+<tr class="separator:ad4249c2cdbd34266120054330ea54396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ad83fdc31c44a9fa087df9cc625f0d"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a34ad83fdc31c44a9fa087df9cc625f0d">displayCategory</a> () const</td></tr>
+<tr class="memdesc:a34ad83fdc31c44a9fa087df9cc625f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">displayCategory returns the display category of the settings widget.  <br /></td></tr>
+<tr class="separator:a34ad83fdc31c44a9fa087df9cc625f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbd94d2b9f63645a17862bfbb75fa18f"><td class="memItemLeft" align="right" valign="top">const QIcon &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#acbd94d2b9f63645a17862bfbb75fa18f">categoryIcon</a> () const</td></tr>
+<tr class="memdesc:acbd94d2b9f63645a17862bfbb75fa18f"><td class="mdescLeft">&#160;</td><td class="mdescRight">categoryIcon returns the icon of the settings widget category.  <br /></td></tr>
+<tr class="separator:acbd94d2b9f63645a17862bfbb75fa18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4adc50382213ad091d0b5c33101332b"><td class="memItemLeft" align="right" valign="top">const QStringList &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#ad4adc50382213ad091d0b5c33101332b">keyWords</a> ()</td></tr>
+<tr class="memdesc:ad4adc50382213ad091d0b5c33101332b"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyWords returns the keywords associated with the settings widget.  <br /></td></tr>
+<tr class="separator:ad4adc50382213ad091d0b5c33101332b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5062c53d5f5b8e5f8889acdc4352833"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#ab5062c53d5f5b8e5f8889acdc4352833">setSettings</a> (QSettings *<a class="el" href="classSettingsWidget.html#a61a21c1099c227250bcfdc8d0e35cd92">settings</a>) final</td></tr>
+<tr class="memdesc:ab5062c53d5f5b8e5f8889acdc4352833"><td class="mdescLeft">&#160;</td><td class="mdescRight">setSettings sets the QSettings object to be used by the settings widget.  <br /></td></tr>
+<tr class="separator:ab5062c53d5f5b8e5f8889acdc4352833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a4b06754f0647706d12828662f9bc319a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a4b06754f0647706d12828662f9bc319a">setDisplayName</a> (const QString &amp;<a class="el" href="classSettingsWidget.html#ad4249c2cdbd34266120054330ea54396">displayName</a>)</td></tr>
+<tr class="memdesc:a4b06754f0647706d12828662f9bc319a"><td class="mdescLeft">&#160;</td><td class="mdescRight">setDisplayName sets the display name of the settings widget.  <br /></td></tr>
+<tr class="separator:a4b06754f0647706d12828662f9bc319a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa8ef01d3066f9bf708aff181e801fcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#afa8ef01d3066f9bf708aff181e801fcf">setDisplayCategory</a> (const QString &amp;<a class="el" href="classSettingsWidget.html#a34ad83fdc31c44a9fa087df9cc625f0d">displayCategory</a>)</td></tr>
+<tr class="memdesc:afa8ef01d3066f9bf708aff181e801fcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">setDisplayCategory sets the display category of the settings widget.  <br /></td></tr>
+<tr class="separator:afa8ef01d3066f9bf708aff181e801fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7e61775502721caf6a05fd4fa419a0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#ae7e61775502721caf6a05fd4fa419a0e">setCategoryIcon</a> (const QIcon &amp;<a class="el" href="classSettingsWidget.html#acbd94d2b9f63645a17862bfbb75fa18f">categoryIcon</a>)</td></tr>
+<tr class="memdesc:ae7e61775502721caf6a05fd4fa419a0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">setCategoryIcon sets the icon of the settings widget category.  <br /></td></tr>
+<tr class="separator:ae7e61775502721caf6a05fd4fa419a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61a21c1099c227250bcfdc8d0e35cd92"><td class="memItemLeft" align="right" valign="top">QSettings *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsWidget.html#a61a21c1099c227250bcfdc8d0e35cd92">settings</a> ()</td></tr>
+<tr class="memdesc:a61a21c1099c227250bcfdc8d0e35cd92"><td class="mdescLeft">&#160;</td><td class="mdescRight">settings returns the QSettings object used by the settings widget.  <br /></td></tr>
+<tr class="separator:a61a21c1099c227250bcfdc8d0e35cd92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00015">15</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad6b264d0455806fd3761a7f0e7b75dfd" name="ad6b264d0455806fd3761a7f0e7b75dfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6b264d0455806fd3761a7f0e7b75dfd">&#9670;&#160;</a></span>SettingsWidget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SettingsWidget::SettingsWidget </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classSettingsWidget.html">SettingsWidget</a> constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td>The parent widget. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00023">23</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="a9373f89a7417a48df50c0d7ac31e4a1c" name="a9373f89a7417a48df50c0d7ac31e4a1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9373f89a7417a48df50c0d7ac31e4a1c">&#9670;&#160;</a></span>~SettingsWidget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SettingsWidget::~SettingsWidget </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classSettingsWidget.html">SettingsWidget</a> destructor. </p>
+<p>The destructor is responsible for cleaning up the object. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1aafb62b340dbe16c69fb2a758007a9f" name="a1aafb62b340dbe16c69fb2a758007a9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aafb62b340dbe16c69fb2a758007a9f">&#9670;&#160;</a></span>apply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SettingsWidget::apply </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>apply applies the changes made in the settings widget. </p>
+<p>This function is called when the apply button is pressed in the settings widget. Subclasses should implement this function to apply the changes made by the user. </p>
+
+</div>
+</div>
+<a id="acbd94d2b9f63645a17862bfbb75fa18f" name="acbd94d2b9f63645a17862bfbb75fa18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbd94d2b9f63645a17862bfbb75fa18f">&#9670;&#160;</a></span>categoryIcon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QIcon &amp; SettingsWidget::categoryIcon </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>categoryIcon returns the icon of the settings widget category. </p>
+<dl class="section return"><dt>Returns</dt><dd>The category icon.</dd></dl>
+<p>This function returns the icon of the settings widget category, which is displayed in the list. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00071">71</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="a34ad83fdc31c44a9fa087df9cc625f0d" name="a34ad83fdc31c44a9fa087df9cc625f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ad83fdc31c44a9fa087df9cc625f0d">&#9670;&#160;</a></span>displayCategory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString SettingsWidget::displayCategory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>displayCategory returns the display category of the settings widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The display category.</dd></dl>
+<p>This function returns the display category of the settings widget, which is used as the name in the list. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00063">63</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="ad4249c2cdbd34266120054330ea54396" name="ad4249c2cdbd34266120054330ea54396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4249c2cdbd34266120054330ea54396">&#9670;&#160;</a></span>displayName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QString SettingsWidget::displayName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>displayName returns the display name of the settings widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The display name.</dd></dl>
+<p>This function returns the display name of the settings widget, which is used as the tab name. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00055">55</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="a3f0359f38cc8115fd9b4afbbacbb0837" name="a3f0359f38cc8115fd9b4afbbacbb0837"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f0359f38cc8115fd9b4afbbacbb0837">&#9670;&#160;</a></span>finish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SettingsWidget::finish </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>finish writes the settings to storage. </p>
+<p>This function is called when the settings are about to be saved. Subclasses should implement this function to write the settings to the appropriate storage. </p>
+
+</div>
+</div>
+<a id="ad4adc50382213ad091d0b5c33101332b" name="ad4adc50382213ad091d0b5c33101332b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4adc50382213ad091d0b5c33101332b">&#9670;&#160;</a></span>keyWords()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const QStringList &amp; SettingsWidget::keyWords </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>keyWords returns the keywords associated with the settings widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The list of keywords.</dd></dl>
+<p>This function returns the keywords associated with the settings widget. The keywords are used for searching within the settings. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00080">80</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="ae7e61775502721caf6a05fd4fa419a0e" name="ae7e61775502721caf6a05fd4fa419a0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e61775502721caf6a05fd4fa419a0e">&#9670;&#160;</a></span>setCategoryIcon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SettingsWidget::setCategoryIcon </td>
+          <td>(</td>
+          <td class="paramtype">const QIcon &amp;&#160;</td>
+          <td class="paramname"><em>categoryIcon</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setCategoryIcon sets the icon of the settings widget category. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">categoryIcon</td><td>The category icon.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function sets the icon of the settings widget category. The category icon is displayed in the list for the settings widget. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00135">135</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="afa8ef01d3066f9bf708aff181e801fcf" name="afa8ef01d3066f9bf708aff181e801fcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa8ef01d3066f9bf708aff181e801fcf">&#9670;&#160;</a></span>setDisplayCategory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SettingsWidget::setDisplayCategory </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>displayCategory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setDisplayCategory sets the display category of the settings widget. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">displayCategory</td><td>The display category.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function sets the display category of the settings widget. The display category is used as the name in the list for the settings widget. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00126">126</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="a4b06754f0647706d12828662f9bc319a" name="a4b06754f0647706d12828662f9bc319a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b06754f0647706d12828662f9bc319a">&#9670;&#160;</a></span>setDisplayName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SettingsWidget::setDisplayName </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>displayName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setDisplayName sets the display name of the settings widget. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">displayName</td><td>The display name.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function sets the display name of the settings widget. The display name is used as the tab name for the settings widget. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00117">117</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="ab5062c53d5f5b8e5f8889acdc4352833" name="ab5062c53d5f5b8e5f8889acdc4352833"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5062c53d5f5b8e5f8889acdc4352833">&#9670;&#160;</a></span>setSettings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void SettingsWidget::setSettings </td>
+          <td>(</td>
+          <td class="paramtype">QSettings *&#160;</td>
+          <td class="paramname"><em>settings</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">final</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>setSettings sets the QSettings object to be used by the settings widget. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">settings</td><td>The QSettings object.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function sets the QSettings object to be used by the settings widget. The settings object is used for storing and retrieving the settings values. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00107">107</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<a id="a61a21c1099c227250bcfdc8d0e35cd92" name="a61a21c1099c227250bcfdc8d0e35cd92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61a21c1099c227250bcfdc8d0e35cd92">&#9670;&#160;</a></span>settings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QSettings * SettingsWidget::settings </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>settings returns the QSettings object used by the settings widget. </p>
+<dl class="section return"><dt>Returns</dt><dd>The QSettings object.</dd></dl>
+<p>This function returns the QSettings object used by the settings widget. The settings object is used for storing and retrieving the settings values. </p>
+
+<p class="definition">Definition at line <a class="el" href="settingswidget_8h_source.html#l00144">144</a> of file <a class="el" href="settingswidget_8h_source.html">settingswidget.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>plugins/<a class="el" href="settingswidget_8h_source.html">settingswidget.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classSettingsWidget.html">SettingsWidget</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
+  </ul>
+</div>
+</body>
+</html>
