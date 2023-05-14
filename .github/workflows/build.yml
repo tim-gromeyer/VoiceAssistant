@@ -52,6 +52,9 @@ jobs:
       with:
         path: build
         key: ${{ matrix.os }}-build-${{ matrix.QT_VER }}
+      exclude: |
+      build/.git
+      build/.gitignore
 
     - name: Build
       run: |
@@ -59,4 +62,3 @@ jobs:
         cmake ..
         cmake --build .
       shell: bash
-
