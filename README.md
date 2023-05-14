@@ -1,9 +1,7 @@
+# VoiceAssistant
+
 [![Build Status](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml/badge.svg)](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml)
 [![Translated using Weblate](https://img.shields.io/badge/Translated%20using%20Weblate-✅-green)](https://weblate.org/en/)
-
-# Pre-Alpha!
-
-# VoiceAssistant
 
 VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
 
@@ -73,6 +71,10 @@ See the build section in [INSTALL.md](INSTALL.md) ([direct link](INSTALL.md#buil
 You can check the translation status of VoiceAssistant on Weblate (click the image below):
 
 [![Translation Status](https://hosted.weblate.org/widgets/voiceassistant/-/multi-auto.svg)](https://hosted.weblate.org/engage/voiceassistant/)
+
+## Creating a plugin
+
+See [plugins/README.md](plugins/README.md)
 
 ## Credits
 

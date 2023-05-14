@@ -101,30 +101,27 @@ Q_SIGNALS:
     /**
      * @brief _say signal emitted to send a speech request to the host application.
      * @param text The text to be spoken.
-     * @param signal The private signal.
      *
      * This signal is emitted to send a speech request to the host application.
      */
-    void _say(const QString &, QPrivateSignal);
+    void _say(const QString &text, QPrivateSignal);
 
     /**
      * @brief _sayAndWait signal emitted to send a speech request to the host application and wait until it completes.
      * @param text The text to be spoken.
-     * @param signal The private signal.
      *
      * This signal is emitted to send a speech request to the host application and wait until it completes.
      */
-    void _sayAndWait(const QString &, QPrivateSignal);
+    void _sayAndWait(const QString &text, QPrivateSignal);
 
     /**
      * @brief _ask signal emitted to send a question to the host application and wait for an answer.
      * @param text The question text.
-     * @param signal The private signal.
      *
      * This signal is emitted to send a question to the host application and wait for an answer.
      */
 
-    void _ask(const QString &, QPrivateSignal);
+    void _ask(const QString &text, QPrivateSignal);
 
     /**
      * @brief useWidget signal emitted to send a widget to the host application for usage.
@@ -133,7 +130,7 @@ Q_SIGNALS:
      * This signal is emitted to send a widget to the host application for usage.
      * The host application can use the provided widget as needed.
      */
-    void useWidget(QWidget *);
+    void useWidget(QWidget *widget);
 
 private:
     QString answer;

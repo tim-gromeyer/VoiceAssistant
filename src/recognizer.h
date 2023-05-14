@@ -22,12 +22,12 @@ class SpeechToText : public QObject
     friend class MainWindow;
 
 public:
-    explicit SpeechToText(const QString & = QStringLiteral("vosk"), QObject *parent = nullptr);
+    explicit SpeechToText(const QString &, QObject *parent = nullptr);
     ~SpeechToText();
 
     enum State {
         NoPluginFound = 0,      // No speech to text plugin could be found or loaded
-        PluginError = 1,        // An error occured in the plugin, see errorString()
+        PluginError = 1,        // An error occurred in the plugin, see errorString()
         NotStarted = 2,         // SpeechToText not set up or not listening
         NoMicrophone = 3,       // No microphone was found or the microphone is not accessible
         IncompatibleFormat = 4, // Incompatible microphone, must support PCM 16bit mono

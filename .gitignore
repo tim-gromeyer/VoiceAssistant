@@ -7,3 +7,5 @@ android/
 *.dll
 build*/
 data/
+doc/
+

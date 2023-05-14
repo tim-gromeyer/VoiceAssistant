@@ -1,4 +1,6 @@
-# Creating a Plugin with `PluginInterface`, `PluginBridge`, and `SettingsWidget`
+# Plugins
+
+## Creating a Plugin
 
 This guide will walk you through the process of creating a plugin using the `PluginInterface`, `PluginBridge`, and `SettingsWidget` classes. These classes provide a foundation for building plugins that can communicate with a host application and have configurable settings.
 
@@ -13,19 +15,19 @@ Step 1: Set up the Development Environment
 Step 2: Define the Plugin Interface
 - Include the necessary classes/headers: `PluginInterface` and `QtPlugin`.
 - Create a new class that inherits from `PluginInterface`.
-- Implement the pure virtual functions `isValid` and `run` according to your plugin's functionality.
+- Implement the pure virtual functions `PluginInterface::isValid` and `PluginInterface::run` according to your plugin's functionality.
 - Optionally, you can define additional functions and member variables specific to your plugin.
 
 Step 3: Include the Plugin Bridge (optional)
 - Include the necessary classes: `PluginBridge`
-- Use `ask` to ask the user a question and get the answer
-- Use `say` or `sayAndWait` to speech text
-- Use the `useWidget`-slot to set the content widget of the main window
+- Use `PluginBridge::ask` to ask the user a question and get the answer
+- Use `PluginBridge::say` or `PluginBridge::sayAndWait` to speech text
+- Use the `PluginBridge::useWidget`-slot to set the content widget of the main window
 
 Step 4: Create the Settings Widget (optional but suggested)
 - Include the necessary headers/classes: `QWidget` and `QSettings`.
 - Create a new class that inherits from `SettingsWidget`.
-- Implement the pure virtual functions `apply` and `finish` to handle the plugin's settings.
+- Implement the pure virtual functions `SettingsWidget::apply` and `SettingsWidget::finish` to handle the plugin's settings.
 - Customize the class by adding widgets and implementing their functionality.
 - Use the provided functions to set the display name, display category, and category icon for the settings widget.
 
