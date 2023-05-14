@@ -53,8 +53,8 @@ jobs:
         path: build
         key: ${{ matrix.os }}-build-${{ matrix.QT_VER }}
       exclude: |
-      build/.git
-      build/.gitignore
+          build/.git
+          build/.gitignore
 
     - name: Build
       run: |
