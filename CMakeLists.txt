@@ -35,7 +35,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Svg Multimedia Network
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
 
 file(GLOB TS_FILES translations/VoiceAssistant_*.ts)
-set(RC_FILES translations/translations.qrc ressources/ressources.qrc)
+set(RC_FILES ressources/ressources.qrc)
 
 include(Dirs)
 include(Translation)
