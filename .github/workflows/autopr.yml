@@ -1,3 +1,5 @@
+name: AutoPR
+
 on:
   issues:
     types: [labeled]
