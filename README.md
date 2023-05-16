@@ -1,24 +1,24 @@
-# VoiceAssistant
+# VoiceAssistant 🎙️
 
 [![Build Status](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml/badge.svg)](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml)
 [![Translated using Weblate](https://img.shields.io/badge/Translated%20using%20Weblate-✅-green)](https://weblate.org/en/)
 
-VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional.
+VoiceAssistant is a resource-efficient and customizable voice assistant that is still in the early stages of development but already functional. 🚀
 
-Privacy is our top priority, and VoiceAssistant ensures that all operations are performed offline on your local device, keeping your data secure and protected.
+Privacy is our top priority, and VoiceAssistant ensures that all operations are performed offline on your local device, keeping your data secure and protected. 🔒
 
-## Goal
+## Goal 🎯
 
-The main goal of VoiceAssistant is to provide a fully customizable and extendable voice assistant that can be controlled entirely using voice commands.
+The main goal of VoiceAssistant is to provide a fully customizable and extendable voice assistant that can be controlled entirely using voice commands. 🌟
 
-## Features
+## Features ✨
 
-- Fully customizable and extendable (I'm still working on this)
-- Offline functionality for enhanced privacy and security
-- Voice recognition for executing predefined commands
-- Privacy-first approach with everything offline and local on the device
+- Fully customizable and extendable (I'm still working on this) ✏️
+- Offline functionality for enhanced privacy and security 🔐
+- Voice recognition for executing predefined commands 🗣️
+- Privacy-first approach with everything offline and local on the device 🏡
 
-## Supported Platforms
+## Supported Platforms 🖥️
 
 The project has been tested on x86_64 Linux, but it should theoretically work on the following platforms:
 
@@ -36,12 +36,12 @@ The project has been tested on x86_64 Linux, but it should theoretically work on
 
 Note: The Android build works and starts, but I can't load the speech-to-text plugin.
 
-## To-Do's
+## To-Do's 📝
 
 - [ ] Full customizability
 - [ ] Implement Whisper.cpp backend (this will add WebAssembly, iOS, and M1 macOS support)
 
-## Customization
+## Customization 🎛️
 
 **In the near future, I'll add settings to the app!**
 
@@ -49,7 +49,7 @@ To customize the commands, edit the `commands/<your_language>/default.json` file
 
 There are some default commands. See [Add Commands](#add-commands).
 
-## Add Commands
+## Add Commands ➕
 
 To add your command, edit the `commands/<your_language>/default.json` file. The supported values are:
 
@@ -62,21 +62,21 @@ To add your command, edit the `commands/<your_language>/default.json` file. The 
 | `args`      | Array of strings | Arguments passed to `program`                               | `${TEXT}` will be replaced with the voice input   |
 | `sound`     | String           | Path to local or remote file that gets played               | Volume can be controlled via voice/GUI            |
 
-## Build
+## Build 🛠️
 
 See the build section in [INSTALL.md](INSTALL.md) ([direct link](INSTALL.md#build)).
 
-## Translation Status
+## Translation Status 🌍
 
 You can check the translation status of VoiceAssistant on Weblate (click the image below):
 
 [![Translation Status](https://hosted.weblate.org/widgets/voiceassistant/-/multi-auto.svg)](https://hosted.weblate.org/engage/voiceassistant/)
 
-## Creating a plugin
+## Creating a plugin 🧩
 
 See [plugins/README.md](plugins/README.md)
 
-## Credits
+## Credits 💙
 
 VoiceAssistant uses the following open-source projects:
 
@@ -84,4 +84,4 @@ VoiceAssistant uses the following open-source projects:
 - [11Zip](https://github.com/Sygmei/11Zip) for unzipping voice models
 - [JokeAPI](https://jokeapi.dev) for telling jokes
 
-Thank you to these amazing projects and their contributors for making VoiceAssistant possible!
+Thank you to these amazing projects and their contributors for making VoiceAssistant possible! 🙏
