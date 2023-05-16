@@ -33,7 +33,7 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
     const auto entryList = pluginsDir.entryList(QDir::Files);
 
     for (const QString &fileName : entryList) {
-        if (!QLibrary::isLibrary(fileName))
+        if (!QLibrary::isLibrary(fileName) || fileName == QLatin1String("libvosk.so"))
             continue;
 
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName), this);
