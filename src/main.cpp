@@ -59,8 +59,6 @@ int main(int argc, char *argv[])
 
     QTranslator translator, qtTranslator;
     QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-    if (qtTranslationsPath.isEmpty())
-        qtTranslationsPath = QStringLiteral(":/qtTranslations/");
 
     // load translation for Qt
     if (qtTranslator.load(QLocale::system(),
