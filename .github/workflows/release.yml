@@ -1,0 +1,99 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Building on ${{ matrix.os }} with Qt ${{ matrix.QT_VER }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            QT_VER: 5.12.8
+            files: |
+              build/packages/VoiceAssistant*.deb
+              build/packages/VoiceAssistant*.tar.gz
+          - os: ubuntu-22.04
+            QT_VER: 5.15.3
+            files: |
+              build/packages/VoiceAssistant*.deb
+          - os: windows-latest
+            QT_VER: 6.5.0
+            files: |
+              build/packages/VoiceAssistant*.exe
+              build/packages/VoiceAssistant*.zip
+
+    steps:
+    - name: Checkout repo and submodules
+      uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+
+    - if: contains( matrix.os, 'windows') || contains( matrix.os, 'macos')
+      name: Install Qt on Windows and Mac
+      uses: jurplel/install-qt-action@v3
+      with:
+        aqtversion: '==3.1.*'
+        py7zrversion: '>=0.20.2'
+        cache: true
+        version: '6.5.0'
+        modules: 'qtimageformats qtmultimedia qtspeech'
+
+    - if: contains( matrix.os, 'ubuntu')
+      name: Install Qt on Linux
+      run: |
+        sudo apt-fast update
+        sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct
+
+    - name: Build and package
+      run: |
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release --config Release -DBUILD_TEST_PLUGIN=OFF -DBUILD_TESTING=OFF
+        cmake --build . --config Release --target package
+      shell: bash
+
+    - name: Upload package
+      uses: actions/upload-artifact@v3
+      with:
+        path: ${{ matrix.files }}
+
+  publish:
+    name: Create release and upload files
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Download files
+      uses: actions/download-artifact@v3
+      with:
+        path: packages
+
+    - name: Find all files
+      id: files
+      run: |
+        echo "FILES<<EOF" >> $GITHUB_ENV
+        find packages/ -name "*" -type f >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        generate_release_notes: true
+        files: ${{ env.FILES }}
+        draft: true
