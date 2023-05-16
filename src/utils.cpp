@@ -3,6 +3,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QDirIterator>
 #include <QHash>
 #include <QTextStream>
 
@@ -107,34 +108,43 @@ bool copyRecursively(const QString &fromDir, const QString &toDir, bool coverFil
 {
     QDir sourceDir(fromDir);
     QDir targetDir(toDir);
-    if (!targetDir.exists()) { /* if directory don't exists, build it */
-        if (!targetDir.mkdir(targetDir.absolutePath()))
-            return false;
+
+    if (!targetDir.mkpath(QChar(u'.'))) {
+        qDebug() << "Failed to create target directory: " << targetDir.absolutePath();
+        return false;
     }
 
-    QFileInfoList fileInfoList = sourceDir.entryInfoList();
-    foreach (QFileInfo fileInfo, fileInfoList) {
-        if (fileInfo.fileName() == "." || fileInfo.fileName() == "..")
-            continue;
+    QDirIterator it(sourceDir.absolutePath(),
+                    QDir::AllEntries | QDir::NoDotAndDotDot,
+                    QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        it.next();
+        QString targetFilePath = targetDir.filePath(
+            it.filePath().mid(sourceDir.absolutePath().length() + 1));
 
-        if (fileInfo.isDir()) { /* if it is directory, copy recursively*/
-            if (!copyRecursively(fileInfo.filePath(),
-                                 targetDir.filePath(fileInfo.fileName()),
-                                 coverFileIfExist))
+        if (QFile::exists(targetFilePath) && coverFileIfExist) {
+            if (!QFile::remove(targetFilePath)) {
+                qDebug() << "Failed to remove existing file: " << targetFilePath;
                 return false;
-        } else { /* if coverFileIfExist == true, remove old file first */
-            if (coverFileIfExist && targetDir.exists(fileInfo.fileName())) {
-                targetDir.remove(fileInfo.fileName());
             }
+        }
 
-            // files copy
-            if (!QFile::copy(fileInfo.filePath(), targetDir.filePath(fileInfo.fileName()))) {
+        if (it.fileInfo().isDir()) {
+            if (!QDir().mkpath(targetFilePath)) {
+                qDebug() << "Failed to create directory: " << targetFilePath;
+                return false;
+            }
+        } else {
+            if (!QFile::copy(it.filePath(), targetFilePath)) {
+                qDebug() << "Failed to copy file: " << it.filePath() << " to " << targetFilePath;
                 return false;
             }
         }
     }
+
     return true;
 }
+
 } // namespace directory
 
 namespace file {
