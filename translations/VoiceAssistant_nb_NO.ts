@@ -4,78 +4,88 @@
 <context>
     <name>ActionPage</name>
     <message>
-        <location filename="../src/commandwizard.cpp" line="178"/>
+        <location filename="../src/commandwizard.cpp" line="188"/>
         <source>Select Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="179"/>
+        <location filename="../src/commandwizard.cpp" line="189"/>
         <source>Select the action(s) to be performed when the command is recognized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="180"/>
+        <location filename="../src/commandwizard.cpp" line="190"/>
         <source>Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="181"/>
+        <location filename="../src/commandwizard.cpp" line="191"/>
+        <source>Action name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="192"/>
+        <source>Name of the action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/commandwizard.cpp" line="193"/>
         <source>Execute function</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="182"/>
+        <location filename="../src/commandwizard.cpp" line="194"/>
         <source>Random response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="183"/>
-        <location filename="../src/commandwizard.cpp" line="187"/>
+        <location filename="../src/commandwizard.cpp" line="195"/>
+        <location filename="../src/commandwizard.cpp" line="199"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="184"/>
+        <location filename="../src/commandwizard.cpp" line="196"/>
         <source>Execute program</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="186"/>
+        <location filename="../src/commandwizard.cpp" line="198"/>
         <source>Program arguments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="188"/>
+        <location filename="../src/commandwizard.cpp" line="200"/>
         <source>Play a sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="189"/>
+        <location filename="../src/commandwizard.cpp" line="201"/>
         <source>URLs are also supported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="190"/>
+        <location filename="../src/commandwizard.cpp" line="202"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="191"/>
+        <location filename="../src/commandwizard.cpp" line="203"/>
         <source>Add a entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="215"/>
+        <location filename="../src/commandwizard.cpp" line="227"/>
         <source>Add app argument</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="217"/>
+        <location filename="../src/commandwizard.cpp" line="229"/>
         <source>Add random response</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/commandwizard.cpp" line="263"/>
+        <location filename="../src/commandwizard.cpp" line="307"/>
         <source>Select executable</source>
         <translation type="unfinished"></translation>
     </message>
@@ -101,7 +111,7 @@
 <context>
     <name>CommandWizard</name>
     <message>
-        <location filename="../src/commandwizard.cpp" line="307"/>
+        <location filename="../src/commandwizard.cpp" line="351"/>
         <source>Add command</source>
         <translation type="unfinished">Legg til kommando</translation>
     </message>
@@ -137,10 +147,10 @@ Vitse-språk: %2</translation>
     <name>MainWindow</name>
     <message>
         <location filename="../ui/mainwindow.ui" line="39"/>
-        <location filename="../src/mainwindow.cpp" line="296"/>
-        <location filename="../src/mainwindow.cpp" line="297"/>
-        <location filename="../src/mainwindow.cpp" line="375"/>
-        <location filename="../src/mainwindow.cpp" line="376"/>
+        <location filename="../src/mainwindow.cpp" line="316"/>
+        <location filename="../src/mainwindow.cpp" line="317"/>
+        <location filename="../src/mainwindow.cpp" line="395"/>
+        <location filename="../src/mainwindow.cpp" line="396"/>
         <source>Mute</source>
         <translation>Forstum</translation>
     </message>
@@ -220,12 +230,12 @@ Vitse-språk: %2</translation>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="249"/>
+        <location filename="../src/mainwindow.cpp" line="269"/>
         <source>About VoiceAssistant</source>
         <translation>Om VoiceAssistant</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="250"/>
+        <location filename="../src/mainwindow.cpp" line="270"/>
         <source>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
 &lt;p&gt;A resource-efficient and customizable voice assistant written in c++.&lt;/p&gt;
 &lt;h3&gt;About&lt;/h3&gt;
@@ -251,95 +261,97 @@ Vitse-språk: %2</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="291"/>
-        <location filename="../src/mainwindow.cpp" line="292"/>
+        <location filename="../src/mainwindow.cpp" line="311"/>
+        <location filename="../src/mainwindow.cpp" line="312"/>
         <source>Unmute</source>
         <translation>Opphev forstumming</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="333"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>Quit?</source>
         <translation>Avslutt?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="333"/>
+        <location filename="../src/mainwindow.cpp" line="353"/>
         <source>Do you really want to quit?</source>
         <translation>Vil du virkelig avslutte?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="423"/>
-        <location filename="../src/mainwindow.cpp" line="478"/>
-        <location filename="../src/mainwindow.cpp" line="927"/>
+        <location filename="../src/mainwindow.cpp" line="443"/>
+        <location filename="../src/mainwindow.cpp" line="498"/>
+        <location filename="../src/mainwindow.cpp" line="994"/>
         <source>Waiting for wake word</source>
         <translation>Venter på oppvekkingsord</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="428"/>
+        <location filename="../src/mainwindow.cpp" line="448"/>
         <source>Microphone Access Denied</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="429"/>
+        <location filename="../src/mainwindow.cpp" line="449"/>
         <source>Access to the microphone has been denied. This feature requires microphone access to function properly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="431"/>
+        <location filename="../src/mainwindow.cpp" line="451"/>
         <source>Please grant microphone access to enable speech-to-text functionality and allow the app to convert your spoken words into text. Your audio data will only be used for this purpose and will be handled securely in accordance with our privacy policy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="465"/>
+        <location filename="../src/mainwindow.cpp" line="485"/>
         <source>Listening …</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="496"/>
+        <location filename="../src/mainwindow.cpp" line="516"/>
         <source>Contains word?</source>
         <translation>Inneholder ord?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="506"/>
+        <location filename="../src/mainwindow.cpp" line="526"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
         <translation type="unfinished">Sjekk om nåværende språkmodell kan (eller ikke kan) gjenkjenne et ord.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="510"/>
+        <location filename="../src/mainwindow.cpp" line="530"/>
         <source>Word:</source>
         <translation>Ord:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="513"/>
+        <location filename="../src/mainwindow.cpp" line="533"/>
         <source>Enter word</source>
         <translation>Skriv inn ord</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="525"/>
+        <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Warning: The current STT plugin does not support word lookups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="527"/>
+        <location filename="../src/mainwindow.cpp" line="547"/>
         <source>Warning: No STT plugin found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="529"/>
+        <location filename="../src/mainwindow.cpp" line="549"/>
         <source>Warning: There is a error with the STT plugin.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="644"/>
+        <location filename="../src/mainwindow.cpp" line="673"/>
         <source>I have not understood this!</source>
         <translation>Jeg har ikke forstått dette.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="775"/>
+        <location filename="../src/mainwindow.cpp" line="826"/>
+        <location filename="../src/mainwindow.cpp" line="842"/>
         <source>Failed to save file</source>
         <translation type="unfinished">Klarte ikke å lagre fil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="776"/>
+        <location filename="../src/mainwindow.cpp" line="827"/>
+        <location filename="../src/mainwindow.cpp" line="843"/>
         <source>Failed to write &lt;em&gt;%1&lt;/em&gt;.
 %2
 Copy following text and save it manually:
@@ -350,30 +362,30 @@ Kopier følgende tekst og lagre den manuelt:
 %3</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="925"/>
+        <location filename="../src/mainwindow.cpp" line="992"/>
         <source>Waiting for answer...</source>
         <translation type="unfinished">Venter på svar …</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="970"/>
-        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1037"/>
+        <location filename="../src/mainwindow.cpp" line="1106"/>
         <source>Are you sure?</source>
         <translation>Er du sikker?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="972"/>
-        <location filename="../src/mainwindow.cpp" line="1041"/>
+        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1108"/>
         <source>yes</source>
         <translation>ja</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="973"/>
-        <location filename="../src/mainwindow.cpp" line="1044"/>
+        <location filename="../src/mainwindow.cpp" line="1040"/>
+        <location filename="../src/mainwindow.cpp" line="1111"/>
         <source>Okay</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="986"/>
+        <location filename="../src/mainwindow.cpp" line="1053"/>
         <source>It is %1</source>
         <translation>Er det %1</translation>
     </message>
@@ -648,6 +660,59 @@ Kopier følgende tekst og lagre den manuelt:
     </message>
 </context>
 <context>
+    <name>WeatherPlugin</name>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="13"/>
+        <source>what&apos;s the weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="16"/>
+        <source>what is the weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="19"/>
+        <source>how&apos;s the weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="22"/>
+        <source>tell me about the weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="25"/>
+        <source>is it going to rain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="29"/>
+        <source>is it sunny today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="32"/>
+        <source>will it be hot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="35"/>
+        <source>is there a chance of thunderstorms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="38"/>
+        <source>how cold is it outside</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plugins/weather/weatherplugin.cpp" line="54"/>
+        <source>I don&apos;t know. This is not implemented yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WelcomePage</name>
     <message>
         <location filename="../src/commandwizard.cpp" line="56"/>
@@ -664,17 +729,17 @@ Press &apos;Next&apos; to continue.</source>
 <context>
     <name>cmd</name>
     <message>
-        <location filename="../src/main.cpp" line="80"/>
+        <location filename="../src/main.cpp" line="78"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
         <translation type="unfinished">Ressursnøysom stemmeassistent som fremdeles er i tidlig utviklingsstadie, men allerede funksjonell.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="88"/>
+        <location filename="../src/main.cpp" line="86"/>
         <source>Reformat JSON file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="89"/>
+        <location filename="../src/main.cpp" line="87"/>
         <source>file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -682,176 +747,176 @@ Press &apos;Next&apos; to continue.</source>
 <context>
     <name>number</name>
     <message>
-        <location filename="../src/utils.cpp" line="19"/>
+        <location filename="../src/utils.cpp" line="18"/>
         <source>zero</source>
         <translation>null</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="20"/>
+        <location filename="../src/utils.cpp" line="19"/>
         <source>one</source>
         <translation>en</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="21"/>
+        <location filename="../src/utils.cpp" line="20"/>
         <source>two</source>
         <translation>to</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="22"/>
+        <location filename="../src/utils.cpp" line="21"/>
         <source>three</source>
         <translation>tre</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="23"/>
+        <location filename="../src/utils.cpp" line="22"/>
         <source>four</source>
         <translation>fire</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="24"/>
+        <location filename="../src/utils.cpp" line="23"/>
         <source>five</source>
         <translation>fem</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="25"/>
+        <location filename="../src/utils.cpp" line="24"/>
         <source>six</source>
         <translation>seks</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="26"/>
+        <location filename="../src/utils.cpp" line="25"/>
         <source>seven</source>
         <translation>syv</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="27"/>
+        <location filename="../src/utils.cpp" line="26"/>
         <source>eight</source>
         <translation>åtte</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="28"/>
+        <location filename="../src/utils.cpp" line="27"/>
         <source>nine</source>
         <translation>ni</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="29"/>
+        <location filename="../src/utils.cpp" line="28"/>
         <source>ten</source>
         <translation>ti</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="30"/>
+        <location filename="../src/utils.cpp" line="29"/>
         <source>eleven</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="31"/>
+        <location filename="../src/utils.cpp" line="30"/>
         <source>twelve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="32"/>
+        <location filename="../src/utils.cpp" line="31"/>
         <source>thirteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="33"/>
+        <location filename="../src/utils.cpp" line="32"/>
         <source>fourteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="34"/>
+        <location filename="../src/utils.cpp" line="33"/>
         <source>fifteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="35"/>
+        <location filename="../src/utils.cpp" line="34"/>
         <source>sixteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="36"/>
+        <location filename="../src/utils.cpp" line="35"/>
         <source>seventeen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="37"/>
+        <location filename="../src/utils.cpp" line="36"/>
         <source>eighteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="38"/>
+        <location filename="../src/utils.cpp" line="37"/>
         <source>nineteen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="39"/>
+        <location filename="../src/utils.cpp" line="38"/>
         <source>twenty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="40"/>
+        <location filename="../src/utils.cpp" line="39"/>
         <source>thirty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="41"/>
+        <location filename="../src/utils.cpp" line="40"/>
         <source>forty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="42"/>
+        <location filename="../src/utils.cpp" line="41"/>
         <source>fifty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="43"/>
+        <location filename="../src/utils.cpp" line="42"/>
         <source>sixty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="44"/>
+        <location filename="../src/utils.cpp" line="43"/>
         <source>seventy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="45"/>
+        <location filename="../src/utils.cpp" line="44"/>
         <source>eighty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="46"/>
+        <location filename="../src/utils.cpp" line="45"/>
         <source>ninety</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="47"/>
-        <location filename="../src/utils.cpp" line="76"/>
+        <location filename="../src/utils.cpp" line="46"/>
+        <location filename="../src/utils.cpp" line="69"/>
         <source>hundred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="48"/>
-        <location filename="../src/utils.cpp" line="78"/>
+        <location filename="../src/utils.cpp" line="47"/>
+        <location filename="../src/utils.cpp" line="71"/>
         <source>thousand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="49"/>
-        <location filename="../src/utils.cpp" line="79"/>
+        <location filename="../src/utils.cpp" line="48"/>
+        <location filename="../src/utils.cpp" line="72"/>
         <source>million</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="50"/>
-        <location filename="../src/utils.cpp" line="80"/>
+        <location filename="../src/utils.cpp" line="49"/>
+        <location filename="../src/utils.cpp" line="73"/>
         <source>billion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="65"/>
+        <location filename="../src/utils.cpp" line="58"/>
         <source>negative</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="67"/>
+        <location filename="../src/utils.cpp" line="60"/>
         <source>and</source>
         <translation type="unfinished"></translation>
     </message>
@@ -859,27 +924,27 @@ Press &apos;Next&apos; to continue.</source>
 <context>
     <name>time</name>
     <message>
-        <location filename="../src/utils.cpp" line="143"/>
+        <location filename="../src/utils.cpp" line="180"/>
         <source>%1 seconds</source>
         <translation>%1 sekunder</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="148"/>
+        <location filename="../src/utils.cpp" line="185"/>
         <source>%1 minute(s), %2 seconds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="153"/>
+        <location filename="../src/utils.cpp" line="190"/>
         <source>%1 hour(s), %2 minute(s)</source>
         <translation>%1 time(r), %2 minutt(er)</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="158"/>
+        <location filename="../src/utils.cpp" line="195"/>
         <source>%1 day(s), %2 hour(s)</source>
         <translation>%1 dag(er), %2 time(r)</translation>
     </message>
     <message>
-        <location filename="../src/utils.cpp" line="163"/>
+        <location filename="../src/utils.cpp" line="200"/>
         <source>%1 year(s), %2 day(s)</source>
         <translation>%1 år, %2 dag(er)</translation>
     </message>
