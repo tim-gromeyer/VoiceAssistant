@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
     plugins/base.h
     plugins/bridge.h
     plugins/settingswidget.h
+    plugins/utils.h
     speechtotext/speechtotextplugin.h
     src/commandwizard.cpp src/commandwizard.h
     src/global.h

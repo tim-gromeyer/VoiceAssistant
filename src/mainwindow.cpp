@@ -4,6 +4,7 @@
 #include "jokes.h"
 #include "modeldownloader.h"
 #include "plugins/bridge.h"
+#include "plugins/utils.h"
 #include "recognizer.h"
 #include "settingsdialog.h"
 #include "speechtotext/speechtotextplugin.h"
@@ -637,7 +638,7 @@ void MainWindow::openCommandWizard()
 
 void MainWindow::processText(const QString &text)
 {
-    using namespace utils::strings;
+    using strings::calculateSimilarity;
 
     constexpr float SIMILARITY_THRESHOLD = 0.8;
 
