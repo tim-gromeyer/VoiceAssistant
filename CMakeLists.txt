@@ -87,6 +87,7 @@ endif()
 if(BUILD_TEST_PLUGIN)
   message(STATUS "Building a test plugin")
   add_subdirectory(plugins/testPlugin)
+  add_subdirectory(plugins/weather)
 endif()
 
 target_include_directories(voiceassistant PRIVATE src)

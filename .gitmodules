@@ -1,3 +1,6 @@
 [submodule "3rdparty/11Zip"]
 	path = 3rdparty/11Zip
 	url = https://github.com/Sygmei/11Zip
+[submodule "plugins/weather/icons"]
+	path = plugins/weather/icons
+	url = https://github.com/Makin-Things/weather-icons
