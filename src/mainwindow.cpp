@@ -63,7 +63,7 @@ MainWindow *_instance = nullptr;
 
 float volume = 1.0;
 
-void actions::Action::run(const QString &text) const
+void actions::Action::run(QStringView text) const
 {
     qDebug().noquote().nospace() << "Running action: " << name;
 
@@ -72,7 +72,7 @@ void actions::Action::run(const QString &text) const
             QMetaObject::invokeMethod((QObject *) MainWindow::instance(),
                                       funcName.toUtf8(),
                                       Qt::QueuedConnection,
-                                      Q_ARG(QString, text));
+                                      Q_ARG(QString, text.toString()));
         else
             QMetaObject::invokeMethod((QObject *) MainWindow::instance(),
                                       funcName.toUtf8(),
@@ -91,7 +91,7 @@ void actions::Action::run(const QString &text) const
         auto index = args.indexOf(L1("${TEXT}"));
         if (index != -1) {
             auto newArgs = args; // The function must be const so we need to create a copy
-            newArgs[index] = text;
+            newArgs[index] = text.toString();
             p.setArguments(newArgs);
         } else
             p.setArguments(args);
@@ -1089,7 +1089,7 @@ void MainWindow::setVolume(int volumeInt)
     applyVolume();
 }
 
-void MainWindow::setVolume(const QString &text)
+void MainWindow::setVolume(QStringView text)
 {
     int volumeInt = utils::wordToNumber(text);
     instance()->ui->volumeSlider->setValue(volumeInt);

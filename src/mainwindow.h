@@ -64,7 +64,7 @@ public Q_SLOTS:
     static void volumeUp();
     static void volumeDown();
     static void setVolume(int);
-    static void setVolume(const QString &);
+    static void setVolume(QStringView);
     static void restart(); // Restart the application
 
     void tellJoke();

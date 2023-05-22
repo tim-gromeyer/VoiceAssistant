@@ -9,7 +9,7 @@
 
 namespace utils {
 inline namespace numbers {
-int wordToNumber(QString);
+int wordToNumber(QStringView);
 }
 namespace strings {
 QString normalizeText(const QString &);
@@ -62,6 +62,6 @@ struct Action
     // A sound to play
     QString sound;
 
-    void run(const QString &) const;
+    void run(QStringView) const;
 };
 } // namespace actions
