@@ -196,6 +196,32 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
 
 QDebug operator<<(QDebug debug, const WeatherData &data)
 {
-    // TODO: Implement
-    return debug;
+    debug << "Weather Data:";
+    debug.nospace() << "\n  TemperatureUnit: " << data.temperatureUnit;
+    debug.nospace() << "\n  SpeedUnit: " << data.speedUnit;
+
+    debug << "\nDaily Weather:";
+    for (const auto &dailyWeather : data.dailyWeatherList) {
+        debug << "\n  Day: " << dailyWeather.day.toString(QStringView(u"dddd"));
+        debug.nospace() << "\n    Sunrise: " << dailyWeather.sunrise.toString(QStringView(u"h:mm"));
+        debug.nospace() << "\n    Sunset: " << dailyWeather.sunset.toString(QStringView(u"h:mm"));
+        debug.nospace() << "\n    UV Index: " << dailyWeather.uvIndex;
+        debug.nospace() << "\n    Min Temperature: " << dailyWeather.tempMin;
+        debug.nospace() << "\n    Max Temperature: " << dailyWeather.tempMax;
+
+        debug << "\n    Hourly Weather:";
+        for (const auto &hourlyWeather : dailyWeather.hours) {
+            debug << "\n      Time: " << hourlyWeather.time.toString(QStringView(u"h:mm"));
+            debug.nospace() << "\n        Temperature: " << hourlyWeather.temperature;
+            debug.nospace() << "\n        Apparent Temperature: " << hourlyWeather.apparentTemp;
+            debug.nospace() << "\n        Wind Speed: " << hourlyWeather.windspeed;
+            debug.nospace() << "\n        Wind Direction: " << hourlyWeather.winddirection;
+            debug.nospace() << "\n        Weather Code: " << hourlyWeather.weathercode;
+            debug.nospace() << "\n        Relative Humidity: " << hourlyWeather.relativehumidity;
+            debug.nospace() << "\n        Visibility: " << hourlyWeather.visibility;
+            debug.nospace() << "\n        Is Day: " << hourlyWeather.is_day;
+        }
+    }
+
+    return debug.space();
 }
