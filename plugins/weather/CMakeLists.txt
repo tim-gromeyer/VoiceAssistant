@@ -13,7 +13,8 @@ include(Dirs)
 include(Plugins)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets OPTIONAL_COMPONENTS Positioning)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Positioning)
 
 if (NOT Qt${QT_VERSION_MAJOR}Positioning_FOUND)
     message(WARNING "Qt Positioning not found. The weather plugin will not be build")
