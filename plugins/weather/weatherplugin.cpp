@@ -1,7 +1,8 @@
 #include "weatherplugin.h"
-
 #include "../utils.h"
 #include "weatherdata.h"
+
+#include <QDebug>
 
 bool isSimiliar(const QString &string, const QString &other, double similarityFactor = 0.8)
 {
