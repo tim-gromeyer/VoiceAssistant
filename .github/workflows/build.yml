@@ -45,7 +45,7 @@ jobs:
       name: Install Qt on Linux
       run: |
         sudo apt-fast update
-        sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct 
+        sudo apt-fast install -y qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qtpositioning5-dev qt5ct 
 
     - name: Cache build directory
       if: matrix.os != 'windows-latest'

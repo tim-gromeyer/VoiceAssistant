@@ -11,9 +11,9 @@ Needed Qt modules: base, multimedia, and speech.
 
 1. Install necessary Qt modules. ✨
 
-   On Ubuntu, run this command: `apt-get install qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qt5ct`  
-   On Fedora, run this command: `dnf install qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qttools-devel qt5-qtmultimedia-devel qt5-qtspeech-devel qt5-qtsvg-devel`  
-   On Arch, run this command: `pacman -S qt5-base qt5-declarative qt5-tools qt5-multimedia qt5-speech qt5-svg`
+   On Ubuntu, run this command: `apt-get install qtbase5-dev qtdeclarative5-dev qttools5-dev qtmultimedia5-dev libqt5texttospeech5-dev libqt5svg5-dev qtpositioning5-dev qt5ct`  
+   On Fedora, run this command: `dnf install qt5-qtbase-devel qt5-qtdeclarative-devel qt5-qttools-devel qt5-qtmultimedia-devel libqt5texttospeech5-devel qt5-qtsvg-devel qt5-qtpositioning-devel qt5ct`  
+   On Arch, run this command: `pacman -S qt5-base qt5-declarative qt5-tools qt5-multimedia qt5-speech qt5-svg qt5-positioning`
 
 2. Clone the repo (requires git). 📂
 
