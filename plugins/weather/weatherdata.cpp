@@ -153,32 +153,6 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
         }
     }
 
-    // Convert the list with the hourly weather to a list with daily weather
-    for (const HourlyWeather &hourlyWeather : qAsConst(hourlyWeatherList)) {
-        bool foundDay = false;
-        for (DailyWeather &dailyWeather : dailyWeatherList) {
-            if (dailyWeather.day == hourlyWeather.time.date()) {
-                // Add the hourly weather data to the existing day
-                dailyWeather.hours.append(hourlyWeather);
-                foundDay = true;
-                break;
-            }
-        }
-
-        // If the day doesn't exist, create a new DailyWeather entry
-        if (!foundDay) {
-            DailyWeather newDay;
-            newDay.day = hourlyWeather.time.date();
-            newDay.hours.append(hourlyWeather);
-            newDay.sunrise = QDateTime();
-            newDay.sunset = QDateTime();
-            newDay.uvIndex = 0;
-            newDay.tempMin = 0;
-            newDay.tempMax = 0;
-            dailyWeatherList.append(newDay);
-        }
-    }
-
     // Print the parsed data
     for (const HourlyWeather &weather : qAsConst(hourlyWeatherList)) {
         qDebug() << "Time:" << weather.time.toString(QStringLiteral("yyyy-MM-dd hh:mm"));
@@ -208,6 +182,7 @@ QDebug operator<<(QDebug debug, const WeatherData &data)
         debug.nospace() << "\n    UV Index: " << dailyWeather.uvIndex;
         debug.nospace() << "\n    Min Temperature: " << dailyWeather.tempMin;
         debug.nospace() << "\n    Max Temperature: " << dailyWeather.tempMax;
+        debug.nospace() << "\n    Hourly Weather Size: " << dailyWeather.hours.count();
 
         debug << "\n    Hourly Weather:";
         for (const auto &hourlyWeather : dailyWeather.hours) {
