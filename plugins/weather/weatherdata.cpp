@@ -79,7 +79,7 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
 
     // Daily object
     QJsonObject dailyObject = jsonObject[QStringLiteral("daily")].toObject();
-    QJsonArray dailyTimesArray = dailyObject[QStringLiteral("times")].toArray();
+    QJsonArray dailyTimesArray = dailyObject[QStringLiteral("time")].toArray();
     QJsonArray dailyTempMin = dailyObject[QStringLiteral("temperature_2m_min")].toArray();
     QJsonArray dailyTempMax = dailyObject[QStringLiteral("temperature_2m_max")].toArray();
     QJsonArray dailySunrise = dailyObject[QStringLiteral("sunrise")].toArray();
@@ -91,7 +91,7 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
         double tempMin = dailyTempMin[i].toDouble();
         double tempMax = dailyTempMax[i].toDouble();
         QString sunriseString = dailySunrise[i].toString();
-        QString sunsetString = dailySunrise[i].toString();
+        QString sunsetString = dailySunset[i].toString();
         double uvIndex = dailyUVIndex[i].toDouble();
 
         QDate date = QDate::fromString(dateString, Qt::ISODate);
