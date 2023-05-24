@@ -1089,7 +1089,7 @@ void MainWindow::setVolume(int volumeInt)
     applyVolume();
 }
 
-void MainWindow::setVolume(QStringView text)
+void MainWindow::setVolume(const QString &text)
 {
     int volumeInt = utils::wordToNumber(text);
     instance()->ui->volumeSlider->setValue(volumeInt);

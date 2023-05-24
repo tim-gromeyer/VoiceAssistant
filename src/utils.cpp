@@ -12,7 +12,7 @@
 
 namespace utils {
 inline namespace numbers {
-int wordToNumber(QStringView text)
+int wordToNumber(const QString &text)
 {
     static QHash<QStringView, int> numMap
         = {{QCoreApplication::translate("number", "zero"), 0},
@@ -53,7 +53,7 @@ int wordToNumber(QStringView text)
     int prevNum = 0;
     bool isNegative = false;
 
-    for (QStringView &word : text.split(u' ')) {
+    for (const QString &word : text.split(u' ')) {
         if (word == QCoreApplication::translate("number", "negative")) {
             isNegative = true;
         } else if (word == QCoreApplication::translate("number", "and")) {

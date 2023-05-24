@@ -9,7 +9,7 @@
 
 namespace utils {
 inline namespace numbers {
-int wordToNumber(QStringView);
+int wordToNumber(const QString &);
 }
 namespace strings {
 QString normalizeText(const QString &);
