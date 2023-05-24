@@ -70,7 +70,7 @@ void Position::getCityPosition(QStringView city, double *latitude, double *longi
 
     // Extract the latitude and longitude
     QJsonObject jsonObject = jsonDoc.object();
-    if (jsonObject.contains(QStringView(u"error"))) {
+    if (jsonObject.contains(QStringLiteral("error"))) {
         qWarning() << "Error:" << jsonObject[QStringLiteral("reason")].toString();
         return;
     }
