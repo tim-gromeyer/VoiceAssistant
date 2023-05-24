@@ -11,6 +11,7 @@
 #include "texttospeechsettings.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
+#include <cmath>
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -166,8 +167,8 @@ MainWindow::MainWindow(QWidget *parent)
                                     settings->value(STR("Engine"), QLatin1String()).toString(),
                                     settings->value(STR("Language"), QLocale::system()).toLocale(),
                                     settings->value(STR("Voice"), QLatin1String()).toString(),
-                                    settings->value(STR("Pitch"), -1.0F).toFloat(),
-                                    settings->value(STR("Rate"), -1.0F).toFloat());
+                                    settings->value(STR("Pitch"), NAN).toFloat(),
+                                    settings->value(STR("Rate"), NAN).toFloat());
     settings->endGroup();
 
     // Connect the actions
@@ -378,9 +379,9 @@ void MainWindow::setupTextToSpeech(const QString &engineName,
         if (voice.name() == voiceName)
             engine->setVoice(voice);
     }
-    if (pitch != -1.0F)
+    if (!std::isnan(pitch))
         engine->setPitch(pitch);
-    if (rate != -1.0F)
+    if (!std::isnan(rate))
         engine->setRate(rate);
     connect(engine, &QTextToSpeech::stateChanged, _instance, &MainWindow::onTTSStateChanged);
     qDebug() << "[debug] TTS: Setup finished";
