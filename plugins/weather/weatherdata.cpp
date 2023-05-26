@@ -77,6 +77,12 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
     QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
     QJsonObject jsonObject = jsonDoc.object();
 
+    // Check for error
+    if (jsonObject.contains(QStringLiteral("error"))) {
+        qWarning() << "Error:" << jsonObject[QStringLiteral("reason")].toString();
+        return;
+    }
+
     // Daily object
     QJsonObject dailyObject = jsonObject[QStringLiteral("daily")].toObject();
     QJsonArray dailyTimesArray = dailyObject[QStringLiteral("time")].toArray();
