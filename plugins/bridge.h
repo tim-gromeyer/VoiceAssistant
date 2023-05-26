@@ -99,31 +99,6 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
-     * @brief _say signal emitted to send a speech request to the host application.
-     * @param text The text to be spoken.
-     *
-     * This signal is emitted to send a speech request to the host application.
-     */
-    void _say(const QString &text, QPrivateSignal);
-
-    /**
-     * @brief _sayAndWait signal emitted to send a speech request to the host application and wait until it completes.
-     * @param text The text to be spoken.
-     *
-     * This signal is emitted to send a speech request to the host application and wait until it completes.
-     */
-    void _sayAndWait(const QString &text, QPrivateSignal);
-
-    /**
-     * @brief _ask signal emitted to send a question to the host application and wait for an answer.
-     * @param text The question text.
-     *
-     * This signal is emitted to send a question to the host application and wait for an answer.
-     */
-
-    void _ask(const QString &text, QPrivateSignal);
-
-    /**
      * @brief useWidget signal emitted to send a widget to the host application for usage.
      * @param widget The widget to be used.
      *
@@ -133,6 +108,31 @@ Q_SIGNALS:
     void useWidget(QWidget *widget);
 
 private:
+    /**
+     * @brief _say signal emitted to send a speech request to the host application.
+     * @param text The text to be spoken.
+     *
+     * This signal is emitted to send a speech request to the host application.
+     */
+    Q_SIGNAL void _say(const QString &text, QPrivateSignal);
+
+    /**
+     * @brief _sayAndWait signal emitted to send a speech request to the host application and wait until it completes.
+     * @param text The text to be spoken.
+     *
+     * This signal is emitted to send a speech request to the host application and wait until it completes.
+     */
+    Q_SIGNAL void _sayAndWait(const QString &text, QPrivateSignal);
+
+    /**
+     * @brief _ask signal emitted to send a question to the host application and wait for an answer.
+     * @param text The question text.
+     *
+     * This signal is emitted to send a question to the host application and wait for an answer.
+     */
+
+    Q_SIGNAL void _ask(const QString &text, QPrivateSignal);
+
     QString answer;
     bool pause = false;
 
