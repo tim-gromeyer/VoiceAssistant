@@ -29,7 +29,7 @@ jobs:
             files: |
               build/packages/VoiceAssistant*.deb
           - os: windows-latest
-            QT_VER: 6.5.0
+            QT_VER: 6.5.2
             files: |
               build/packages/VoiceAssistant*.exe
               build/packages/VoiceAssistant*.zip
@@ -47,7 +47,7 @@ jobs:
         aqtversion: '==3.1.*'
         py7zrversion: '>=0.20.2'
         cache: true
-        version: '6.5.0'
+        version: '6.5.2'
         modules: 'qtimageformats qtmultimedia qtspeech'
 
     - if: contains( matrix.os, 'ubuntu')
