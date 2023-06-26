@@ -3,6 +3,8 @@ name: Build
 on:
   push:
     paths: ['.github/workflows/**', 'CMakeLists.txt', '**.cmake', '**.h', '*.c', '**.cpp', '**.ui']
+    tags-ignore:
+      - '*'
   pull_request:
     types: [opened, synchronize, edited, reopened, review_requested, ready_for_review]
     paths: ['CMakeLists.txt', '**.cmake', '**.h', '*.c', '**.cpp', '**.ui']
