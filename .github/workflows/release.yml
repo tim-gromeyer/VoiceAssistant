@@ -60,7 +60,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release --config Release -DBUILD_TEST_PLUGIN=OFF -DBUILD_TESTING=OFF
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_TEST_PLUGIN=OFF -DBUILD_TESTING=OFF
         cmake --build . --config Release --target package
       shell: bash
 
