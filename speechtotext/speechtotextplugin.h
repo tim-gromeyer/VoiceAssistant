@@ -11,7 +11,7 @@ class SpeechToTextPlugin : public QIODevice
     Q_PROPERTY(State state READ state NOTIFY stateChanged)
 
 public:
-    explicit SpeechToTextPlugin(QObject *parent = nullptr){};
+    explicit SpeechToTextPlugin(QObject *parent = nullptr) : QIODevice(parent) {};
     virtual ~SpeechToTextPlugin() = default;
 
     [[nodiscard]] virtual QString pluginName() const = 0;
@@ -51,6 +51,8 @@ public:
     // Clear all recognized words and start from the very beginning
     virtual void clear() = 0;
 
+    virtual int sampleRate() = 0;
+
 Q_SIGNALS:
     // Emit this signal when setup() was successful
     void loaded();
@@ -62,7 +64,7 @@ Q_SIGNALS:
 
     /*!
      * \brief Signal emitted when the program detects the wake word in audio input incorrectly, indicating other parts of the program should take corrective action.
-     * 
+     *
      * This signal is emitted when the program falsely detects the wake word in the audio input. This can occur due to background noise, interference, or other factors. When this signal is emitted, it indicates that the program has encountered a false detection and may prompt other parts of the program or plugins to take corrective action.
      */
     void falsePositiveWakeWord();
@@ -80,7 +82,7 @@ Q_SIGNALS:
     void answerReady(QString);
 
 private:
-    inline qint64 readData(char *data, qint64 size) final { return size; };
+    inline qint64 readData(char * /*data*/, qint64 size) final { return size; };
 };
 
 #define SpeechToText_iid "voiceassistant.speechtotext/1.0"

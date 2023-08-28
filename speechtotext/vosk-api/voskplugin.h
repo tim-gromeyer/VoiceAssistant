@@ -41,9 +41,11 @@ public:
     };
 
     inline bool hasLookupSupport() override { return true; };
-    bool canRecognizeWord(const QString &) override;
+    bool canRecognizeWord(const QString &word) override;
 
     void clear() override;
+
+    inline int sampleRate() override { return 16000; };
 
 private:
     // Private method that takes a JSON string containing the recognized text

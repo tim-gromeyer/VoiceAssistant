@@ -33,7 +33,7 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
     const auto entryList = pluginsDir.entryList(QDir::Files);
 
     for (const QString &fileName : entryList) {
-        if (!QLibrary::isLibrary(fileName) || fileName == QLatin1String("libvosk.so"))
+        if (!QLibrary::isLibrary(fileName) || fileName == u"libvosk.so")
             continue;
 
         QPluginLoader loader(pluginsDir.absoluteFilePath(fileName), this);
@@ -178,7 +178,7 @@ void SpeechToText::setUpMic()
     qDebug() << "[debug] Prepare microphone";
 
     QAudioFormat format;
-    format.setSampleRate(16000);
+    format.setSampleRate(m_plugin->sampleRate());
     format.setChannelCount(1);
 #ifdef QT6
     format.setSampleFormat(QAudioFormat::Int16);
