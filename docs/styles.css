@@ -1,0 +1,307 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Hamburger Menu for mobile devices */
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #101010;
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .nav-item {
+        margin-left: 5rem;
+    }
+
+    .nav-link {
+        font-size: 1.6rem;
+        font-weight: 400;
+        color: #475569;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 3rem;
+        flex-direction: column;
+        background-color: #fff;
+        width: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-item {
+        margin: 1.5rem 0;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        -webkit-transform: translateY(8px) rotate(45deg);
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        -webkit-transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#hero {
+    background-color: #f7f7f7;
+    padding: 40px;
+    text-align: center;
+}
+
+#hero h2 {
+    margin-top: 0;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.hero-image {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+    /* Add transition for scaling */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Download Now Button */
+.cta {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.cta:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+body.dark-mode #dark-mode-toggle {
+    /* Rotate the button 360 degrees in dark mode */
+    transform: rotate(360deg);
+}
+
+.dark-mode header {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+.dark-mode header h1 {
+    color: #f0f0f0;
+}
+
+.dark-mode .bar {
+    background-color: #fff;
+}
+
+.dark-mode .nav-menu {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+.dark-mode nav ul li a {
+    color: #f0f0f0;
+}
+
+.dark-mode #hero {
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+.dark-mode .cta {
+    background-color: #ff6600;
+}
+
+.dark-mode footer {
+    background-color: #222;
+    color: #f0f0f0;
+}
+
+/* CSS Animation */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark mode toggle button */
+#dark-mode-toggle {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 24px;
+    text-align: center;
+    display: flex;
+
+    /* Add transition for rotation */
+    transition: transform 0.3s ease;
+}
+
+/* Features Section */
+#features {
+    text-align: center; /* Center the inline-block elements */
+    padding: 40px 0;
+}
+
+#features ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.feature-item {
+    display: inline-block; /* Display elements in a row */
+    width: 250px; /* Set a fixed width for each item */
+    padding: 20px;
+    margin: 20px;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    /* Add transition for scaling */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
+}
+
+.feature-info h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.feature-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.feature-item.dark-mode {
+    background-color: #212121; /* Update background color for dark mode */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Adjust shadow for dark mode */
+}

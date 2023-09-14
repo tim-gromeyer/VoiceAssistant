@@ -66,7 +66,7 @@ public:
     void initializePage() override;
     [[nodiscard]] bool isComplete() const override;
 
-    QStringList commands() const;
+    [[nodiscard]] QStringList commands() const;
 
 private Q_SLOTS:
     void addCommand();

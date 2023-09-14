@@ -11,7 +11,6 @@
 #include "texttospeechsettings.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
-#include <cmath>
 
 #include <QCloseEvent>
 #include <QDebug>
@@ -80,7 +79,7 @@ void actions::Action::run(QStringView text) const
                                       Qt::QueuedConnection);
     }
     if (!responses.isEmpty()) {
-        int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
+        const int randomIndex = (int) QRandomGenerator::global()->bounded(responses.size());
         MainWindow::say(responses.at(randomIndex));
     }
 

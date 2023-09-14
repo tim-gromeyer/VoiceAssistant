@@ -1,4 +1,4 @@
-*.user
+*.user*
 vosk/
 models/
 android/
@@ -8,4 +8,4 @@ android/
 build*/
 data/
 doc/
-
+.flatpak-builder/

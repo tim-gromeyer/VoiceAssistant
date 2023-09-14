@@ -7,8 +7,6 @@
 
 #include "vosk_api.h" // Include the Vosk API header file
 
-// Declare global variables for the Vosk model and recognizer
-
 VoskPlugin::VoskPlugin(QObject *parent)
     : SpeechToTextPlugin(parent)
 {
@@ -103,7 +101,7 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
         model = vosk_model_new(QString(modelDir + formattedLang).toUtf8());
         if (model) {
             qDebug() << "[debug] Loaded model, language:" << lang;
-            recognizer = vosk_recognizer_new(model, 16000.0);
+            recognizer = vosk_recognizer_new(model, sampleRate());
         }
 
         if (!model || !recognizer) {

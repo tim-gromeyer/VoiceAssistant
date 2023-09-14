@@ -81,6 +81,11 @@ elseif(UNIX AND NOT EMSCRIPTEN AND NOT ANDROID)
  execute_process(COMMAND lsb_release -sc OUTPUT_VARIABLE release OUTPUT_STRIP_TRAILING_WHITESPACE)
  execute_process(COMMAND uname -m OUTPUT_VARIABLE CPACK_RPM_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+ # Fix for openSUSE Tumbleweed
+ if(release STREQUAL "n/a")
+     execute_process(COMMAND lsb_release -sr OUTPUT_VARIABLE release OUTPUT_STRIP_TRAILING_WHITESPACE)
+ endif()
+
  if(distribution STREQUAL "Debian" OR distribution STREQUAL "Ubuntu" OR distribution STREQUAL "Linuxmint")
  set(CPACK_GENERATOR "DEB")
  execute_process(COMMAND dpkg --print-architecture OUTPUT_VARIABLE CPACK_DEBIAN_PACKAGE_ARCHITECTURE OUTPUT_STRIP_TRAILING_WHITESPACE)
