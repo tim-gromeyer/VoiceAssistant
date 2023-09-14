@@ -51,6 +51,7 @@ public:
     // Clear all recognized words and start from the very beginning
     virtual void clear() = 0;
 
+    // The sample rate the plugin uses/needs
     virtual int sampleRate() = 0;
 
 Q_SIGNALS:

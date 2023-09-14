@@ -8,4 +8,4 @@ android/
 build*/
 data/
 doc/
-
+.flatpak-builder/

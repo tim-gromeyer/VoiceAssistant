@@ -9,7 +9,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
-}
+} // namespace Ui
 class Jokes;
 class PluginBridge;
 class QAudioOutput;
@@ -70,7 +70,7 @@ public Q_SLOTS:
     void tellJoke();
 
 protected:
-    void closeEvent(QCloseEvent *) override;
+    void closeEvent(QCloseEvent *e) override;
 
 private Q_SLOTS:
     void onSTTStateChanged();

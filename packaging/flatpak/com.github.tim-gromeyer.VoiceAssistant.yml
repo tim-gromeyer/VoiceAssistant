@@ -1,0 +1,25 @@
+app-id: com.github.tim_gromeyer.VoiceAssistant
+runtime: org.kde.Platform
+runtime-version: '6.5'
+sdk: org.kde.Sdk
+command: voiceassistant
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=network
+  - --filesystem=host
+  - --device=dri
+modules:
+  - name: voiceassistant
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+    sources:
+      - type: git
+        url: https://github.com/tim-gromeyer/VoiceAssistant.git
+        branch: main
+      - type: archive
+        url: https://github.com/alphacep/vosk-api/releases/download/v0.3.45/vosk-linux-x86_64-0.3.45.zip
+        sha256: bbdc8ed85c43979f6443142889770ea95cbfbc56cffb5c5dcd73afa875c5fbb2
+        dest: vosk
