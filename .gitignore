@@ -1,4 +1,4 @@
-*.user
+*.user*
 vosk/
 models/
 android/
