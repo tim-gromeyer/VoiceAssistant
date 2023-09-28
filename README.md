@@ -1,3 +1,5 @@
+# NOTE: I will continue developing this when I have some time. I use MarkdownEdit for school and need to improve it
+
 # VoiceAssistant 🎙️
 
 [![Build Status](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml/badge.svg)](https://github.com/tim-gromeyer/VoiceAssistant/actions/workflows/build.yml)
