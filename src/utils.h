@@ -22,6 +22,11 @@ constexpr QLatin1String L1(const char *str)
 #define STR(str) QStringLiteral(str)
 } // namespace literals
 } // namespace strings
+
+namespace json {
+QString reformat(const QByteArray &);
+bool reformatFile(const QString &fileName);
+} // namespace json
 } // namespace utils
 
 namespace directory {

@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QHash>
+#include <QJsonDocument>
+#include <QJsonParseError>
 #include <QTextStream>
 
 #include <sstream>
@@ -100,6 +102,40 @@ int wordToNumber(const QString &text)
 
 //return numbers.value(word, 10);
 } // namespace numbers
+
+namespace json {
+QString reformat(const QByteArray &json)
+{
+    QJsonParseError error{};
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(json, &error);
+
+    if (error.error != QJsonParseError::NoError) {
+        qWarning() << "Failed to parse JSON file: " << error.errorString();
+        return {};
+    }
+
+    return jsonDoc.toJson(QJsonDocument::Indented);
+}
+bool reformatFile(const QString &fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Failed to open JSON file: " << fileName;
+        return false;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    // write reformatted JSON data back to file
+    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+    file.write(reformat(jsonData).toUtf8());
+    file.close();
+
+    return true;
+}
+} // namespace json
 } // namespace utils
 
 namespace directory {

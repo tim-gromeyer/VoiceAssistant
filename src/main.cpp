@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "utils.h"
 
 #include <QApplication>
 #include <QCommandLineParser>
@@ -9,32 +10,6 @@
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
-
-void reformatJsonFile(const QString &fileName)
-{
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Failed to open JSON file: " << fileName;
-        return;
-    }
-
-    QJsonParseError error{};
-
-    QByteArray jsonData = file.readAll();
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &error);
-
-    file.close();
-
-    if (error.error != QJsonParseError::NoError) {
-        qWarning() << "Failed to parse JSON file: " << error.errorString();
-        return;
-    }
-
-    // write reformatted JSON data back to file
-    file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
-    file.write(jsonDoc.toJson(QJsonDocument::Indented));
-    file.close();
-}
 
 int main(int argc, char *argv[])
 {
@@ -91,7 +66,7 @@ int main(int argc, char *argv[])
 
     if (parser.isSet(reformatOption)) {
         QString fileName = parser.value(reformatOption);
-        reformatJsonFile(fileName);
+        utils::json::reformatFile(fileName);
         return 0;
     }
 
