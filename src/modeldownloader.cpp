@@ -384,6 +384,8 @@ void ModelDownloader::downloadFinished()
         error = true;
     }
 
+    qDebug() << "Done";
+
     QGuiApplication::restoreOverrideCursor();
 
     if (senderButton)

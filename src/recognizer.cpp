@@ -346,6 +346,7 @@ void SpeechToText::setState(SpeechToText::State s)
         break;
     default:
         break;
+        m_errorString.clear();
     }
 
     qDebug().noquote().nospace() << "[debug] SpeechToText state changed: " << s << ": "

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "commands.h"
 #include "commandwizard.h"
 #include "global.h"
 #include "jokes.h"
@@ -93,8 +94,10 @@ void actions::Action::run(QStringView text) const
             auto newArgs = args; // The function must be const so we need to create a copy
             newArgs[index] = text.toString();
             p.setArguments(newArgs);
-        } else
+        } else {
+            qDebug() << "[debug] Starting program:" << program << args;
             p.setArguments(args);
+        }
 
         p.startDetached();
     }
@@ -599,6 +602,10 @@ void MainWindow::openModelDownloader()
         &ModelDownloader::modelDownloaded,
         this,
         [this] {
+            qDebug() << "Model downloaded, reloading model";
+
+            recognizer->setState(SpeechToText::State::NotStarted);
+
             if (recognizer->requestMicrophonePermission())
                 recognizer->setup();
         },
@@ -640,13 +647,14 @@ void MainWindow::processText(const QString &text)
 {
     using strings::calculateSimilarity;
 
+    // TODO: Make this a setting
     constexpr float SIMILARITY_THRESHOLD = 0.8;
 
     if (text.isEmpty())
         return;
 
     // Loop for actions in commands
-    for (const auto &action : qAsConst(commands)) {
+    for (const auto &action : std::as_const(commands)) {
         for (const auto &command : action.commands) {
             QString commandPrefix = text.left(command.length());
             float similaritry = calculateSimilarity(commandPrefix, command);
@@ -661,7 +669,7 @@ void MainWindow::processText(const QString &text)
     }
 
     // Loop for plugins
-    for (const Plugin &plugin : qAsConst(plugins)) {
+    for (const Plugin &plugin : std::as_const(plugins)) {
         if (!plugin.interface->isValid(text))
             continue;
 
@@ -675,173 +683,12 @@ void MainWindow::processText(const QString &text)
 
 void MainWindow::loadCommands()
 {
-    commands.clear();
-
-    QString dir = dir::commandsBaseDir() + recognizer->language();
-
-    // Fallback solution if `firstSetup` failed to copy the folder
-    QDir testDir;
-    testDir.setPath(dir);
-    if (testDir.isEmpty())
-        dir = dir::commandsInstallBaseDir() + recognizer->language();
-
-    QFile jsonFile(dir + STR("/default.json"));
-    // open the JSON file
-    if (!jsonFile.open(QIODevice::ReadOnly)) {
-        qCritical() << STR("Failed to open %1:\n%2")
-                           .arg(jsonFile.fileName(), jsonFile.errorString())
-                           .toStdString()
-                           .c_str();
-        return;
-    }
-
-    // read all the data from the JSON file
-    QByteArray jsonData = jsonFile.readAll();
-    jsonFile.close();
-
-    // In case of an error
-    QJsonParseError error{};
-
-    // create a QJsonDocument from the JSON data
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &error);
-
-    // Error handling
-    if (error.error != QJsonParseError::NoError) {
-        qCritical() << STR("JSON parsing error at %1: %2")
-                           .arg(QString::number(error.offset), error.errorString());
-        return;
-    }
-
-    // get the array from the JSON document
-    QJsonArray jsonArray = jsonDoc.array();
-
-    for (const auto &value : jsonArray) {
-        // convert the array element to an object
-        QJsonObject jsonObject = value.toObject();
-
-        // get the commands array from the JSON object
-        QJsonArray commandsArray = jsonObject[STR("commands")].toArray();
-        if (commandsArray.isEmpty()) {
-            qWarning() << "No commands specified for:" << jsonObject;
-            continue;
-        }
-
-        // Command template
-        Action c;
-
-        // get the name of the action
-        c.name = jsonObject[STR("name")].toString();
-
-        // this is a default action
-        c.isUserAction = false;
-
-        // get the function name from the JSON object(optional)
-        c.funcName = jsonObject[STR("funcName")].toString();
-
-        // get the responses(optional)
-        QJsonArray responseArray = jsonObject[STR("responses")].toArray();
-        for (const auto &response : responseArray)
-            c.responses.append(response.toString());
-
-        // sound/song to play(optional)
-        c.sound = jsonObject[STR("sound")].toString();
-
-        // used to execute external programs(optional)
-        c.program = jsonObject[STR("program")].toString();
-        QJsonArray args = jsonObject[STR("args")].toArray();
-        c.args.reserve(args.size());
-        for (const auto &arg : args)
-            c.args.append(arg.toString());
-
-        // reserve memory
-        c.commands.reserve(commandsArray.size());
-        for (const auto &command : commandsArray)
-            c.commands << command.toString();
-
-        commands.append(c);
-    }
+    commands = Commands::getActions(recognizer->language());
 }
 
 void MainWindow::saveCommands()
 {
-    const QString dir = dir::commandsBaseDir() + recognizer->language();
-    QDir makeDir;
-    makeDir.setPath(dir);
-    makeDir.mkpath(dir);
-
-    QJsonArray jsonArray;
-    QJsonArray userArray;
-
-    for (const auto &c : qAsConst(commands)) {
-        QJsonObject jsonObject;
-
-        if (!c.name.isEmpty())
-            jsonObject[STR("name")] = c.name;
-        if (!c.funcName.isEmpty())
-            jsonObject[STR("funcName")] = c.funcName;
-        if (!c.program.isEmpty())
-            jsonObject[STR("program")] = c.program;
-        if (!c.sound.isEmpty())
-            jsonObject[STR("sound")] = c.sound;
-
-        if (!c.commands.isEmpty()) {
-            QJsonArray commandsArray;
-            for (const auto &command : c.commands)
-                commandsArray.append(command);
-            jsonObject[STR("commands")] = commandsArray;
-        }
-
-        if (!c.responses.isEmpty()) {
-            QJsonArray responseArray;
-            for (const auto &response : c.responses)
-                responseArray.append(response);
-            jsonObject[STR("responses")] = responseArray;
-        }
-
-        if (!c.args.isEmpty()) {
-            QJsonArray argsArray;
-            for (const auto &arg : c.args)
-                argsArray.append(arg);
-            jsonObject[STR("args")] = argsArray;
-        }
-        if (!jsonObject.isEmpty()) {
-            if (c.isUserAction)
-                userArray.append(jsonObject);
-            else
-                jsonArray.append(jsonObject);
-        }
-    }
-
-    QJsonDocument jsonDoc(jsonArray);
-
-    QSaveFile jsonFile(dir + STR("/default.json"));
-    if (!jsonFile.open(QIODevice::WriteOnly)) {
-        qDebug() << STR("Failed to open %1\n%2").arg(jsonFile.fileName(), jsonFile.errorString());
-        return;
-    }
-    jsonFile.write(jsonDoc.toJson());
-    if (!jsonFile.commit())
-        QMessageBox::warning(
-            instance(),
-            tr("Failed to save file"),
-            tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
-                .arg(jsonFile.fileName(), jsonFile.errorString(), jsonDoc.toJson()));
-
-    QJsonDocument userJsonDoc(userArray);
-
-    QSaveFile userJsonFile(dir + STR("/user.json"));
-    if (!userJsonFile.open(QIODevice::WriteOnly)) {
-        qDebug() << STR("Failed to open %1\n%2")
-                        .arg(userJsonFile.fileName(), userJsonFile.errorString());
-        return;
-    }
-    userJsonFile.write(userJsonDoc.toJson());
-    if (!userJsonFile.commit())
-        QMessageBox::warning(
-            instance(),
-            tr("Failed to save file"),
-            tr("Failed to write <em>%1</em>.\n%2\nCopy following text and save it manually:\n%3")
-                .arg(userJsonFile.fileName(), userJsonFile.errorString(), userJsonDoc.toJson()));
+    Commands::saveActions(commands, recognizer->language());
 }
 
 void MainWindow::loadPlugins()

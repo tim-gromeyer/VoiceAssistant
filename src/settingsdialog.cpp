@@ -74,11 +74,11 @@ void SettingsDialog::onClicked(QAbstractButton *button)
     case QDialogButtonBox::InvalidRole:
         return;
     case QDialogButtonBox::AcceptRole:
-        for (auto *settingsWidget : qAsConst(m_settingsWidgets))
+        for (auto *settingsWidget : std::as_const(m_settingsWidgets))
             settingsWidget->finish();
         break;
     case QDialogButtonBox::ApplyRole:
-        for (auto *settingsWidget : qAsConst(m_settingsWidgets))
+        for (auto *settingsWidget : std::as_const(m_settingsWidgets))
             settingsWidget->apply();
         break;
     default:
@@ -90,7 +90,7 @@ void SettingsDialog::search(const QString &text)
 {
     int pageCount = 0;
 
-    for (SettingsWidget *settingsWidget : qAsConst(m_settingsWidgets)) {
+    for (SettingsWidget *settingsWidget : std::as_const(m_settingsWidgets)) {
         bool keywordsContainsText = false;
 
         for (const QString &keyword : settingsWidget->keyWords()) {

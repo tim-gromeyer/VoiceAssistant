@@ -211,7 +211,7 @@ void Jokes::saveJokes()
 
     QDataStream out(&f);
     out << jokeLang;
-    for (const Joke &j : qAsConst(jokes)) {
+    for (const Joke &j : std::as_const(jokes)) {
         out << j;
     }
 }
