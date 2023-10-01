@@ -160,7 +160,7 @@ void WeatherData::parseWeatherData(const QByteArray &jsonData)
     }
 
     // Print the parsed data
-    for (const HourlyWeather &weather : qAsConst(hourlyWeatherList)) {
+    for (const HourlyWeather &weather : std::as_const(hourlyWeatherList)) {
         qDebug() << "Time:" << weather.time.toString(QStringLiteral("yyyy-MM-dd hh:mm"));
         qDebug() << "Temperature:" << weather.temperature;
         qDebug() << "Apparent temperature:" << weather.apparentTemp;
