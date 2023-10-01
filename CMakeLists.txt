@@ -48,17 +48,18 @@ set(PROJECT_SOURCES
     plugins/settingswidget.h
     plugins/utils.h
     speechtotext/speechtotextplugin.h
-    src/commandwizard.cpp src/commandwizard.h
+    src/commandwizard.cpp       src/commandwizard.h
     src/global.h
-    src/jokes.cpp src/jokes.h
+    src/jokes.cpp               src/jokes.h
     src/listwidget.h
     src/main.cpp
-    src/mainwindow.cpp src/mainwindow.h
-    src/modeldownloader.cpp src/modeldownloader.h
-    src/recognizer.cpp src/recognizer.h
-    src/settingsdialog.cpp src/settingsdialog.h
+    src/mainwindow.cpp          src/mainwindow.h
+    src/modeldownloader.cpp     src/modeldownloader.h
+    src/recognizer.cpp          src/recognizer.h
+    src/settingsdialog.cpp      src/settingsdialog.h
     src/texttospeechsettings.cpp src/texttospeechsettings.h
-    src/utils.cpp src/utils.h
+    src/utils.cpp               src/utils.h
+    src/commands.cpp            src/commands.h
     ui/mainwindow.ui
     ui/settingsdialog.ui
 )
