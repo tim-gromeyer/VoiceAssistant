@@ -65,3 +65,36 @@ struct Action
     void run(QStringView) const;
 };
 } // namespace actions
+
+namespace info {
+enum OS { Linux, Mac, Windows, Wasm, Unknown };
+
+static constexpr OS getOs()
+{
+#if defined(Q_OS_WIN)
+    return Windows;
+#elif defined(Q_OS_LINUX)
+    return Linux;
+#elif defined(Q_OS_MACOS)
+    return Mac;
+#elif defined(Q_OS_WASM)
+    return Wasm;
+#else
+    return Unknown;
+#endif
+}
+
+static constexpr QLatin1String getOsString()
+{
+    switch (getOs()) {
+    case Linux:
+        return utils::strings::literals::L1("Linux");
+    case Mac:
+        return utils::strings::literals::L1("MacOS");
+    case Windows:
+        return utils::strings::literals::L1("Windows");
+    case Wasm:
+        return utils::strings::literals::L1("WebAssembly");
+    }
+}
+} // namespace info
