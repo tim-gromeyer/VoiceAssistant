@@ -83,6 +83,7 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
     qDebug() << "[debug] Setting up model and recognizer";
 
     const QStringList uiLangs = QLocale::system().uiLanguages();
+    qDebug() << "[debug] System languages:" << uiLangs;
 
     QDir dir(modelDir);
     if (dir.isEmpty(QDir::Dirs)) {
@@ -90,6 +91,8 @@ void VoskPlugin::setup(const QString &modelDir, bool *success)
         *success = false;
         return;
     }
+
+    qDebug() << "[debug] Vosk model dir:" << dir;
 
     bool errorWhileLoading = false;
 

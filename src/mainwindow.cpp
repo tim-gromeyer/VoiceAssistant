@@ -17,9 +17,6 @@
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QDir>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
 #include <QLibrary>
 #include <QLineEdit>
 #include <QMediaPlayer>
@@ -29,7 +26,6 @@
 #include <QRandomGenerator>
 #include <QRegularExpression>
 #include <QRegularExpressionMatchIterator>
-#include <QSaveFile>
 #include <QSettings>
 #include <QSystemTrayIcon>
 #include <QTextToSpeech>
@@ -114,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent)
     , jokes(new Jokes(this))
     , bridge(new PluginBridge(this))
     , trayIcon(new QSystemTrayIcon(qApp->windowIcon(), this))
-    , settings(new QSettings(this))
+    , settings(new QSettings(STR("Tim Gromeyer"), STR("VoiceAssistant"), this))
 {
     // Set up UI
     ui->setupUi(this);
@@ -123,6 +119,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set instance for instance()
     _instance = this;
+
+    qDebug() << "Settings file:" << settings->fileName();
 
     connect(bridge, &PluginBridge::_say, this, &MainWindow::say, Qt::QueuedConnection);
     connect(bridge,
@@ -147,10 +145,16 @@ MainWindow::MainWindow(QWidget *parent)
     player->setAudioOutput(audioOutput);
 #endif
 
-    // TODO: Detect first startup (after installation) and show a instruction or so
-    firstSetup();
+    settings->beginGroup(STR("General"));
+    if (settings->value(STR("FirstStart"), true).toBool())
+        firstSetup();
+    settings->endGroup();
 
     // Set up recognizer
+    settings->beginGroup(STR("SpeechToText"));
+    QString wakeWord = settings->value(STR("WakeWord"), L1("computer")).toString();
+    settings->endGroup();
+
     recognizer = new SpeechToText(STR("vosk"), this);
     connect(recognizer, &SpeechToText::stateChanged, this, &MainWindow::onSTTStateChanged);
     connect(recognizer,
@@ -158,6 +162,7 @@ MainWindow::MainWindow(QWidget *parent)
             this,
             &MainWindow::loadCommands,
             Qt::QueuedConnection);
+    recognizer->setWakeWord(wakeWord);
     if (recognizer->state() != SpeechToText::NotStarted)
         onSTTStateChanged();
 
@@ -233,11 +238,15 @@ void MainWindow::firstSetup()
     if (dir.exists(dir::commandsBaseDir()))
         return;
 
+    qInfo() << "Running the setup script";
+
     directory::copyRecursively(dir::commandsInstallBaseDir(), dir::commandsBaseDir());
 #ifndef QT_DEBUG
     // NOTE: This might fail because on Linux /opt is read-only so we can't delete files/folders or write to files
     dir.remove(dir::commandsInstallBaseDir());
 #endif
+
+    settings->setValue(STR("FirstStart"), false);
 }
 
 void MainWindow::addCommand(const Action &a)
@@ -979,6 +988,8 @@ MainWindow::~MainWindow()
         QThreadPool::globalInstance()->waitForDone();
         qDebug() << "[debug] All threads ended";
     }
+
+    settings->sync();
 
     recognizer->deleteLater();
     delete recognizer;

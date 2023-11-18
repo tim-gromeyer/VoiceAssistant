@@ -58,7 +58,7 @@ private:
 
     void setState(State);
 
-    QString m_wakeWord = QStringLiteral("computer ");
+    QString m_wakeWord;
     bool m_isAsking = false;
 
     State m_state = NotStarted;
