@@ -34,7 +34,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
     , downloadTime(new QElapsedTimer())
 {
     setWindowTitle(tr("Model downloader"));
-
+    setWindowFlags(Qt::Window);
     progress->setWindowTitle(tr("Downloading..."));
     progress->setRange(0, 100);
     progress->close();
@@ -367,11 +367,13 @@ void ModelDownloader::downloadFinished()
 
         loop.exec();
 
+        QString modelname= QLocale::system().name().replace("_","-").toLower();
+        
         qDebug() << "Renaming folder ...";
         QDir dir(dir::modelDir());
-        if (!dir.rename(info.name, info.lang)) {
+        if (!dir.rename(info.name, modelname)) { //info.lang
             qCritical() << "Can't rename the folder, do it yourself!\nOriginal name:" << info.name
-                        << "\nNew name:" << info.lang << "\n";
+                        << "\nNew name:" << modelname << "test" <<info.lang << "\n";
             error = true;
         }
 
