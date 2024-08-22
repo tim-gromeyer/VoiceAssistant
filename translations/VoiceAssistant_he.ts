@@ -113,7 +113,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="351"/>
         <source>Add command</source>
-        <translation type="unfinished"></translation>
+        <translation>הוסף פקודה</translation>
     </message>
 </context>
 <context>
