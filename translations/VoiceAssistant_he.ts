@@ -62,7 +62,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="202"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>בוצע</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="203"/>
@@ -185,7 +185,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="201"/>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>סגור חלון</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
@@ -755,52 +755,52 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/utils.cpp" line="21"/>
         <source>three</source>
-        <translation>3</translation>
+        <translation>שלש</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="22"/>
         <source>four</source>
-        <translation type="unfinished"></translation>
+        <translation>ארבע</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="23"/>
         <source>five</source>
-        <translation type="unfinished"></translation>
+        <translation>חמש</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="24"/>
         <source>six</source>
-        <translation type="unfinished"></translation>
+        <translation>שש</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="25"/>
         <source>seven</source>
-        <translation type="unfinished"></translation>
+        <translation>שבע</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="26"/>
         <source>eight</source>
-        <translation type="unfinished"></translation>
+        <translation>שמונה</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="27"/>
         <source>nine</source>
-        <translation type="unfinished"></translation>
+        <translation>תשע</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="28"/>
         <source>ten</source>
-        <translation type="unfinished"></translation>
+        <translation>עשר</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="29"/>
         <source>eleven</source>
-        <translation type="unfinished"></translation>
+        <translation>אחד-עשר</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="30"/>
         <source>twelve</source>
-        <translation type="unfinished"></translation>
+        <translation>שנים-עשר</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="31"/>
@@ -893,18 +893,18 @@ Press &apos;Next&apos; to continue.</source>
         <location filename="../src/utils.cpp" line="48"/>
         <location filename="../src/utils.cpp" line="72"/>
         <source>million</source>
-        <translation type="unfinished"></translation>
+        <translation>מיליון</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="49"/>
         <location filename="../src/utils.cpp" line="73"/>
         <source>billion</source>
-        <translation type="unfinished"></translation>
+        <translation>מיליארד</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="58"/>
         <source>negative</source>
-        <translation type="unfinished"></translation>
+        <translation>שלילי</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="60"/>
