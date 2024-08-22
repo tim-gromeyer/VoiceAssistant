@@ -6,22 +6,22 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="188"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר פעולה</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="189"/>
         <source>Select the action(s) to be performed when the command is recognized</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר את הפעולה/פעולות שיש לבצע כאשר הפקודה מזוהה</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="190"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>פעולות</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="191"/>
         <source>Action name</source>
-        <translation type="unfinished"></translation>
+        <translation>שם הפעולה</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="192"/>
@@ -42,12 +42,12 @@
         <location filename="../src/commandwizard.cpp" line="195"/>
         <location filename="../src/commandwizard.cpp" line="199"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>בחר</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="196"/>
         <source>Execute program</source>
-        <translation type="unfinished"></translation>
+        <translation>הפעל תוכנית</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="198"/>
@@ -95,12 +95,12 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="85"/>
         <source>Add command</source>
-        <translation type="unfinished"></translation>
+        <translation>הוסף פקודה</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="86"/>
         <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
-        <translation type="unfinished"></translation>
+        <translation>הקש על &apos;האזן&apos; כדי להפעיל את הזיהוי הקולי. דבר באופן טבעי והאפליקציה תמיר את המילים המדוברות שלך לטקסט.</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="88"/>
@@ -150,17 +150,17 @@ Joke languages: %2</source>
         <location filename="../src/mainwindow.cpp" line="395"/>
         <location filename="../src/mainwindow.cpp" line="396"/>
         <source>Mute</source>
-        <translation type="unfinished"></translation>
+        <translation>השתק</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="122"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>קובץ</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="131"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>עזרה</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="171"/>
@@ -170,17 +170,17 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="180"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>צא</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="183"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="196"/>
         <source>Add command</source>
-        <translation type="unfinished"></translation>
+        <translation>הוסף פקודה</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="201"/>
@@ -195,27 +195,27 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading …</source>
-        <translation type="unfinished"></translation>
+        <translation>טוען…</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="138"/>
         <source>Voice &amp;recognition</source>
-        <translation type="unfinished"></translation>
+        <translation>זיהוי קולי</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="145"/>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>פקודות</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="156"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>אודות</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="161"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>אודות, ושאלות ותשובות</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="166"/>
@@ -225,7 +225,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="191"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="269"/>
@@ -262,17 +262,17 @@ Joke languages: %2</source>
         <location filename="../src/mainwindow.cpp" line="311"/>
         <location filename="../src/mainwindow.cpp" line="312"/>
         <source>Unmute</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל השתקה</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="353"/>
         <source>Quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>לצאת?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="353"/>
         <source>Do you really want to quit?</source>
-        <translation type="unfinished"></translation>
+        <translation>אתה באמת רוצה לצאת?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="443"/>
@@ -289,17 +289,17 @@ Joke languages: %2</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="449"/>
         <source>Access to the microphone has been denied. This feature requires microphone access to function properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>הגישה למיקרופון נדחתה. לתכונה זו נדרשת גישה למיקרופון כדי לפעול כראוי.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="451"/>
         <source>Please grant microphone access to enable speech-to-text functionality and allow the app to convert your spoken words into text. Your audio data will only be used for this purpose and will be handled securely in accordance with our privacy policy.</source>
-        <translation type="unfinished"></translation>
+        <translation>אנא הענק גישה למיקרופון כדי לאפשר את תכונת הדיבור לטקסט, על ידי שאפליקציה תמיר את המילים המדוברות שלך לטקסט. נתוני האודיו שלך ישמשו רק למטרה זו ויטופלו בצורה מאובטחת בהתאם למדיניות הפרטיות שלנו.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="485"/>
         <source>Listening …</source>
-        <translation type="unfinished"></translation>
+        <translation>מקשיב…</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="516"/>
@@ -395,7 +395,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="64"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>שגיאה</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="65"/>
@@ -458,7 +458,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="38"/>
         <source>Downloading...</source>
-        <translation type="unfinished"></translation>
+        <translation>מוריד...</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="121"/>
@@ -479,23 +479,24 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="320"/>
         <source>Download failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>ההורדה נכשלה!</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="321"/>
         <source>The download failed for following reason:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ההורדה נכשלה מהסיבות הבאות:
+%1</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unzipping</source>
-        <translation type="unfinished"></translation>
+        <translation>מחלץ</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
         <source>Downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>הורד</translation>
     </message>
 </context>
 <context>
@@ -503,22 +504,22 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="13"/>
         <source>Hello</source>
-        <translation type="unfinished"></translation>
+        <translation>שלום</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
         <source>How are you</source>
-        <translation type="unfinished"></translation>
+        <translation>מה שלומך</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
         <source>Okay</source>
-        <translation type="unfinished"></translation>
+        <translation>בסדר</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
         <source>It works!</source>
-        <translation type="unfinished"></translation>
+        <translation>זה עובד!</translation>
     </message>
 </context>
 <context>
@@ -526,12 +527,12 @@ Copy following text and save it manually:
     <message>
         <location filename="../ui/settingsdialog.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות</translation>
     </message>
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
         <source>Search …</source>
-        <translation type="unfinished"></translation>
+        <translation>חפש…</translation>
     </message>
 </context>
 <context>
@@ -539,22 +540,22 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/recognizer.cpp" line="327"/>
         <source>The app is unable to transcribe speech to text because the necessary plugin is missing or could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>האפליקציה לא מצליחה לתמלל דיבור לטקסט מכיוון שהתוסף הדרוש חסר או שלא ניתן היה לטעון אותו.</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="335"/>
         <source>The recognizer has not yet been set up</source>
-        <translation type="unfinished"></translation>
+        <translation>המזהה עדיין לא הוגדר</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="338"/>
         <source>No microphone was found or the microphone is not accessible</source>
-        <translation type="unfinished"></translation>
+        <translation>לא נמצא מיקרופון או שהוא לא נגיש</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="341"/>
         <source>The microphone is incompatible with the required audio format (PCM 16bit mono)</source>
-        <translation type="unfinished"></translation>
+        <translation>המיקרופון אינו תואם לפורמט השמע הנדרש (PCM 16bit mono)</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="345"/>
@@ -567,32 +568,32 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="23"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>כללי</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="24"/>
         <source>Text to speech</source>
-        <translation type="unfinished"></translation>
+        <translation>טקסט לדיבור</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="113"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הגדרות</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="114"/>
         <source>Engine</source>
-        <translation type="unfinished"></translation>
+        <translation>מנוע</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="115"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>שפה</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="116"/>
         <source>Voice</source>
-        <translation type="unfinished"></translation>
+        <translation>קול</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="117"/>
@@ -607,12 +608,12 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="119"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>בדיקה</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="120"/>
         <source>Enter some text here to test the settings</source>
-        <translation type="unfinished"></translation>
+        <translation>הזן קצת טקסט כאן כדי לבדוק את ההגדרות</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="121"/>
@@ -640,7 +641,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="172"/>
         <source>The recognizer has not yet been set up</source>
-        <translation type="unfinished"></translation>
+        <translation>המזהה עדיין לא הוגדר</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="175"/>
@@ -653,12 +654,12 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="13"/>
         <source>what&apos;s the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>מה מזג האוויר</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="16"/>
         <source>what is the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>מה מזג האוויר</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="19"/>
@@ -712,7 +713,8 @@ Copy following text and save it manually:
         <location filename="../src/commandwizard.cpp" line="58"/>
         <source>This wizard allows you to add commands.
 Press &apos;Next&apos; to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>אשף זה מאפשר לך להוסיף פקודות.
+לחץ על &apos;הבא&apos; כדי להמשיך.</translation>
     </message>
 </context>
 <context>
@@ -720,7 +722,7 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/main.cpp" line="78"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
-        <translation type="unfinished"></translation>
+        <translation>עוזר קולי חסכוני במשאבים שעדיין נמצא בשלבי פיתוח מוקדמים אך כבר מתפקד.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="86"/>
