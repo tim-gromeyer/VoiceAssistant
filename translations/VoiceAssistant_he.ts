@@ -669,7 +669,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="22"/>
         <source>tell me about the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>ספר לי על מזג האוויר</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="25"/>
@@ -732,7 +732,7 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/main.cpp" line="87"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>קובץ</translation>
     </message>
 </context>
 <context>
@@ -740,22 +740,22 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/utils.cpp" line="18"/>
         <source>zero</source>
-        <translation type="unfinished"></translation>
+        <translation>אפס</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="19"/>
         <source>one</source>
-        <translation type="unfinished"></translation>
+        <translation>אחד</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="20"/>
         <source>two</source>
-        <translation type="unfinished"></translation>
+        <translation>שניים</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="21"/>
         <source>three</source>
-        <translation type="unfinished"></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="22"/>
