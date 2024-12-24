@@ -26,11 +26,7 @@ static const QString &baseDir()
     if (QCoreApplication::instance() && dir.isEmpty()) {
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
         if (QCoreApplication::applicationDirPath().endsWith(QLatin1String("bin")))
-#if QT5
-            dir = QLibraryInfo::location(QLibraryInfo::PrefixPath);
-#else
             dir = QLibraryInfo::path(QLibraryInfo::PrefixPath);
-#endif
         else
             dir = QCoreApplication::applicationDirPath();
 #endif

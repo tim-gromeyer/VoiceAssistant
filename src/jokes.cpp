@@ -12,8 +12,6 @@
 #include <QNetworkReply>
 #include <QTimer>
 
-#include <chrono>
-
 using namespace std::chrono_literals;
 using namespace utils::strings::literals;
 
@@ -40,9 +38,6 @@ Jokes::Jokes(QObject *parent)
     : QObject(parent)
     , manager(new QNetworkAccessManager(this))
 {
-#ifdef QT5
-    qRegisterMetaTypeStreamOperators<Jokes::Joke>("Joke");
-#endif
 }
 
 void Jokes::setup()

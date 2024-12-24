@@ -12,10 +12,6 @@
 #include <QTextToSpeech>
 #include <QVBoxLayout>
 
-#if QT5
-Q_DECLARE_METATYPE(QVoice);
-#endif
-
 TextToSpeechSettings::TextToSpeechSettings(QTextToSpeech *tts, QWidget *parent)
     : SettingsWidget(parent)
     , m_tts(tts)

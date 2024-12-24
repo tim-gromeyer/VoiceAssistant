@@ -34,10 +34,7 @@
 #include <QTimer>
 #include <QWidgetAction>
 #include <QtConcurrentRun>
-
-#ifdef QT6
 #include <QAudioOutput>
-#endif
 
 #include <chrono>
 
@@ -185,7 +182,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::openSettings);
     connect(ui->actionAddCommand, &QAction::triggered, this, &MainWindow::openCommandWizard);
     connect(ui->action_About, &QAction::triggered, this, &MainWindow::onHelpAbout);
-    connect(ui->volumeSlider, &QSlider::sliderMoved, this, qOverload<int>(&MainWindow::setVolume));
     connect(ui->actionCloseWindow, &QAction::triggered, this, &MainWindow::toggleVisibilty);
 
     // Set up time timer
@@ -261,11 +257,7 @@ void MainWindow::playSound(const QString &_url)
     if (QFile::exists(_url))
         url = QUrl::fromLocalFile(_url);
 
-#ifdef QT6
     player->setSource(url);
-#else
-    player->setMedia(url);
-#endif
     player->play();
 }
 
@@ -429,19 +421,11 @@ void MainWindow::onTTSStateChanged()
     switch (s) {
     case QTextToSpeech::Speaking:
         if (player)
-#ifdef QT6
             audioOutput->setVolume(0.3F * volume);
-#else
-            player->setVolume(int(30 * volume));
-#endif
         break;
     case QTextToSpeech::Ready:
         if (player)
-#ifdef QT6
             audioOutput->setVolume(1 * volume);
-#else
-            player->setVolume(int(100 * volume));
-#endif
         break;
     default:
         break;
@@ -497,11 +481,7 @@ void MainWindow::onWakeWord()
     ui->statusLabel->setText(tr("Listening …"));
 
     if (player)
-#ifdef QT6
         audioOutput->setVolume(0.3F * volume);
-#else
-        player->setVolume(int(30 * volume));
-#endif
     engine->setVolume(0.3F * volume);
 }
 
@@ -513,11 +493,7 @@ void MainWindow::doneListening()
     QMetaObject::invokeMethod(this, "processText", Qt::QueuedConnection, Q_ARG(QString, text));
 
     if (player)
-#ifdef QT6
         audioOutput->setVolume(1.0F * volume);
-#else
-        player->setVolume(int(100 * volume));
-#endif
 
     engine->setVolume(1.0F * volume);
 }

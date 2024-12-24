@@ -180,18 +180,11 @@ void SpeechToText::setUpMic()
     QAudioFormat format;
     format.setSampleRate(m_plugin->sampleRate());
     format.setChannelCount(1);
-#ifdef QT6
     format.setSampleFormat(QAudioFormat::Int16);
 
     auto inputDevices = QMediaDevices::audioInputs();
     auto input = QMediaDevices::defaultAudioInput();
-#else
-    format.setSampleType(QAudioFormat::SignedInt);
-    format.setSampleSize(16);
 
-    auto inputDevices = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-    auto input = QAudioDeviceInfo::defaultInputDevice();
-#endif
     if (inputDevices.isEmpty()) {
         setState(NoMicrophone);
         return;
@@ -200,8 +193,8 @@ void SpeechToText::setUpMic()
         return;
     }
 
-    audio = new AUDIOINPUT(format, this);
-    connect(audio, &AUDIOINPUT::stateChanged, this, [](QAudio::State state) {
+    audio = new QAudioSource(format, this);
+    connect(audio, &QAudioSource::stateChanged, this, [](QAudio::State state) {
         qDebug() << "[debug] Microphone state:" << state;
     });
     audio->setBufferSize(8000);
@@ -236,11 +229,7 @@ void SpeechToText::setup()
                 &SpeechToText::setUpMic,
                 Qt::UniqueConnection);
 
-#if QT5
-        QtConcurrent::run(this, &SpeechToText::setUpModel);
-#else
         std::ignore = QtConcurrent::run(&SpeechToText::setUpModel, this);
-#endif
         break;
     }
     }

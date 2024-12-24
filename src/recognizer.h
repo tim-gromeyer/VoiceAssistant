@@ -5,15 +5,8 @@
 
 #include <QIODevice>
 
-#ifdef QT6
 #include <QAudioSource>
 #include <QMediaDevices>
-#define AUDIOINPUT QAudioSource
-#else
-#include <QAudioDeviceInfo>
-#include <QAudioInput>
-#define AUDIOINPUT QAudioInput
-#endif
 
 class SpeechToText : public QObject
 {
@@ -79,7 +72,7 @@ private Q_SLOTS:
 private:
     void setState(SpeechToText::State s);
 
-    AUDIOINPUT *audio = nullptr;
+    QAudioSource *audio = nullptr;
 
     SpeechToTextPlugin *m_plugin = nullptr;
     QList<SpeechToTextPlugin *> m_plugins;

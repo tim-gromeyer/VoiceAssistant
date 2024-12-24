@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
     QTranslator translator, qtTranslator;
-    QString qtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    QString qtTranslationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
 
     // load translation for Qt
     if (qtTranslator.load(QLocale::system(),

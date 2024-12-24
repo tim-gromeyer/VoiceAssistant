@@ -58,13 +58,6 @@ public Q_SLOTS:
 
     static void quit();    // Close the app
     static void sayTime(); // Say the current local time
-    static void stop();    // Stop text to speech
-    static void pause();   // Pause music
-    static void resume();  // Resume the playing of music
-    static void volumeUp();
-    static void volumeDown();
-    static void setVolume(int);
-    static void setVolume(const QString &);
     static void restart(); // Restart the application
 
     void tellJoke();
@@ -121,9 +114,7 @@ private:
 
     QAction *muteAction = nullptr;
     QMediaPlayer *player = nullptr;
-#ifdef QT6
     QAudioOutput *audioOutput = nullptr;
-#endif
 
     // The timer used to display the current time
     QTimer *timeTimer;

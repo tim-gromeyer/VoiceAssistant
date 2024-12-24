@@ -12,17 +12,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(Dirs)
 include(Plugins)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} QUIET COMPONENTS DBus)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 QUIET COMPONENTS DBus)
 
 add_plugin(mediaControl CLASS_NAME PluginTest)
 target_sources(mediaControl PUBLIC ../base.h ../bridge.h mediaControl.cpp mediaControl.h)
-target_link_libraries(mediaControl PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(mediaControl PUBLIC Qt6::Widgets)
 
-if(Qt${QT_VERSION_MAJOR}DBus_FOUND)
+if(Qt6DBus_FOUND)
     target_compile_definitions(mediaControl PRIVATE HAS_DBUS)
-    target_link_libraries(mediaControl PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
+    target_link_libraries(mediaControl PRIVATE Qt6::DBus)
 endif()
 
 add_custom_command(TARGET mediaControl POST_BUILD

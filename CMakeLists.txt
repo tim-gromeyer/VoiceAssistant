@@ -31,8 +31,7 @@ else()
     option(BUILD_TEST_PLUGIN "Build a test plugin" ON)
 endif()
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Multimedia Network TextToSpeech Concurrent)
 
 file(GLOB TS_FILES translations/VoiceAssistant_*.ts)
 set(RC_FILES ressources/ressources.qrc)
@@ -64,17 +63,7 @@ set(PROJECT_SOURCES
     ui/settingsdialog.ui
 )
 
-add_translations(TS ${TS_FILES})
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-  qt_add_executable(voiceassistant MANUAL_FINALIZATION ${PROJECT_SOURCES} ${TS})
-else()
-  if(ANDROID)
-    add_library(voiceassistant SHARED ${PROJECT_SOURCES} ${TS})
-  else()
-    add_executable(voiceassistant ${PROJECT_SOURCES} ${TS})
-  endif()
-endif()
+qt_add_executable(voiceassistant MANUAL_FINALIZATION ${PROJECT_SOURCES} ${TS})
 
 add_subdirectory(3rdparty)
 add_subdirectory(speechtotext)
@@ -95,21 +84,20 @@ add_subdirectory(plugins/mediaControl)
 
 target_include_directories(voiceassistant PRIVATE src)
 target_link_libraries(voiceassistant PRIVATE
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Svg
-    Qt${QT_VERSION_MAJOR}::Multimedia
-    Qt${QT_VERSION_MAJOR}::Network
-    Qt${QT_VERSION_MAJOR}::TextToSpeech
-    Qt${QT_VERSION_MAJOR}::Concurrent
+    Qt6::Widgets
+    Qt6::Svg
+    Qt6::Multimedia
+    Qt6::Network
+    Qt6::TextToSpeech
+    Qt6::Concurrent
     elzip
 )
 
 target_compile_definitions(voiceassistant PUBLIC
     APP_DIR="${CMAKE_SOURCE_DIR}"
     APP_VERSION="${APP_VERSION}"
-    QT_DISABLE_DEPRECATED_BEFORE=0x0${QT_VERSION_MAJOR}${QT_VERSION_MINOR}${QT_VERSION_PATCH}
     QT_USE_QSTRINGBUILDER
-    QT${QT_VERSION_MAJOR}=1)
+)
 
 set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/android")
 
@@ -127,9 +115,7 @@ if (EMSCRIPTEN)
     target_link_options(voiceassistant PUBLIC "-sASYNCIFY -Os")
 endif()
 
-if(QT_VERSION_MAJOR EQUAL 6)
-  qt_finalize_executable(voiceassistant)
-endif()
+qt_finalize_executable(voiceassistant)
 
 include(GNUInstallDirs)
 
@@ -148,11 +134,11 @@ if(QT_VERSION GREATER_EQUAL 6.3.0)
             NO_UNSUPPORTED_PLATFORM_ERROR
         )
     else()
-    qt_generate_deploy_app_script(
-        TARGET voiceassistant
-        FILENAME_VARIABLE deploy_script
-        NO_UNSUPPORTED_PLATFORM_ERROR
-    )
+        qt_generate_deploy_app_script(
+            TARGET voiceassistant
+            FILENAME_VARIABLE deploy_script
+            NO_UNSUPPORTED_PLATFORM_ERROR
+        )
     endif()
     install(SCRIPT ${deploy_script})
 endif()

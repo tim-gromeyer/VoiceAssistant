@@ -12,22 +12,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(Dirs)
 include(Plugins)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Positioning)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
 
-if (NOT Qt${QT_VERSION_MAJOR}Positioning_FOUND)
-    message(WARNING "Qt Positioning not found. The weather plugin will not be build")
+if(Qt6Positioning_FOUND)
+    find_package(Qt6 REQUIRED COMPONENTS Positioning)
+else()
+    message(WARNING "Qt Positioning not found. The weather plugin will not be built.")
     return()
 endif()
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS SvgWidgets)
-    set(SVG Qt${QT_VERSION_MAJOR}::SvgWidgets)
-else()
-    find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Svg)
-    set(SVG Qt${QT_VERSION_MAJOR}::Svg)
-endif()
+find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+set(SVG Qt6::SvgWidgets)
 
 add_plugin(weatherPlugin CLASS_NAME WeatherPlugin)
 target_sources(weatherPlugin PUBLIC
@@ -42,9 +37,9 @@ target_sources(weatherPlugin PUBLIC
     position.h
 )
 target_link_libraries(weatherPlugin PUBLIC
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Positioning
-    Qt${QT_VERSION_MAJOR}::Network
+    Qt6::Widgets
+    Qt6::Positioning
+    Qt6::Network
     ${SVG}
 )
 
