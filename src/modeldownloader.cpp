@@ -192,10 +192,7 @@ void ModelDownloader::search(const QString &searchText)
 
     // Hide all rows that do not contain matching items
     for (int i = 0; i < table->rowCount(); ++i) {
-        if (matchingRows.contains(i))
-            table->setRowHidden(i, false);
-        else
-            table->setRowHidden(i, true);
+        table->setRowHidden(i, !matchingRows.contains(i));
     }
 }
 

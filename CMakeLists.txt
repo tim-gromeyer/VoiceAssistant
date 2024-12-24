@@ -91,6 +91,8 @@ if(BUILD_TEST_PLUGIN)
   add_subdirectory(plugins/weather)
 endif()
 
+add_subdirectory(plugins/mediaControl)
+
 target_include_directories(voiceassistant PRIVATE src)
 target_link_libraries(voiceassistant PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets

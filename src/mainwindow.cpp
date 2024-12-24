@@ -868,26 +868,6 @@ void MainWindow::bridgeAsk(const QString &text)
     bridge->pause = false;
 }
 
-void MainWindow::stop()
-{
-    if (engine)
-        engine->stop();
-    if (instance()->player)
-        instance()->player->stop();
-}
-
-void MainWindow::pause()
-{
-    if (instance()->player)
-        instance()->player->pause();
-}
-
-void MainWindow::resume()
-{
-    if (instance()->player)
-        instance()->player->play();
-}
-
 void MainWindow::quit()
 {
     const QString answer = ask(tr("Are you sure?"));
@@ -907,49 +887,6 @@ void MainWindow::sayTime()
     const QString time = QLocale::system().toString(currentTime, QLocale::ShortFormat);
 
     say(tr("It is %1").arg(time));
-}
-
-void MainWindow::applyVolume()
-{
-    qDebug() << "[debug] Change volume to:" << volume;
-#ifdef QT6
-    instance()->audioOutput->setVolume(1.0F * volume);
-#else
-    if (instance()->player)
-        instance()->player->setVolume(int(100 * volume));
-#endif
-
-    if (engine)
-        engine->setVolume(1.0 * volume);
-}
-
-void MainWindow::volumeUp()
-{
-    if (volume != 1)
-        volume += 0.1F;
-
-    applyVolume();
-}
-
-void MainWindow::volumeDown()
-{
-    if (volume != 0)
-        volume -= 0.1F;
-
-    applyVolume();
-}
-
-void MainWindow::setVolume(int volumeInt)
-{
-    volume = (float) volumeInt / 10.0F;
-    applyVolume();
-}
-
-void MainWindow::setVolume(const QString &text)
-{
-    int volumeInt = utils::wordToNumber(text);
-    instance()->ui->volumeSlider->setValue(volumeInt);
-    setVolume(volumeInt);
 }
 
 void MainWindow::tellJoke()

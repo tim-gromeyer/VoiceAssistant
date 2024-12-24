@@ -11,15 +11,6 @@
         "funcName": "sayTime"
     },
     {
-        "name": "Stop",
-        "commands": [
-            "shop",
-            "stock",
-            "stop"
-        ],
-        "funcName": "stop"
-    },
-    {
         "name": "Repeat the user",
         "commands": [
             "repeat after me",
@@ -83,21 +74,6 @@
         "funcName": "toggleMute"
     },
     {
-        "name": "Pause",
-        "commands": [
-            "pause"
-        ],
-        "funcName": "pause"
-    },
-    {
-        "name": "Resume",
-        "commands": [
-            "resume",
-            "continue"
-        ],
-        "funcName": "resume"
-    },
-    {
         "name": "Quit",
         "commands": [
             "shutdown",
@@ -106,32 +82,6 @@
             "turn off"
         ],
         "funcName": "quit"
-    },
-    {
-        "name": "Volume Up",
-        "commands": [
-            "volume up",
-            "increase volume",
-            "turn up the volume"
-        ],
-        "funcName": "volumeUp"
-    },
-    {
-        "name": "Volume Down",
-        "commands": [
-            "volume down",
-            "decrease volume",
-            "turn down the volume"
-        ],
-        "funcName": "volumeDown"
-    },
-    {
-        "name": "Set Volume",
-        "commands": [
-            "set volume to",
-            "change volume to"
-        ],
-        "funcName": "setVolume"
     },
     {
         "name": "Tell Joke",

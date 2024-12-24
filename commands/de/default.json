@@ -10,15 +10,6 @@
         "funcName": "sayTime"
     },
     {
-        "name": "Stopp",
-        "commands": [
-            "shop",
-            "stock",
-            "stopp"
-        ],
-        "funcName": "stop"
-    },
-    {
         "name": "Wiederholen",
         "commands": [
             "sprich mir nach",
@@ -72,48 +63,11 @@
         "funcName": "toggleMute"
     },
     {
-        "name": "Pause",
-        "commands": [
-            "pause"
-        ],
-        "funcName": "pause"
-    },
-    {
-        "name": "Weiter",
-        "commands": [
-            "weiter",
-            "fortsetzen"
-        ],
-        "funcName": "resume"
-    },
-    {
         "name": "Herunterfahren",
         "commands": [
             "herunterfahren"
         ],
         "funcName": "quit"
-    },
-    {
-        "name": "Lautstärke erhöhen",
-        "commands": [
-            "lauter"
-        ],
-        "funcName": "volumeUp"
-    },
-    {
-        "name": "Lautstärke verringern",
-        "commands": [
-            "leiser"
-        ],
-        "funcName": "volumeDown"
-    },
-    {
-        "name": "Lautstärke festlegen",
-        "commands": [
-            "lautstärke",
-            "lautstärker"
-        ],
-        "funcName": "setVolume"
     },
     {
         "name": "Witz erzählen",
