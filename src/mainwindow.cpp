@@ -364,6 +364,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     saveSettings();
     e->accept();
     QMainWindow::closeEvent(e);
+    QApplication::quit();
 }
 
 void MainWindow::setupTextToSpeech(const QString &engineName,
