@@ -1,5 +1,6 @@
 #include "recognizer.h" // Include the header file for the SpeechToText class
 #include "global.h"
+#include "pluginloader.h"
 #include "speechtotext/speechtotextplugin.h"
 
 #include <QCoreApplication>
@@ -18,48 +19,10 @@
 SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
     : QObject{parent}
 {
-    const auto staticInstances = QPluginLoader::staticInstances();
-    for (QObject *pluginObject : staticInstances) {
-        pluginObject->setParent(this);
-        auto *plugin = qobject_cast<SpeechToTextPlugin *>(pluginObject);
-        if (!plugin)
-            continue;
-        m_plugins.append(plugin);
-    }
-
-    QDir pluginsDir;
-    pluginsDir.setPath(dir::speechToTextPluginDir());
-
-    const auto entryList = pluginsDir.entryList(QDir::Files);
-
-    for (const QString &fileName : entryList) {
-        if (!QLibrary::isLibrary(fileName) || fileName == u"libvosk.so")
-            continue;
-
-        QPluginLoader loader(pluginsDir.absoluteFilePath(fileName), this);
-        if (!loader.load()) {
-            qWarning() << "Failed to load plugin" << fileName
-                       << "due to following reason:" << loader.errorString()
-                       << "\nUse `qtplugininfo` for a more advanced error message!";
-        }
-        QObject *pluginObject = loader.instance();
-        if (!pluginObject)
-            continue;
-
-        pluginObject->setParent(this);
-
-        SpeechToTextPlugin *plugin = qobject_cast<SpeechToTextPlugin *>(pluginObject);
-        if (!plugin)
-            continue;
-
-        qInfo() << "Loaded speech to text plugin:" << plugin->pluginName();
-        m_plugins.append(plugin);
-
-        if (plugin->pluginName() != pluginName)
-            continue;
-
-        m_plugin = plugin;
-    }
+    // Create loader for speech-to-text plugins
+    auto *loader = new PluginLoader<SpeechToTextPlugin>(this);
+    loader->loadPlugins(dir::speechToTextPluginDir());
+    m_plugins = loader->plugins();
 
     if (m_plugins.isEmpty()) {
         qCritical() << "No speech to text plugin found!";

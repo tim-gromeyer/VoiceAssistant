@@ -137,10 +137,8 @@ MainWindow::MainWindow(QWidget *parent)
         Qt::QueuedConnection);
 
     // Set audio output device
-#ifdef QT6
     audioOutput = new QAudioOutput(this);
     player->setAudioOutput(audioOutput);
-#endif
 
     settings->beginGroup(STR("General"));
     if (settings->value(STR("FirstStart"), true).toBool())

@@ -34,7 +34,7 @@ ModelDownloader::ModelDownloader(QWidget *parent)
     , downloadTime(new QElapsedTimer())
 {
     setWindowTitle(tr("Model downloader"));
-    setWindowFlags(Qt::Window);
+
     progress->setWindowTitle(tr("Downloading..."));
     progress->setRange(0, 100);
     progress->close();
@@ -127,7 +127,7 @@ void ModelDownloader::setupUi()
 
     int row = 0;
 
-    // Create widgets to display the information and give the user the option to choose the desired model
+    // Create widgets to display the information and give the user the option to choose the desired mode
     for (int i = 0; modelInfos.size() > i; ++i) {
         const ModelInfo &modelInfo = modelInfos.at(i);
         if (modelInfo.obsolete)
@@ -364,13 +364,11 @@ void ModelDownloader::downloadFinished()
 
         loop.exec();
 
-        QString modelname= QLocale::system().name().replace("_","-").toLower();
-        
         qDebug() << "Renaming folder ...";
         QDir dir(dir::modelDir());
-        if (!dir.rename(info.name, modelname)) { //info.lang
+        if (!dir.rename(info.name, info.lang)) {
             qCritical() << "Can't rename the folder, do it yourself!\nOriginal name:" << info.name
-                        << "\nNew name:" << modelname << "test" <<info.lang << "\n";
+                        << "\nNew name:" << info.lang << "\n";
             error = true;
         }
 

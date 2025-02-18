@@ -12,8 +12,7 @@ int main(int argc, char *argv[])
 
 #if (QT_FEATURE_static == 1)
     Q_IMPORT_PLUGIN(PluginTest);
-#endif
-
+#endif    
     // Test static plugins
     const auto staticPlugins = QPluginLoader::staticInstances();
     std::cout << "Amount of static plugins: " << staticPlugins.size() << '\n';
