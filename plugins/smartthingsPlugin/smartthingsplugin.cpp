@@ -22,18 +22,18 @@ void SmartThingsPlugin::setup()
 
 bool SmartThingsPlugin::isValid(const QString &input)
 {
-    return input.toLower().contains("licht") || input.toLower().contains("outlet");
+    return input.contains("licht") || input.contains("outlet");
 }
 
 void SmartThingsPlugin::run(const QString &input)
 {
     if (input.contains("licht") && input.contains("an")) {
         controlDevice("light", "on");
-    } else if (input.toLower().contains("licht aus")) {
+    } else if (input.contains("licht aus")) {
         controlDevice("light", "off");
-    } else if (input.toLower().contains("turn on outlet")) {
+    } else if (input.contains("turn on outlet")) {
         controlDevice("outlet", "on");
-    } else if (input.toLower().contains("turn off outlet")) {
+    } else if (input.contains("turn off outlet")) {
         controlDevice("outlet", "off");
     } else {
         bridge->say("Command not recognized.");

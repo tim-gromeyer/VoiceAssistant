@@ -87,11 +87,7 @@ void AddCommandPage::initializePage()
                    "convert your spoken words into text."));
     listenButton->setText(tr("Listen"));
 
-    connect(listenButton,
-            &QPushButton::clicked,
-            this,
-            &AddCommandPage::addCommand,
-            Qt::UniqueConnection);
+    connect(listenButton, &QPushButton::clicked, this, &AddCommandPage::addCommand);
 }
 
 void AddCommandPage::addCommand()

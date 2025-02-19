@@ -155,28 +155,17 @@ void TextToSpeechSettings::populateComboBoxes(bool useNewTTS)
     connect(engineComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged),
             this,
-            &TextToSpeechSettings::onEngineChanged,
-            Qt::UniqueConnection);
+            &TextToSpeechSettings::onEngineChanged);
     connect(languageComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged),
             this,
-            &TextToSpeechSettings::onLanguageChanged,
-            Qt::UniqueConnection);
+            &TextToSpeechSettings::onLanguageChanged);
     connect(voiceComboBox,
             qOverload<int>(&QComboBox::currentIndexChanged),
             this,
-            &TextToSpeechSettings::onVoiceChanged,
-            Qt::UniqueConnection);
-    connect(pitchSlider,
-            &QSlider::sliderMoved,
-            this,
-            &TextToSpeechSettings::onPitchChanged,
-            Qt::UniqueConnection);
-    connect(rateSlider,
-            &QSlider::sliderMoved,
-            this,
-            &TextToSpeechSettings::onRateChanged,
-            Qt::UniqueConnection);
+            &TextToSpeechSettings::onVoiceChanged);
+    connect(pitchSlider, &QSlider::sliderMoved, this, &TextToSpeechSettings::onPitchChanged);
+    connect(rateSlider, &QSlider::sliderMoved, this, &TextToSpeechSettings::onRateChanged);
 }
 
 void TextToSpeechSettings::onEngineChanged()
@@ -249,31 +238,9 @@ void TextToSpeechSettings::setupTTS(bool override)
     if (override || !m_newtts)
         m_newtts = new QTextToSpeech(engineComboBox->currentText());
 
-#if QT6
-    connect(m_newtts,
-            &QTextToSpeech::engineChanged,
-            this,
-            &TextToSpeechSettings::onTTSChanged,
-            Qt::UniqueConnection);
-#endif
-    connect(m_newtts,
-            &QTextToSpeech::localeChanged,
-            this,
-            &TextToSpeechSettings::onTTSChanged,
-            Qt::UniqueConnection);
-    connect(m_newtts,
-            &QTextToSpeech::voiceChanged,
-            this,
-            &TextToSpeechSettings::onTTSChanged,
-            Qt::UniqueConnection);
-    connect(m_newtts,
-            &QTextToSpeech::pitchChanged,
-            this,
-            &TextToSpeechSettings::onTTSChanged,
-            Qt::UniqueConnection);
-    connect(m_newtts,
-            &QTextToSpeech::rateChanged,
-            this,
-            &TextToSpeechSettings::onTTSChanged,
-            Qt::UniqueConnection);
+    connect(m_newtts, &QTextToSpeech::engineChanged, this, &TextToSpeechSettings::onTTSChanged);
+    connect(m_newtts, &QTextToSpeech::localeChanged, this, &TextToSpeechSettings::onTTSChanged);
+    connect(m_newtts, &QTextToSpeech::voiceChanged, this, &TextToSpeechSettings::onTTSChanged);
+    connect(m_newtts, &QTextToSpeech::pitchChanged, this, &TextToSpeechSettings::onTTSChanged);
+    connect(m_newtts, &QTextToSpeech::rateChanged, this, &TextToSpeechSettings::onTTSChanged);
 }

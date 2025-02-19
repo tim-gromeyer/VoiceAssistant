@@ -188,11 +188,7 @@ void SpeechToText::setup()
         setUpMic();
         break;
     case NotStarted: {
-        connect(m_plugin,
-                &SpeechToTextPlugin::loaded,
-                this,
-                &SpeechToText::setUpMic,
-                Qt::UniqueConnection);
+        connect(m_plugin, &SpeechToTextPlugin::loaded, this, &SpeechToText::setUpMic);
 
         std::ignore = QtConcurrent::run(&SpeechToText::setUpModel, this);
         break;
