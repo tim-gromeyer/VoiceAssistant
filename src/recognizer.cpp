@@ -31,7 +31,9 @@ SpeechToText::SpeechToText(const QString &pluginName, QObject *parent)
     }
 
     if (m_plugin == nullptr)
-        m_plugin = m_plugins.at(0);
+        m_plugin = m_plugins.last();
+
+    m_plugin->open(QIODevice::ReadWrite);
 
     connect(m_plugin, &SpeechToTextPlugin::answerReady, this, &SpeechToText::onAnswerReady);
     connect(m_plugin, &SpeechToTextPlugin::stateChanged, this, &SpeechToText::pluginStateChanged);
