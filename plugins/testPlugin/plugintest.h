@@ -14,6 +14,7 @@ public:
     explicit PluginTest(QObject *parent = nullptr)
         : QObject(parent){};
 
+    void setup() override{};
     bool isValid(const QString &) override;
     void run(const QString &) override;
 

@@ -20,6 +20,7 @@ public:
     explicit TextToSpeechSettings(QTextToSpeech *tts, QWidget *parent = nullptr);
     ~TextToSpeechSettings() = default;
 
+    void setup() override{};
     void apply() override;
     void finish() override;
 

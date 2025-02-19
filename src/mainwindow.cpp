@@ -119,6 +119,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     qDebug() << "Settings file:" << settings->fileName();
 
+    bridge->setSettings(settings);
     connect(bridge, &PluginBridge::_say, this, &MainWindow::say, Qt::QueuedConnection);
     connect(bridge,
             &PluginBridge::_sayAndWait,
@@ -134,6 +135,12 @@ MainWindow::MainWindow(QWidget *parent)
             ui->content->takeWidget();
             ui->content->setWidget(w);
         },
+        Qt::QueuedConnection);
+    connect(
+        bridge,
+        &PluginBridge::_settingsWidgetRegistered,
+        this,
+        [this](SettingsWidget *w) { m_settingsWidgets.append(w); },
         Qt::QueuedConnection);
 
     // Set audio output device
@@ -611,6 +618,12 @@ void MainWindow::openSettings()
         engine = tts;
     });
 
+    for (int i = 0; i < m_settingsWidgets.count(); i++) {
+        auto widget = m_settingsWidgets[i];
+        widget->setSettings(settings);
+        dia.addSettingsWidget(widget);
+    }
+
     QGuiApplication::restoreOverrideCursor();
     dia.exec();
 }
@@ -684,6 +697,7 @@ void MainWindow::loadPlugins()
             continue;
 
         interface->setBridge(bridge);
+        interface->setup();
 
         Plugin plugin;
         plugin.interface = interface;
@@ -718,6 +732,7 @@ void MainWindow::loadPlugins()
             continue;
 
         interface->setBridge(bridge);
+        interface->setup();
         Plugin plugin;
         plugin.interface = interface;
         plugin.object = pluginObject;

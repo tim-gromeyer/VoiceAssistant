@@ -82,6 +82,7 @@ if(BUILD_TEST_PLUGIN)
 endif()
 
 add_subdirectory(plugins/mediaControl)
+add_subdirectory(plugins/smartthingsPlugin)
 
 target_include_directories(voiceassistant PRIVATE src)
 target_link_libraries(voiceassistant PRIVATE

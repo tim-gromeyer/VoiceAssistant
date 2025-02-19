@@ -8,4 +8,5 @@ endif()
 # Use the built-in qt_add_plugin function if Qt6 is available
 function(add_plugin)
     qt_add_plugin(${ARGV})
+    target_include_directories(${ARGV0} PRIVATE "${CMAKE_SOURCE_DIR}/plugins")
 endfunction()

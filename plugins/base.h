@@ -21,6 +21,11 @@ public:
     virtual ~PluginInterface() = default;
 
     /**
+     * @brief Set up everything in this function
+     */
+    virtual void setup() = 0;
+
+    /**
      * @brief isValid checks if a plugin is valid for the given input.
      * @param input The input to check.
      * @return True if the plugin is valid for the given input, false otherwise.
