@@ -1,0 +1,159 @@
+{
+    "en": {
+        "light": {
+            "triggers": [
+                "light",
+                "lamp"
+            ],
+            "on": [
+                "on",
+                "turn on",
+                "switch on"
+            ],
+            "off": [
+                "off",
+                "turn off",
+                "switch off"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "outlet": {
+            "triggers": [
+                "outlet",
+                "socket",
+                "plug"
+            ],
+            "on": [
+                "on",
+                "turn on",
+                "switch on"
+            ],
+            "off": [
+                "off",
+                "turn off",
+                "switch off"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "responses": {
+            "success": "Done.",
+            "error": "There was an error executing that command."
+        },
+        "errors": {
+            "command_not_recognized": "Command not recognized.",
+            "device_not_found": "No %1 device found.",
+            "specify_device": "Please specify which %1 you want to control.",
+            "ambiguous_command": "I didn’t understand that command."
+        }
+    },
+    "de": {
+        "light": {
+            "triggers": [
+                "licht",
+                "lampe"
+            ],
+            "on": [
+                "an",
+                "mach an",
+                "einschalten"
+            ],
+            "off": [
+                "aus",
+                "mach aus",
+                "ausschalten"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "outlet": {
+            "triggers": [
+                "steckdose",
+                "stecker"
+            ],
+            "on": [
+                "an",
+                "mach an",
+                "einschalten"
+            ],
+            "off": [
+                "aus",
+                "mach aus",
+                "ausschalten"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "responses": {
+            "success": "Erledigt.",
+            "error": "Bei der Ausführung dieses Befehls ist ein Fehler aufgetreten."
+        },
+        "errors": {
+            "command_not_recognized": "Befehl nicht erkannt.",
+            "device_not_found": "Kein %1 Gerät gefunden.",
+            "specify_device": "Bitte gib an, welches %1 du steuern möchtest.",
+            "ambiguous_command": "Ich habe den Befehl nicht verstanden."
+        }
+    },
+    "es": {
+        "light": {
+            "triggers": [
+                "luz",
+                "lámpara"
+            ],
+            "on": [
+                "encender",
+                "on",
+                "enciende"
+            ],
+            "off": [
+                "apagar",
+                "off",
+                "apaga"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "outlet": {
+            "triggers": [
+                "enchufe",
+                "toma"
+            ],
+            "on": [
+                "encender",
+                "on",
+                "enciende"
+            ],
+            "off": [
+                "apagar",
+                "off",
+                "apaga"
+            ],
+            "config": {
+                "component": "main",
+                "capability": "switch"
+            }
+        },
+        "responses": {
+            "success": "Hecho.",
+            "error": "Hubo un error al ejecutar ese comando."
+        },
+        "errors": {
+            "command_not_recognized": "Comando no reconocido.",
+            "device_not_found": "No se encontró ningún dispositivo %1.",
+            "specify_device": "Por favor, especifica qué %1 quieres controlar.",
+            "ambiguous_command": "No entendí ese comando."
+        }
+    }
+}

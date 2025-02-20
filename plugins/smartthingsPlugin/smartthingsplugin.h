@@ -20,19 +20,39 @@ public:
     bool isValid(const QString &input) override;
     void run(const QString &input) override;
 
+    void setLanguage(const QString &language);
+
 private slots:
     void handleNetworkResponse(QNetworkReply *reply);
 
 private:
-    QJsonObject makeRequest(const QString &url);
+    struct Device
+    {
+        QString deviceId;
+        QString deviceName; // label attribute
+        QStringList capabilities;
+        QStringList categories;
+    };
 
-    QNetworkAccessManager *manager;
-
+    void loadLanguageCommands();
+    QJsonObject getCurrentLanguageCommands() const;
     QString getAccessToken();
+    QList<Device> getDeviceList();
     QString getDeviceId(const QString &deviceType);
     void controlDevice(const QString &deviceType, const QString &action);
 
+    void controlDeviceById(const QString &deviceId,
+                           const QString &action,
+                           const QString &deviceType);
+    void controlAllDevicesOfType(const QString &deviceType, const QString &action);
+
     SmartThingsSettingsWidget *settingsWidget;
+    QNetworkAccessManager *manager;
+
+    QJsonObject languageCommands;
+    QString currentLanguage;
+
+    QList<Device> m_devices;
 
     using PluginInterface::bridge;
 };

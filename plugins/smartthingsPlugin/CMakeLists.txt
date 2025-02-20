@@ -23,6 +23,7 @@ target_sources(smartThingsPlugin
         smartthingsplugin.cpp
         smartthingssettingswidget.h
         smartthingssettingswidget.cpp
+        ressources.qrc
 )
 
 target_link_libraries(smartThingsPlugin PUBLIC
