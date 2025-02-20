@@ -14,16 +14,33 @@ include(Plugins)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
 
+# Set plugin sources and headers
+set(SOURCES
+    smartthingsplugin.cpp
+    languagemanager.cpp
+    devicemanager.cpp
+    networkhandler.cpp
+    smartthingsplugin.cpp
+    smartthingssettingswidget.cpp
+)
+
+set(HEADERS
+    smartthingsplugin.h
+    languagemanager.h
+    devicemanager.h
+    networkhandler.h
+    smartthingsplugin.h
+    smartthingssettingswidget.h
+)
+
 # Add your plugin
 add_plugin(smartThingsPlugin CLASS_NAME SmartThingsPlugin)
 target_sources(smartThingsPlugin
     PUBLIC
         ../base.h ../bridge.h
-        smartthingsplugin.h
-        smartthingsplugin.cpp
-        smartthingssettingswidget.h
-        smartthingssettingswidget.cpp
         ressources.qrc
+        ${SOURCES}
+        ${HEADERS}
 )
 
 target_link_libraries(smartThingsPlugin PUBLIC

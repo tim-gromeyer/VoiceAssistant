@@ -7,9 +7,9 @@
 #include "plugins/bridge.h"
 #include "plugins/utils.h"
 #include "recognizer.h"
-#include "settingsdialog.h"
+#include "settings/settingsdialog.h"
+#include "settings/texttospeechsettings.h"
 #include "speechtotext/speechtotextplugin.h"
-#include "texttospeechsettings.h"
 #include "ui_mainwindow.h"
 #include "utils.h"
 

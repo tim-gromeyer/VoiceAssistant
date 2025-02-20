@@ -1,10 +1,12 @@
 #pragma once
 
 #include "base.h"
-#include <QNetworkAccessManager>
 #include <QString>
 
 class SmartThingsSettingsWidget;
+class LanguageManager;
+class DeviceManager;
+class NetworkHandler;
 
 class SmartThingsPlugin : public QObject, PluginInterface
 {
@@ -14,45 +16,18 @@ class SmartThingsPlugin : public QObject, PluginInterface
 
 public:
     explicit SmartThingsPlugin(QObject *parent = nullptr);
-    ~SmartThingsPlugin() override = default;
+    ~SmartThingsPlugin() override;
 
     void setup() override;
     bool isValid(const QString &input) override;
     void run(const QString &input) override;
-
     void setLanguage(const QString &language);
 
-private slots:
-    void handleNetworkResponse(QNetworkReply *reply);
-
 private:
-    struct Device
-    {
-        QString deviceId;
-        QString deviceName; // label attribute
-        QStringList capabilities;
-        QStringList categories;
-    };
-
-    void loadLanguageCommands();
-    QJsonObject getCurrentLanguageCommands() const;
-    QString getAccessToken();
-    QList<Device> getDeviceList();
-    QString getDeviceId(const QString &deviceType);
-    void controlDevice(const QString &deviceType, const QString &action);
-
-    void controlDeviceById(const QString &deviceId,
-                           const QString &action,
-                           const QString &deviceType);
-    void controlAllDevicesOfType(const QString &deviceType, const QString &action);
-
-    SmartThingsSettingsWidget *settingsWidget;
-    QNetworkAccessManager *manager;
-
-    QJsonObject languageCommands;
-    QString currentLanguage;
-
-    QList<Device> m_devices;
+    SmartThingsSettingsWidget *m_settingsWidget = nullptr;
+    LanguageManager *m_languageManager = nullptr;
+    DeviceManager *m_deviceManager = nullptr;
+    NetworkHandler *m_networkHandler = nullptr;
 
     using PluginInterface::bridge;
 };
