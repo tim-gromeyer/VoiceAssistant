@@ -4,3 +4,6 @@
 [submodule "plugins/weather/icons"]
 	path = plugins/weather/icons
 	url = https://github.com/Makin-Things/weather-icons
+[submodule "3rdparty/whisper.cpp"]
+	path = 3rdparty/whisper.cpp
+	url = https://github.com/ggerganov/whisper.cpp

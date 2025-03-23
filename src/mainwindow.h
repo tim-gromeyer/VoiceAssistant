@@ -19,6 +19,7 @@ class QSettings;
 class QSystemTrayIcon;
 class QTextToSpeech;
 class QTimer;
+class SettingsWidget;
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -127,6 +128,8 @@ private:
     QSettings *settings = nullptr;
 
     QList<actions::Action> commands;
+
+    QList<SettingsWidget *> m_settingsWidgets;
 };
 
 #endif // MAINWINDOW_H

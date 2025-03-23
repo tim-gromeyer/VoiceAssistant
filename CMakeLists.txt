@@ -54,9 +54,10 @@ set(PROJECT_SOURCES
     src/main.cpp
     src/mainwindow.cpp          src/mainwindow.h
     src/modeldownloader.cpp     src/modeldownloader.h
+    src/pluginloader.cpp        src/pluginloader.h
     src/recognizer.cpp          src/recognizer.h
-    src/settingsdialog.cpp      src/settingsdialog.h
-    src/texttospeechsettings.cpp src/texttospeechsettings.h
+    src/settings/settingsdialog.cpp      src/settings/settingsdialog.h
+    src/settings/texttospeechsettings.cpp src/settings/texttospeechsettings.h
     src/utils.cpp               src/utils.h
     src/commands.cpp            src/commands.h
     ui/mainwindow.ui
@@ -81,6 +82,7 @@ if(BUILD_TEST_PLUGIN)
 endif()
 
 add_subdirectory(plugins/mediaControl)
+add_subdirectory(plugins/smartthingsPlugin)
 
 target_include_directories(voiceassistant PRIVATE src)
 target_link_libraries(voiceassistant PRIVATE

@@ -14,7 +14,6 @@ class QSettings;
 
 class SettingsWidget : public QWidget
 {
-    Q_OBJECT
 public:
     /**
      * @brief SettingsWidget constructor.
@@ -29,6 +28,11 @@ public:
      * The destructor is responsible for cleaning up the object.
      */
     ~SettingsWidget() = default;
+
+    /**
+     * @brief THe setup function. Do every setup-related here, and not in the constructor. Things like settings will not be set.
+     */
+    virtual void setup() = 0;
 
     /**
      * @brief apply applies the changes made in the settings widget.
@@ -52,7 +56,7 @@ public:
      *
      * This function returns the display name of the settings widget, which is used as the tab name.
      */
-    [[nodiscard]] QString displayName() const { return m_displayName; }
+    [[nodiscard]] inline QString displayName() const { return m_displayName; }
 
     /**
      * @brief displayCategory returns the display category of the settings widget.
@@ -60,7 +64,7 @@ public:
      *
      * This function returns the display category of the settings widget, which is used as the name in the list.
      */
-    [[nodiscard]] QString displayCategory() const { return m_displayCategory; }
+    [[nodiscard]] inline QString displayCategory() const { return m_displayCategory; }
 
     /**
      * @brief categoryIcon returns the icon of the settings widget category.
@@ -68,7 +72,7 @@ public:
      *
      * This function returns the icon of the settings widget category, which is displayed in the list.
      */
-    [[nodiscard]] const QIcon &categoryIcon() const { return m_categoryIcon; }
+    [[nodiscard]] inline const QIcon &categoryIcon() const { return m_categoryIcon; }
 
     /**
      * @brief keyWords returns the keywords associated with the settings widget.
@@ -114,7 +118,7 @@ protected:
      * This function sets the display name of the settings widget.
      * The display name is used as the tab name for the settings widget.
      */
-    void setDisplayName(const QString &displayName) { m_displayName = displayName; }
+    inline void setDisplayName(const QString &displayName) { m_displayName = displayName; }
 
     /**
      * @brief setDisplayCategory sets the display category of the settings widget.
@@ -123,7 +127,10 @@ protected:
      * This function sets the display category of the settings widget.
      * The display category is used as the name in the list for the settings widget.
      */
-    void setDisplayCategory(const QString &displayCategory) { m_displayCategory = displayCategory; }
+    inline void setDisplayCategory(const QString &displayCategory)
+    {
+        m_displayCategory = displayCategory;
+    }
 
     /**
      * @brief setCategoryIcon sets the icon of the settings widget category.
@@ -132,7 +139,7 @@ protected:
      * This function sets the icon of the settings widget category.
      * The category icon is displayed in the list for the settings widget.
      */
-    void setCategoryIcon(const QIcon &categoryIcon) { m_categoryIcon = categoryIcon; }
+    inline void setCategoryIcon(const QIcon &categoryIcon) { m_categoryIcon = categoryIcon; }
 
     /**
      * @brief settings returns the QSettings object used by the settings widget.
@@ -141,7 +148,7 @@ protected:
      * This function returns the QSettings object used by the settings widget.
      * The settings object is used for storing and retrieving the settings values.
      */
-    QSettings *settings() { return m_settings; };
+    inline QSettings *settings() { return m_settings; };
 
 private:
     bool m_keywordsInitialized = false;

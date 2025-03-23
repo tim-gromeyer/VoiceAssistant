@@ -98,7 +98,7 @@ static constexpr QLatin1String getOsString()
         return utils::strings::literals::L1("Windows");
     case Wasm:
         return utils::strings::literals::L1("WebAssembly");
-    case Unknown:
+    default:
         return utils::strings::literals::L1("");
     }
 }

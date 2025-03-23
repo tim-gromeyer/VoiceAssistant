@@ -45,7 +45,7 @@ public:
 
     void clear() override;
 
-    inline int sampleRate() override { return 16000; };
+    inline int sampleRate() override { return 32000; };
 
 private:
     // Private method that takes a JSON string containing the recognized text
