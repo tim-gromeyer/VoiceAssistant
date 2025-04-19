@@ -47,7 +47,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="196"/>
         <source>Execute program</source>
-        <translation>நிரல் நிரல்</translation>
+        <translation>நிரலை இயக்கு</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="198"/>
