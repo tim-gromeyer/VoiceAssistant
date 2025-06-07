@@ -6,88 +6,88 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="188"/>
         <source>Select Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите действие</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="189"/>
         <source>Select the action(s) to be performed when the command is recognized</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите действие, которое будет выполнено при распознавании команды</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="190"/>
         <source>Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Действия</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="191"/>
         <source>Action name</source>
-        <translation type="unfinished"></translation>
+        <translation>Название действия</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="192"/>
         <source>Name of the action</source>
-        <translation type="unfinished"></translation>
+        <translation>Название действия</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="193"/>
         <source>Execute function</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить функцию</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="194"/>
         <source>Random response</source>
-        <translation type="unfinished"></translation>
+        <translation>Случайный ответ</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="195"/>
         <location filename="../src/commandwizard.cpp" line="199"/>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберать</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="196"/>
         <source>Execute program</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить программу</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="198"/>
         <source>Program arguments</source>
-        <translation type="unfinished"></translation>
+        <translation>Аргументы программы</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="200"/>
         <source>Play a sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизвести звук</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="201"/>
         <source>URLs are also supported</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-адреса также поддерживаются</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="202"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнено</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="203"/>
         <source>Add a entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить запись</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="227"/>
         <source>Add app argument</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить аргумент приложения</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="229"/>
         <source>Add random response</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить случайный ответ</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="307"/>
         <source>Select executable</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите исполняемый файл</translation>
     </message>
 </context>
 <context>
@@ -95,17 +95,17 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="85"/>
         <source>Add command</source>
-        <translation type="unfinished">Добавить команду</translation>
+        <translation>Добавить команду</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="86"/>
         <source>Tap &apos;Listen&apos; to turn on voice recognition. Speak naturally and the app will convert your spoken words into text.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите «Прослушать», чтобы включить распознавание голоса. Говорите естественно, и приложение преобразует произнесенные вами слова в текст.</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="88"/>
         <source>Listen</source>
-        <translation type="unfinished"></translation>
+        <translation>Слушать</translation>
     </message>
 </context>
 <context>
@@ -113,7 +113,7 @@
     <message>
         <location filename="../src/commandwizard.cpp" line="351"/>
         <source>Add command</source>
-        <translation type="unfinished">Добавить команду</translation>
+        <translation>Добавить команду</translation>
     </message>
 </context>
 <context>
@@ -182,12 +182,12 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="196"/>
         <source>Add command</source>
-        <translation type="unfinished">Добавить команду</translation>
+        <translation>Добавить команду</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="201"/>
         <source>Close window</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть окно</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="14"/>
@@ -197,7 +197,7 @@ Joke languages: %2</source>
     <message>
         <location filename="../ui/mainwindow.ui" line="23"/>
         <source>Loading …</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка …</translation>
     </message>
     <message>
         <location filename="../ui/mainwindow.ui" line="138"/>
@@ -258,7 +258,28 @@ Joke languages: %2</source>
 &lt;h3&gt;Credits&lt;/h3&gt;
 &lt;p&gt;This project uses &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; which is licensed under the &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;This project also uses&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;to unpack the downloaded voice models.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h1&gt;Voice Assistant&lt;/h1&gt;
+&lt;p&gt;Ресурсоэффективный и настраиваемый голосовой помощник, написанный на c++.&lt;/p&gt;
+&lt;h3&gt;О Voice Assistant &lt;/h3&gt;
+&lt;table border=&quot;0&quot; style=&quot;border-collapse: collapse; width: 100%;&quot;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Версия:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Версия Qt:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;%2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&quot;text-align: right; padding-right: 5px;&quot;&gt;Домашняя страница:&lt;/td&gt;
+&lt;td style=&quot;text-align: left; padding-left: 5px;&quot;&gt;&lt;a href=&quot;https://github.com/tim-gromeyer/VoiceAssistant&quot;&gt;https://github.com/tim-gromeyer/VoiceAssistant&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;Права&lt;/h3&gt;
+&lt;p&gt;В данном проекте используется &lt;a href=&quot;https://github.com/alphacep/vosk-api&quot;&gt;Vosk&lt;/a&gt; который лицензирована под &lt;a href=&quot;https://github.com/alphacep/vosk-api/blob/master/COPYING&quot;&gt;Apache License 2.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В этом проекте также используется&amp;nbsp;&lt;a href=&quot;https://github.com/Sygmei/11Zip&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;11Zip&lt;/a&gt;&amp;nbsp;для распаковки загруженных голосовых моделей.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="311"/>
@@ -286,32 +307,32 @@ Joke languages: %2</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="448"/>
         <source>Microphone Access Denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ к микрофону запрещён</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="449"/>
         <source>Access to the microphone has been denied. This feature requires microphone access to function properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ к микрофону был запрещён. Для правильной работы этой функции необходим доступ к микрофону.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="451"/>
         <source>Please grant microphone access to enable speech-to-text functionality and allow the app to convert your spoken words into text. Your audio data will only be used for this purpose and will be handled securely in accordance with our privacy policy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, предоставьте доступ к микрофону, чтобы включить функцию преобразования речи в текст и позволить приложению преобразовывать произнесенные вами слова в текст. Ваши аудиоданные будут использоваться только для этой цели и будут надежно обработаны в соответствии с нашей политикой конфиденциальности.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="485"/>
         <source>Listening …</source>
-        <translation type="unfinished"></translation>
+        <translation>Слушать …</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="516"/>
         <source>Contains word?</source>
-        <translation>Содержит слова?</translation>
+        <translation>Содержит слово?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="526"/>
         <source>Check if the current language model can (not does) recognize a word.</source>
-        <translation>Проверьте, может ли текущая языковая модель распознавать слово (не распознает).</translation>
+        <translation>Проверьте, может ли текущая языковая модель распознать слово.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="530"/>
@@ -326,17 +347,17 @@ Joke languages: %2</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="545"/>
         <source>Warning: The current STT plugin does not support word lookups</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: текущий дополнение распознавания голоса не поддерживает поиск слов</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="547"/>
         <source>Warning: No STT plugin found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Дополнение распознавания голоса не найдено!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="549"/>
         <source>Warning: There is a error with the STT plugin.</source>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Произошла ошибка с дополнением распознавания голоса.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="673"/>
@@ -382,7 +403,7 @@ Copy following text and save it manually:
         <location filename="../src/mainwindow.cpp" line="1040"/>
         <location filename="../src/mainwindow.cpp" line="1111"/>
         <source>Okay</source>
-        <translation>Окей</translation>
+        <translation>Хорошо</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1053"/>
@@ -429,7 +450,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
         <source>Size</source>
-        <translation>Вес</translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="126"/>
@@ -472,7 +493,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="121"/>
         <source>Search …</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск …</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="235"/>
@@ -501,7 +522,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/modeldownloader.cpp" line="357"/>
         <source>Unzipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковка</translation>
     </message>
     <message>
         <location filename="../src/modeldownloader.cpp" line="390"/>
@@ -519,12 +540,12 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="14"/>
         <source>How are you</source>
-        <translation>Как ты</translation>
+        <translation>Как вы</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="15"/>
         <source>Okay</source>
-        <translation>Окей</translation>
+        <translation>Хорошо</translation>
     </message>
     <message>
         <location filename="../plugins/testPlugin/plugintest.cpp" line="19"/>
@@ -542,7 +563,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../ui/settingsdialog.ui" line="22"/>
         <source>Search …</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск …</translation>
     </message>
 </context>
 <context>
@@ -550,7 +571,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/recognizer.cpp" line="327"/>
         <source>The app is unable to transcribe speech to text because the necessary plugin is missing or could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приложение не может транскрибировать речь в текст, потому что необходимое дополнение отсутствует или не может быть загружено.</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="335"/>
@@ -578,57 +599,57 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="23"/>
         <source>General</source>
-        <translation type="unfinished">Основные</translation>
+        <translation>Основные</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="24"/>
         <source>Text to speech</source>
-        <translation type="unfinished">Текст в речь</translation>
+        <translation>Синтез речи</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="113"/>
         <source>Settings</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="114"/>
         <source>Engine</source>
-        <translation type="unfinished">Двигатель</translation>
+        <translation>Движок</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="115"/>
         <source>Language</source>
-        <translation type="unfinished">Язык</translation>
+        <translation>Язык</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="116"/>
         <source>Voice</source>
-        <translation type="unfinished">Голос</translation>
+        <translation>Голос</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="117"/>
         <source>Pitch</source>
-        <translation type="unfinished">Высота</translation>
+        <translation>Тон</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="118"/>
         <source>Rate</source>
-        <translation type="unfinished">Скорость</translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="119"/>
         <source>Test</source>
-        <translation type="unfinished">Попробовать</translation>
+        <translation>Попробовать</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="120"/>
         <source>Enter some text here to test the settings</source>
-        <translation type="unfinished">Введите здесь текст для проверки настроек</translation>
+        <translation>Введите здесь текст для проверки настроек</translation>
     </message>
     <message>
         <location filename="../src/texttospeechsettings.cpp" line="121"/>
         <source>Say</source>
-        <translation type="unfinished">Скажите</translation>
+        <translation>Скажите</translation>
     </message>
 </context>
 <context>
@@ -636,7 +657,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="162"/>
         <source>No Vosk model was found for the system languages</source>
-        <translation>Для языка системы не было найдено ни одной модели Vosk</translation>
+        <translation>Для языков системы не было найдено ни одной модели Vosk</translation>
     </message>
     <message>
         <location filename="../speechtotext/vosk-api/voskplugin.cpp" line="165"/>
@@ -664,52 +685,52 @@ Copy following text and save it manually:
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="13"/>
         <source>what&apos;s the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>что за погода</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="16"/>
         <source>what is the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>какая погода</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="19"/>
         <source>how&apos;s the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>как погода</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="22"/>
         <source>tell me about the weather</source>
-        <translation type="unfinished"></translation>
+        <translation>расскажите мне о погоде</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="25"/>
         <source>is it going to rain</source>
-        <translation type="unfinished"></translation>
+        <translation>будет ли дождь</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="29"/>
         <source>is it sunny today</source>
-        <translation type="unfinished"></translation>
+        <translation>сегодня солнечно</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="32"/>
         <source>will it be hot</source>
-        <translation type="unfinished"></translation>
+        <translation>будет ли жарко</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="35"/>
         <source>is there a chance of thunderstorms</source>
-        <translation type="unfinished"></translation>
+        <translation>есть ли вероятность грозы</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="38"/>
         <source>how cold is it outside</source>
-        <translation type="unfinished"></translation>
+        <translation>насколько холодно на улице</translation>
     </message>
     <message>
         <location filename="../plugins/weather/weatherplugin.cpp" line="54"/>
         <source>I don&apos;t know. This is not implemented yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Я не знаю. Это еще не реализовано.</translation>
     </message>
 </context>
 <context>
@@ -717,13 +738,14 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/commandwizard.cpp" line="56"/>
         <source>Welcome to Command Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Добро пожаловать в настройщик команд</translation>
     </message>
     <message>
         <location filename="../src/commandwizard.cpp" line="58"/>
         <source>This wizard allows you to add commands.
 Press &apos;Next&apos; to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот настройщик позволяет добавить команды.
+Нажмите «Далее», чтобы продолжить.</translation>
     </message>
 </context>
 <context>
@@ -731,17 +753,17 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/main.cpp" line="78"/>
         <source>Resource-efficient voice assistant that is still in the early stages of development but already functional.</source>
-        <translation>Ресурсоэффективный голосовой помощник, который пока находится на ранней стадии разработки, но уже функционирует.</translation>
+        <translation>Ресурсосберегающий голосовой помощник, который пока находится на ранней стадии разработки, но уже функционирует.</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="86"/>
         <source>Reformat JSON file</source>
-        <translation type="unfinished"></translation>
+        <translation>Переформатировать файл JSON</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="87"/>
         <source>file</source>
-        <translation type="unfinished"></translation>
+        <translation>файл</translation>
     </message>
 </context>
 <context>
@@ -804,121 +826,121 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/utils.cpp" line="29"/>
         <source>eleven</source>
-        <translation type="unfinished"></translation>
+        <translation>одиннадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="30"/>
         <source>twelve</source>
-        <translation type="unfinished"></translation>
+        <translation>двенадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="31"/>
         <source>thirteen</source>
-        <translation type="unfinished"></translation>
+        <translation>тринадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="32"/>
         <source>fourteen</source>
-        <translation type="unfinished"></translation>
+        <translation>четырнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="33"/>
         <source>fifteen</source>
-        <translation type="unfinished"></translation>
+        <translation>пятнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="34"/>
         <source>sixteen</source>
-        <translation type="unfinished"></translation>
+        <translation>шестнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="35"/>
         <source>seventeen</source>
-        <translation type="unfinished"></translation>
+        <translation>семнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="36"/>
         <source>eighteen</source>
-        <translation type="unfinished"></translation>
+        <translation>восемнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="37"/>
         <source>nineteen</source>
-        <translation type="unfinished"></translation>
+        <translation>девятнадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="38"/>
         <source>twenty</source>
-        <translation type="unfinished"></translation>
+        <translation>двадцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="39"/>
         <source>thirty</source>
-        <translation type="unfinished"></translation>
+        <translation>тридцать</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="40"/>
         <source>forty</source>
-        <translation type="unfinished"></translation>
+        <translation>сорок</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="41"/>
         <source>fifty</source>
-        <translation type="unfinished"></translation>
+        <translation>пятьдесят</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="42"/>
         <source>sixty</source>
-        <translation type="unfinished"></translation>
+        <translation>шестьдесят</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="43"/>
         <source>seventy</source>
-        <translation type="unfinished"></translation>
+        <translation>семьдесят</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="44"/>
         <source>eighty</source>
-        <translation type="unfinished"></translation>
+        <translation>восемьдесят</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="45"/>
         <source>ninety</source>
-        <translation type="unfinished"></translation>
+        <translation>девяносто</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="46"/>
         <location filename="../src/utils.cpp" line="69"/>
         <source>hundred</source>
-        <translation type="unfinished"></translation>
+        <translation>сто</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="47"/>
         <location filename="../src/utils.cpp" line="71"/>
         <source>thousand</source>
-        <translation type="unfinished"></translation>
+        <translation>тысяча</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="48"/>
         <location filename="../src/utils.cpp" line="72"/>
         <source>million</source>
-        <translation type="unfinished"></translation>
+        <translation>миллион</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="49"/>
         <location filename="../src/utils.cpp" line="73"/>
         <source>billion</source>
-        <translation type="unfinished"></translation>
+        <translation>миллиард</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="58"/>
         <source>negative</source>
-        <translation type="unfinished"></translation>
+        <translation>отрицательное</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="60"/>
         <source>and</source>
-        <translation type="unfinished"></translation>
+        <translation>и</translation>
     </message>
 </context>
 <context>
@@ -926,27 +948,27 @@ Press &apos;Next&apos; to continue.</source>
     <message>
         <location filename="../src/utils.cpp" line="180"/>
         <source>%1 seconds</source>
-        <translation>%1 секунд</translation>
+        <translation>%1 секунда</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="185"/>
         <source>%1 minute(s), %2 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 минута(ы), %2 секунд</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="190"/>
         <source>%1 hour(s), %2 minute(s)</source>
-        <translation>%1 час(а), %2 минут(ы)</translation>
+        <translation>%1 час(ы), %2 минуты(ы)</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="195"/>
         <source>%1 day(s), %2 hour(s)</source>
-        <translation>%1 день(ей), %2 час(а)</translation>
+        <translation>%1 день(ы), %2 час(ы)</translation>
     </message>
     <message>
         <location filename="../src/utils.cpp" line="200"/>
         <source>%1 year(s), %2 day(s)</source>
-        <translation>%1 год(а), %2 дней(я)</translation>
+        <translation>%1 год(ы), %2 день(ы)</translation>
     </message>
 </context>
 </TS>
