@@ -571,7 +571,7 @@ Copy following text and save it manually:
     <message>
         <location filename="../src/recognizer.cpp" line="327"/>
         <source>The app is unable to transcribe speech to text because the necessary plugin is missing or could not be loaded.</source>
-        <translation>Приложение не может транскрибировать речь в текст, потому что необходимое дополнение отсутствует или не может быть загружено.</translation>
+        <translation>Приложение не может переводить речь в текст, потому что необходимое дополнение отсутствует или не может быть загружено.</translation>
     </message>
     <message>
         <location filename="../src/recognizer.cpp" line="335"/>
